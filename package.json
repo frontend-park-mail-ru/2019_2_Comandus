@@ -7,7 +7,8 @@
 	"scripts": {
 		"start": "node server.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "echo \"Error: no build specified\" && exit 1"
+		"build": "echo \"Error: no build specified\" && exit 1",
+		"prettier": "prettier --config .prettierrc --write '{public,__{tests,mocks}__}/**/*.{js,html,css}'"
 	},
 	"repository": {
 		"type": "git",
@@ -17,5 +18,8 @@
 	"bugs": {
 		"url": "https://github.com/frontend-park-mail-ru/2019_2_Comandus/issues"
 	},
-	"homepage": "https://github.com/frontend-park-mail-ru/2019_2_Comandus#readme"
+	"homepage": "https://github.com/frontend-park-mail-ru/2019_2_Comandus#readme",
+	"devDependencies": {
+		"prettier": "1.18.2"
+	}
 }
