@@ -12,11 +12,17 @@ html {
 	max-width: 1140px;
 	margin: 0 auto;
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 }
 
-.tp-container.tp-container-centered {
+.tp-row.tp-row-centered {
 	justify-content: center;
+}
+
+.tp-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .tp-col,
