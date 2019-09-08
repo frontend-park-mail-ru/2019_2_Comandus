@@ -1,0 +1,110 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+.tp-container {
+	max-width: 1140px;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tp-container.tp-container-centered {
+	justify-content: center;
+}
+
+.tp-col,
+[class*='tp-col-'] {
+	--columns: 12;
+	--width-default: 0;
+	--width: var(--width-mobile, var(--width-default));
+	flex-basis: calc(var(--width) / var(--columns) * 100%);
+	padding: 16px;
+	background-color: white;
+	border: #f5f5f6 4px solid;
+}
+
+.tp-col-1 {
+	--width: 1;
+}
+
+.tp-col-2 {
+	--width: 2;
+}
+
+.tp-col-3 {
+	--width: 3;
+}
+
+.tp-col-4 {
+	--width: 4;
+}
+
+.tp-col-5 {
+	--width: 5;
+}
+
+.tp-col-6 {
+	--width: 6;
+}
+
+.tp-col-7 {
+	--width: 7;
+}
+
+.tp-col-8 {
+	--width: 8;
+}
+
+.tp-col-9 {
+	--width: 9;
+}
+
+.tp-col-10 {
+	--width: 10;
+}
+
+.tp-col-11 {
+	--width: 11;
+}
+
+.tp-col-12 {
+	--width: 12;
+}
+
+@media (min-width: 576px) {
+	.tp-col {
+		--width: var(--width-tablet, var(--width-mobile, var(--width-default)));
+	}
+}
+
+@media (min-width: 768px) {
+	.tp-col {
+		--width: var(
+			--width-desktop,
+			var(--width-tablet, var(--width-mobile, var(--width-default)))
+		);
+	}
+}
+
+.tp-header {
+	--width-mobile: 12;
+}
+
+.tp-content {
+	--width-mobile: 12;
+	--width-tablet: 6;
+	--width-desktop: 8;
+}
+
+.tp-sidebar {
+	--width-mobile: 12;
+	--width-tablet: 6;
+	--width-desktop: 4;
+}

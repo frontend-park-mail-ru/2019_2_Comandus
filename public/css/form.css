@@ -1,0 +1,53 @@
+.tp-form > * {
+	margin-bottom: 10px;
+}
+
+input[type='text'].tp-input,
+input[type='password'].tp-input,
+input[type='number'].tp-input,
+input[type='email'].tp-input {
+	width: 100%;
+	padding: 12px 16px;
+	border: 1px #eef2f7 solid;
+	outline: 0;
+	background: #eef2f7;
+	border-radius: 4px;
+}
+
+input[type='text'].tp-input:focus,
+input[type='password'].tp-input:focus,
+input[type='number'].tp-input:focus,
+input[type='email'].tp-input:focus {
+	background: white;
+}
+
+input[type='text'].tp-input {
+}
+
+input[type='password'].tp-input {
+}
+
+input[type='number'].tp-input {
+}
+
+input[type='email'].tp-input {
+}
+
+.tp-button-primary {
+	width: 100%;
+	background-color: #4caf50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.tp-button-primary:hover {
+	background-color: #45a049;
+}
+
+form > label {
+	user-select: none;
+}

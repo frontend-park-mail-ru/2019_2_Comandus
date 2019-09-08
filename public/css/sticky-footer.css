@@ -1,0 +1,22 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+body > * {
+	width: 100%;
+}
+
+/*.wrapper {*/
+/*	flex: 1 0 auto;*/
+/*}*/
+
+.footer {
+	flex-shrink: 0;
+}
