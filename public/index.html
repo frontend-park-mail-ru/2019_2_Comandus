@@ -1,10 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>Title</title>
-	</head>
-	<body>
-		Index
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <title>Freelance Main Page</title>
+</head>
+<body>
+    <header class="tp-navbar">
+        <div class="tp-container">
+            <div class="tp-row">
+                <div class="tp-navbar-logo">
+                    <a class="tp-navbar-brand" href="/" target="_self">
+                        Project name
+                    </a>
+                </div>
+                <ul class="tp-navbar-navigate" role="menubar">
+                    <li class="">
+                        <a href="/jobs/" target="_self" role="menuitem">
+                            Jobs
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/freelancers/" target="_self" role="menuitem">
+                            Freelancers
+                        </a>
+                    </li>
+                    <li class="tp-dropdown">
+                        <a class="tp-dropdown-toggle" href="/" target="_self" role="menuitem">
+                            Other
+                        </a>
+                        <ul class="tp-dropdown-content">
+                            <li role="none">others</li>
+                            <li role="none">others</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="tp-navbar-navigate tp-navbar-right-part" role="menubar">
+                    <li class="tp-navbar-search">
+                        <form method="GET" role="search">
+                            <div>
+                                <input />
+                            </div>
+                        </form>
+                    </li>
+                    <li class="tp-dropdown" role="none">
+                        <a class="tp-dropdown-toggle" role="menuitem">
+                            <div class="tp-navbar-profile"></div>
+                        </a>
+                        <ul class="tp-dropdown-content">
+                            <li role="none">
+                                <a href="/freelancers/freelancer-profile-page.html">
+                                    Freelancer Profile
+                                </a>
+                            </li>
+                            <li role="none">
+                                <a href="/companies/some-company-page.html">
+                                    Customer (Company) Profile
+                                </a>
+                            </li>
+                            <li role="none">
+                                <a href="/freelancer-settings.html">
+                                    Freelancer settings
+                                </a>
+                            </li>
+                            <li role="none">
+                                <a href="/company-settings.html">
+                                    Company settings
+                                </a>
+                            </li>
+                            <li role="none">
+                                <a href="/companies/create/">
+                                    Create company
+                                </a>
+                            </li>
+                            <li role="none">
+                                Log out
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="tp-page">
+        <div id="tp-main-page-photo">
+            <div class="tp-shadow">
+                <div class="tp-centered-container">
+                    <h1 class="tp-main-text">ДОСТУПНЫЙ ФРИЛАНС ДЛЯ КАЖДОГО</h1>
+                    <div class="tp-row">
+                        <button class="tp-main-screen-buttons">Найти фрилансера</button>
+                        <button class="tp-main-screen-buttons">Стать фрилансером</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tp-container">
+            <div class="tp-row">
+    <!--            <div id="works-examples">-->
+                <div class="tp-col-8 tp-border-wrapper">
+                    <h2>Примеры работ:</h2>
+                    <div class="tp-media">
+                        content
+                    </div>
+                </div>
+    <!--            <div id="best-freelancers">-->
+                <div class="tp-col-4 tp-border-wrapper">
+                    <h2>Лучшие фрилансеры:</h2>
+                    <div class="tp-media">
+                        content
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer role="contentinfo">
+        <div class="tp-container">
+            <div class="tp-row">
+                <div class="tp-col-6">
+                    <ul class="tp-list-unstyled">
+                        <li>
+                            <a href="/info/about/" target="_self">About Us</a>
+                        </li>
+                        <li>
+                            <a href="/info/about/" target="_self">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tp-col-6">
+                    <ul class="tp-list-unstyled">
+                        <li>
+                            <a href="/info/about/" target="_self">About Us</a>
+                        </li>
+                        <li>
+                            <a href="/info/about/" target="_self">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
 </html>
