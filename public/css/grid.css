@@ -1,3 +1,13 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
 .tp-container {
 	max-width: 1140px;
 	margin: 0 auto;
@@ -7,6 +17,7 @@
 
 .tp-centered-container {
 	margin: auto;
+	width: 100%;
 	opacity: 1;
 	display: flex;
 	flex-direction: inherit;
@@ -18,11 +29,16 @@
 	justify-content: center;
 }
 
+.tp-row.tp-row-float-left {
+	justify-content: flex-start;
+}
+
 .tp-row {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-around;
+	align-items: center;
 }
 
 .tp-col,

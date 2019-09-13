@@ -4,7 +4,6 @@
 }
 
 .tp-navbar-logo {
-	/*Зачем тут столько свойств?*/
 	flex-basis: auto;
 	min-height: 70px;
 
@@ -25,7 +24,6 @@
 	margin-right: 5px;
 }
 
-/* Этот стиль вообще нужен? */
 .tp-navbar-nav-wrap {
 	display: flex;
 	padding: 0;
@@ -210,20 +208,17 @@ input {
 	height: 32px;
 	font-size: 15px;
 	padding: 0 12px;
-	margin: 1px 4px;
+	margin: 2px 2px;
 
-	border-radius: 0.5rem;
+	border-radius: 0.7rem;
 	border: none;
-	/*outline: 5px solid #000000;*/
-	box-shadow: 0 0 0 2px #ffffff,
-	0 0 0 3px #c5c5c5;
-	transition: box-shadow 0.2s ease;
+	box-shadow: 0 0 0 1px #c5c5c5;
+	transition: box-shadow 0.3s ease;
 }
 
 input:focus {
-	box-shadow: 0 0 0 2px #FFFFFF,
-	0 0 0 4px #9fa2df;
-	transition: box-shadow 0.1s ease-out;
+	box-shadow: 0 0 0 2px #9fa2df;
+	transition: box-shadow 0.3s ease-out;
 }
 
 a {
