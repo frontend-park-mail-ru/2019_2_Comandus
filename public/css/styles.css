@@ -251,7 +251,7 @@ h2 {
 	height: 600px;
 	flex-direction: column;
 	align-items: center;
-	background-image: url("/media/dev/background_cut.jpg");
+	background-image: url('/media/dev/background_cut.jpg');
 	background-position: center top;
 	background-size: cover;
 	opacity: 0.85;

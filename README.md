@@ -2,7 +2,9 @@
 
 ## Проект
 
-### Run
+https://comandus.now.sh/
+
+### Run dev server
 
 ```
 npm start
