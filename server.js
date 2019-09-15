@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const port = process.argv[2] || 3000;
-const staticBasePath = './public';
+const staticBasePath = './dist';
 
 const extContentType = {
 	'.ico': 'image/x-icon',
@@ -43,7 +43,7 @@ const server = http.createServer((req, res) => {
 	res.setHeader('it-is-nodejs', "yes" );
 
 	const stream = fs.createReadStream(url);
-	stream.on('error', function(error) {
+	stream.on('error', () => {
 		res.writeHead(404, 'Not Found');
 		res.write('404: File Not Found!');
 		res.end();
