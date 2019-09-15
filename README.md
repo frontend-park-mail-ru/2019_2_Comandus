@@ -21,6 +21,11 @@ fl.ru ( ставки на проект )
 - Отзывы и оценки (и заказу и фрилансерам)
 - Хороший поиск с фильтром
 
+### Макеты UI
+
+[Папка с макетами](docs/wireframes)
+
+[Ninjamock (старые версии)](https://ninjastorage.blob.core.windows.net/html/SMFDQFx/52e2914d-427c-06f1-ebb8-e593fdbce622.html)
 
 ### Backend
 
