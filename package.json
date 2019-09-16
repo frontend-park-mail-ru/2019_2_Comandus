@@ -7,7 +7,7 @@
 	"scripts": {
 		"start": "node server.js",
 		"test": "jest --watchAll",
-		"build": "webpack",
+		"build": "NODE_ENV=production webpack && cp src/index.html dist/index.html",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/**/*.{js,html,css}'",
 		"prettier:public": "prettier --config .prettierrc --write '{public,__{tests,mocks}__}/**/*.{js,html,css}'",
 		"dev": "webpack-dev-server",
