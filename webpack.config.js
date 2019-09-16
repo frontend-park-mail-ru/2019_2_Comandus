@@ -6,6 +6,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
+		publicPath: '/'
 	},
 	module: {
 		rules: [
@@ -16,13 +17,42 @@ module.exports = {
 					loader: 'babel-loader',
 				},
 			},
+			// {
+			// 	test: /\.js$/,
+			// 	exclude: /node_modules/,
+			// 	use: {
+			// 		loader: 'eslint-loader',
+			// 	}
+			// },
 			{
-				test: /\.js$/,
-				exclude: /node_modules/,
+				test: /\.css$/i,
+				use: ['style-loader', 'css-loader'],
+			},
+			{
+				test: /\.(html)$/,
 				use: {
-					loader: 'eslint-loader',
+					loader: 'html-loader'
 				}
-			}
+			},
+			{
+				test: /\.(png|jpe?g|gif)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+					},
+				],
+			},
+			{
+				test: /\.(png|jpg|gif)$/i,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 8192,
+						},
+					},
+				],
+			},
 		]
 	},
 	resolve: {
@@ -33,7 +63,15 @@ module.exports = {
 		contentBase: path.join(__dirname, 'dist'),
 		compress: true,
 		port: 9000,
-		hot: true
+		hot: true,
+		historyApiFallback: true,
+		// historyApiFallback: {
+		// 	rewrites: [
+				// { from: /^\/$/, to: '/index.html' },
+				// { from: /bundle.js$/, to: '/bundle.js' },
+				// { from: /./, to: '/views/404.html' }
+			// ],
+		// },
 	},
 	plugins: [
 		new webpack.NamedModulesPlugin(),

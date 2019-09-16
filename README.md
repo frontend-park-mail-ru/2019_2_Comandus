@@ -4,10 +4,24 @@
 
 https://comandus.now.sh/
 
-### Run dev server
+### Run | Build
+
+#### static server
 
 ```
 npm start
+``` 
+
+#### dev server with hot-load
+
+```
+npm run dev
+``` 
+
+#### build all src files into bundle.js
+
+```
+npm run build
 ``` 
 
 ###  Описание

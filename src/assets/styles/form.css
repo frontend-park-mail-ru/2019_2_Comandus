@@ -1,0 +1,77 @@
+.tp-form > * {
+	margin-bottom: 10px;
+}
+
+.tp-form-window {
+	box-shadow: 1px 2px 10px 0px #c5c5c5;
+	padding: 12px 20px 20px;
+}
+
+.tp-form-window > h1 {
+	padding: 0;
+	text-align: center;
+}
+
+input[type='text'].tp-input,
+input[type='password'].tp-input,
+input[type='number'].tp-input,
+input[type='email'].tp-input {
+	width: 100%;
+	margin-top: 4px;
+	/*padding: 12px 16px;*/
+	/*border: 1px #eef2f7 solid;*/
+	outline: 0;
+	background: #eef2f7;
+	border-radius: 0.5rem;
+}
+
+input[type='checkbox'].tp-input {
+	box-shadow: none;
+	margin: 0 4px;
+}
+
+input[type='text'].tp-input:focus,
+input[type='password'].tp-input:focus,
+input[type='number'].tp-input:focus,
+input[type='email'].tp-input:focus {
+	background: white;
+	transition: background 0.2s ease;
+}
+
+input[type='text'].tp-input {
+}
+
+input[type='password'].tp-input {
+}
+
+input[type='number'].tp-input {
+}
+
+input[type='email'].tp-input {
+}
+
+.tp-form-choice > p {
+	margin: 0;
+}
+.tp-form-choice [class*='tp-col-'] {
+	padding: 4px;
+}
+
+.tp-button-primary {
+	width: 100%;
+	background-color: #4caf50;
+	color: white;
+	/*padding: 14px 20px;*/
+	margin: 4px 0;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+}
+
+.tp-button-primary:hover {
+	background-color: #45a049;
+}
+
+form > label {
+	user-select: none;
+}
