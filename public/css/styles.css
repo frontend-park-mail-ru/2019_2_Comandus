@@ -217,7 +217,32 @@ input {
 }
 
 input:focus {
-	box-shadow: 0 0 0 2px #9fa2df;
+	box-shadow: 0 0 0 0px #FFFFFF,
+	0 0 0 2px #9fa2df;
+	transition: box-shadow 0.3s ease-out;
+}
+
+input[readonly]:focus {
+	box-shadow: 0 0 0 1px #c5c5c5;
+}
+
+textarea,
+select {
+	font-size: 15px;
+	padding: 0 12px;
+	margin: 2px 2px;
+
+	border-radius: 0.7rem;
+	border: none;
+	/*outline: 0;*/
+	box-shadow: 0 0 0 1px #c5c5c5;
+	transition: box-shadow 0.3s ease;
+}
+
+textarea:focus,
+select:focus {
+	box-shadow: 0 0 0 0px #FFFFFF,
+	0 0 0 2px #9fa2df;
 	transition: box-shadow 0.3s ease-out;
 }
 
@@ -301,9 +326,13 @@ h1.tp-main-text {
 	justify-content: space-between;
 }
 
-img.avatar {
+img.tp-avatar {
 	margin: 12px 12px;
 	box-shadow: 1px 1px 3px 2px #c5c5c5;
+}
+
+.tp-avatar.tp-avatar-content-below {
+	margin-bottom: 2px;
 }
 
 .tp-row.tp-nav-buttons-group {
@@ -312,4 +341,77 @@ img.avatar {
 
 .tp-border-wrapper {
 	border: #f5f5f6 4px solid;
+}
+
+.tp-columns-row {
+	flex-wrap: nowrap;
+	align-items: flex-start;
+}
+
+.tp-align-items-start {
+	align-items: flex-start;
+}
+
+.tp-menu-navigate {
+	/* навигационная часть хэдэра */
+	list-style: none;
+	flex-direction: column;
+	margin: 32px -16px -16px;
+	/*box-shadow: 0 0 3px 0 #c5c5c5;*/
+	padding: 0;
+	display: flex;
+	/*margin: -10px ;*/
+}
+
+.tp-underline {
+	border-bottom: #e6e6e6 1px solid;
+}
+
+.tp-menu-navigate > li {
+	padding: 8px 0px;
+	display: flex;
+	justify-content: center;
+	border: #c5c5c5 1px solid;
+	transition: background-color 0.3s ease;
+}
+
+.tp-menu-navigate > li:hover {
+	background-color: #e6e6e6;
+	transition: background-color 0.3s ease;
+}
+
+.tp-menu-navigate > li > a {
+	font-size: 1.1rem;
+	text-align: center;
+	color: #666;
+	/*padding-left: 9px;*/
+	/*padding-right: 9px;*/
+	/*display: flex;*/
+	/*align-items: center;*/
+	/*vertical-align: middle;*/
+	font-weight: 500;
+	text-decoration: none;
+}
+
+a.tp-option-link {
+	margin-left: 16px;
+}
+
+.tp-modal-window {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	min-width: 400px;
+	max-width: 500px;
+	background: inherit;
+}
+
+.tp-modal-shadow {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	background: rgba(0, 0, 0, 0.4);;
 }
