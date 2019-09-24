@@ -1,5 +1,5 @@
 import AppComponent from './app/app';
-import './assets/styles/index.css';
+import '../public/css/index.css';
 import './main.css';
 import withRouter from './app/services/router';
 

@@ -1,6 +1,5 @@
+import html from './index.html';
 import { htmlToElement } from '../../services/utils';
-
-const homePage = 'Home';
 
 class HomeComponent {
 	constructor({ parent = document.body }) {
@@ -9,7 +8,7 @@ class HomeComponent {
 	}
 
 	render() {
-		const el = htmlToElement(homePage);
+		const el = htmlToElement(html);
 		this._parent.appendChild(el);
 	}
 }
