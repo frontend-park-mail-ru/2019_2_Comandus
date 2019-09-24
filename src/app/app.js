@@ -1,32 +1,51 @@
-import homePage from './containers/homePage/homePage';
-import loginPage from './containers/loginPage/loginPage';
-import signupPage from './containers/signupPage/signupPage';
-import profilePage from './containers/profilePage/profilePage';
+import HomeComponent from './containers/homePage/homePage';
+import LoginComponent from './containers/loginPage/loginPage';
+import SignUpComponent from './containers/signupPage/signupPage';
+import ProfileComponent from './containers/profilePage/profilePage';
 import { htmlToElement } from './services/utils';
-import header from './containers/header';
+import HeaderComponent from './containers/header';
 
 const routes = {
-	'/': homePage,
-	'/signup/': signupPage,
-	'/login/': loginPage,
-	'/profile/': profilePage,
+	'/': HomeComponent,
+	'/signup/': SignUpComponent,
+	'/login/': LoginComponent,
+	'/settings/': ProfileComponent,
 };
 
-const App = {
-	render: () => {
+class AppComponent {
+	constructor({ parent = document.body, ...props }) {
+		this.props = props;
+		this._parent = parent;
+		this._data = {};
+	}
+
+	get data() {
+		return this._data;
+	}
+
+	set data(dataToSet) {
+		this._data = { ...dataToSet };
+	}
+
+	render() {
 		const html = `
 			<div style="all:inherit"></div>
 		`;
 		const el = htmlToElement(html);
 
-		el.appendChild(header);
+		const header = new HeaderComponent({ parent: el, ...this.props });
+		header.render();
 
 		if (routes[window.location.pathname]) {
-			el.appendChild(htmlToElement(routes[window.location.pathname]));
+			const component = new routes[window.location.pathname]({
+				parent: el,
+				...this.props,
+			});
+			component.render();
 		}
 
-		return el;
-	},
-};
+		this._parent.appendChild(el);
+	}
+}
 
-export default App;
+export default AppComponent;

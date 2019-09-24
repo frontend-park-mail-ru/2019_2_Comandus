@@ -9,13 +9,13 @@ https://comandus.now.sh/
 #### static server
 
 ```
-npm start
+npm start:server
 ``` 
 
 #### dev server with hot-load
 
 ```
-npm run dev
+npm run start
 ``` 
 
 #### build all src files into bundle.js
@@ -64,4 +64,6 @@ https://github.com/go-park-mail-ru/2019_2_Comandus
 
 https://trello.com/comandus
 
+### Contributing
 
+[Commit Message Guide](docs/contributing.md)
