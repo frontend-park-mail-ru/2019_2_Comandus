@@ -15,27 +15,73 @@
 input[type='text'].tp-input,
 input[type='password'].tp-input,
 input[type='number'].tp-input,
-input[type='email'].tp-input {
+input[type='email'].tp-input,
+textarea.tp-input,
+select.tp-input {
+	display: block;
 	width: 100%;
 	margin-top: 4px;
-	/*padding: 12px 16px;*/
-	/*border: 1px #eef2f7 solid;*/
+	padding: 12px 12px;
 	outline: 0;
 	background: #eef2f7;
 	border-radius: 0.5rem;
 }
 
+input[type='date'].tp-input {
+	display: block;
+	margin-top: 4px;
+	outline: 0;
+	background: #eef2f7;
+	border-radius: 0.5rem;
+}
+
+.tp-form > label {
+	display: block;
+}
+
 input[type='checkbox'].tp-input {
 	box-shadow: none;
-	margin: 0 4px;
+	margin: 0 6px;
+}
+
+input[type='file'].tp-input {
+	border: none;
+	box-shadow: none;
+}
+
+input[type='text'][readonly].tp-input {
+	background: inherit;
+	box-shadow: none;
+	font-size: 1.1rem;
 }
 
 input[type='text'].tp-input:focus,
 input[type='password'].tp-input:focus,
 input[type='number'].tp-input:focus,
-input[type='email'].tp-input:focus {
+input[type='email'].tp-input:focus,
+input[type='date'].tp-input:focus,
+textarea.tp-input:focus,
+select.tp-input:focus {
 	background: white;
 	transition: background 0.2s ease;
+}
+
+.tp-text-title {
+	margin: 6px 0;
+	font-size: 1.1rem;
+	font-weight: bold;
+}
+
+.tp-description {
+	margin: 6px 0;
+}
+
+label.tp-label-centered {
+	text-align: center;
+}
+
+input[type='text'][readonly].tp-input:focus {
+	background: inherit;
 }
 
 input[type='text'].tp-input {
@@ -54,7 +100,11 @@ input[type='email'].tp-input {
 	margin: 0;
 }
 .tp-form-choice [class*='tp-col-'] {
-	padding: 4px;
+	padding: 4px 16px;
+}
+
+.tp-label-note {
+	font-size: 0.7rem;
 }
 
 .tp-button-primary {
@@ -75,4 +125,3 @@ input[type='email'].tp-input {
 form > label {
 	user-select: none;
 }
-

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Security Question</title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/css/grid.css" type="text/css" />
+    <link rel="stylesheet" href="/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="/css/form.css" type="text/css" />
+</head>
+<body>
+<div class="tp-modal-shadow"></div>
+<div class="tp-modal-window">
+    <main class="tp-container tp-form-window">
+        <h2>Security Question</h2>
+        <div class="tp-underline"></div>
+        <span class="tp-description">
+            Перед тем, как изменить свой вопрос, пожалуйста, ответьте на текущий:
+        </span>
+        <span class="tp-text-title">Текущий вопрос</span>
+        <span class="tp-description"> Девичья фамилия Вашей матери</span>
+        <form
+                class="tp-form"
+                id="securityQuestForm"
+                method="post"
+                autocomplete="off"
+                novalidate="novalidate"
+        >
+            <label for="currentAnswer">Ответ</label>
+            <input
+                    class="tp-input"
+                    name="currentAnswer"
+                    id="currentAnswer"
+                    type="text"
+            />
+            <label for="newQuestion">Новый вопрос</label>
+            <select
+                    class="tp-input"
+                    name="newQuestion"
+                    id="newQuestion"
+            >
+                <option selected disabled >Выберите вопрос</option>
+                <option value="Любимое блюдо">Ваше любимое блюдо</option>
+                <option value="Музыкальная группа">Ваша любимая музыкальная группа</option>
+                <option value="Мама">Девичья фамилия матери</option>
+                <option value="Что">С какого раза Вы поступили в Технопарк</option>
+            </select>
+            <label for="newAnswer">Ответ</label>
+            <input
+                    class="tp-input"
+                    name="newAnswer"
+                    id="newAnswer"
+                    type="text"
+            />
+            <div class="tp-row tp-row-float-left">
+                <input class="tp-input" id="agreement" name="agreement" type="checkbox" />
+                <label for="agreement"
+                >Я осознаю, что мой аккаунт будет заблокирован в случае неправильного ответа на вопрос</label
+                >
+            </div>
+            <div class="tp-row tp-row-float-left">
+                <input class="tp-input" id="rememberDevice" name="rememberDevice" type="checkbox" />
+                <label for="rememberDevice"
+                >Запомнить устройство</label
+                >
+            </div>
+            <input
+                    class="tp-button-primary"
+                    type="submit"
+                    value="Создать аккаунт"
+            />
+        </form>
+    </main>
+</div>
+</body>
+</html>
