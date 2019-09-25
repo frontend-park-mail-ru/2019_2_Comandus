@@ -1,10 +1,12 @@
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
+import Component from '../../../Spa/Component';
 
 const html = '<div>Settings</div>';
 
-class ProfileComponent {
+class ProfileComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
+		super(props);
 		this.props = props;
 		this._parent = parent;
 		this._data = {};
@@ -12,7 +14,6 @@ class ProfileComponent {
 	}
 
 	render() {
-		this.preRender();
 		this._el = htmlToElement(html);
 		this._parent.appendChild(this._el);
 	}

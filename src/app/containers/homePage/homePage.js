@@ -1,8 +1,10 @@
 import html from './index.html';
 import { htmlToElement } from '../../services/utils';
+import Component from '../../../Spa/Component';
 
-class HomeComponent {
-	constructor({ parent = document.body }) {
+class HomeComponent extends Component {
+	constructor({ parent = document.body, ...props }) {
+		super(props);
 		this._parent = parent;
 		this._data = {};
 	}

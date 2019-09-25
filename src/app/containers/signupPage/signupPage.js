@@ -1,9 +1,11 @@
 import html from './index.html';
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
+import Component from '../../../Spa/Component';
 
-class SignUpComponent {
+class SignUpComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
+		super(props);
 		this.props = props;
 		this._parent = parent;
 		this._data = {};
@@ -13,7 +15,6 @@ class SignUpComponent {
 	render() {
 		this._el = htmlToElement(html);
 		this._parent.appendChild(this._el);
-		this.postRender();
 	}
 
 	postRender() {

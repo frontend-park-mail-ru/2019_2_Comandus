@@ -1,4 +1,4 @@
-class Router {
+export class Router {
 	constructor(element, component) {
 		this._element = element;
 		this._component = component;
@@ -13,14 +13,15 @@ class Router {
 
 				const pathName = target.getAttribute('href');
 
-				this._pushToHistory(pathName);
-				this._render();
+				this.push(pathName);
 			}
 		});
 
 		window.addEventListener('popstate', () => {
 			this._render();
 		});
+
+		this._render();
 	}
 
 	_pushToHistory(pathName) {
@@ -32,23 +33,11 @@ class Router {
 	}
 
 	_render() {
-		this._element.innerHTML = '';
-		const component = new this._component({
-			parent: this._element,
-			router: this,
-		});
-		component.render();
+		this._component({ router: this });
 	}
 
 	push(pathName) {
 		this._pushToHistory(pathName);
 		this._render();
 	}
-}
-
-export default function withRouter(element, WrappedComponent) {
-	const router = new Router(element, WrappedComponent);
-	router._init();
-
-	return router;
 }

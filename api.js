@@ -13,6 +13,14 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(body.json());
 app.use(cookie());
 
+class FreelancerAccount {
+
+}
+
+class ClientAccount {
+
+}
+
 class User {
 	constructor(email, password, firstName, lastName, accountType = accountTypes.freelancer){
 		this.email = email;
@@ -20,8 +28,12 @@ class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.accountType = accountType;
+		this.freelancerAccount = null;
+		this.clientAccount = null;
 	}
 }
+
+
 
 const accountTypes = {
 	client:'client',

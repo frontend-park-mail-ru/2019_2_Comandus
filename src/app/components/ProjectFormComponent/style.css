@@ -1,0 +1,17 @@
+.projectForm__label {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.projectForm__loadFiles {
+	border: #484861 dashed 1px;
+	border-radius: 5px;
+	padding: 15px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.projectForm__loadFiles:hover {
+	border: #697287 dashed 1px;
+	color: #697287;
+}
