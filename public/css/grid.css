@@ -33,6 +33,10 @@ html {
 	justify-content: center !important;
 }
 
+.tp-row.tp-row-space-between {
+	justify-content: space-between !important;
+}
+
 .tp-row.tp-row-float-left {
 	justify-content: flex-start !important;
 }
@@ -46,7 +50,7 @@ html {
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 .tp-col,
@@ -107,6 +111,10 @@ html {
 
 .tp-col-12 {
 	--width: 12;
+}
+
+.tp-col_padding_0 {
+	padding: 0;
 }
 
 @media (min-width: 576px) {

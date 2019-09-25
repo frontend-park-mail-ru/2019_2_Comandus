@@ -40,8 +40,13 @@ input[type='date'].tp-input {
 }
 
 input[type='checkbox'].tp-input {
+	height: auto;
 	box-shadow: none;
-	margin: 0 6px;
+	margin: 10px 6px;
+}
+
+.tp-label-checkbox {
+	margin-top: 10px;
 }
 
 input[type='file'].tp-input {
@@ -67,9 +72,8 @@ select.tp-input:focus {
 }
 
 .tp-text-title {
-	margin: 6px 0;
-	font-size: 1.1rem;
-	font-weight: bold;
+	margin: 4px 0;
+	font-size: 1.3rem;
 }
 
 .tp-description {
@@ -96,6 +100,24 @@ input[type='number'].tp-input {
 input[type='email'].tp-input {
 }
 
+.tp-2cols-list {
+	display: flex;
+	flex-direction: row;
+	margin: 6px 0;
+	/*padding: 2px 4px;*/
+	flex-wrap: wrap;
+}
+
+.tp-checkbox-row {
+	align-items: flex-start;
+	flex-wrap: nowrap;
+	justify-content: flex-start !important;
+}
+
+.tp-2cols-list-element {
+	width: 50%;
+}
+
 .tp-form-choice > p {
 	margin: 0;
 }
@@ -116,6 +138,7 @@ input[type='email'].tp-input {
 	border: none;
 	border-radius: 0.5rem;
 	cursor: pointer;
+	min-height: 32px;
 }
 
 .tp-button-primary:hover {
@@ -124,4 +147,35 @@ input[type='email'].tp-input {
 
 form > label {
 	user-select: none;
+}
+
+.tp-input-file-button {
+    color: #555;
+    padding: 0;
+    margin: 10px 0;
+    margin-right: 10px;
+    line-height: 40px;
+    width: 200px;
+    /*margin:auto;*/
+    display: block;
+    border: 2px solid #555;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.tp-label-file {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 10px;
+    cursor: pointer
+}
+
+.tp-input-file {
+    width: .1px;
+    height: .1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
