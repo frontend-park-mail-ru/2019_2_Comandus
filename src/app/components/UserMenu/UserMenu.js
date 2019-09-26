@@ -40,12 +40,17 @@ export class UserMenu extends Component {
 	}
 
 	preRender() {
+		this._data = {
+			...this._data,
+			loaded: false,
+		};
 		AjaxModule.get(URL_ACCOUNT)
 			.then(response => {
 				this._data = {
 					...this._data,
 					user: response,
 					loggedIn: () => !!response,
+					loaded: true,
 				};
 				this.stateChanged();
 			})

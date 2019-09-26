@@ -1,102 +1,104 @@
-{{#if user}}
-	<ul
-			class="tp-navbar-navigate tp-navbar-right-part"
-			role="menubar"
-	>
-		<li class="tp-navbar-search">
-			<form method="GET" role="search">
-				<div>
-					<input/>
-				</div>
-			</form>
-		</li>
-		<li class="tp-dropdown" role="none">
-			<a class="tp-dropdown-toggle" role="menuitem">
-				<div class="tp-navbar-profile"></div>
-			</a>
-			<ul class="tp-dropdown-content">
-				<li role="none" class="{{#isFreelancerMode}}active{{/isFreelancerMode}}">
-					<a class='account-switcher' data-mode="freelancer">
-						{{user.firstName}} {{user.lastName}}
-					</a>
-					Freelancer
-				</li>
-				<li role="none" class="{{#isClientMode}}active{{/isClientMode}}">
-					<a class="account-switcher" data-mode="client">
-						{{user.client.company.name}}
-					</a>
-					Client
-				</li>
-				<li role="none">
-					<a
-							href="/freelancers/freelancer-profile-page.html"
-					>
-						Freelancer Profile
-					</a>
-				</li>
-				<li role="none">
-					<a
-							href="/freelancers/freelancer-profile-page.html"
-					>
-						Freelancer Profile
-					</a>
-				</li>
-				<li role="none">
-					<a href="/companies/some-company-page.html">
-						Customer (Company) Profile
-					</a>
-				</li>
-				<li role="none">
-					<a href="/freelancer-settings.html">
-						Freelancer settings
-					</a>
-				</li>
-				<li role="none">
-					<a href="/settings/">
-						Company settings
-					</a>
-				</li>
-				<li role="none">
-					<a href="/companies/create/">
-						Create company
-					</a>
-				</li>
-				<li role="none">
-					<a href="/logout" id="logout">
-						Log out
-					</a>
-				</li>
-			</ul>
-		</li>
-	</ul>
-{{else}}
-	<ul class="tp-navbar-navigate tp-navbar-right-part" role="menubar">
-		<li class="tp-navbar-search">
-			<form method="GET" role="search">
-				<div>
-					<input/>
-				</div>
-			</form>
-		</li>
-		<li>
-			<a href="/login/" role="menuitem">
-				Войти
-			</a>
-		</li>
-		<li>
-			<a href="/signup/" role="menuitem">
-				Регистрация
-			</a>
-		</li>
-		<li>
-			<a href="/new-project/" role="menuitem">
-				Разметить заказ
-			</a>
-		</li>
-		<li>
-			<a href="/new-vacancy/" role="menuitem">
-				Разметить вакансию
-			</a>
-		</li>
-	</ul>
-{{/if}}
+<ul
+		class="tp-navbar-navigate tp-navbar-right-part"
+		role="menubar"
+>
+	{{#loaded}}
+		{{#if user}}
+			<li class="tp-navbar-search">
+				<form method="GET" role="search">
+					<div>
+						<input/>
+					</div>
+				</form>
+			</li>
+			<li class="tp-dropdown" role="none">
+				<a class="tp-dropdown-toggle" role="menuitem">
+					<div class="tp-navbar-profile"></div>
+				</a>
+				<ul class="tp-dropdown-content">
+					<li role="none" class="{{#isFreelancerMode}}active{{/isFreelancerMode}}">
+						<a class='account-switcher' data-mode="freelancer">
+							{{user.firstName}} {{user.lastName}}
+						</a>
+						Freelancer
+					</li>
+					<li role="none" class="{{#isClientMode}}active{{/isClientMode}}">
+						<a class="account-switcher" data-mode="client">
+							{{user.client.company.name}}
+						</a>
+						Client
+					</li>
+					<li role="none">
+						<a
+								href="/freelancers/freelancer-profile-page.html"
+						>
+							Freelancer Profile
+						</a>
+					</li>
+					<li role="none">
+						<a
+								href="/freelancers/freelancer-profile-page.html"
+						>
+							Freelancer Profile
+						</a>
+					</li>
+					<li role="none">
+						<a href="/companies/some-company-page.html">
+							Customer (Company) Profile
+						</a>
+					</li>
+					<li role="none">
+						<a href="/freelancer-settings.html">
+							Freelancer settings
+						</a>
+					</li>
+					<li role="none">
+						<a href="/settings/">
+							Company settings
+						</a>
+					</li>
+					<li role="none">
+						<a href="/companies/create/">
+							Create company
+						</a>
+					</li>
+					<li role="none">
+						<a href="/logout" id="logout">
+							Log out
+						</a>
+					</li>
+				</ul>
+			</li>
+		{{else}}
+			<li class="tp-navbar-search">
+				<form method="GET" role="search">
+					<div>
+						<input/>
+					</div>
+				</form>
+			</li>
+			<li>
+				<a href="/login/" role="menuitem">
+					Войти
+				</a>
+			</li>
+			<li>
+				<a href="/signup/" role="menuitem">
+					Регистрация
+				</a>
+			</li>
+			<li>
+				<a href="/new-project/" role="menuitem">
+					Разметить заказ
+				</a>
+			</li>
+			<li>
+				<a href="/new-vacancy/" role="menuitem">
+					Разметить вакансию
+				</a>
+			</li>
+		{{/if}}
+	{{/loaded}}
+</ul>
+
+
