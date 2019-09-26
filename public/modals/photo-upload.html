@@ -24,15 +24,18 @@
         >
             <div class="tp-container">
                 <div class="tp-row tp-row-centered">
-                    <label class="tp-label-centered" for="uploadImage">Вы можете загрузить изображение в формате JPG, GIF или PNG</label>
+                    <span class="tp-text-centered">Вы можете загрузить изображение в формате JPG, GIF или PNG</span>
                 </div>
                 <div class="tp-row tp-row-centered">
                     <input
-                            class="tp-input"
+                            class="tp-input tp-input-file"
                             name="uploadImage"
                             id="uploadImage"
                             type="file"
                     />
+                    <label for="uploadImage" class="tp-input-file-button tp-label-file">
+                        <span class="">Выбрать файл</span>
+                    </label>
                 </div>
             </div>
         </form>

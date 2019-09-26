@@ -1,8 +1,822 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>Title</title>
-	</head>
-	<body></body>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<link rel="stylesheet" href="/сss/main.css">
+	<link rel="stylesheet" href="/css/grid.css">
+	<link rel="stylesheet" href="/css/styles.css">
+	<link rel="stylesheet" href="/css/form.css">
+	<link rel="stylesheet" href="/css/table.css">
+
+	<title>Freelancer Settings</title>
+</head>
+<body>
+<header class="tp-navbar">
+	<div class="tp-container">
+		<div class="tp-row">
+			<div class="tp-navbar-logo">
+				<a class="tp-navbar-brand" href="/" target="_self">
+					Project name
+				</a>
+			</div>
+			<ul class="tp-navbar-navigate" role="menubar">
+				<li class="">
+					<a href="/jobs/" target="_self" role="menuitem">
+						Jobs
+					</a>
+				</li>
+				<li class="">
+					<a href="/freelancers/" target="_self" role="menuitem">
+						Freelancers
+					</a>
+				</li>
+				<li class="tp-dropdown">
+					<a class="tp-dropdown-toggle" href="/" target="_self" role="menuitem">
+						Other
+					</a>
+					<ul class="tp-dropdown-content">
+						<li role="none">others</li>
+						<li role="none">others</li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="tp-navbar-navigate tp-navbar-right-part" role="menubar">
+				<li class="tp-navbar-search">
+					<form method="GET" role="search">
+						<div>
+							<input />
+						</div>
+					</form>
+				</li>
+				<li class="tp-dropdown" role="none">
+					<a class="tp-dropdown-toggle" role="menuitem">
+						<div class="tp-navbar-profile"></div>
+					</a>
+					<ul class="tp-dropdown-content">
+						<li role="none">
+							<a href="/freelancers/freelancer-profile-page.html">
+								Freelancer Profile
+							</a>
+						</li>
+						<li role="none">
+							<a href="/companies/some-company-page.html">
+								Customer (Company) Profile
+							</a>
+						</li>
+						<li role="none">
+							<a href="/freelancer-settings.html">
+								Freelancer settings
+							</a>
+						</li>
+						<li role="none">
+							<a href="/company-settings.html">
+								Company settings
+							</a>
+						</li>
+						<li role="none">
+							<a href="/companies/create/">
+								Create company
+							</a>
+						</li>
+						<li role="none">
+							Log out
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</header>
+
+<div id="main-page">
+	<div class="tp-container">
+		<div class="tp-row tp-columns-row">
+			<div class="tp-col-2 tp-border-wrapper">
+				<ul class="tp-menu-navigate" role="menubar">
+					<li>
+						<a href="#" target="_self" role="menuitem">
+							Основное
+						</a>
+					</li>
+					<li>
+						<a href="#" target="_self" role="menuitem">
+							Настройки профиля
+						</a>
+					</li>
+					<li>
+						<a href="#" target="_self" role="menuitem">
+							Уведомления
+						</a>
+					</li>
+					<li>
+						<a href="#" target="_self" role="menuitem">
+							Пароль и безопасность
+						</a>
+					</li>
+					<li>
+						<a href="#" target="_self" role="menuitem">
+							Финансы
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tp-col-10 tp-border-wrapper">
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Основное
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-6">
+							<div class="tp-container tp-container-align-center">
+								<img class="tp-avatar tp-avatar-content-below" alt="..." src="/static/media/dev/avatar.jpg" width="120" height="120">
+								<a href="#" target="_self">Изменить</a>
+							</div>
+							<form
+									class="tp-form"
+									id="mainSettingsForm"
+									method="post"
+									autocomplete="off"
+									novalidate="novalidate"
+							>
+								<label for="lastName">Фамилия</label>
+								<input
+										class="tp-input"
+										name="lastName"
+										id="lastName"
+										type="text"
+										placeholder="Эдвард"
+								/>
+								<label for="firstName">Имя</label>
+								<input
+										class="tp-input"
+										name="firstName"
+										id="firstName"
+										type="text"
+										placeholder="Нортон"
+								/>
+
+								<label for="email">Email</label>
+								<input
+										class="tp-input"
+										name="email"
+										id="email"
+										type="text"
+										placeholder="Email"
+								/>
+								<input
+										class="tp-button-primary"
+										type="submit"
+										value="Сохранить изменения"
+								/>
+							</form>
+						</div>
+						<div class="tp-col-6">
+							smth important
+						</div>
+					</div>
+					<div class="tp-row tp-row-float-right">
+						<a href="#" target="_self">
+							Вы можете удалить свой аккаунт
+						</a>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Контакты
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-12">
+							<div class="tp-container">
+								<form
+										class="tp-form"
+										id="contactsForm"
+										method="post"
+										autocomplete="off"
+										novalidate="novalidate"
+								>
+									<div class="tp-col-4 tp-col_padding_0">
+										<label for="country">Страна</label>
+										<select
+												class="tp-input"
+												name="country"
+												id="country"
+										>
+											<option selected disabled >Выберите страну</option>
+											<option value="Россия">Россия</option>
+											<option value="Украина">Украина</option>
+											<option value="Беларусь">Беларусь</option>
+											<option value="Армения">Армения</option>
+											<option value="Казахстан">Казахстан</option>
+										</select>
+									</div>
+
+									<div class="tp-col-4 tp-col_padding_0">
+									<label for="town">Город</label>
+										<input
+												class="tp-input"
+												name="town"
+												id="town"
+												type="text"
+												placeholder="Москва"
+										/>
+									</div>
+
+									<div class="tp-col-8 tp-col_padding_0">
+										<label for="address">Адрес</label>
+										<div class="tp-container">
+											<input
+													class="tp-input"
+													name="address"
+													id="address"
+													type="text"
+													placeholder="Бауманская 7"
+											/>
+											<span class="tp-label-note">Мы серьезно относимся к соблюдению конфиденциальности.
+												Только ваш город и страна будут доступны клиентам</span>
+										</div>
+									</div>
+
+									<div class="tp-col-4 tp-col_padding_0">
+										<label for="phone">Телефон</label>
+										<input
+												class="tp-input"
+												name="phone"
+												id="phone"
+												type="text"
+												placeholder="+78005553535"
+										/>
+									</div>
+
+									<div class="tp-col-4 tp-col_padding_0">
+										<input
+												class="tp-button-primary"
+												type="submit"
+												value="Сохранить изменения"
+										/>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Мой профиль
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-6">
+							<form
+									class="tp-form"
+									id="profileSettingsForm"
+									method="post"
+									autocomplete="off"
+									novalidate="novalidate"
+							>
+								<label for="visible">Кому в интернете видна моя страница</label>
+								<select
+										class="tp-input"
+										name="visible"
+										id="visible"
+								>
+									<option selected value="Россия">Всем</option>
+									<option value="Украина">Только пользователям Сервиса</option>
+									<option value="Беларусь">Никому (даже по ссылке)</option>
+								</select>
+								<div class="tp-form-choice">
+									<span>Ваш уровень опыта</span>
+									<div class="tp-row">
+										<input class="tp-input" id="individual" type="radio" name="legalStatus" />
+										<label for="individual">
+											Начальный
+										</label>
+										<input class="tp-input" id="legal-entity" type="radio" name="legalStatus" />
+										<label for="legal-entity">
+											Средний
+										</label>
+										<input class="tp-input" id="legal-entity" type="radio" name="legalStatus" />
+										<label for="legal-entity">
+											Эксперт
+										</label>
+									</div>
+								</div>
+								<input
+										class="tp-button-primary"
+										type="submit"
+										value="Сохранить изменения"
+								/>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Выбор специализации и категорий услуг
+						</h2>
+						<a class="tp-row-right-part" href="#" target="_self">Изменить</a>
+					</div>
+				</div>
+				<div class="tp-col-12">
+					<div class="tp-container">
+						<div class="tp-row">
+							<span class="tp-text-title">Программирование</span>
+						</div>
+						<div class="tp-row tp-row-float-left">
+							<span class="tp-framed-tag">Веб-программирование</span>
+							<span class="tp-framed-tag">Базы данных</span>
+							<span class="tp-framed-tag">Программирование игр</span>
+							<span class="tp-framed-tag">Встраиваемые системы</span>
+						</div>
+					</div>
+					<div class="tp-container">
+						<div class="tp-row">
+							<span class="tp-text-title">Дизайн и арт</span>
+						</div>
+						<div class="tp-row tp-row-float-left">
+							<span class="tp-framed-tag">Логотипы</span>
+							<span class="tp-framed-tag">Векторная графика</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Настройка уведомлений
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-12">
+							<div class="tp-container">
+								<form
+										class="tp-form"
+										id="notificationsSettings"
+										method="post"
+										autocomplete="off"
+										novalidate="novalidate"
+								>
+									<h3>
+										Присылать по электронной почте следущие уведомления:
+									</h3>
+									<div class="tp-row tp-checkbox-row">
+										<input class="tp-input" id="newMessages" name="agreement" type="checkbox" />
+										<label for="newMessages" class="tp-label-checkbox"
+										>о новых сообщениях</label
+										>
+									</div>
+									<div class="tp-row tp-checkbox-row">
+										<input class="tp-input" id="newProjects" name="agreement" type="checkbox" />
+										<label for="newProjects" class="tp-label-checkbox"
+										>о новых проектах</label
+										>
+									</div>
+									<div class="tp-row tp-checkbox-row">
+										<input class="tp-input" id="news" name="agreement" type="checkbox" />
+										<label for="news" class="tp-label-checkbox"
+										>новости от Сервиса</label
+										>
+									</div>
+									<div class="tp-col-6 tp-col_padding_0">
+										<input
+												class="tp-button-primary"
+												type="submit"
+												value="Сохранить изменения"
+										/>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Пароль
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-12">
+							<div class="tp-container">
+								<div class="tp-row tp-row-float-left">
+									<h3>Обновлен год назад</h3>
+									<a class="tp-option-link" href="#" target="_self">
+										Изменить
+									</a>
+								</div>
+							</div>
+							<div class="tp-container" id="passwordChangeBlock">
+								<form
+										class="tp-form"
+										id="passwordChangeForm"
+										method="post"
+										autocomplete="off"
+										novalidate="novalidate"
+								>
+									<div class="tp-col-6 tp-col_padding_0">
+										<label for="oldPassword">Старый пароль</label>
+										<input
+												class="tp-input"
+												name="oldPassword"
+												id="oldPassword"
+												type="password"
+										/>
+									</div>
+									<div class="tp-col-6 tp-col_padding_0">
+										<label for="newPassword">Новый пароль</label>
+										<input
+												class="tp-input"
+												name="newPassword"
+												id="newPassword"
+												type="password"
+										/>
+									</div>
+									<div class="tp-col-6 tp-col_padding_0">
+										<label for="newPasswordConfirmation">Повторите пароль</label>
+										<input
+												class="tp-input"
+												name="newPasswordConfirmation"
+												id="newPasswordConfirmation"
+												type="password"
+										/>
+									</div>
+									<div class="tp-col-6 tp-col_padding_0">
+										<input
+												class="tp-button-primary"
+												type="submit"
+												value="Изменить пароль"
+										/>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							История авторизации
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-12">
+							<div class="tp-container">
+								<div class="tp-table">
+									<div class="tp-table-caption">
+										История авторизации
+									</div>
+									<div class="tp-table-row">
+										<span class="tp-table-th">#</span>
+										<span class="tp-table-th">Дата-время (МСК)</span>
+										<span class="tp-table-th">IP-адрес</span>
+										<span class="tp-table-th">Устройство</span>
+										<span class="tp-table-th">Приложение</span>
+									</div>
+									<div class="tp-table-row">
+                                            <span class="tp-table-cell">
+                                                1
+                                            </span>
+										<span class="tp-table-cell">
+                                                15.09.2019 02:51
+                                            </span>
+										<span class="tp-table-cell">
+                                                91.79.208.198
+                                            </span>
+										<span class="tp-table-cell">
+                                                Linux
+                                            </span>
+										<span class="tp-table-cell">
+                                                Firefox
+                                            </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Двухэтапная аутентефикация
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-12">
+							<div class="tp-container">
+								<span class="tp-text-title">Контрольный вопрос:</span>
+								<div class="tp-row tp-row-float-left">
+									<h4>Контрольный вопрос задан</h4>
+									<a class="tp-option-link" href="#" target="_self">
+										Изменить
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container">
+					<div class="tp-row tp-underline">
+						<h2>
+							Информация для финансовых операций
+						</h2>
+					</div>
+					<div class="tp-row tp-align-items-start">
+						<div class="tp-col-12">
+							<div class="tp-container">
+								<form
+										class="tp-form"
+										id="financialForm"
+										method="post"
+										autocomplete="off"
+										novalidate="novalidate"
+								>
+									<div class="tp-col-6 tp-col_padding_0">
+										<label for="fullName">Ваше фамилия, имя и отчество</label>
+										<input
+												class="tp-input"
+												name="fullName"
+												id="fullName"
+												type="text"
+												value="Иванов Иван Иванович"
+										/>
+									</div>
+									<label for="birthdate">Дата рождения</label>
+									<input
+											class="tp-input"
+											name="birthdate"
+											id="birthdate"
+											type="date"
+									/>
+
+									<label for="phoneNumber">Телефон</label>
+									<input
+											class="tp-input"
+											name="phoneNumber"
+											id="phoneNumber"
+											type="text"
+											placeholder="+78005553535"
+									/>
+									<!--                                        <label for="residency">Резиденство</label>-->
+									<div class="tp-form-choice">
+										<span>Резиденство</span>
+										<div class="tp-row">
+											<div class="tp-col-6">
+												<div class="tp-container">
+													<div class="tp-row">
+														<label for="residency_1">
+															Резидент Российской Федерации
+														</label>
+														<input id="residency_1" class="tp-input" type="radio" checked="checked" name="residency"/>
+													</div>
+													<div class="tp-row">
+														<label for="residency_2">
+															Беженец
+														</label>
+														<input id="residency_2" class="tp-input" type="radio" name="residency"/>
+													</div>
+												</div>
+											</div>
+											<div class="tp-col-6">
+												<div class="tp-container">
+													<div class="tp-row">
+														<label for="residency_3">
+															Не резидент Российской Федерации
+														</label>
+														<input class="tp-input" id="residency_3" type="radio" name="residency" />
+													</div>
+													<div class="tp-row">
+														<label for="residency_4">
+															Вид на жительство РФ
+														</label>
+														<input id="residency_4" class="tp-input" type="radio" name="residency"/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--                                        <label for="status">Юридический статус</label>-->
+									<div class="tp-form-choice">
+										<span>Юридический статус</span>
+										<div class="tp-row">
+											<div class="tp-col-6">
+												<div class="tp-row">
+													<label for="individual">
+														Физическое лицо
+													</label>
+													<input class="tp-input" id="individual" type="radio" name="legalStatus" />
+												</div>
+											</div>
+											<div class="tp-col-6">
+												<div class="tp-row">
+													<label for="legal-entity">
+														ИП или юридическое лицо
+													</label>
+													<input class="tp-input" id="legal-entity" type="radio" name="legalStatus" />
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="tp-underline"></div>
+									<h3>Паспортные данные</h3>
+
+									<span>Серия и номер паспорта</span>
+									<div class="tp-row tp-row-float-left">
+										<div class="tp-col-3">
+											<input
+													class="tp-input"
+													name="passportSeries"
+													id="passportSeries"
+													type="text"
+													placeholder="42 11"
+											/>
+										</div>
+										<div class="tp-col-5">
+											<input
+													class="tp-input"
+													name="passportNumber"
+													id="passportNumber"
+													type="text"
+													placeholder="461589"
+											/>
+										</div>
+									</div>
+									<label for="dateOfIssue">Дата выдачи</label>
+									<input
+											class="tp-input"
+											name="dateOfIssue"
+											id="dateOfIssue"
+											type="date"
+									/>
+									<div class="tp-container">
+										<label for="issuedBy">Кем выдан</label>
+										<span class="tp-label-note">(Дословно по паспорту)</span>
+									</div>
+									<input
+											class="tp-input"
+											name="issuedBy"
+											id="issuedBy"
+											type="text"
+											placeholder="МВД России по району ..."
+									/>
+									<label for="departmentCode">Код подразделения</label>
+									<div class="tp-row tp-row-float-left">
+										<div class="tp-col-3">
+											<input
+													class="tp-input"
+													name="departmentCode"
+													id="departmentCode"
+													type="text"
+													placeholder="404"
+											/>
+										</div>
+									</div>
+									<div class="tp-container">
+										<label for="registrationAddress">Адрес регистрации</label>
+										<span class="tp-label-note">(Полностью, включая № квартиры)</span>
+									</div>
+									<input
+											class="tp-input"
+											name="registrationAddress"
+											id="registrationAddress"
+											type="text"
+											placeholder="Москва, ул. Старый Гай 15"
+									/>
+									<div class="tp-container">
+										<label for="mailAddress">Почтовый адрес</label>
+										<span class="tp-label-note">(Полностью, включая № квартиры)</span>
+									</div>
+									<input
+											class="tp-input"
+											name="mailAddress"
+											id="mailAddress"
+											type="text"
+											placeholder="Москва, ул. Старый Гай 15"
+									/>
+
+<!--									<div class="tp-underline"></div>-->
+									<h3>Платежные реквизиты</h3>
+
+									<label for="departmentCode">Яндекс.Деньги</label>
+									<div class="tp-row tp-row-float-left">
+										<div class="tp-col-3 tp-col_padding_0">
+											<input
+													class="tp-input"
+													name="departmentCode"
+													id="departmentCode"
+													type="text"
+													placeholder="4100123456789"
+											/>
+										</div>
+									</div>
+									<label for="departmentCode">Номер карты VISA/MC</label>
+									<div class="tp-row tp-row-float-left">
+										<div class="tp-col-6 tp-col_padding_0">
+											<input
+													class="tp-input"
+													name="departmentCode"
+													id="departmentCode"
+													type="text"
+													placeholder="1234567890123456"
+											/>
+										</div>
+									</div>
+
+									<span>Скан-копии страниц паспорта</span>
+									<div class="tp-row tp-row-float-left">
+										<input
+												class="tp-input tp-input-file"
+												name="departmentCode"
+												id="departmentCode"
+												type="file"
+										/>
+										<label for="departmentCode" class="tp-input-file-button tp-label-file">
+											<span class="">Прикрепить скан</span>
+										</label>
+
+										<a href="#" target="_self">Требования к файлам</a>
+									</div>
+									<div class="tp-container">
+										<div class="tp-row">
+											<div class="tp-col-8 tp-col_padding_0">
+												<span class="tp-label-note">
+													Необходимы начальная страница с основными данными и страница с данными
+													об адресе регистрации (если регистраци предусмотрена законодательством
+													Вашей страны).
+												</span>
+											</div>
+										</div>
+										<div class="tp-row tp-row-float-left">
+											<div class="tp-col-8 tp-col_padding_0">
+												<span>Сканы (или фото) должны быть:</span>
+												<ul class="tp-ul-text">
+													<li><span class="tp-label-note">цветные</span></li>
+													<li><span class="tp-label-note">цельные (без срезов/перекрытий по краям/низу/верху</span></li>
+													<li><span class="tp-label-note">с четко читаемыми данными</span></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+
+
+									<input
+											class="tp-button-primary"
+											type="submit"
+											value="Сохранить изменения"
+									/>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+<footer role="contentinfo">
+	<div class="tp-container">
+		<div class="tp-row">
+			<div class="tp-col-6">
+				<ul class="tp-list-unstyled">
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tp-col-6">
+				<ul class="tp-list-unstyled">
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>
+
+</body>
 </html>
