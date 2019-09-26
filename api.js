@@ -22,18 +22,45 @@ class ClientAccount {
 }
 
 class User {
-	constructor(email, password, firstName, lastName, accountType = accountTypes.freelancer){
+	constructor(email, password, firstName, lastName){
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.accountType = accountType;
-		this.freelancerAccount = null;
-		this.clientAccount = null;
+		this.notificationSettings = {
+			newMessages: false,
+			newProjects: false,
+			news: false,
+		};
+		this.authHistory = []
 	}
 }
 
-
+const freelancers = [
+	{
+		id: 'freelancerId',
+		accountId: "nozim@mail.ru",
+	}
+];
+const clients = [
+	{
+		id: 'clientId',
+		accountId: "nozim@mail.ru",
+		company: {
+			name:'Company name',
+			site:'',
+			tagLine:'',
+			description:''
+		},
+		companyContacts: {
+			country:'',
+			city: '',
+			address:'',
+			phone:''
+		},
+		financeData: {}
+	}
+];
 
 const accountTypes = {
 	client:'client',
@@ -44,10 +71,11 @@ const users = {
 	's.volodin@corp.mail.ru': new User('s.volodin@corp.mail.ru', 'password', 'Сергей','Володин'),
 	'a.ts@corp.mail.ru': new User('a.ts@corp.mail.ru', 'password', 'А','Т'),
 	'a.ostapenko@corp.mail.ru': new User('a.ostapenko@corp.mail.ru', 'password', 'А','Остапенко'),
-	'nozim@mail.ru': new User('nozim@mail.ru', 'password', 'Nozim','Yunusov'),
+	'nozim@mail.ru': new User('nozim@mail.ru', '1234', 'Nozim','Yunusov'),
 };
 const ids = {};
 const cookieSessionIdName = 'session_id';
+const cookieAccountModeName = 'account_mode';
 
 app.post('/signup', function (req, res) {
 	res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
@@ -74,11 +102,24 @@ app.post('/signup', function (req, res) {
 	}
 
 	const id = uuid();
-	const user = new User(email, password, firstName, lastName, accountType);
+	const user = new User(email, password, firstName, lastName);
 	ids[id] = email;
 	users[email] = user;
 
-	res.cookie(cookieSessionIdName, id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+	switch (accountType) {
+		case accountTypes.freelancer:
+			freelancers.push({accountId: email, id: 'freelancerId1'});
+
+			res.cookie(cookieAccountModeName, accountTypes.freelancer);
+			break;
+		case accountTypes.client:
+			clients.push({id:'clientId1', accountId: email, company: {name: ''}});
+
+			res.cookie(cookieAccountModeName, accountTypes.client);
+			break;
+	}
+
+	res.cookie(cookieSessionIdName, id, {expires: new Date(Date.now() + 1000 * 60 * 10), httpOnly: true});
 	res.status(201).json({id});
 });
 
@@ -98,7 +139,7 @@ app.post('/login', function (req, res) {
 	const id = uuid();
 	ids[id] = email;
 
-	res.cookie(cookieSessionIdName, id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+	res.cookie(cookieSessionIdName, id, {expires: new Date(Date.now() + 1000 * 60 * 10), httpOnly: true}, );
 	res.status(200).json({id});
 });
 
@@ -114,6 +155,8 @@ app.post('/logout', function (req, res) {
 	}
 
 	delete ids[id];
+
+	res.cookie(cookieSessionIdName, id, {expires: new Date(0), httpOnly: true});
 
 	res.json({});
 });
@@ -135,6 +178,32 @@ app.get('/settings', function (req, res) {
 	res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
 	res.set('Access-Control-Allow-Credentials', 'true');
 
+	const id = req.cookies[cookieSessionIdName];
+	const email = ids[id];
+	if (!email || !users[email]) {
+		return res.status(401).end();
+	}
+
+	const mode = req.cookies[cookieAccountModeName];
+
+	const user = {...users[email]};
+
+	switch (mode) {
+		case accountTypes.client:
+			user.client = clients.find(el => el.accountId === email);
+			break;
+		case accountTypes.freelancer:
+		default:
+			user.freelancer = freelancers.find(el => el.accountId === email);
+			res.cookie(cookieAccountModeName, accountTypes.freelancer);
+	}
+
+	res.json(user);
+});
+
+app.get('/account', function (req, res) {
+	res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
+	res.set('Access-Control-Allow-Credentials', 'true');
 
 	const id = req.cookies[cookieSessionIdName];
 	const email = ids[id];
@@ -142,7 +211,11 @@ app.get('/settings', function (req, res) {
 		return res.status(401).end();
 	}
 
-	res.json(users[email]);
+	const user = {...users[email]};
+	user.freelancer = freelancers.find(el => el.accountId === email);
+	user.client = clients.find(el => el.accountId === email);
+
+	res.json(user);
 });
 
 function optionsHandler(req, res) {
@@ -166,6 +239,9 @@ function optionsHandler(req, res) {
 app.options('/login', optionsHandler);
 app.options('/signup', optionsHandler);
 app.options('/logout', optionsHandler);
+app.options('/settings', optionsHandler);
+app.options('/account', optionsHandler);
+app.options('/', optionsHandler);
 
 const port = process.env.PORT || 3000;
 

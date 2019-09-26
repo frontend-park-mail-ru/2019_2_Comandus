@@ -19,19 +19,15 @@ class ProfileComponent extends Component {
 	}
 
 	preRender() {
-		AjaxModule.doGet({
-			url: 'http://localhost:3000/settings',
-			callback: function(status, responseText) {
-				if (status === 200) {
-					this._data = JSON.parse(responseText);
-					this._el.textContent = JSON.stringify(this._data);
-					return;
-				}
-
-				const { error } = JSON.parse(responseText);
-				alert(error);
-			}.bind(this),
-		});
+		AjaxModule.get('/settings')
+			.then(response => {
+				this._data = response;
+				this._el.textContent = JSON.stringify(this._data);
+			})
+			.catch(error => {
+				console.error(error);
+				alert(error.message);
+			});
 	}
 }
 

@@ -9,13 +9,19 @@ import ClientSettingsComponent from './components/ClientSettingsComponent/Client
 import Component from '../Spa/Component';
 
 const routes = {
-	'/': HomeComponent,
-	'/signup/': SignUpComponent,
-	'/login/': LoginComponent,
-	// '/settings/': ProfileComponent,
-	'/settings/': ClientSettingsComponent,
-	'/new-project/': ProjectFormComponent,
-	'/new-vacancy/': ProjectFormComponent,
+	'/': { component: HomeComponent },
+	'/signup/': { component: SignUpComponent },
+	'/login/': { component: LoginComponent },
+	'/settings/': { component: ProfileComponent },
+	// '/settings/': {component: ClientSettingsComponent},
+	'/new-project/': {
+		component: ProjectFormComponent,
+		props: { mode: 'project' },
+	},
+	'/new-vacancy/': {
+		component: ProjectFormComponent,
+		props: { mode: 'vacancy' },
+	},
 };
 
 class AppComponent extends Component {
@@ -40,14 +46,28 @@ class AppComponent extends Component {
 		`;
 		const el = htmlToElement(html);
 
-		const header = new HeaderComponent({ parent: el, ...this.props });
-		header.render();
+		let props = {
+			...this.props,
+			parent: el,
+		};
+
+		const component = this.props.spa._createComponent(
+			HeaderComponent,
+			el,
+			props
+		);
+		this.props.spa._renderComponent(component);
 
 		if (routes[window.location.pathname]) {
+			const routElement = routes[window.location.pathname];
+			props = {
+				...props,
+				...routElement.props,
+			};
 			const component = this.props.spa._createComponent(
-				routes[window.location.pathname],
+				routElement.component,
 				el,
-				{ parent: el, ...this.props }
+				props
 			);
 			this.props.spa._renderComponent(component);
 		}

@@ -3,9 +3,7 @@ import { Router } from '../app/services/router';
 class Spa {
 	render(Component, rootElement) {
 		window.addEventListener('load', () => {
-			const props = {
-				parent: rootElement,
-			};
+			const props = {};
 
 			const router = new Router(rootElement, ({ router }) => {
 				rootElement.innerHTML = '';
@@ -23,7 +21,7 @@ class Spa {
 	}
 
 	_createComponent(Component, rootElement, props) {
-		const component = new Component(props);
+		const component = new Component({ ...props, parent: rootElement });
 		component.created();
 		return component;
 	}

@@ -40,19 +40,13 @@ class SignUpComponent extends Component {
 				object[key].push(value);
 			});
 
-			AjaxModule.doPost({
-				url: 'http://localhost:3000/signup',
-				body: object, // {email, firstName, password},
-				callback: function(status, responseText) {
-					if (status === 201) {
-						this.props.router.push('/settings/');
-						return;
-					}
-
-					const { error } = JSON.parse(responseText);
+			AjaxModule.post('/signup', object)
+				.then(response => {
+					this.props.router.push('/settings/');
+				})
+				.catch(error => {
 					alert(error);
-				}.bind(this),
-			});
+				});
 		});
 	}
 }

@@ -36,19 +36,13 @@ class LoginComponent extends Component {
 				object[key].push(value);
 			});
 
-			AjaxModule.doPost({
-				url: 'http://localhost:3000/login',
-				body: object,
-				callback: function(status, responseText) {
-					if (status === 200) {
-						this.props.router.push('/settings/');
-						return;
-					}
-
-					const { error } = JSON.parse(responseText);
+			AjaxModule.post('/login', object)
+				.then(response => {
+					this.props.router.push('/settings/');
+				})
+				.catch(error => {
 					alert(error);
-				}.bind(this),
-			});
+				});
 		});
 	}
 }

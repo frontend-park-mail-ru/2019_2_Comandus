@@ -2,12 +2,13 @@
 	<div class="tp-container">
 		<div class="tp-row">
 			<div class="tp-col-8">
-				<h1>Новый проект</h1>
+				<h1>{{title}}</h1>
 				<form method="post">
 					<div>
 						<label class="projectForm__label" for="name"
-							>Название</label
+						>Название</label
 						>
+						{{#if isProject}}
 						<p>
 							Напишите название вашего проекта. Название должно
 							привлечь внимание и отразить суть проекта.
@@ -23,6 +24,7 @@
 								<li>Ищем специалиста по по 3D моделированию</li>
 							</ul>
 						</div>
+						{{/if}}
 						<input
 							id="name"
 							name="name"
@@ -35,7 +37,7 @@
 					</div>
 					<div>
 						<label class="projectForm__label" for="description"
-							>Описание проекта</label
+						>Описание проекта</label
 						>
 						<ul>
 							<li>
@@ -61,7 +63,7 @@
 					</div>
 					<div>
 						<label class="projectForm__label" for="files"
-							>Файлы</label
+						>Файлы</label
 						>
 						<div>
 							Загрузите до 10 файлов общим объемом до 100 Мб
@@ -82,11 +84,12 @@
 					</div>
 					<div>
 						<label class="projectForm__label" for="category"
-							>Специализация проекта</label
+						>Специализация проекта</label
 						>
 						<select class="tp-input" name="category" id="category">
 							<option selected disabled
-								>Выберите категорию</option
+							>Выберите категорию
+							</option
 							>
 							<option value="gamedev">Разработка игр</option>
 							<option value="webdev">Разработка сайтов</option>
@@ -101,7 +104,8 @@
 							id="speciality"
 						>
 							<option selected disabled
-								>Выберите специализацию</option
+							>Выберите специализацию
+							</option
 							>
 							<option value="gamedev">Разработка игр</option>
 							<option value="webdev">Разработка сайтов</option>
@@ -112,12 +116,12 @@
 					</div>
 					<div>
 						<label class="projectForm__label" for="skills"
-							>Требуемые навыки и компетенции</label
+						>Требуемые навыки и компетенции</label
 						>
 						<div>Какие навыки и опыт более важны для вас?</div>
 						<div>
 							<span>Golang</span><span>Javascript</span
-							><span>HTML</span>
+						><span>HTML</span>
 						</div>
 						<input
 							id="skills"
@@ -129,7 +133,7 @@
 					</div>
 					<div>
 						<label class="projectForm__label" for="budget"
-							>Бюджет</label
+						>Бюджет</label
 						>
 						<input
 							id="budget"
@@ -140,9 +144,39 @@
 						/>
 						иконка рубля
 					</div>
+					{{#if isVacancy}}
+						<div>
+							<label class="projectForm__label" for="country">Нужен исполнитель из...</label>
+							<select class="tp-input" name="country" id="country">
+								<option selected disabled
+								>Страна</option
+								>
+								<option value="gamedev">Разработка игр</option>
+								<option value="webdev">Разработка сайтов</option>
+								<option value="designArt">Дизайн и арт</option>
+								<option value="dev">Программирование</option>
+								<option value="3dGraph">3D Графика</option>
+							</select>
+
+							<select
+									class="tp-input"
+									name="city"
+									id="city"
+							>
+								<option selected disabled
+								>Город</option
+								>
+								<option value="gamedev">Разработка игр</option>
+								<option value="webdev">Разработка сайтов</option>
+								<option value="designArt">Дизайн и арт</option>
+								<option value="dev">Программирование</option>
+								<option value="3dGraph">3D Графика</option>
+							</select>
+						</div>
+					{{/if}}
 					<div>
 						<label class="projectForm__label" for="budget"
-							>Уровень фрилансера</label
+						>Уровень фрилансера</label
 						>
 						<div>
 							Выберите требуемый уровень фрилансера для выполнения
@@ -186,7 +220,7 @@
 						<div>Способ оплаты</div>
 						<div>Прямая оплата Исполнитлю на его кашелек/счет</div>
 					</div>
-					<input type="submit" value="Опубликовать проект" />
+					<input type="submit" value="Опубликовать проект"/>
 				</form>
 			</div>
 		</div>

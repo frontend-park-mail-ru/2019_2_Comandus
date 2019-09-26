@@ -1,46 +1,103 @@
-const noop = () => null;
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+function combineURLs(baseURL, relativeURL) {
+	return relativeURL
+		? `${baseURL.replace(/\/+$/, '')}/${relativeURL.replace(/^\/+/, '')}`
+		: baseURL;
+}
+
+function validateStatus(status) {
+	return status >= 200 && status < 300;
+}
+
+function handleErrors(response) {
+	if (!response.ok) {
+		// throw Error(response.statusText);
+		return Promise.reject({
+			message: response.statusText,
+			response,
+		});
+	}
+	return response;
+}
 
 class AjaxModule {
-	doGet({ url = '/', body = null, callback = noop } = {}) {
-		this._ajax({
+	constructor({ baseUrl = '', headers = null } = {}) {
+		this.baseUrl = baseUrl;
+		this.headers = headers;
+	}
+
+	get(url = '/', config) {
+		return this._fetch({
+			url,
 			method: 'GET',
-			url,
-			body,
-			callback,
-		});
+			...config,
+		}).then(response => response.json());
 	}
 
-	doPost({ url = '/', body = null, callback = noop } = {}) {
-		this._ajax({
-			method: 'POST',
+	post(url = '/', data = null, config = {}) {
+		return this._fetch({
 			url,
-			body,
-			callback,
-		});
+			method: 'post',
+			data,
+			...config,
+		}).then(response => response.json());
 	}
 
-	_ajax({ method = 'GET', url = '/', body = null, callback = noop } = {}) {
-		const xhr = new XMLHttpRequest();
-		xhr.open(method, url, true);
-		xhr.withCredentials = true;
+	put(url = '/', data, config) {
+		return this._fetch({
+			url,
+			method: 'put',
+			data,
+			...config,
+		}).then(response => response.json());
+	}
 
-		xhr.addEventListener('readystatechange', () => {
-			if (xhr.readyState !== xhr.DONE) return;
+	delete(url = '/', config) {
+		return this._fetch({
+			url,
+			method: 'delete',
+			...config,
+		}).then(response => response.json());
+	}
 
-			callback(xhr.status, xhr.responseText);
-		});
+	_fetch({
+		method = 'get',
+		url = '/',
+		data = null,
+		headers = {
+			'Content-Type': 'application/json',
+		},
+	} = {}) {
+		url = combineURLs(this.baseUrl, url);
 
-		if (body) {
-			xhr.setRequestHeader(
-				'Content-type',
-				'application/json; charset=utf-8'
-			);
-			xhr.send(JSON.stringify(body));
-			return;
+		if (data && typeof data === 'object' && !(data instanceof FormData)) {
+			data = JSON.stringify(data);
 		}
 
-		xhr.send();
+		const init = {
+			method,
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				...this.headers,
+				...headers,
+			},
+		};
+
+		if (data) {
+			init.body = data;
+		}
+
+		return fetch(url, init).then(handleErrors);
 	}
 }
 
-export default new AjaxModule();
+export default new AjaxModule({
+	baseUrl: 'http://localhost:3000',
+});

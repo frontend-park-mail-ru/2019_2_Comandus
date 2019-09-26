@@ -47,7 +47,8 @@ module.exports = {
 				use: [
 					'file-loader'
 				]
-			}
+			},
+			{ test: /\.handlebars$/, loader: "handlebars-loader" }
 		]
 	},
 	resolve: {
