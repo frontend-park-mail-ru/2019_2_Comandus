@@ -5,7 +5,7 @@ export class Router {
 	}
 
 	_init() {
-		this._element.addEventListener('click', evt => {
+		this._element.addEventListener('click', (evt) => {
 			const { target } = evt;
 
 			if (target instanceof HTMLAnchorElement) {
@@ -28,7 +28,7 @@ export class Router {
 		window.history.pushState(
 			{},
 			pathName,
-			window.location.origin + pathName
+			window.location.origin + pathName,
 		);
 	}
 

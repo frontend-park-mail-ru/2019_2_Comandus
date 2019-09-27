@@ -3,36 +3,39 @@
 		<div class="tp-row">
 			<div class="tp-col-8">
 				<h1>{{title}}</h1>
-				<form method="post">
+				<form method="post" id="projectForm" autocomplete="off">
+					{{{mySelect}}}
 					<div>
 						<label class="projectForm__label" for="name"
 						>Название</label
 						>
 						{{#if isProject}}
-						<p>
-							Напишите название вашего проекта. Название должно
-							привлечь внимание и отразить суть проекта.
-						</p>
-						<div>
-							Несколько хороших примеров:
-							<ul>
-								<li>
-									Нужен разрабтчик для создания адаптивной
-									темы для WordPress
-								</li>
-								<li>Нужен дизайн нового логотипа компании</li>
-								<li>Ищем специалиста по по 3D моделированию</li>
-							</ul>
-						</div>
+							<p>
+								Напишите название вашего проекта. Название должно
+								привлечь внимание и отразить суть проекта.
+							</p>
+							<div>
+								Несколько хороших примеров:
+								<ul>
+									<li>
+										Нужен разрабтчик для создания адаптивной
+										темы для WordPress
+									</li>
+									<li>Нужен дизайн нового логотипа компании</li>
+									<li>Ищем специалиста по по 3D моделированию</li>
+								</ul>
+							</div>
 						{{/if}}
 						<input
-							id="name"
-							name="name"
-							class="tp-input"
-							type="text"
-							minlength="5"
-							maxlength="1000"
-							placeholder="Кого вы ищете и какую работу нужно выполнить"
+								id="name"
+								name="name"
+								class="tp-input"
+								type="text"
+								minlength="5"
+								maxlength="1000"
+								placeholder="Кого вы ищете и какую работу нужно выполнить"
+								required
+
 						/>
 					</div>
 					<div>
@@ -52,13 +55,14 @@
 							<li>Сроки выполнения и другие условия</li>
 						</ul>
 						<textarea
-							id="description"
-							name="description"
-							class="tp-input"
-							rows="3"
-							minlength="50"
-							maxlength="5000"
-							placeholder="Расскажите подробно о вашем проекте"
+								id="description"
+								name="description"
+								class="tp-input"
+								rows="3"
+								minlength="50"
+								maxlength="5000"
+								placeholder="Расскажите подробно о вашем проекте"
+
 						></textarea>
 					</div>
 					<div>
@@ -75,11 +79,11 @@
 							Загрузите файлы
 						</div>
 						<input
-							type="file"
-							class="tp-input"
-							id="files"
-							name="files"
-							accept="image/png, image/jpeg"
+								type="file"
+								class="tp-input"
+								id="files"
+								name="files"
+								accept="image/png, image/jpeg"
 						/>
 					</div>
 					<div>
@@ -99,9 +103,9 @@
 						</select>
 
 						<select
-							class="tp-input"
-							name="speciality"
-							id="speciality"
+								class="tp-input"
+								name="speciality"
+								id="speciality"
 						>
 							<option selected disabled
 							>Выберите специализацию
@@ -124,11 +128,11 @@
 						><span>HTML</span>
 						</div>
 						<input
-							id="skills"
-							name="skills"
-							class="tp-input"
-							type="text"
-							placeholder="Введите название навыка для добавления"
+								id="skills"
+								name="skills"
+								class="tp-input"
+								type="text"
+								placeholder="Введите название навыка для добавления"
 						/>
 					</div>
 					<div>
@@ -136,11 +140,11 @@
 						>Бюджет</label
 						>
 						<input
-							id="budget"
-							name="budget"
-							class="tp-input"
-							type="number"
-							placeholder="0"
+								id="budget"
+								name="budget"
+								class="tp-input"
+								type="number"
+								placeholder="0"
 						/>
 						иконка рубля
 					</div>
@@ -183,34 +187,34 @@
 							вашего проекта.
 						</div>
 						<input
-							class="tp-input"
-							id="beginner"
-							type="radio"
-							checked="checked"
-							name="freelancer_level"
-							value="client"
+								class="tp-input"
+								id="beginner"
+								type="radio"
+								name="freelancer_level"
+								value="beginner"
+								required
 						/>
 						<label for="beginner">
 							Начинающий. Базовые знания и небольшой опыт работы
 						</label>
 						<input
-							class="tp-input"
-							id="intermediate"
-							type="radio"
-							checked="checked"
-							name="freelancer_level"
-							value="client"
+								class="tp-input"
+								id="intermediate"
+								type="radio"
+								name="freelancer_level"
+								value="intermediate"
+								required
 						/>
 						<label for="intermediate">
 							Продвинутый. Несколько лет профессионального опыта
 						</label>
 						<input
-							class="tp-input"
-							id="expert"
-							type="radio"
-							checked="checked"
-							name="freelancer_level"
-							value="client"
+								class="tp-input"
+								id="expert"
+								type="radio"
+								name="freelancer_level"
+								value="expert"
+								required
 						/>
 						<label for="expert">
 							Эксперт. Многолетний опыт работы в сложных проектах

@@ -12,7 +12,7 @@ class Spa {
 				const component = this._createComponent(
 					Component,
 					rootElement,
-					props
+					props,
 				);
 				this._renderComponent(component);
 			});

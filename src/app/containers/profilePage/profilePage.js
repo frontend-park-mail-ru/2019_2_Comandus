@@ -20,11 +20,11 @@ class ProfileComponent extends Component {
 
 	preRender() {
 		AjaxModule.get('/settings')
-			.then(response => {
+			.then((response) => {
 				this._data = response;
 				this._el.textContent = JSON.stringify(this._data);
 			})
-			.catch(error => {
+			.catch((error) => {
 				console.error(error);
 				alert(error.message);
 			});

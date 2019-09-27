@@ -20,7 +20,7 @@ class LoginComponent extends Component {
 	postRender() {
 		const form = this._el.getElementsByTagName('form')[0];
 
-		form.addEventListener('submit', event => {
+		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 
 			const formData = new FormData(form);
@@ -37,10 +37,10 @@ class LoginComponent extends Component {
 			});
 
 			AjaxModule.post('/login', object)
-				.then(response => {
+				.then((response) => {
 					this.props.router.push('/settings/');
 				})
-				.catch(error => {
+				.catch((error) => {
 					alert(error);
 				});
 		});

@@ -20,7 +20,7 @@ class SignUpComponent extends Component {
 	postRender() {
 		const form = this._el.getElementsByTagName('form')[0];
 
-		form.addEventListener('submit', event => {
+		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 
 			const formData = new FormData(form);
@@ -41,10 +41,10 @@ class SignUpComponent extends Component {
 			});
 
 			AjaxModule.post('/signup', object)
-				.then(response => {
+				.then((response) => {
 					this.props.router.push('/settings/');
 				})
-				.catch(error => {
+				.catch((error) => {
 					alert(error);
 				});
 		});

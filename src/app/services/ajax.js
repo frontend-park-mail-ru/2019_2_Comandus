@@ -37,7 +37,7 @@ class AjaxModule {
 			url,
 			method: 'GET',
 			...config,
-		}).then(response => response.json());
+		}).then((response) => response.json());
 	}
 
 	post(url = '/', data = null, config = {}) {
@@ -46,7 +46,7 @@ class AjaxModule {
 			method: 'post',
 			data,
 			...config,
-		}).then(response => response.json());
+		}).then((response) => response.json());
 	}
 
 	put(url = '/', data, config) {
@@ -55,7 +55,7 @@ class AjaxModule {
 			method: 'put',
 			data,
 			...config,
-		}).then(response => response.json());
+		}).then((response) => response.json());
 	}
 
 	delete(url = '/', config) {
@@ -63,21 +63,26 @@ class AjaxModule {
 			url,
 			method: 'delete',
 			...config,
-		}).then(response => response.json());
+		}).then((response) => response.json());
 	}
 
 	_fetch({
 		method = 'get',
 		url = '/',
 		data = null,
-		headers = {
-			'Content-Type': 'application/json',
-		},
+		// headers = {
+		// 	'Content-Type': 'application/json',
+		// },
+		headers = {},
 	} = {}) {
 		url = combineURLs(this.baseUrl, url);
 
 		if (data && typeof data === 'object' && !(data instanceof FormData)) {
 			data = JSON.stringify(data);
+			headers = {
+				...headers,
+				'Content-Type': 'application/json',
+			};
 		}
 
 		const init = {

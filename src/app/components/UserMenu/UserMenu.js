@@ -45,30 +45,35 @@ export class UserMenu extends Component {
 			loaded: false,
 		};
 		AjaxModule.get(URL_ACCOUNT)
-			.then(response => {
+			.then((response) => {
 				this._data = {
 					...this._data,
 					user: response,
 					loggedIn: () => !!response,
+				};
+			})
+			.catch((error) => {})
+			.finally(() => {
+				this._data = {
+					...this._data,
 					loaded: true,
 				};
 				this.stateChanged();
-			})
-			.catch(error => {});
+			});
 	}
 
 	postRender() {
 		const logout = this._el.querySelector('#logout');
 
 		if (logout) {
-			logout.addEventListener('click', event => {
+			logout.addEventListener('click', (event) => {
 				event.preventDefault();
 
 				AjaxModule.post('/logout')
-					.then(response => {
+					.then((response) => {
 						this.props.router.push('/login/');
 					})
-					.catch(error => {
+					.catch((error) => {
 						console.error(error);
 						alert(error.message);
 					});
@@ -77,8 +82,8 @@ export class UserMenu extends Component {
 
 		const switchersArray = this._el.querySelectorAll('.account-switcher');
 
-		switchersArray.forEach(el => {
-			el.addEventListener('click', event => {
+		switchersArray.forEach((el) => {
+			el.addEventListener('click', (event) => {
 				event.preventDefault();
 				event.stopPropagation();
 

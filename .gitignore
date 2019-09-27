@@ -12,3 +12,5 @@ dist/
 !.vscode/extensions.json
 
 todo.md
+mynow.json
+gist.js

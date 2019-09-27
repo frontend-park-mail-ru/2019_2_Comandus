@@ -24,7 +24,7 @@ class HeaderComponent extends Component {
 		const component = this.props.spa._createComponent(
 			UserMenu,
 			newElement.querySelector('#userMenuParent'),
-			{ ...this.props }
+			{ ...this.props },
 		);
 		this.props.spa._renderComponent(component);
 

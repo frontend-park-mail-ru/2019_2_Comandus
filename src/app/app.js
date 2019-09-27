@@ -54,7 +54,7 @@ class AppComponent extends Component {
 		const component = this.props.spa._createComponent(
 			HeaderComponent,
 			el,
-			props
+			props,
 		);
 		this.props.spa._renderComponent(component);
 
@@ -67,7 +67,7 @@ class AppComponent extends Component {
 			const component = this.props.spa._createComponent(
 				routElement.component,
 				el,
-				props
+				props,
 			);
 			this.props.spa._renderComponent(component);
 		}

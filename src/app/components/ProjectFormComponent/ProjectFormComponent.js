@@ -2,6 +2,8 @@ import { htmlToElement } from '../../services/utils';
 import template from './ProjectFormComponent.template.handlebars';
 import './style.css';
 import Component from '../../../Spa/Component';
+import { Select } from '../Select/Select';
+import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
 
 const modes = {
 	project: 'project',
@@ -22,14 +24,14 @@ class ProjectFormComponent extends Component {
 
 		let title = '';
 		switch (this.props.mode) {
-			case modes.project:
-				title = 'Новый проект';
-				break;
-			case modes.vacancy:
-				title = 'Новая вакансия';
-				break;
-			default:
-				break;
+		case modes.project:
+			title = 'Новый проект';
+			break;
+		case modes.vacancy:
+			title = 'Новая вакансия';
+			break;
+		default:
+			break;
 		}
 		this.data = { title, ...this.data };
 	}
@@ -43,12 +45,64 @@ class ProjectFormComponent extends Component {
 	}
 
 	render() {
+		const component = this.props.spa._createComponent(Select, this._el, {
+			id: 'mySelect',
+			items: [
+				{ label: 'text1', value: 'text1', selected: false },
+				{ label: 'text2', value: 'text2', selected: true },
+			],
+			onChange(value) {
+				console.log(value);
+			},
+		});
+		// component.preRender();
+		this.data = {
+			mySelect: component.render(),
+			...this.data,
+		};
+		// this.props.spa._renderComponent(component);
+
 		const html = template(this.data);
 		this._el = htmlToElement(html);
+
+		const mySelect = this._el.querySelector('#mySelect');
+		component.postRender(mySelect);
+
 		this._parent.appendChild(this._el);
 	}
 
 	preRender() {}
+
+	postRender() {
+		const form = this._el.querySelector('#projectForm');
+
+		enableValidationAndSubmit(form, (form, fields, event) => {
+			console.log(form.checkValidity());
+			if (form.checkValidity()) {
+				event.preventDefault();
+				console.log('fields', fields);
+				console.log('form.elements', form.elements);
+				const FD = new FormData(form);
+				console.log('FD', FD);
+
+				// const password = form.elements['password'].value;
+				const object = {};
+				FD.forEach((value, key) => {
+					if (!object.hasOwnProperty(key)) {
+						object[key] = value;
+						return;
+					}
+					if (!Array.isArray(object[key])) {
+						object[key] = [object[key]];
+					}
+					object[key].push(value);
+				});
+
+				console.log('object');
+				console.dir(object);
+			}
+		});
+	}
 }
 
 export default ProjectFormComponent;
