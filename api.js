@@ -9,7 +9,7 @@ const path = require('path');
 const app = express();
 
 app.use(morgan('dev'));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(body.json());
 app.use(cookie());
 

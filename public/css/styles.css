@@ -204,7 +204,8 @@ button[disabled] {
 	transition: all 0.1s ease;
 }
 
-input {
+input,
+select {
 	height: 32px;
 	font-size: 15px;
 	padding: 0 12px;
@@ -216,6 +217,8 @@ input {
 	transition: box-shadow 0.3s ease;
 }
 
+
+
 input:focus {
 	box-shadow: 0 0 0 0px #FFFFFF,
 	0 0 0 2px #9fa2df;
@@ -226,15 +229,13 @@ input[readonly]:focus {
 	box-shadow: 0 0 0 1px #c5c5c5;
 }
 
-textarea,
-select {
+textarea {
 	font-size: 15px;
-	padding: 0 12px;
+	padding: 6px 12px;
 	margin: 2px 2px;
 
 	border-radius: 0.7rem;
 	border: none;
-	/*outline: 0;*/
 	box-shadow: 0 0 0 1px #c5c5c5;
 	transition: box-shadow 0.3s ease;
 }
@@ -406,11 +407,22 @@ a.tp-option-link {
 	display: flex;
 	flex-direction: column;
 	min-width: 400px;
-	max-width: 650px;
+	max-width: 400px;
 	max-height: 75%;
 	background: inherit;
+}
+
+.tp-modal-window-scrolling {
 	overflow: scroll;
 	overflow-x: hidden;
+}
+
+.tp-modal-window-medium {
+	max-width: 500px;
+}
+
+.tp-modal-window-big {
+	max-width: 650px;
 }
 
 .tp-modal-shadow {
@@ -463,4 +475,30 @@ a.tp-option-link {
 
 .tp-text-centered {
 	text-align: center;
+}
+
+.tp-paginator {
+	margin-right: 10px;
+	height: 32px;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: space-around;
+}
+
+.tp-paginator > li {
+	display: flex;
+	margin-bottom: 0;
+	border: #e8eaf1 1px solid;
+	align-items: center;
+}
+
+.tp-paginator > li > a {
+	font-size: 20px;
+	line-height: 12px;
+	color: #666;
+	padding-left: 9px;
+	padding-right: 9px;
+	font-weight: 500;
 }

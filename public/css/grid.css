@@ -10,19 +10,19 @@ html {
 
 .tp-container {
 	max-width: 1140px;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 	display: flex;
 	flex-direction: column;
 }
 
 .tp-centered-container {
-	margin: auto;
-	width: 100%;
-	opacity: 1;
-	display: flex;
-	flex-direction: inherit;
-	align-items: stretch;
-	max-width: 1140px;
+	margin: 0 auto;
+	/*width: 100%;*/
+	/*opacity: 1;*/
+	/*display: flex;*/
+	/*flex-direction: inherit;*/
+	/*align-items: stretch;*/
+	/*max-width: 1140px;*/
 }
 
 .tp-container.tp-container-align-center {
@@ -35,6 +35,10 @@ html {
 
 .tp-row.tp-row-space-between {
 	justify-content: space-between !important;
+}
+
+.tp-row.tp-row-space-around {
+	justify-content: space-around !important;
 }
 
 .tp-row.tp-row-float-left {

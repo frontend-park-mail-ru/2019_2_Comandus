@@ -1,184 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-		/>
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-		<link rel="stylesheet" href="/css/main.css" />
-		<link rel="stylesheet" href="/css/grid.css" />
-		<link rel="stylesheet" href="/css/styles.css" />
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/grid.css">
+	<link rel="stylesheet" href="/css/styles.css">
+	<link rel="stylesheet" href="/css/form.css">
+	<link rel="stylesheet" href="/css/table.css">
 
-		<title>Profile Page</title>
-	</head>
-	<body>
-		<header class="tp-navbar">
-			<div class="tp-container">
-				<div class="tp-row">
-					<div class="tp-navbar-logo">
-						<a class="tp-navbar-brand" href="/" target="_self">
-							Project name
-						</a>
-					</div>
-					<ul class="tp-navbar-navigate" role="menubar">
-						<li class="">
-							<a href="/jobs/" target="_self" role="menuitem">
-								Jobs
+	<title>Freelancer Profile</title>
+</head>
+<body>
+<header class="tp-navbar">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row">
+			<div class="tp-navbar-logo">
+				<a class="tp-navbar-brand" href="/" target="_self">
+					Project name
+				</a>
+			</div>
+			<ul class="tp-navbar-navigate" role="menubar">
+				<li class="">
+					<a href="/jobs/" target="_self" role="menuitem">
+						Jobs
+					</a>
+				</li>
+				<li class="">
+					<a href="/freelancers/" target="_self" role="menuitem">
+						Freelancers
+					</a>
+				</li>
+				<li class="tp-dropdown">
+					<a class="tp-dropdown-toggle" href="/" target="_self" role="menuitem">
+						Other
+					</a>
+					<ul class="tp-dropdown-content">
+						<li role="none">others</li>
+						<li role="none">others</li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="tp-navbar-navigate tp-navbar-right-part" role="menubar">
+				<li class="tp-navbar-search">
+					<form method="GET" role="search">
+						<div>
+							<input />
+						</div>
+					</form>
+				</li>
+				<li class="tp-dropdown" role="none">
+					<a class="tp-dropdown-toggle" role="menuitem">
+						<div class="tp-navbar-profile"></div>
+					</a>
+					<ul class="tp-dropdown-content">
+						<li role="none">
+							<a href="/freelancers/freelancer-profile-page.html">
+								Freelancer Profile
 							</a>
 						</li>
-						<li class="">
-							<a
-								href="/freelancers/"
-								target="_self"
-								role="menuitem"
-							>
-								Freelancers
+						<li role="none">
+							<a href="/companies/some-company-page.html">
+								Customer (Company) Profile
 							</a>
 						</li>
-						<li class="tp-dropdown">
-							<a
-								class="tp-dropdown-toggle"
-								href="/"
-								target="_self"
-								role="menuitem"
-							>
-								Other
+						<li role="none">
+							<a href="/freelancer-settings.html">
+								Freelancer settings
 							</a>
-							<ul class="tp-dropdown-content">
-								<li role="none">others</li>
-								<li role="none">others</li>
-							</ul>
+						</li>
+						<li role="none">
+							<a href="/company-settings.html">
+								Company settings
+							</a>
+						</li>
+						<li role="none">
+							<a href="/companies/create/">
+								Create company
+							</a>
+						</li>
+						<li role="none">
+							Log out
 						</li>
 					</ul>
-					<ul
-						class="tp-navbar-navigate tp-navbar-right-part"
-						role="menubar"
-					>
-						<li class="tp-navbar-search">
-							<form method="GET" role="search">
-								<div>
-									<input />
-								</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</header>
+
+<div id="main-page">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row tp-columns-row">
+			<div class="tp-col-9 tp-border-wrapper">
+				<div class="tp-container">
+					<div class="tp-media">
+						<div class="tp-row tp-align-items-start">
+							<div class="tp-container">
+								<img class="tp-avatar" alt="..." src="/media/dev/avatar.jpg" width="120" height="120">
+							</div>
+							<div class="tp-container">
+								<span class="tp-text-title">
+									Имя Фамилия
+								</span>
+								<span>
+									Москва,Россия - 2:43, местное время
+								</span>
+							</div>
+							<div class="tp-container tp-row-right-part tp-container-align-center">
+								<span>100</span>
+								<span>Рейтинг</span>
+							</div>
+						</div>
+
+						<h2>
+							Заголовок описания
+						</h2>
+						<div class="tp-container">
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+								Ad amet aperiam architecto, consequatur hic minus mollitia nemo quidem quis rem.
+							</p>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+								Ad amet aperiam architecto, consequatur hic minus mollitia nemo quidem quis rem.
+							</p>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+								Ad amet aperiam architecto, consequatur hic minus mollitia nemo quidem quis rem.
+							</p>
+						</div>
+						<div class="tp-row tp-align-items-start">
+							<div class="tp-container tp-container-align-center">
+								<span>
+									100000 руб
+								</span>
+								<span>
+									стоимость месяца работы
+								</span>
+							</div>
+							<div class="tp-container tp-container-align-center">
+								<span>7000 руб</span>
+								<span>стоимомть часа работы</span>
+							</div>
+							<div class="tp-container tp-container-align-center">
+								<span>44 раза</span>
+								<span>выбран исполнителем</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="tp-media">
+						<div class="tp-row tp-underline">
+							<h2>
+								История работ и отзывы
+							</h2>
+							<form
+								class="tp-form"
+								id="sortHistoryBy"
+								method="get"
+								autocomplete="off"
+								novalidate="novalidate"
+							>
+								<select
+									class="tp-input"
+									name="sortBy"
+									id="sortBy"
+								>
+									<option selected value="Новые" >Сначала новые</option>
+									<option value="Старые">Сначала старые</option>
+									<option value="Релевантность">По релевантности</option>
+								</select>
 							</form>
-						</li>
-						<li class="tp-dropdown" role="none">
-							<a class="tp-dropdown-toggle" role="menuitem">
-								<div class="tp-navbar-profile"></div>
+						</div>
+						<div class="tp-col-12">
+							<div class="tp-underline">
+								<div class="tp-row">
+									<span class="tp-text-title">
+										Название проекта/заказа
+									</span>
+									<span>
+										40000 руб
+									</span>
+								</div>
+								<div class="tp-row tp-row-float-left">
+									<span>*****</span>
+									<span>4.1</span>
+									<span>14.09.2019</span>
+								</div>
+								<div class="tp-container">
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus autem corporis,
+										debitis exercitationem expedita fugit harum laboriosam necessitatibus neque nostrum,
+										nulla officia repellat sapiente soluta tempora vel voluptas! Quae, reiciendis?
+									</p>
+								</div>
+							</div>
+							<div class="tp-underline">
+								<div class="tp-row">
+									<span class="tp-text-title">
+										Название проекта/заказа
+									</span>
+									<span>
+										40000 руб
+									</span>
+								</div>
+								<div class="tp-row tp-row-float-left">
+									<span>*****</span>
+									<span>4.1</span>
+									<span>14.09.2019</span>
+								</div>
+								<div class="tp-container">
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus autem corporis,
+										debitis exercitationem expedita fugit harum laboriosam necessitatibus neque nostrum,
+										nulla officia repellat sapiente soluta tempora vel voluptas! Quae, reiciendis?
+									</p>
+								</div>
+							</div>
+							<a href="#" target="_self">
+								Посмотреть еще
 							</a>
-							<ul class="tp-dropdown-content">
-								<li role="none">
-									<a
-										href="/freelancers/freelancer-profile-page.html"
-									>
-										Freelancer Profile
-									</a>
-								</li>
-								<li role="none">
-									<a href="/companies/some-company-page.html">
-										Customer (Company) Profile
-									</a>
-								</li>
-								<li role="none">
-									<a href="/freelancer-settings.html">
-										Freelancer settings
-									</a>
-								</li>
-								<li role="none">
-									<a href="/company-settings.html">
-										Company settings
-									</a>
-								</li>
-								<li role="none">
-									<a href="/companies/create/">
-										Create company
-									</a>
-								</li>
-								<li role="none">
-									Log out
-								</li>
-							</ul>
-						</li>
-					</ul>
+						</div>
+					</div>
+
+
+					<div class="tp-media">
+						<div class="tp-row tp-underline">
+							<h2>
+								Портфолио
+							</h2>
+						</div>
+						<div class="tp-col-12">
+							<div class="tp-2cols-list">
+								<div class="tp-2cols-list-element">
+									<div class="tp-container tp-container-align-center">
+										<img class="tp-avatar" alt="..." src="/media/dev/portfolio-project.jpg" width="320" height="160">
+										<a href="#" target="_self">
+											Заголовок протфолио
+										</a>
+									</div>
+								</div>
+								<div class="tp-2cols-list-element">
+									<div class="tp-container tp-container-align-center">
+										<img class="tp-avatar" alt="..." src="/media/dev/portfolio-project.jpg" width="320" height="160">
+										<a href="#" target="_self">
+											Заголовок протфолио
+										</a>
+									</div>
+								</div>
+								<div class="tp-2cols-list-element">
+									<div class="tp-container tp-container-align-center">
+										<img class="tp-avatar" alt="..." src="/media/dev/portfolio-project.jpg" width="320" height="160">
+										<a href="#" target="_self">
+											Заголовок протфолио
+										</a>
+									</div>
+								</div>
+								<div class="tp-2cols-list-element">
+									<div class="tp-container tp-container-align-center">
+										<img class="tp-avatar" alt="..." src="/media/dev/portfolio-project.jpg" width="320" height="160">
+										<a href="#" target="_self">
+											Заголовок протфолио
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="tp-row tp-row-float-right">
+								<ul class="tp-paginator">
+									<li class="page-item">
+										<a href="#">&laquo;</a>
+									</li>
+									<li>
+										<a href="#">1</a>
+									</li>
+									<li>
+										<a href="#">2</a>
+									</li>
+									<li>
+										<a href="#">3</a>
+									</li>
+									<li>
+										<a href="#">&raquo;</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="tp-media">
+						<div class="tp-row tp-underline">
+							<h2>
+								Навыки
+							</h2>
+						</div>
+						<div class="tp-col-12">
+							<div class="tp-row tp-row-float-left">
+								<div class="tp-framed-tag">
+									JavaScript
+								</div>
+								<div class="tp-framed-tag">
+									Python
+								</div>
+								<div class="tp-framed-tag">
+									Frontend Development
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="tp-media">
+						<div class="tp-row tp-underline">
+							<h2>
+								Опыт работы
+							</h2>
+						</div>
+						<div class="tp-col-12">
+							<p>smth</p>
+						</div>
+					</div>
+
+					<div class="tp-media">
+						<div class="tp-row tp-underline">
+							<h2>
+								Образование
+							</h2>
+						</div>
+						<div class="tp-col-12">
+							<p>smth</p>
+						</div>
+					</div>
+
 				</div>
 			</div>
-		</header>
-		<div class="page">
-			<div class="tp-container">
+
+
+			<div class="tp-col-3 tp-border-wrapper">
+				<button class="tp-button-primary">
+					Предложить проект
+				</button>
+				<button class="tp-button-primary">
+					Добавить в избранное
+				</button>
+				<div class="tp-container">
+					<span class="tp-text-title">
+						Свободен
+					</span>
+					<span>
+						Более 30ч. в неделю
+					</span>
+				</div>
+				<div class="tp-container">
+					<span class="tp-text-title">
+						Ссылка на профиль
+					</span>
+					<input
+						class="tp-input"
+						type="text"
+						readonly
+						value="https://example.com/"
+					>
+					<a href="#">
+						Копиоровать ссылку
+					</a>
+				</div>
+				<div class="tp-container">
+					<span class="tp-text-title">
+						Языки
+					</span>
+					<div class="tp-row">
+						<span>
+							Русский:
+						</span>
+						<span>
+							родной
+						</span>
+					</div>
+				</div>
 				<div class="tp-row">
-					<img
-						class="avatar"
-						alt="..."
-						src="/media/dev/avatar.jpg"
-						width="180"
-						height="180"
-					/>
-					<!--                <div class="user-info">-->
-					<div class="tp-col-4 tp-border-wrapper">
-						Username
-					</div>
-					<div class="tp-col-4 tp-border-wrapper">
-						Заказы
-					</div>
+						<span>
+							Английский:
+						</span>
+					<span>
+							разговорный
+						</span>
 				</div>
 			</div>
-			<div class="tp-container">
-				<div class="tp-row tp-nav-buttons-group">
-					<button>
-						Портфолио
-					</button>
-					<button>
-						Текущие задания
-					</button>
-					<button>
-						Заказы
-					</button>
-				</div>
+
+		</div>
+	</div>
+</div>
+<footer role="contentinfo">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row">
+			<div class="tp-col-6">
+				<ul class="tp-list-unstyled">
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+				</ul>
 			</div>
-			<div class="tp-container">
-				<div class="tp-media">
-					Some order
-				</div>
-				<div class="tp-media">
-					Another one
-				</div>
+			<div class="tp-col-6">
+				<ul class="tp-list-unstyled">
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+					<li>
+						<a href="/info/about/" target="_self">About Us</a>
+					</li>
+				</ul>
 			</div>
 		</div>
-		<footer role="contentinfo">
-			<div class="tp-container">
-				<div class="tp-row">
-					<div class="tp-col-6">
-						<ul class="tp-list-unstyled">
-							<li>
-								<a href="/info/about/" target="_self"
-									>About Us</a
-								>
-							</li>
-							<li>
-								<a href="/info/about/" target="_self"
-									>About Us</a
-								>
-							</li>
-						</ul>
-					</div>
-					<div class="tp-col-6">
-						<ul class="tp-list-unstyled">
-							<li>
-								<a href="/info/about/" target="_self"
-									>About Us</a
-								>
-							</li>
-							<li>
-								<a href="/info/about/" target="_self"
-									>About Us</a
-								>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</footer>
-	</body>
+	</div>
+</footer>
+
+</body>
 </html>
