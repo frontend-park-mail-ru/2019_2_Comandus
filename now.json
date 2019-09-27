@@ -5,6 +5,7 @@
 		{ "src": "dist/", "use": "@now/static" }
 	],
 	"routes": [
+		{ "src": "/", "dest": "dist/index.html" },
 		{ "src": "/(.*)", "dest": "dist/$1" }
 	]
 }
