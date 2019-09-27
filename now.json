@@ -1,4 +1,7 @@
 {
 	"name": "comandus2019",
-	"alias": ["comandus2019"]
+	"alias": ["comandus2019"],
+	"routes": [
+		{ "src": "/(.*)", "dest": "dist/$1" },
+	]
 }

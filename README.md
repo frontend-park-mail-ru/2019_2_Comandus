@@ -55,6 +55,8 @@ https://github.com/go-park-mail-ru/2019_2_Comandus
 - [Нозим Юнусов](https://github.com/nozimy)
 - [Александр Косенков](https://github.com/SoulPhazed)
 
+Ментор: [Джахонгир Тулфоров](https://github.com/bin-umar)
+
 ## Tasks
 
 - [ДЗ №1](https://park.mail.ru/blog/topic/view/13787/)
