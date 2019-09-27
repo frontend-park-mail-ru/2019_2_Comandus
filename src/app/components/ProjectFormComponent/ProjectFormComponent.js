@@ -76,32 +76,34 @@ class ProjectFormComponent extends Component {
 	postRender() {
 		const form = this._el.querySelector('#projectForm');
 
-		enableValidationAndSubmit(form, (form, fields, event) => {
-			console.log(form.checkValidity());
-			if (form.checkValidity()) {
-				event.preventDefault();
-				console.log('fields', fields);
-				console.log('form.elements', form.elements);
-				const FD = new FormData(form);
-				console.log('FD', FD);
+		if (form) {
+			enableValidationAndSubmit(form, (form, fields, event) => {
+				console.log(form.checkValidity());
+				if (form.checkValidity()) {
+					event.preventDefault();
+					console.log('fields', fields);
+					console.log('form.elements', form.elements);
+					const FD = new FormData(form);
+					console.log('FD', FD);
 
-				// const password = form.elements['password'].value;
-				const object = {};
-				FD.forEach((value, key) => {
-					if (!object.hasOwnProperty(key)) {
-						object[key] = value;
-						return;
-					}
-					if (!Array.isArray(object[key])) {
-						object[key] = [object[key]];
-					}
-					object[key].push(value);
-				});
+					// const password = form.elements['password'].value;
+					const object = {};
+					FD.forEach((value, key) => {
+						if (!object.hasOwnProperty(key)) {
+							object[key] = value;
+							return;
+						}
+						if (!Array.isArray(object[key])) {
+							object[key] = [object[key]];
+						}
+						object[key].push(value);
+					});
 
-				console.log('object');
-				console.dir(object);
-			}
-		});
+					console.log('object');
+					console.dir(object);
+				}
+			});
+		}
 	}
 }
 

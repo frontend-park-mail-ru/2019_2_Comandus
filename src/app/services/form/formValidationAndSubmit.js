@@ -248,7 +248,7 @@ function onBlur(event) {
 export function enableValidationAndSubmit(formElement, onSubmit) {
 	formElement.setAttribute('novalidate', true);
 	formElement.classList.add('validate');
-	document.addEventListener('blur', onBlur, true);
+	formElement.addEventListener('blur', onBlur, true);
 
 	formElement.addEventListener(
 		'submit',
