@@ -1,7 +1,7 @@
 import { htmlToElement } from '../../services/utils';
 import template from './ProjectFormComponent.template.handlebars';
 import './style.css';
-import Component from '../../../Spa/Component';
+import Component from '../../../spa/Component';
 import { Select } from '../Select/Select';
 import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
 

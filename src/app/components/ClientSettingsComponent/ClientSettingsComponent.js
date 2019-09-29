@@ -1,6 +1,6 @@
 import { htmlToElement } from '../../services/utils';
 import template from './ClientSettingsComponent.handlebars';
-import Component from '../../../Spa/Component';
+import Component from '../../../spa/Component';
 
 class ClientSettingsComponent extends Component {
 	constructor({ parent = document.body, ...props }) {

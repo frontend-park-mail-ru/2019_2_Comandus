@@ -1,7 +1,7 @@
 import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
-import Component from '../../../Spa/Component';
+import Component from '../../../spa/Component';
 import config from '../../config';
 
 class SignUpComponent extends Component {

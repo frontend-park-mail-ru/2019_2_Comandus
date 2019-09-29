@@ -1,4 +1,4 @@
-import Component from '../../../Spa/Component';
+import Component from '../../../spa/Component';
 import template from './Select.handlebars';
 import { htmlToElement } from '../../services/utils';
 

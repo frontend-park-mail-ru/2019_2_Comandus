@@ -1,6 +1,6 @@
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
-import Component from '../../../Spa/Component';
+import Component from '../../../spa/Component';
 
 const html = '<div>Settings</div>';
 

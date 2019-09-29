@@ -6,7 +6,7 @@ import { htmlToElement } from './services/utils';
 import HeaderComponent from './components/Header';
 import ProjectFormComponent from './components/ProjectFormComponent/ProjectFormComponent';
 import ClientSettingsComponent from './components/ClientSettingsComponent/ClientSettingsComponent';
-import Component from '../Spa/Component';
+import Component from '../spa/Component';
 import template from './App.handlebars';
 import { Profile } from './containers/profile';
 

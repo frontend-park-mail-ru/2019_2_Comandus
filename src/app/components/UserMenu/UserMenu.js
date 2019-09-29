@@ -1,4 +1,4 @@
-import Component from '../../../Spa/Component';
+import Component from '../../../spa/Component';
 import template from './UserMenu.handlebars';
 import { getCookie, htmlToElement, setCookie } from '../../services/utils';
 import AjaxModule from '../../services/ajax';

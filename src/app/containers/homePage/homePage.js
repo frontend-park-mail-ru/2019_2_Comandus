@@ -1,6 +1,6 @@
 import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
-import Component from '../../../Spa/Component';
+import Component from '../../../spa/Component';
 
 class HomeComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
