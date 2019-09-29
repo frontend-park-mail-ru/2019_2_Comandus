@@ -8,6 +8,7 @@ import ProjectFormComponent from './components/ProjectFormComponent/ProjectFormC
 import ClientSettingsComponent from './components/ClientSettingsComponent/ClientSettingsComponent';
 import Component from '../Spa/Component';
 import template from './App.handlebars';
+import { Profile } from './containers/profile';
 
 const routes = {
 	'/': { component: HomeComponent },
@@ -23,6 +24,7 @@ const routes = {
 		component: ProjectFormComponent,
 		props: { mode: 'vacancy' },
 	},
+	'/freelancers/freelancerId': { component: Profile },
 };
 
 class AppComponent extends Component {
