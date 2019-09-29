@@ -23,6 +23,7 @@ export class Settings extends Component {
 			Account,
 			this._el,
 			{
+				spa: this.props.spa,
 				id: 'myAccount',
 			},
 		);
@@ -30,6 +31,7 @@ export class Settings extends Component {
 			Company,
 			this._el,
 			{
+				spa: this.props.spa,
 				id: 'companyComponent',
 			},
 		);
@@ -37,6 +39,7 @@ export class Settings extends Component {
 			NotificationSettings,
 			this._el,
 			{
+				spa: this.props.spa,
 				id: 'notificationSettingsComponent',
 			},
 		);
@@ -44,6 +47,7 @@ export class Settings extends Component {
 			ChangePassword,
 			this._el,
 			{
+				spa: this.props.spa,
 				id: 'changePasswordComponent',
 			},
 		);
@@ -51,6 +55,7 @@ export class Settings extends Component {
 			AuthHistory,
 			this._el,
 			{
+				spa: this.props.spa,
 				id: 'authHistoryComponent',
 			},
 		);
@@ -58,6 +63,7 @@ export class Settings extends Component {
 			SecurityQuestion,
 			this._el,
 			{
+				spa: this.props.spa,
 				id: 'securityQuestionComponent',
 			},
 		);
@@ -66,6 +72,7 @@ export class Settings extends Component {
 			FreelancerSettings,
 			this._el,
 			{
+				spa: this.props.spa,
 				id: 'freelancerSettingsComponent',
 			},
 		);
@@ -92,8 +99,22 @@ export class Settings extends Component {
 		});
 		this._el = htmlToElement(html);
 
-		// const mySelect = this._el.querySelector('#myAccount');
-		// accountComponent.postRender(mySelect);
+		accountComponent.postRender(this._el.querySelector('#myAccount'));
+		if (this.data.isFreelancerMode) {
+			freelancerSettingsComponent.postRender(
+				this._el.querySelector('#freelancerSettingsComponent'),
+			);
+		} else if (this.data.isClientMode) {
+			companyComponent.postRender(
+				this._el.querySelector('#companyComponent'),
+			);
+		}
+		notificationSettingsComponent.postRender(
+			this._el.querySelector('#notificationSettingsComponent'),
+		);
+		changePasswordComponent.postRender(
+			this._el.querySelector('#changePasswordComponent'),
+		);
 
 		this._parent.appendChild(this._el);
 	}

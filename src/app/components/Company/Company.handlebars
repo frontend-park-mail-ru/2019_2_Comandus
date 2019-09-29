@@ -23,34 +23,42 @@
 							id="companySettingsForm"
 							method="post"
 							autocomplete="off"
-							novalidate="novalidate"
 					>
-						<label for="companyTitle">Название</label>
+						<label for="companyName">Название</label>
 						<input
 								class="tp-input"
-								name="companyTitle"
-								id="companyTitle"
+								name="companyName"
+								id="companyName"
 								type="text"
+								minlength="3"
+								maxlength="20"
 								placeholder="Технопарк"
+								value="{{ company.companyName }}"
+								required
 						/>
-						<label for="companySite">Сайт</label>
+						<label for="site">Сайт</label>
 						<input
 								class="tp-input"
-								name="companySite"
-								id="companySite"
+								name="site"
+								id="site"
 								type="text"
+								minlength="5"
+								maxlength="30"
 								placeholder="park.mail.ru"
+								value="{{ company.site }}"
 						/>
 
-						<label for="headerDescription"
+						<label for="tagline"
 						>Заголовок описания (Tagline)</label
 						>
 						<input
 								class="tp-input"
-								name="headerDescription"
-								id="headerDescription"
+								name="tagline"
+								id="tagline"
 								type="text"
 								placeholder="Бауманская 7"
+								value="{{ company.tagline }}"
+								required
 						/>
 						<label for="description">Описание</label>
 						<textarea
@@ -58,6 +66,8 @@
 								name="description"
 								id="description"
 								placeholder="Спасите меня"
+								value="{{ company.description }}"
+								required
 						></textarea>
 						<input
 								class="tp-button-primary"
@@ -83,7 +93,6 @@
 							id="companyContactsForm"
 							method="post"
 							autocomplete="off"
-							novalidate="novalidate"
 					>
 						<label for="companyOwner">Владелец</label>
 						<input
@@ -94,46 +103,38 @@
 								readonly
 								value="Хлоя Прайс"
 						/>
-						<label for="companyCountry">Страна</label>
-						<select
-								class="tp-input"
-								name="companyCountry"
-								id="companyCountry"
-						>
-							<option selected disabled
-							>Выберите страну
-							</option
-							>
-							<option value="Россия">Россия</option>
-							<option value="Украина">Украина</option>
-							<option value="Беларусь">Беларусь</option>
-							<option value="Армения">Армения</option>
-							<option value="Казахстан">Казахстан</option>
-						</select>
-
-						<label for="companyTown">Город</label>
+						<label for="country">Страна</label>
+						{{{ countrySelect }}}
+						<label for="city">Город</label>
 						<input
 								class="tp-input"
-								name="companyTown"
-								id="companyTown"
+								name="city"
+								id="city"
 								type="text"
 								placeholder="Москва"
+								pattern="^[А-Яа-яA-Za-z]{2,}$"
+								value="{{ company.city }}"
+								required
 						/>
-						<label for="companyAddress">Адрес</label>
+						<label for="address">Адрес</label>
 						<input
 								class="tp-input"
-								name="companyAddress"
-								id="companyAddress"
+								name="address"
+								id="address"
 								type="text"
 								placeholder="Бауманская 7"
+								value="{{ company.address }}"
 						/>
-						<label for="companyPhone">Телефон</label>
+						<label for="phone">Телефон</label>
 						<input
 								class="tp-input"
-								name="companyPhone"
-								id="companyPhone"
+								name="phone"
+								id="phone"
 								type="text"
+								pattern="^\+[0-9]{11,12}$"
 								placeholder="+78005553535"
+								value="{{ company.phone }}"
+								required
 						/>
 						<input
 								class="tp-button-primary"

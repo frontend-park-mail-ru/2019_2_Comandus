@@ -21,7 +21,6 @@
 					id="mainSettingsForm"
 					method="post"
 					autocomplete="off"
-					novalidate="novalidate"
 			>
 				<label for="lastName">Фамилия</label>
 				<input
@@ -29,7 +28,11 @@
 						name="lastName"
 						id="lastName"
 						type="text"
-						placeholder="Email"
+						minlength="2"
+						maxlength="20"
+						pattern="^[А-Яа-яA-Za-z]{2,}$"
+						placeholder="Ваша фамилия"
+						value="{{ user.lastName }}"
 				/>
 				<label for="firstName">Имя</label>
 				<input
@@ -37,7 +40,12 @@
 						name="firstName"
 						id="firstName"
 						type="text"
-						placeholder="Email"
+						minlength="2"
+						maxlength="20"
+						pattern="^[А-Яа-яA-Za-z]{2,}$"
+						placeholder="Ваше имя"
+						value="{{ user.firstName }}"
+						required
 				/>
 
 				<label for="email">Email</label>
@@ -45,8 +53,10 @@
 						class="tp-input"
 						name="email"
 						id="email"
-						type="text"
-						placeholder="Email"
+						type="email"
+						placeholder="Ваш e-mail"
+						value="{{ user.email }}"
+						required
 				/>
 				<input
 						class="tp-button-primary"

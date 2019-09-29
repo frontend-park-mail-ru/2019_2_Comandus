@@ -1,5 +1,8 @@
 <select id="{{props.id}}" name="{{props.name}}" class="{{props.className}}">
 	{{#each props.items}}
-		<option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{label}}</option>
+		<option value="{{value}}"
+				{{#selected}} selected="selected" {{/selected}}
+				{{#disabled}} disabled {{/disabled}}
+		>{{label}}</option>
 	{{/each}}
 </select>

@@ -21,21 +21,23 @@
 						<span class="tp-table-th">Приложение</span>
 					</div>
 					<div class="tp-table-row">
-									<span class="tp-table-cell">
-										1
-									</span>
-						<span class="tp-table-cell">
-										15.09.2019 02:51
-									</span>
-						<span class="tp-table-cell">
-										91.79.208.198
-									</span>
-						<span class="tp-table-cell">
-										Linux
-									</span>
-						<span class="tp-table-cell">
-										Firefox
-									</span>
+						{{#each props.history}}
+							<span class="tp-table-cell">
+								{{ id }}
+							</span>
+							<span class="tp-table-cell">
+								{{ datetime }}
+							</span>
+							<span class="tp-table-cell">
+								{{ ip }}
+							</span>
+							<span class="tp-table-cell">
+								{{ device }}
+							</span>
+							<span class="tp-table-cell">
+								{{ app }}
+							</span>
+						{{/each}}
 					</div>
 				</div>
 			</div>

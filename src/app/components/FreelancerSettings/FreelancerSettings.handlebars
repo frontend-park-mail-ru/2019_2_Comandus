@@ -1,4 +1,4 @@
-<div id="props.id">
+<div id="{{ props.id }}">
 	<div class="tp-container">
 		<div class="tp-row tp-underline">
 			<h2>
@@ -13,32 +13,37 @@
 							id="contactsForm"
 							method="post"
 							autocomplete="off"
-							novalidate="novalidate"
 					>
 						<div class="tp-col-4 tp-col_padding_0">
 							<label for="country">Страна</label>
-							<select
-									class="tp-input"
-									name="country"
-									id="country"
-							>
-								<option selected disabled>Выберите страну</option>
-								<option value="Россия">Россия</option>
-								<option value="Украина">Украина</option>
-								<option value="Беларусь">Беларусь</option>
-								<option value="Армения">Армения</option>
-								<option value="Казахстан">Казахстан</option>
-							</select>
+<!--							<select-->
+<!--									class="tp-input"-->
+<!--									name="country"-->
+<!--									id="country"-->
+<!--									required-->
+<!--							>-->
+<!--								<option selected disabled>Выберите страну</option>-->
+<!--								<option value="Россия">Россия</option>-->
+<!--								<option value="Украина">Украина</option>-->
+<!--								<option value="Беларусь">Беларусь</option>-->
+<!--								<option value="Армения">Армения</option>-->
+<!--								<option value="Казахстан">Казахстан</option>-->
+<!--							</select>-->
+							{{{ countrySelect }}}
 						</div>
 
 						<div class="tp-col-4 tp-col_padding_0">
 							<label for="town">Город</label>
 							<input
 									class="tp-input"
-									name="town"
-									id="town"
+									name="city"
+									id="city"
 									type="text"
+									minlength="2"
+									maxlength="20"
+									pattern="^[А-Яа-яA-Za-z]{2,}$"
 									placeholder="Москва"
+									required
 							/>
 						</div>
 
@@ -50,6 +55,8 @@
 										name="address"
 										id="address"
 										type="text"
+										minlength="5"
+										maxlength="40"
 										placeholder="Бауманская 7"
 								/>
 								<span class="tp-label-note">Мы серьезно относимся к соблюдению конфиденциальности.
@@ -64,7 +71,9 @@
 									name="phone"
 									id="phone"
 									type="text"
+									pattern="^\+[0-9]{11,12}$"
 									placeholder="+78005553535"
+									required
 							/>
 						</div>
 
@@ -97,28 +106,41 @@
 						novalidate="novalidate"
 				>
 					<label for="visible">Кому в интернете видна моя страница</label>
-					<select
-							class="tp-input"
-							name="visible"
-							id="visible"
-					>
-						<option selected value="Россия">Всем</option>
-						<option value="Украина">Только пользователям Сервиса</option>
-						<option value="Беларусь">Никому (даже по ссылке)</option>
-					</select>
+					{{{ visibilitySelect }}}
 					<div class="tp-form-choice">
 						<span>Ваш уровень опыта</span>
 						<div class="tp-row">
-							<input class="tp-input" id="individual" type="radio" name="legalStatus"/>
-							<label for="individual">
+							<input
+									class="tp-input"
+									id="junior"
+									type="radio"
+									name="experienceLevelId"
+									value="1"
+									required
+							/>
+							<label for="junior">
 								Начальный
 							</label>
-							<input class="tp-input" id="legal-entity" type="radio" name="legalStatus"/>
-							<label for="legal-entity">
+							<input
+									class="tp-input"
+									id="middle"
+									type="radio"
+									name="experienceLevelId"
+									value="2"
+									required
+							/>
+							<label for="middle">
 								Средний
 							</label>
-							<input class="tp-input" id="legal-entity" type="radio" name="legalStatus"/>
-							<label for="legal-entity">
+							<input
+									class="tp-input"
+									id="senior"
+									type="radio"
+									name="experienceLevelId"
+									value="3"
+									required
+							/>
+							<label for="senior">
 								Эксперт
 							</label>
 						</div>

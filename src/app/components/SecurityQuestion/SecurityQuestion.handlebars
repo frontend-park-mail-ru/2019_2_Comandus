@@ -9,7 +9,11 @@
 			<div class="tp-container">
 				<h3>Контрольный вопрос:</h3>
 				<div class="tp-row tp-row-float-left">
-					<h4>Контрольный вопрос задан</h4>
+					{{#if question.setted}}
+						<h4>Контрольный вопрос задан</h4>
+					{{else}}
+						<h4>Контрольный вопрос не задан</h4>
+					{{/if}}
 					<a
 							class="tp-option-link"
 							href="#"
