@@ -1,6 +1,6 @@
 :root {
-	--bg_color: #f6f8ff;
-	--header-footer-color: #e8eaf1;
+	--bg_color: #F2F2F2;
+	--header-footer-color: #fff;
 }
 
 html {
@@ -21,13 +21,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	margin: 0;
-}
-
-header {
-	position: relative;
-	box-shadow: 0 0 2px 1px #c5c5c5;
-	background-color: var(--header-footer-color, #ffffff);
-	/*padding: 4px 16px;*/
 }
 
 footer {

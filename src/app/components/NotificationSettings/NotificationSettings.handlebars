@@ -1,0 +1,61 @@
+<div class="tp-container" id="{{props.id}}">
+	<div class="tp-row tp-underline">
+		<h2>
+			Настройка уведомлений
+		</h2>
+	</div>
+	<div class="tp-row tp-align-items-start">
+		<div class="tp-col-12">
+			<div class="tp-container">
+				<form
+						class="tp-form"
+						id="notificationsSettings"
+						method="post"
+						autocomplete="off"
+						novalidate="novalidate"
+				>
+					<h3>
+						Присылать по электронной почте следущие
+						уведомления:
+					</h3>
+					<div class="tp-row tp-row-float-left">
+						<input
+								class="tp-input"
+								id="newMessages"
+								name="agreement"
+								type="checkbox"
+						/>
+						<label for="newMessages"
+						>о новых сообщениях</label
+						>
+					</div>
+					<div class="tp-row tp-row-float-left">
+						<input
+								class="tp-input"
+								id="newProjects"
+								name="agreement"
+								type="checkbox"
+						/>
+						<label for="newProjects"
+						>о новых проектах</label
+						>
+					</div>
+					<div class="tp-row tp-row-float-left">
+						<input
+								class="tp-input"
+								id="news"
+								name="agreement"
+								type="checkbox"
+						/>
+						<label for="news">новости от Сервиса</label>
+					</div>
+					<input
+							class="tp-button-primary"
+							type="submit"
+							value="Сохранить изменения"
+					/>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

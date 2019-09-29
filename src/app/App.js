@@ -9,13 +9,15 @@ import ClientSettingsComponent from './components/ClientSettingsComponent/Client
 import Component from '../spa/Component';
 import template from './App.handlebars';
 import { Profile } from './containers/profile';
+import { Settings } from './containers/settings/settings';
 
 const routes = {
 	'/': { component: HomeComponent },
 	'/signup/': { component: SignUpComponent },
 	'/login/': { component: LoginComponent },
-	'/settings/': { component: SettingsComponent },
+	'/settings/': { component: Settings, props: {} },
 	// '/settings/': {component: ClientSettingsComponent},
+	'/settings-template': { component: ClientSettingsComponent },
 	'/new-project/': {
 		component: JobFormComponent,
 		props: { mode: 'project' },
@@ -56,6 +58,9 @@ class AppComponent extends Component {
 				...props,
 				...routElement.props,
 			};
+			console.log(props);
+			console.log(routElement.component);
+
 			const component = this.props.spa._createComponent(
 				routElement.component,
 				el,

@@ -1,0 +1,148 @@
+<div id="{{props.id}}">
+	<div class="tp-container">
+		<div class="tp-row tp-underline">
+			<h2>
+				О компании
+			</h2>
+		</div>
+		<div class="tp-row tp-align-items-start">
+			<div class="tp-col-12">
+				<div class="tp-container tp-container-align-center">
+					<img
+							class="tp-avatar tp-avatar-content-below"
+							alt="..."
+							src="/media/dev/avatar.jpg"
+							width="120"
+							height="120"
+					/>
+					<a href="#" target="_self">Изменить лого</a>
+				</div>
+				<div class="tp-container">
+					<form
+							class="tp-form"
+							id="companySettingsForm"
+							method="post"
+							autocomplete="off"
+							novalidate="novalidate"
+					>
+						<label for="companyTitle">Название</label>
+						<input
+								class="tp-input"
+								name="companyTitle"
+								id="companyTitle"
+								type="text"
+								placeholder="Технопарк"
+						/>
+						<label for="companySite">Сайт</label>
+						<input
+								class="tp-input"
+								name="companySite"
+								id="companySite"
+								type="text"
+								placeholder="park.mail.ru"
+						/>
+
+						<label for="headerDescription"
+						>Заголовок описания (Tagline)</label
+						>
+						<input
+								class="tp-input"
+								name="headerDescription"
+								id="headerDescription"
+								type="text"
+								placeholder="Бауманская 7"
+						/>
+						<label for="description">Описание</label>
+						<textarea
+								class="tp-input"
+								name="description"
+								id="description"
+								placeholder="Спасите меня"
+						></textarea>
+						<input
+								class="tp-button-primary"
+								type="submit"
+								value="Сохранить изменения"
+						/>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tp-container">
+		<div class="tp-row tp-underline">
+			<h3>
+				Контакты компании
+			</h3>
+		</div>
+		<div class="tp-row tp-align-items-start">
+			<div class="tp-col-12">
+				<div class="tp-container">
+					<form
+							class="tp-form"
+							id="companyContactsForm"
+							method="post"
+							autocomplete="off"
+							novalidate="novalidate"
+					>
+						<label for="companyOwner">Владелец</label>
+						<input
+								class="tp-input"
+								name="companyOwner"
+								id="companyOwner"
+								type="text"
+								readonly
+								value="Хлоя Прайс"
+						/>
+						<label for="companyCountry">Страна</label>
+						<select
+								class="tp-input"
+								name="companyCountry"
+								id="companyCountry"
+						>
+							<option selected disabled
+							>Выберите страну
+							</option
+							>
+							<option value="Россия">Россия</option>
+							<option value="Украина">Украина</option>
+							<option value="Беларусь">Беларусь</option>
+							<option value="Армения">Армения</option>
+							<option value="Казахстан">Казахстан</option>
+						</select>
+
+						<label for="companyTown">Город</label>
+						<input
+								class="tp-input"
+								name="companyTown"
+								id="companyTown"
+								type="text"
+								placeholder="Москва"
+						/>
+						<label for="companyAddress">Адрес</label>
+						<input
+								class="tp-input"
+								name="companyAddress"
+								id="companyAddress"
+								type="text"
+								placeholder="Бауманская 7"
+						/>
+						<label for="companyPhone">Телефон</label>
+						<input
+								class="tp-input"
+								name="companyPhone"
+								id="companyPhone"
+								type="text"
+								placeholder="+78005553535"
+						/>
+						<input
+								class="tp-button-primary"
+								type="submit"
+								value="Сохранить изменения"
+						/>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

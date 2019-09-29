@@ -1,6 +1,7 @@
 export default class Component {
 	constructor(props) {
 		this._data = {};
+		this.props = props;
 	}
 
 	created() {}

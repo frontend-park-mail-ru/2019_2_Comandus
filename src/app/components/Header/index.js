@@ -2,6 +2,7 @@ import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
 import Component from '../../../spa/Component';
 import { UserMenu } from '../UserMenu/UserMenu';
+import './style.css';
 
 class HeaderComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
