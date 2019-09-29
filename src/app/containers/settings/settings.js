@@ -1,12 +1,14 @@
 import Component from '../../../spa/Component';
 import template from './settings.handlebars';
-import { htmlToElement } from '../../services/utils';
+import { getCookie, htmlToElement } from '../../services/utils';
 import { Account } from '../../components/Account/Account';
 import { Company } from '../../components/Company/Company';
 import { NotificationSettings } from '../../components/NotificationSettings/NotificationSettings';
 import { ChangePassword } from '../../components/ChangePassword/ChangePassword';
 import { AuthHistory } from '../../components/AuthHistory/AuthHistory';
 import { SecurityQuestion } from '../../components/SecurityQuestion/SecurityQuestion';
+import config from '../../config';
+import { FreelancerSettings } from '../../components/FreelancerSettings/FreelancerSettings';
 
 export class Settings extends Component {
 	constructor({ parent = document.body, ...props }) {
@@ -60,6 +62,14 @@ export class Settings extends Component {
 			},
 		);
 
+		const freelancerSettingsComponent = this.props.spa._createComponent(
+			FreelancerSettings,
+			this._el,
+			{
+				id: 'freelancerSettingsComponent',
+			},
+		);
+
 		this.data = {
 			accountComponent: accountComponent.render(),
 			companyComponent: companyComponent.render(),
@@ -67,7 +77,14 @@ export class Settings extends Component {
 			changePasswordComponent: changePasswordComponent.render(),
 			authHistoryComponent: authHistoryComponent.render(),
 			securityQuestionComponent: securityQuestionComponent.render(),
+			freelancerSettingsComponent: freelancerSettingsComponent.render(),
 			...this.data,
+			isClientMode:
+				getCookie(config.cookieAccountModeName)
+				=== config.accountTypes.client,
+			isFreelancerMode:
+				getCookie(config.cookieAccountModeName)
+				=== config.accountTypes.freelancer,
 		};
 		const html = template({
 			data: this.data,

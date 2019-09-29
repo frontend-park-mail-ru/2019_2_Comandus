@@ -8,7 +8,7 @@ import JobFormComponent from './components/JobFormComponent/JobFormComponent';
 import ClientSettingsComponent from './components/ClientSettingsComponent/ClientSettingsComponent';
 import Component from '../spa/Component';
 import template from './App.handlebars';
-import { Profile } from './containers/profile';
+import { Profile } from './containers/freelancerProfile';
 import { Settings } from './containers/settings/settings';
 
 const routes = {

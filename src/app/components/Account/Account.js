@@ -9,12 +9,9 @@ export class Account extends Component {
 	}
 
 	render() {
-		const html = template({
+		return template({
 			data: this.data,
 			props: this.props,
 		});
-		// this._el = htmlToElement(html);
-		// this._parent.appendChild(this._el);
-		return html;
 	}
 }

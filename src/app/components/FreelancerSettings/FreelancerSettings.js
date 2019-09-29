@@ -9,8 +9,9 @@ export class FreelancerSettings extends Component {
 	}
 
 	render() {
-		const html = template(this.data);
-		this._el = htmlToElement(html);
-		this._parent.appendChild(this._el);
+		return template({
+			data: this.data,
+			props: this.props,
+		});
 	}
 }

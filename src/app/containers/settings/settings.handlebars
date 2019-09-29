@@ -22,7 +22,11 @@
 			</div>
 			<div class="tp-col-10 tp-border-wrapper card">
 				{{{data.accountComponent}}}
-				{{{data.companyComponent}}}
+				{{#if data.isClientMode}}
+					{{{data.companyComponent}}}
+				{{else}}
+					{{{data.freelancerSettingsComponent}}}
+				{{/if}}
 				{{{data.notificationSettingsComponent}}}
 				{{{data.changePasswordComponent}}}
 				{{{data.authHistoryComponent}}}

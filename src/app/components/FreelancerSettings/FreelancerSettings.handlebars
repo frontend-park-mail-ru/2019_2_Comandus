@@ -1,0 +1,166 @@
+<div id="props.id">
+	<div class="tp-container">
+		<div class="tp-row tp-underline">
+			<h2>
+				Контакты
+			</h2>
+		</div>
+		<div class="tp-row tp-align-items-start">
+			<div class="tp-col-12">
+				<div class="tp-container">
+					<form
+							class="tp-form"
+							id="contactsForm"
+							method="post"
+							autocomplete="off"
+							novalidate="novalidate"
+					>
+						<div class="tp-col-4 tp-col_padding_0">
+							<label for="country">Страна</label>
+							<select
+									class="tp-input"
+									name="country"
+									id="country"
+							>
+								<option selected disabled>Выберите страну</option>
+								<option value="Россия">Россия</option>
+								<option value="Украина">Украина</option>
+								<option value="Беларусь">Беларусь</option>
+								<option value="Армения">Армения</option>
+								<option value="Казахстан">Казахстан</option>
+							</select>
+						</div>
+
+						<div class="tp-col-4 tp-col_padding_0">
+							<label for="town">Город</label>
+							<input
+									class="tp-input"
+									name="town"
+									id="town"
+									type="text"
+									placeholder="Москва"
+							/>
+						</div>
+
+						<div class="tp-col-8 tp-col_padding_0">
+							<label for="address">Адрес</label>
+							<div class="tp-container">
+								<input
+										class="tp-input"
+										name="address"
+										id="address"
+										type="text"
+										placeholder="Бауманская 7"
+								/>
+								<span class="tp-label-note">Мы серьезно относимся к соблюдению конфиденциальности.
+												Только ваш город и страна будут доступны клиентам</span>
+							</div>
+						</div>
+
+						<div class="tp-col-4 tp-col_padding_0">
+							<label for="phone">Телефон</label>
+							<input
+									class="tp-input"
+									name="phone"
+									id="phone"
+									type="text"
+									placeholder="+78005553535"
+							/>
+						</div>
+
+						<div class="tp-col-4 tp-col_padding_0">
+							<input
+									class="tp-button-primary"
+									type="submit"
+									value="Сохранить изменения"
+							/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tp-container">
+		<div class="tp-row tp-underline">
+			<h2>
+				Мой профиль
+			</h2>
+		</div>
+		<div class="tp-row tp-align-items-start">
+			<div class="tp-col-6">
+				<form
+						class="tp-form"
+						id="profileSettingsForm"
+						method="post"
+						autocomplete="off"
+						novalidate="novalidate"
+				>
+					<label for="visible">Кому в интернете видна моя страница</label>
+					<select
+							class="tp-input"
+							name="visible"
+							id="visible"
+					>
+						<option selected value="Россия">Всем</option>
+						<option value="Украина">Только пользователям Сервиса</option>
+						<option value="Беларусь">Никому (даже по ссылке)</option>
+					</select>
+					<div class="tp-form-choice">
+						<span>Ваш уровень опыта</span>
+						<div class="tp-row">
+							<input class="tp-input" id="individual" type="radio" name="legalStatus"/>
+							<label for="individual">
+								Начальный
+							</label>
+							<input class="tp-input" id="legal-entity" type="radio" name="legalStatus"/>
+							<label for="legal-entity">
+								Средний
+							</label>
+							<input class="tp-input" id="legal-entity" type="radio" name="legalStatus"/>
+							<label for="legal-entity">
+								Эксперт
+							</label>
+						</div>
+					</div>
+					<input
+							class="tp-button-primary"
+							type="submit"
+							value="Сохранить изменения"
+					/>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="tp-container">
+		<div class="tp-row tp-underline">
+			<h2>
+				Выбор специализации и категорий услуг
+			</h2>
+			<a class="tp-row-right-part" href="#" target="_self">Изменить</a>
+		</div>
+	</div>
+	<div class="tp-col-12">
+		<div class="tp-container">
+			<div class="tp-row">
+				<span class="tp-text-title">Программирование</span>
+			</div>
+			<div class="tp-row tp-row-float-left">
+				<span class="tp-framed-tag">Веб-программирование</span>
+				<span class="tp-framed-tag">Базы данных</span>
+				<span class="tp-framed-tag">Программирование игр</span>
+				<span class="tp-framed-tag">Встраиваемые системы</span>
+			</div>
+		</div>
+		<div class="tp-container">
+			<div class="tp-row">
+				<span class="tp-text-title">Дизайн и арт</span>
+			</div>
+			<div class="tp-row tp-row-float-left">
+				<span class="tp-framed-tag">Логотипы</span>
+				<span class="tp-framed-tag">Векторная графика</span>
+			</div>
+		</div>
+	</div>
+</div>
