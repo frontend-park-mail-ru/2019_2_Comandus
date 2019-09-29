@@ -16,6 +16,6 @@ export default class Component {
 	}
 
 	set data(newData) {
-		this._data = newData;
+		this._data = { ...newData };
 	}
 }

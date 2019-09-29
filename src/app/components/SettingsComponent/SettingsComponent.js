@@ -4,7 +4,7 @@ import Component from '../../../Spa/Component';
 
 const html = '<div>Settings</div>';
 
-class ProfileComponent extends Component {
+class SettingsComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
 		super(props);
 		this.props = props;
@@ -31,4 +31,4 @@ class ProfileComponent extends Component {
 	}
 }
 
-export default ProfileComponent;
+export default SettingsComponent;

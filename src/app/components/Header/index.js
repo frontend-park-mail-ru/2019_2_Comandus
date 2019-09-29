@@ -1,7 +1,7 @@
 import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
 import Component from '../../../Spa/Component';
-import { UserMenu } from '../../components/UserMenu/UserMenu';
+import { UserMenu } from '../UserMenu/UserMenu';
 
 class HeaderComponent extends Component {
 	constructor({ parent = document.body, ...props }) {

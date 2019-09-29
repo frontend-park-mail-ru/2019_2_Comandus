@@ -2,11 +2,7 @@ import Component from '../../../Spa/Component';
 import template from './UserMenu.handlebars';
 import { getCookie, htmlToElement, setCookie } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
-import {
-	accountTypes,
-	cookieAccountModeName,
-	URL_ACCOUNT,
-} from '../../constants';
+import config from '../../config';
 import './UserMenu.css';
 
 export class UserMenu extends Component {
@@ -18,33 +14,12 @@ export class UserMenu extends Component {
 		this._el = null;
 	}
 
-	render() {
-		this._data = {
-			...this._data,
-			isClientMode:
-				getCookie(cookieAccountModeName) === accountTypes.client,
-			isFreelancerMode:
-				getCookie(cookieAccountModeName) === accountTypes.freelancer,
-		};
-		const html = template({
-			...this.props,
-			...this._data,
-		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
-		this._el = newElement;
-	}
-
 	preRender() {
 		this._data = {
 			...this._data,
 			loaded: false,
 		};
-		AjaxModule.get(URL_ACCOUNT)
+		AjaxModule.get(config.urls.account)
 			.then((response) => {
 				this._data = {
 					...this._data,
@@ -60,6 +35,29 @@ export class UserMenu extends Component {
 				};
 				this.stateChanged();
 			});
+	}
+
+	render() {
+		this._data = {
+			...this._data,
+			isClientMode:
+				getCookie(config.cookieAccountModeName)
+				=== config.accountTypes.client,
+			isFreelancerMode:
+				getCookie(config.cookieAccountModeName)
+				=== config.accountTypes.freelancer,
+		};
+		const html = template({
+			...this.props,
+			...this._data,
+		});
+		const newElement = htmlToElement(html);
+		if (this._el && this._parent.contains(this._el)) {
+			this._parent.replaceChild(newElement, this._el);
+		} else {
+			this._parent.appendChild(newElement);
+		}
+		this._el = newElement;
 	}
 
 	postRender() {
@@ -88,7 +86,10 @@ export class UserMenu extends Component {
 				event.stopPropagation();
 
 				console.log('click', event.target);
-				setCookie(cookieAccountModeName, event.target.dataset.mode);
+				setCookie(
+					config.cookieAccountModeName,
+					event.target.dataset.mode,
+				);
 				this.props.router.push('/');
 			});
 		});

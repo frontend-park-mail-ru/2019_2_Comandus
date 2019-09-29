@@ -5,7 +5,7 @@
 	"private": true,
 	"main": "index.js",
 	"scripts": {
-		"start:server": "node server.js",
+		"start-build": "node server.js",
 		"test": "jest --watchAll",
 		"build": "NODE_ENV=production webpack && cp src/index.html dist/index.html",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/**/*.{js,html,css}'",

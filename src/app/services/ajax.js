@@ -1,3 +1,5 @@
+import config from '../config';
+
 /**
  * Creates a new URL by combining the specified URLs
  *
@@ -67,13 +69,7 @@ class AjaxModule {
 	}
 
 	_fetch({
-		method = 'get',
-		url = '/',
-		data = null,
-		// headers = {
-		// 	'Content-Type': 'application/json',
-		// },
-		headers = {},
+		method = 'get', url = '/', data = null, headers = {},
 	} = {}) {
 		url = combineURLs(this.baseUrl, url);
 
@@ -104,5 +100,5 @@ class AjaxModule {
 }
 
 export default new AjaxModule({
-	baseUrl: 'http://localhost:3000',
+	baseUrl: config.baseAPIUrl,
 });

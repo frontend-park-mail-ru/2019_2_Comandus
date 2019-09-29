@@ -18,8 +18,12 @@ export function htmlToElements(html) {
 	return template.content.childNodes;
 }
 
-// возвращает куки с указанным name,
-// или undefined, если ничего не найдено
+/**
+ * возвращает куки с указанным name,
+ * или undefined, если ничего не найдено
+ * @param name
+ * @returns {any}
+ */
 export function getCookie(name) {
 	const matches = document.cookie.match(
 		new RegExp(

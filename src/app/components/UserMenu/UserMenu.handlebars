@@ -2,15 +2,26 @@
 		class="tp-navbar-navigate tp-navbar-right-part"
 		role="menubar"
 >
+
+	<li class="tp-navbar-search">
+		<form method="GET" role="search">
+			<div>
+				<input/>
+			</div>
+		</form>
+	</li>
+	<li>
+		<a href="/new-project/" role="menuitem">
+			Разметить заказ
+		</a>
+	</li>
+	<li>
+		<a href="/new-vacancy/" role="menuitem">
+			Разметить вакансию
+		</a>
+	</li>
 	{{#loaded}}
 		{{#if user}}
-			<li class="tp-navbar-search">
-				<form method="GET" role="search">
-					<div>
-						<input/>
-					</div>
-				</form>
-			</li>
 			<li class="tp-dropdown" role="none">
 				<a class="tp-dropdown-toggle" role="menuitem">
 					<div class="tp-navbar-profile"></div>
@@ -70,13 +81,6 @@
 				</ul>
 			</li>
 		{{else}}
-			<li class="tp-navbar-search">
-				<form method="GET" role="search">
-					<div>
-						<input/>
-					</div>
-				</form>
-			</li>
 			<li>
 				<a href="/login/" role="menuitem">
 					Войти
@@ -85,16 +89,6 @@
 			<li>
 				<a href="/signup/" role="menuitem">
 					Регистрация
-				</a>
-			</li>
-			<li>
-				<a href="/new-project/" role="menuitem">
-					Разметить заказ
-				</a>
-			</li>
-			<li>
-				<a href="/new-vacancy/" role="menuitem">
-					Разметить вакансию
 				</a>
 			</li>
 		{{/if}}

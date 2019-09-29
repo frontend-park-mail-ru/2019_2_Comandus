@@ -1,34 +1,24 @@
 # 2019_2_Comandus
 
+### How to Run | Build
+
+**Dev Mode**
+
+- `npm i` install all the packages required by front-end repos/packages.
+- `npm start` to start the client app and webpack server
+
+**Production Mode**
+
+- `npm build`
+- `npm run start-build`  
+
+Before Contributing please read the [Commit Message Guide](docs/contributing.md).
+
 ## Проект
-
-https://comandus.now.sh/
-
-### Run | Build
-
-#### static server
-
-```
-npm start:server
-``` 
-
-#### dev server with hot-load
-
-```
-npm run start
-``` 
-
-#### build all src files into bundle.js
-
-```
-npm run build
-``` 
-
-###  Описание
 
 fl.ru ( ставки на проект )
 
-#### Features: 
+**Features:** 
 
 - Регистрация как фрилансер и как заказчик (по возможности OAuth 
 - Разместить заказ (категория, название, описание, бюджет)
@@ -37,18 +27,21 @@ fl.ru ( ставки на проект )
 - Отзывы и оценки (и заказу и фрилансерам)
 - Хороший поиск с фильтром
 
-### Макеты UI
+**REST API**
 
-[Папка с макетами](docs/wireframes)
+https://swagger.nozim.now.sh/
 
-[Ninjamock (старые версии)](https://ninjastorage.blob.core.windows.net/html/SMFDQFx/52e2914d-427c-06f1-ebb8-e593fdbce622.html)
+**Макеты UI**
 
-### Backend
+- [Папка с макетами](docs/wireframes)
 
-https://github.com/go-park-mail-ru/2019_2_Comandus
+- [Ninjamock (старые версии)](https://ninjastorage.blob.core.windows.net/html/SMFDQFx/52e2914d-427c-06f1-ebb8-e593fdbce622.html)
 
+**Kanban Board**
 
-## Команда
+https://trello.com/comandus
+
+### Команда
 
 - [Дарья Ефимова](https://github.com/efimovad)
 - [Дмитрий Андронов](https://github.com/Andronovdima)
@@ -57,15 +50,12 @@ https://github.com/go-park-mail-ru/2019_2_Comandus
 
 Ментор: [Джахонгир Тулфоров](https://github.com/bin-umar)
 
-## Tasks
+### Tasks
 
 - [ДЗ №1](https://park.mail.ru/blog/topic/view/13787/)
 - [ДЗ №2](https://park.mail.ru/blog/topic/view/13888/)
 
-### Kanban Board
+### Backend
 
-https://trello.com/comandus
+https://github.com/go-park-mail-ru/2019_2_Comandus
 
-### Contributing
-
-[Commit Message Guide](docs/contributing.md)

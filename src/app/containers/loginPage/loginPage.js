@@ -1,18 +1,19 @@
-import html from './index.html';
+import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
 import Component from '../../../Spa/Component';
+import config from '../../config';
 
 class LoginComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
 		super(props);
 		this.props = props;
 		this._parent = parent;
-		this._data = {};
 		this._el = null;
 	}
 
 	render() {
+		const html = template(this.data);
 		this._el = htmlToElement(html);
 		this._parent.appendChild(this._el);
 	}
@@ -36,7 +37,7 @@ class LoginComponent extends Component {
 				object[key].push(value);
 			});
 
-			AjaxModule.post('/login', object)
+			AjaxModule.post(config.urls.login, object)
 				.then((response) => {
 					this.props.router.push('/settings/');
 				})

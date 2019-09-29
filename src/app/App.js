@@ -1,18 +1,19 @@
 import HomeComponent from './containers/homePage/homePage';
 import LoginComponent from './containers/loginPage/loginPage';
 import SignUpComponent from './containers/signupPage/signupPage';
-import ProfileComponent from './containers/profilePage/profilePage';
+import SettingsComponent from './components/SettingsComponent/SettingsComponent';
 import { htmlToElement } from './services/utils';
-import HeaderComponent from './containers/header';
+import HeaderComponent from './components/Header';
 import ProjectFormComponent from './components/ProjectFormComponent/ProjectFormComponent';
 import ClientSettingsComponent from './components/ClientSettingsComponent/ClientSettingsComponent';
 import Component from '../Spa/Component';
+import template from './App.handlebars';
 
 const routes = {
 	'/': { component: HomeComponent },
 	'/signup/': { component: SignUpComponent },
 	'/login/': { component: LoginComponent },
-	'/settings/': { component: ProfileComponent },
+	'/settings/': { component: SettingsComponent },
 	// '/settings/': {component: ClientSettingsComponent},
 	'/new-project/': {
 		component: ProjectFormComponent,
@@ -29,21 +30,10 @@ class AppComponent extends Component {
 		super(props);
 		this.props = props;
 		this._parent = parent;
-		this._data = {};
-	}
-
-	get data() {
-		return this._data;
-	}
-
-	set data(dataToSet) {
-		this._data = { ...dataToSet };
 	}
 
 	render() {
-		const html = `
-			<div style="all:inherit"></div>
-		`;
+		const html = template(this.data);
 		const el = htmlToElement(html);
 
 		let props = {

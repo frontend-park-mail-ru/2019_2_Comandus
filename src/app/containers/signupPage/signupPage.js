@@ -1,7 +1,8 @@
-import html from './index.html';
+import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
 import Component from '../../../Spa/Component';
+import config from '../../config';
 
 class SignUpComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
@@ -13,6 +14,7 @@ class SignUpComponent extends Component {
 	}
 
 	render() {
+		const html = template(this.data);
 		this._el = htmlToElement(html);
 		this._parent.appendChild(this._el);
 	}
@@ -40,7 +42,7 @@ class SignUpComponent extends Component {
 				object[key].push(value);
 			});
 
-			AjaxModule.post('/signup', object)
+			AjaxModule.post(config.urls.signUp, object)
 				.then((response) => {
 					this.props.router.push('/settings/');
 				})
