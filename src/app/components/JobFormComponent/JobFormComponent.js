@@ -1,16 +1,18 @@
 import { htmlToElement } from '../../services/utils';
-import template from './ProjectFormComponent.template.handlebars';
+import template from './JobFormComponent.handlebars';
 import './style.css';
 import Component from '../../../spa/Component';
 import { Select } from '../Select/Select';
 import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
+import AjaxModule from '../../services/ajax';
+import config from '../../config';
 
 const modes = {
 	project: 'project',
 	vacancy: 'vacancy',
 };
 
-class ProjectFormComponent extends Component {
+class JobFormComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
 		super(props);
 		this.props = props;
@@ -77,34 +79,23 @@ class ProjectFormComponent extends Component {
 		const form = this._el.querySelector('#projectForm');
 
 		if (form) {
-			enableValidationAndSubmit(form, (form, fields, event) => {
-				console.log(form.checkValidity());
-				if (form.checkValidity()) {
-					event.preventDefault();
-					console.log('fields', fields);
-					console.log('form.elements', form.elements);
-					const FD = new FormData(form);
-					console.log('FD', FD);
+			enableValidationAndSubmit(form, (helper) => {
+				helper.event.preventDefault();
 
-					// const password = form.elements['password'].value;
-					const object = {};
-					FD.forEach((value, key) => {
-						if (!object.hasOwnProperty(key)) {
-							object[key] = value;
-							return;
+				AjaxModule.post(config.urls.jobs, helper.formToJSON())
+					.then((data) => {
+						this.props.router.push(`/jobs/${data.id}`);
+					})
+					.catch((error) => {
+						let text = error.message;
+						if (error.data && error.data.error) {
+							text = error.data.error;
 						}
-						if (!Array.isArray(object[key])) {
-							object[key] = [object[key]];
-						}
-						object[key].push(value);
+						helper.setResponseText(text);
 					});
-
-					console.log('object');
-					console.dir(object);
-				}
 			});
 		}
 	}
 }
 
-export default ProjectFormComponent;
+export default JobFormComponent;

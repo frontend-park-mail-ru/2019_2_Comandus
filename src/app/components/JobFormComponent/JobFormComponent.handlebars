@@ -5,8 +5,10 @@
 				<h1>{{title}}</h1>
 				<form method="post" id="projectForm" autocomplete="off">
 					{{{mySelect}}}
+					<input id="hireManagerId" name="hireManagerId" type="text" hidden value="some-id" required/>
+					<input id="jobTypeId" name="jobTypeId" type="text" hidden value="{{props.mode}}" required/>
 					<div>
-						<label class="projectForm__label" for="name"
+						<label class="projectForm__label" for="title"
 						>Название</label
 						>
 						{{#if isProject}}
@@ -27,15 +29,14 @@
 							</div>
 						{{/if}}
 						<input
-								id="name"
-								name="name"
+								id="title"
+								name="title"
 								class="tp-input"
 								type="text"
 								minlength="5"
 								maxlength="1000"
 								placeholder="Кого вы ищете и какую работу нужно выполнить"
 								required
-
 						/>
 					</div>
 					<div>
@@ -62,7 +63,7 @@
 								minlength="50"
 								maxlength="5000"
 								placeholder="Расскажите подробно о вашем проекте"
-
+								required
 						></textarea>
 					</div>
 					<div>
@@ -91,10 +92,7 @@
 						>Специализация проекта</label
 						>
 						<select class="tp-input" name="category" id="category">
-							<option selected disabled
-							>Выберите категорию
-							</option
-							>
+							<option disabled value="" selected>Выберите категорию</option>
 							<option value="gamedev">Разработка игр</option>
 							<option value="webdev">Разработка сайтов</option>
 							<option value="designArt">Дизайн и арт</option>
@@ -104,13 +102,13 @@
 
 						<select
 								class="tp-input"
-								name="speciality"
-								id="speciality"
+								name="specialityId"
+								id="specialityId"
+								required
 						>
-							<option selected disabled
+							<option disabled value="" selected
 							>Выберите специализацию
-							</option
-							>
+							</option>
 							<option value="gamedev">Разработка игр</option>
 							<option value="webdev">Разработка сайтов</option>
 							<option value="designArt">Дизайн и арт</option>
@@ -136,15 +134,16 @@
 						/>
 					</div>
 					<div>
-						<label class="projectForm__label" for="budget"
+						<label class="projectForm__label" for="paymentAmount"
 						>Бюджет</label
 						>
 						<input
-								id="budget"
-								name="budget"
+								id="paymentAmount"
+								name="paymentAmount"
 								class="tp-input"
 								type="number"
 								placeholder="0"
+								required
 						/>
 						иконка рубля
 					</div>
@@ -152,9 +151,7 @@
 						<div>
 							<label class="projectForm__label" for="country">Нужен исполнитель из...</label>
 							<select class="tp-input" name="country" id="country">
-								<option selected disabled
-								>Страна</option
-								>
+								<option selected disabled>Страна</option>
 								<option value="gamedev">Разработка игр</option>
 								<option value="webdev">Разработка сайтов</option>
 								<option value="designArt">Дизайн и арт</option>
@@ -166,10 +163,9 @@
 									class="tp-input"
 									name="city"
 									id="city"
+									required
 							>
-								<option selected disabled
-								>Город</option
-								>
+								<option selected disabled value="">Город</option>
 								<option value="gamedev">Разработка игр</option>
 								<option value="webdev">Разработка сайтов</option>
 								<option value="designArt">Дизайн и арт</option>
@@ -179,7 +175,7 @@
 						</div>
 					{{/if}}
 					<div>
-						<label class="projectForm__label" for="budget"
+						<label class="projectForm__label" for=""
 						>Уровень фрилансера</label
 						>
 						<div>
@@ -188,20 +184,20 @@
 						</div>
 						<input
 								class="tp-input"
-								id="beginner"
+								id="entry"
 								type="radio"
-								name="freelancer_level"
-								value="beginner"
+								name="experienceLevelId"
+								value="entry"
 								required
 						/>
-						<label for="beginner">
+						<label for="entry">
 							Начинающий. Базовые знания и небольшой опыт работы
 						</label>
 						<input
 								class="tp-input"
 								id="intermediate"
 								type="radio"
-								name="freelancer_level"
+								name="experienceLevelId"
 								value="intermediate"
 								required
 						/>
@@ -212,7 +208,7 @@
 								class="tp-input"
 								id="expert"
 								type="radio"
-								name="freelancer_level"
+								name="experienceLevelId"
 								value="expert"
 								required
 						/>
@@ -220,10 +216,10 @@
 							Эксперт. Многолетний опыт работы в сложных проектах
 						</label>
 					</div>
-					<div>
-						<div>Способ оплаты</div>
-						<div>Прямая оплата Исполнитлю на его кашелек/счет</div>
-					</div>
+{{!--					<div>--}}
+{{!--						<div>Способ оплаты</div>--}}
+{{!--						<div>Прямая оплата Исполнитлю на его кашелек/счет</div>--}}
+{{!--					</div>--}}
 					<input type="submit" value="Опубликовать проект"/>
 				</form>
 			</div>

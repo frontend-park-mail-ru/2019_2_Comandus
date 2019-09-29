@@ -4,7 +4,7 @@ import SignUpComponent from './containers/signupPage/signupPage';
 import SettingsComponent from './components/SettingsComponent/SettingsComponent';
 import { htmlToElement } from './services/utils';
 import HeaderComponent from './components/Header';
-import ProjectFormComponent from './components/ProjectFormComponent/ProjectFormComponent';
+import JobFormComponent from './components/JobFormComponent/JobFormComponent';
 import ClientSettingsComponent from './components/ClientSettingsComponent/ClientSettingsComponent';
 import Component from '../spa/Component';
 import template from './App.handlebars';
@@ -17,11 +17,11 @@ const routes = {
 	'/settings/': { component: SettingsComponent },
 	// '/settings/': {component: ClientSettingsComponent},
 	'/new-project/': {
-		component: ProjectFormComponent,
+		component: JobFormComponent,
 		props: { mode: 'project' },
 	},
 	'/new-vacancy/': {
-		component: ProjectFormComponent,
+		component: JobFormComponent,
 		props: { mode: 'vacancy' },
 	},
 	'/freelancers/freelancerId': { component: Profile },

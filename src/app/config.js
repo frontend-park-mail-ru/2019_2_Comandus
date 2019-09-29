@@ -7,6 +7,7 @@ export default {
 		signUp: '/signup',
 		logout: '/logout',
 		settings: '/settings',
+		jobs: '/jobs',
 	},
 	accountTypes: {
 		client: 'client',

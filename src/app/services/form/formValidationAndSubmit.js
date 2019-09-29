@@ -61,7 +61,17 @@ function hasError(field) {
 	if (validity.valid) return;
 
 	// If field is required and empty
-	if (validity.valueMissing) return config.messageValueMissing;
+	if (validity.valueMissing) {
+		if (field.type === 'checkbox') return config.messageValueMissingCheckbox;
+
+		if (field.type === 'radio') return config.messageValueMissingRadio;
+
+		if (field.type === 'select-multiple') return config.messageValueMissingSelectMulti;
+
+		if (field.type === 'select-one') return config.messageValueMissingSelect;
+
+		return config.messageValueMissing;
+	}
 
 	// If not the right type
 	if (validity.typeMismatch) {
