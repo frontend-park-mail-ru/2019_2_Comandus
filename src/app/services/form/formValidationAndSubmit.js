@@ -1,4 +1,5 @@
 import './form.css';
+import { formToJSON } from './formToJSON';
 
 const config = {
 	messageValueMissing: 'Заполните пожалуйста это поле',
@@ -42,6 +43,7 @@ const classes = {
 	error: 'error',
 	errorMessage: 'error-message',
 	validate: 'validate',
+	responseText: 'response-error-text',
 };
 
 function hasError(field) {
@@ -203,6 +205,57 @@ function removeError(field) {
 	message.style.visibility = 'hidden';
 }
 
+class FormHelper {
+	constructor(submitEvent) {
+		this._event = submitEvent;
+		this.responseTextElement = null;
+	}
+
+	setResponseText(text) {
+		this.responseTextElement = this.form.querySelector(
+			`.${classes.responseText}`,
+		);
+		if (!this.responseTextElement) {
+			this.responseTextElement = document.createElement('div');
+			this.responseTextElement.className = classes.responseText;
+			this.form.insertAdjacentElement(
+				'afterbegin',
+				this.responseTextElement,
+			);
+		}
+		this.responseTextElement.textContent = text;
+		this.responseTextElement.style.display = 'block';
+		this.responseTextElement.style.visibility = 'visible';
+	}
+
+	get event() {
+		return this._event;
+	}
+
+	get form() {
+		return this._event.target;
+	}
+
+	get fields() {
+		return this._event.target.elements;
+	}
+
+	static clearResponseText(form) {
+		const responseTextElement = form.querySelector(
+			`.${classes.responseText}`,
+		);
+		if (responseTextElement) {
+			responseTextElement.textContent = '';
+			responseTextElement.style.display = 'none';
+			responseTextElement.style.visibility = 'hidden';
+		}
+	}
+
+	formToJSON() {
+		return formToJSON(this.form);
+	}
+}
+
 function onFormSubmitValidate(event, onSubmitCallback) {
 	if (!event.target.classList.contains(classes.validate)) return;
 
@@ -225,14 +278,17 @@ function onFormSubmitValidate(event, onSubmitCallback) {
 	// If there are errors, don't submit form and focus on first element with error
 	if (hasErrors) {
 		event.preventDefault();
-		hasErrors.focus();
+		return hasErrors.focus();
 	}
 
-	onSubmitCallback(event.target, fields, event);
+	// onSubmitCallback(event.target, fields, event);
+	onSubmitCallback(new FormHelper(event));
 }
 
 function onBlur(event) {
 	if (!event.target.form.classList.contains(classes.validate)) return;
+
+	FormHelper.clearResponseText(event.target.form);
 
 	removeError(event.target);
 	const error = hasError(event.target);
@@ -249,6 +305,12 @@ export function enableValidationAndSubmit(formElement, onSubmit) {
 	formElement.setAttribute('novalidate', true);
 	formElement.classList.add('validate');
 	formElement.addEventListener('blur', onBlur, true);
+
+	const responseText = document.createElement('div');
+	responseText.className = classes.responseText;
+	responseText.innerHTML = '';
+	responseText.style.display = 'none';
+	responseText.style.visibility = 'hidden';
 
 	formElement.addEventListener(
 		'submit',

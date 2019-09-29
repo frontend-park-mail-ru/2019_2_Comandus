@@ -3,6 +3,7 @@ import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
 import Component from '../../../spa/Component';
 import config from '../../config';
+import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
 
 class LoginComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
@@ -21,28 +22,19 @@ class LoginComponent extends Component {
 	postRender() {
 		const form = this._el.getElementsByTagName('form')[0];
 
-		form.addEventListener('submit', (event) => {
-			event.preventDefault();
+		enableValidationAndSubmit(form, (helper) => {
+			helper.event.preventDefault();
 
-			const formData = new FormData(form);
-			const object = {};
-			formData.forEach((value, key) => {
-				if (!object.hasOwnProperty(key)) {
-					object[key] = value;
-					return;
-				}
-				if (!Array.isArray(object[key])) {
-					object[key] = [object[key]];
-				}
-				object[key].push(value);
-			});
-
-			AjaxModule.post(config.urls.login, object)
+			AjaxModule.post(config.urls.login, helper.formToJSON())
 				.then((response) => {
 					this.props.router.push('/settings/');
 				})
 				.catch((error) => {
-					alert(error);
+					let text = error.message;
+					if (error.data && error.data.error) {
+						text = error.data.error;
+					}
+					helper.setResponseText(text);
 				});
 		});
 	}

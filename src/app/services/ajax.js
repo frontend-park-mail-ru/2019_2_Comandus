@@ -20,11 +20,13 @@ function validateStatus(status) {
 function handleErrors(response) {
 	if (!response.ok) {
 		// throw Error(response.statusText);
-		return Promise.reject({
+		return response.json().then((json) => Promise.reject({
 			message: response.statusText,
+			data: json,
 			response,
-		});
+		}));
 	}
+
 	return response;
 }
 
@@ -94,6 +96,8 @@ class AjaxModule {
 		if (data) {
 			init.body = data;
 		}
+
+		console.log(data);
 
 		return fetch(url, init).then(handleErrors);
 	}

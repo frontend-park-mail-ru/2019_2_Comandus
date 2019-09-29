@@ -90,7 +90,7 @@ app.post('/signup', function (req, res) {
 	const accountType = req.body.accountType;
 	const agreement = req.body.agreement;
 	if (
-		!password || !email || !agreement || !accountType ||
+		!password || !email || !accountType ||
 		!password.match(/^\S{4,}$/) ||
 		!email.match(/@/) ||
 		!(accountType === accountTypes.client || accountType === accountTypes.freelancer)
@@ -127,6 +127,7 @@ app.post('/login', function (req, res) {
 	res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
 	res.set('Access-Control-Allow-Credentials', 'true');
 
+	console.log(req.body);
 	const password = req.body.password;
 	const email = req.body.email;
 	if (!password || !email) {
