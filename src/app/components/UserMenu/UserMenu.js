@@ -14,16 +14,29 @@ export class UserMenu extends Component {
 		this._el = null;
 	}
 
+	created() {
+		const mode = getCookie(config.cookieAccountModeName);
+		if (!mode) {
+			setCookie(
+				config.cookieAccountModeName,
+				config.accountTypes.freelancer,
+			);
+		}
+	}
+
 	preRender() {
 		this._data = {
 			...this._data,
 			loaded: false,
 		};
-		AjaxModule.get(config.urls.account)
+		AjaxModule.get(config.urls.roles)
 			.then((response) => {
+				response.forEach((role) => {
+					role.on =						role.role === getCookie(config.cookieAccountModeName);
+				});
 				this._data = {
 					...this._data,
-					user: response,
+					roles: response,
 					loggedIn: () => !!response,
 				};
 			})
@@ -40,12 +53,6 @@ export class UserMenu extends Component {
 	render() {
 		this._data = {
 			...this._data,
-			isClientMode:
-				getCookie(config.cookieAccountModeName)
-				=== config.accountTypes.client,
-			isFreelancerMode:
-				getCookie(config.cookieAccountModeName)
-				=== config.accountTypes.freelancer,
 		};
 		const html = template({
 			...this.props,
@@ -67,7 +74,7 @@ export class UserMenu extends Component {
 			logout.addEventListener('click', (event) => {
 				event.preventDefault();
 
-				AjaxModule.post('/logout')
+				AjaxModule.post(config.urls.logout)
 					.then((response) => {
 						this.props.router.push('/login/');
 					})
@@ -85,7 +92,6 @@ export class UserMenu extends Component {
 				event.preventDefault();
 				event.stopPropagation();
 
-				console.log('click', event.target);
 				setCookie(
 					config.cookieAccountModeName,
 					event.target.dataset.mode,

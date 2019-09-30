@@ -19,4 +19,9 @@ export default class Component {
 	set data(newData) {
 		this._data = { ...newData };
 	}
+
+	stateChanged() {
+		this.render();
+		this.postRender();
+	}
 }

@@ -22,17 +22,17 @@
 					method="post"
 					autocomplete="off"
 			>
-				<label for="lastName">Фамилия</label>
+				<label for="secondName">Фамилия</label>
 				<input
 						class="tp-input"
-						name="lastName"
-						id="lastName"
+						name="secondName"
+						id="secondName"
 						type="text"
 						minlength="2"
 						maxlength="20"
 						pattern="^[А-Яа-яA-Za-z]{2,}$"
 						placeholder="Ваша фамилия"
-						value="{{ user.lastName }}"
+						value="{{ data.user.secondName }}"
 				/>
 				<label for="firstName">Имя</label>
 				<input
@@ -44,7 +44,7 @@
 						maxlength="20"
 						pattern="^[А-Яа-яA-Za-z]{2,}$"
 						placeholder="Ваше имя"
-						value="{{ user.firstName }}"
+						value="{{ data.user.firstName }}"
 						required
 				/>
 
@@ -55,7 +55,7 @@
 						id="email"
 						type="email"
 						placeholder="Ваш e-mail"
-						value="{{ user.email }}"
+						value="{{ data.user.email }}"
 						required
 				/>
 				<input
@@ -64,9 +64,6 @@
 						value="Сохранить изменения"
 				/>
 			</form>
-		</div>
-		<div class="tp-col-6">
-			smth important
 		</div>
 	</div>
 	<div class="tp-row tp-row-float-right">

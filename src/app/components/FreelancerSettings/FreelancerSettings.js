@@ -61,47 +61,53 @@ export class FreelancerSettings extends Component {
 			},
 		);
 
-		this.preRender();
-		return template({
+		const html = template({
 			countrySelect: countrySelect.render(),
 			visibilitySelect: visibilitySelect.render(),
 			data: this.data,
 			props: this.props,
 		});
+		const newElement = htmlToElement(html);
+		if (this._el && this._parent.contains(this._el)) {
+			this._parent.replaceChild(newElement, this._el);
+		} else {
+			this._parent.appendChild(newElement);
+		}
+		this._el = newElement;
 	}
 
 	preRender() {
-		AjaxModule.get('/freelancers/freelancerId')
+		this._data = {
+			...this._data,
+			loaded: false,
+		};
+		AjaxModule.get(`${config.urls.freelancers}/freelancerId`)
 			.then((response) => {
 				this.data = {
 					user: { ...response },
-					loaded: false,
 					...this.data,
 				};
-				// this._el.textContent = JSON.stringify(this._data);
 			})
 			.catch((error) => {
-				console.log(error);
-				alert(error.message);
+				console.error(error);
 			})
 			.finally(() => {
 				this.data = {
 					...this.data,
 					loaded: true,
 				};
-				// this.stateChanged();
+				this.stateChanged();
 			});
 	}
 
-	postRender(component) {
-		const contactsForm = component.querySelector('#contactsForm');
+	postRender() {
+		const contactsForm = this._el.querySelector('#contactsForm');
 		enableValidationAndSubmit(contactsForm, (helper) => {
 			helper.event.preventDefault();
 
 			AjaxModule.put('/freelancers/freelancerId', helper.formToJSON())
 				.then((response) => {
-					this.props.router.push('/settings/');
-					alert('Изменения успешны!');
+					helper.setResponseText('Изменения сохранены.', true);
 				})
 				.catch((error) => {
 					let text = error.message;
@@ -112,14 +118,13 @@ export class FreelancerSettings extends Component {
 				});
 		});
 
-		const profileForm = component.querySelector('#profileSettingsForm');
+		const profileForm = this._el.querySelector('#profileSettingsForm');
 		enableValidationAndSubmit(profileForm, (helper) => {
 			helper.event.preventDefault();
 
 			AjaxModule.put('/freelancers/freelancerId', helper.formToJSON())
 				.then((response) => {
-					this.props.router.push('/settings/');
-					alert('Изменения успешны!');
+					helper.setResponseText('Изменения сохранены.', true);
 				})
 				.catch((error) => {
 					let text = error.message;

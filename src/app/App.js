@@ -29,6 +29,10 @@ const routes = {
 	'/freelancers/freelancerId': { component: Profile },
 };
 
+const dynamicRoutes = [
+	{ regex: new RegExp('/jobs/[0-9]+'), component: SettingsComponent },
+];
+
 class AppComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
 		super(props);
@@ -68,6 +72,24 @@ class AppComponent extends Component {
 			);
 			this.props.spa._renderComponent(component);
 		}
+
+		dynamicRoutes.forEach((routElement) => {
+			if (routElement.regex.test(window.location.pathname)) {
+				props = {
+					...props,
+					...routElement.props,
+				};
+				console.log(props);
+				console.log(routElement.component);
+
+				const component = this.props.spa._createComponent(
+					routElement.component,
+					el,
+					props,
+				);
+				this.props.spa._renderComponent(component);
+			}
+		});
 
 		this._parent.appendChild(el);
 	}

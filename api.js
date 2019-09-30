@@ -22,11 +22,11 @@ class ClientAccount {
 }
 
 class User {
-	constructor(email, password, firstName, lastName){
+	constructor(email, password, firstName, secondName){
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
-		this.lastName = lastName;
+		this.secondName = secondName;
 		this.notificationSettings = {
 			newMessages: false,
 			newProjects: false,
@@ -86,7 +86,7 @@ app.post('/signup', function (req, res) {
 	const password = req.body.password;
 	const email = req.body.email;
 	const firstName = req.body.firstName;
-	const lastName = req.body.lastName;
+	const secondName = req.body.secondName;
 	const accountType = req.body.accountType;
 	const agreement = req.body.agreement;
 	if (
@@ -102,7 +102,7 @@ app.post('/signup', function (req, res) {
 	}
 
 	const id = uuid();
-	const user = new User(email, password, firstName, lastName);
+	const user = new User(email, password, firstName, secondName);
 	ids[id] = email;
 	users[email] = user;
 

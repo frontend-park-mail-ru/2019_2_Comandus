@@ -43,7 +43,9 @@ const classes = {
 	error: 'error',
 	errorMessage: 'error-message',
 	validate: 'validate',
-	responseText: 'response-error-text',
+	responseText: 'response-text',
+	responseTextError: 'response-text-error',
+	responseTextSuccess: 'response-text-success',
 };
 
 function hasError(field) {
@@ -221,7 +223,7 @@ class FormHelper {
 		this.responseTextElement = null;
 	}
 
-	setResponseText(text) {
+	setResponseText(text, success = false) {
 		this.responseTextElement = this.form.querySelector(
 			`.${classes.responseText}`,
 		);
@@ -232,6 +234,24 @@ class FormHelper {
 				'afterbegin',
 				this.responseTextElement,
 			);
+		}
+		switch (success) {
+		case false:
+			this.responseTextElement.classList.remove(
+				classes.responseTextSuccess,
+			);
+			this.responseTextElement.classList.add(
+				classes.responseTextError,
+			);
+			break;
+		case true:
+			this.responseTextElement.classList.remove(
+				classes.responseTextError,
+			);
+			this.responseTextElement.classList.add(
+				classes.responseTextSuccess,
+			);
+			break;
 		}
 		this.responseTextElement.textContent = text;
 		this.responseTextElement.style.display = 'block';

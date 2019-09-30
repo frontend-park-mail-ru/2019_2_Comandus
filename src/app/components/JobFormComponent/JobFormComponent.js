@@ -21,6 +21,7 @@ class JobFormComponent extends Component {
 			props,
 			isProject: () => props.mode === modes.project,
 			isVacancy: () => props.mode === modes.vacancy,
+			jobTypeId: props.mode === modes.vacancy ? 1 : 0,
 		};
 		this._el = null;
 
@@ -68,7 +69,9 @@ class JobFormComponent extends Component {
 		this._el = htmlToElement(html);
 
 		const mySelect = this._el.querySelector('#mySelect');
-		component.postRender(mySelect);
+		if (mySelect) {
+			component.postRender(mySelect);
+		}
 
 		this._parent.appendChild(this._el);
 	}

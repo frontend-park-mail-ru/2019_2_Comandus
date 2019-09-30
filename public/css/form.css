@@ -130,10 +130,8 @@ input[type='email'].tp-input {
 }
 
 .tp-button-primary {
-	width: 100%;
 	background-color: #4caf50;
 	color: white;
-	/*padding: 14px 20px;*/
 	margin: 4px 0;
 	border: none;
 	border-radius: 0.5rem;

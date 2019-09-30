@@ -38,6 +38,7 @@
 			"ignoreRegExpLiterals": true,
 			"ignoreStrings": true,
 			"ignoreTemplateLiterals": true
-		}]
+		}],
+		"default-case": 0
 	}
 }

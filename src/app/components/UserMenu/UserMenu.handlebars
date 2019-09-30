@@ -2,14 +2,6 @@
 		class="tp-navbar-navigate tp-navbar-right-part"
 		role="menubar"
 >
-
-	<li class="tp-navbar-search">
-		<form method="GET" role="search">
-			<div>
-				<input/>
-			</div>
-		</form>
-	</li>
 	<li>
 		<a href="/new-project/" role="menuitem">
 			Разметить заказ
@@ -21,44 +13,39 @@
 		</a>
 	</li>
 	{{#loaded}}
-		{{#if user}}
+		{{#if roles}}
 			<li class="tp-dropdown" role="none">
 				<a class="tp-dropdown-toggle" role="menuitem">
 					<div class="tp-navbar-profile"></div>
 				</a>
 				<ul class="tp-dropdown-content">
-					<li role="none" class="{{#isFreelancerMode}}active{{/isFreelancerMode}}">
-						<a class='account-switcher' data-mode="freelancer">
-							{{user.firstName}} {{user.lastName}}
-						</a>
-						Freelancer
-					</li>
-					<li role="none" class="{{#isClientMode}}active{{/isClientMode}}">
-						<a class="account-switcher" data-mode="client">
-							{{user.client.company.name}}
-						</a>
-						Client
-					</li>
+					{{#each roles}}
+						<li role="none" class="{{#on}}active{{/on}}">
+							<a class='account-switcher' data-mode="{{role}}">{{label}}
+								<span style="display: block">{{role}}</span>
+							</a>
+						</li>
+					{{/each}}
 					<li role="none">
 						<a
 								href="/freelancers/freelancerId"
 						>
-							Freelancer Profile
+							Страница фрилансера
 						</a>
 					</li>
 					<li role="none">
 						<a href="/settings/">
-							Settings
+							Настройки
 						</a>
 					</li>
-					<li role="none">
-						<a href="/settings-template">
-							Client Settings Template
-						</a>
-					</li>
+{{!--					<li role="none">--}}
+{{!--						<a href="/settings-template">--}}
+{{!--							Client Settings Template--}}
+{{!--						</a>--}}
+{{!--					</li>--}}
 					<li role="none">
 						<a href="/logout" id="logout">
-							Log out
+							Выйти
 						</a>
 					</li>
 				</ul>

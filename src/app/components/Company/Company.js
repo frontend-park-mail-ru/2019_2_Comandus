@@ -39,39 +39,46 @@ export class Company extends Component {
 			},
 		);
 
-		// this.preRender();
-		return template({
+		const html = template({
 			countrySelect: countrySelect.render(),
 			data: this.data,
 			props: this.props,
 		});
+		const newElement = htmlToElement(html);
+		if (this._el && this._parent.contains(this._el)) {
+			this._parent.replaceChild(newElement, this._el);
+		} else {
+			this._parent.appendChild(newElement);
+		}
+		this._el = newElement;
 	}
 
 	preRender() {
-		AjaxModule.get('/company/companyId')
+		this._data = {
+			...this._data,
+			loaded: false,
+		};
+		AjaxModule.get(`${config.urls.company}/0`)
 			.then((response) => {
 				this.data = {
 					company: { ...response },
-					loaded: false,
 					...this.data,
 				};
-				// this._el.textContent = JSON.stringify(this._data);
 			})
 			.catch((error) => {
-				console.log(error);
-				alert(error.message);
+				console.error(error);
 			})
 			.finally(() => {
 				this.data = {
 					...this.data,
 					loaded: true,
 				};
-				// this.stateChanged();
+				this.stateChanged();
 			});
 	}
 
-	postRender(component) {
-		const companySettingsForm = component.querySelector(
+	postRender() {
+		const companySettingsForm = this._el.querySelector(
 			'#companySettingsForm',
 		);
 		enableValidationAndSubmit(companySettingsForm, (helper) => {
@@ -79,8 +86,7 @@ export class Company extends Component {
 
 			AjaxModule.put('/company/companyId', helper.formToJSON())
 				.then((response) => {
-					this.props.router.push('/settings/');
-					alert('Изменения успешны!');
+					helper.setResponseText('Изменения сохранены.', true);
 				})
 				.catch((error) => {
 					let text = error.message;
@@ -91,7 +97,7 @@ export class Company extends Component {
 				});
 		});
 
-		const companyContactsForm = component.querySelector(
+		const companyContactsForm = this._el.querySelector(
 			'#companyContactsForm',
 		);
 		enableValidationAndSubmit(companyContactsForm, (helper) => {
@@ -99,8 +105,7 @@ export class Company extends Component {
 
 			AjaxModule.put('/company/companyId', helper.formToJSON())
 				.then((response) => {
-					this.props.router.push('/settings/');
-					alert('Изменения успешны!');
+					helper.setResponseText('Изменения сохранены.', true);
 				})
 				.catch((error) => {
 					let text = error.message;

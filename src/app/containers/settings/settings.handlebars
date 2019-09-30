@@ -21,16 +21,17 @@
 				</ul>
 			</div>
 			<div class="tp-col-10 tp-border-wrapper card">
-				{{{data.accountComponent}}}
+				<div id="{{data.children.myAccount}}"></div>
 				{{#if data.isClientMode}}
-					{{{data.companyComponent}}}
+					<div id="{{data.children.companyComponent}}"></div>
 				{{else}}
-					{{{data.freelancerSettingsComponent}}}
+					<div id="{{data.children.freelancerSettingsComponent}}"></div>
 				{{/if}}
-				{{{data.notificationSettingsComponent}}}
-				{{{data.changePasswordComponent}}}
-				{{{data.authHistoryComponent}}}
-				{{{data.securityQuestionComponent}}}
+				<div id="{{data.children.notificationSettingsComponent}}"></div>
+				<div id="{{data.children.changePasswordComponent}}"></div>
+				<div id="{{data.children.authHistoryComponent}}"></div>
+				<div id="{{data.children.securityQuestionComponent}}"></div>
+
 			</div>
 		</div>
 	</div>

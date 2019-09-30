@@ -12,50 +12,56 @@ export class NotificationSettings extends Component {
 	}
 
 	render() {
-		// this.preRender();
-		return template({
+		const html = template({
 			data: this.data,
 			props: this.props,
 		});
+		const newElement = htmlToElement(html);
+		if (this._el && this._parent.contains(this._el)) {
+			this._parent.replaceChild(newElement, this._el);
+		} else {
+			this._parent.appendChild(newElement);
+		}
+		this._el = newElement;
 	}
 
 	preRender() {
-		AjaxModule.get('/account/settings/notifications')
+		this._data = {
+			...this._data,
+			loaded: false,
+		};
+		AjaxModule.get(config.urls.notificationSettings)
 			.then((response) => {
 				this.data = {
 					notifications: { ...response },
-					loaded: false,
 					...this.data,
 				};
-				// this._el.textContent = JSON.stringify(this._data);
 			})
 			.catch((error) => {
-				console.log(error);
-				alert(error.message);
+				console.error(error);
 			})
 			.finally(() => {
 				this.data = {
 					...this.data,
 					loaded: true,
 				};
-				// this.stateChanged();
+				this.stateChanged();
 			});
 	}
 
-	postRender(component) {
-		const notificationsForm = component.querySelector(
+	postRender() {
+		const notificationsForm = this._el.querySelector(
 			'#notificationsSettings',
 		);
 		enableValidationAndSubmit(notificationsForm, (helper) => {
 			helper.event.preventDefault();
 
 			AjaxModule.put(
-				'/account/settings/notifications',
+				config.urls.notificationSettings,
 				helper.formToJSON(),
 			)
 				.then((response) => {
-					this.props.router.push('/settings/');
-					alert('Изменения успешны!');
+					helper.setResponseText('Изменения сохранены.', true);
 				})
 				.catch((error) => {
 					let text = error.message;

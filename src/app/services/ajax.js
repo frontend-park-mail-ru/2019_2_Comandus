@@ -53,7 +53,7 @@ class AjaxModule {
 		}).then((response) => response.json());
 	}
 
-	put(url = '/', data, config) {
+	put(url = '/', data = null, config = {}) {
 		return this._fetch({
 			url,
 			method: 'put',
@@ -62,7 +62,7 @@ class AjaxModule {
 		}).then((response) => response.json());
 	}
 
-	delete(url = '/', config) {
+	delete(url = '/', config = {}) {
 		return this._fetch({
 			url,
 			method: 'delete',
@@ -98,6 +98,7 @@ class AjaxModule {
 		}
 
 		console.log(data);
+		console.log(url);
 
 		return fetch(url, init).then(handleErrors);
 	}

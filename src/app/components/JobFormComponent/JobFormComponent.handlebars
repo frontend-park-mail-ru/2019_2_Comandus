@@ -4,9 +4,8 @@
 			<div class="tp-col-8">
 				<h1>{{title}}</h1>
 				<form method="post" id="projectForm" autocomplete="off">
-					{{{mySelect}}}
-					<input id="hireManagerId" name="hireManagerId" type="text" hidden value="some-id" required/>
-					<input id="jobTypeId" name="jobTypeId" type="text" hidden value="{{props.mode}}" required/>
+					<input id="hireManagerId" name="hireManagerId" type="number" hidden value="0" required/>
+					<input id="jobTypeId" name="jobTypeId" type="number" hidden value="{{jobTypeId}}" required/>
 					<div>
 						<label class="projectForm__label" for="title"
 						>Название</label
@@ -93,11 +92,11 @@
 						>
 						<select class="tp-input" name="category" id="category">
 							<option disabled value="" selected>Выберите категорию</option>
-							<option value="gamedev">Разработка игр</option>
-							<option value="webdev">Разработка сайтов</option>
-							<option value="designArt">Дизайн и арт</option>
-							<option value="dev">Программирование</option>
-							<option value="3dGraph">3D Графика</option>
+							<option value="0">Разработка игр</option>
+							<option value="1">Разработка сайтов</option>
+							<option value="2">Дизайн и арт</option>
+							<option value="3">Программирование</option>
+							<option value="4">3D Графика</option>
 						</select>
 
 						<select
@@ -109,11 +108,11 @@
 							<option disabled value="" selected
 							>Выберите специализацию
 							</option>
-							<option value="gamedev">Разработка игр</option>
-							<option value="webdev">Разработка сайтов</option>
-							<option value="designArt">Дизайн и арт</option>
-							<option value="dev">Программирование</option>
-							<option value="3dGraph">3D Графика</option>
+							<option value="0">Разработка игр</option>
+							<option value="1">Разработка сайтов</option>
+							<option value="2">Дизайн и арт</option>
+							<option value="3">Программирование</option>
+							<option value="4">3D Графика</option>
 						</select>
 					</div>
 					<div>
@@ -152,11 +151,11 @@
 							<label class="projectForm__label" for="country">Нужен исполнитель из...</label>
 							<select class="tp-input" name="country" id="country">
 								<option selected disabled>Страна</option>
-								<option value="gamedev">Разработка игр</option>
-								<option value="webdev">Разработка сайтов</option>
-								<option value="designArt">Дизайн и арт</option>
-								<option value="dev">Программирование</option>
-								<option value="3dGraph">3D Графика</option>
+								<option value="0">Разработка игр</option>
+								<option value="1">Разработка сайтов</option>
+								<option value="2">Дизайн и арт</option>
+								<option value="3">Программирование</option>
+								<option value="4">3D Графика</option>
 							</select>
 
 							<select
@@ -166,11 +165,11 @@
 									required
 							>
 								<option selected disabled value="">Город</option>
-								<option value="gamedev">Разработка игр</option>
-								<option value="webdev">Разработка сайтов</option>
-								<option value="designArt">Дизайн и арт</option>
-								<option value="dev">Программирование</option>
-								<option value="3dGraph">3D Графика</option>
+								<option value="0">Разработка игр</option>
+								<option value="1">Разработка сайтов</option>
+								<option value="2">Дизайн и арт</option>
+								<option value="3">Программирование</option>
+								<option value="4">3D Графика</option>
 							</select>
 						</div>
 					{{/if}}
@@ -187,7 +186,7 @@
 								id="entry"
 								type="radio"
 								name="experienceLevelId"
-								value="entry"
+								value="1"
 								required
 						/>
 						<label for="entry">
@@ -198,7 +197,7 @@
 								id="intermediate"
 								type="radio"
 								name="experienceLevelId"
-								value="intermediate"
+								value="1"
 								required
 						/>
 						<label for="intermediate">
@@ -209,7 +208,7 @@
 								id="expert"
 								type="radio"
 								name="experienceLevelId"
-								value="expert"
+								value="2"
 								required
 						/>
 						<label for="expert">

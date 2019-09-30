@@ -1,8 +1,9 @@
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
 import Component from '../../../spa/Component';
+import config from '../../config';
 
-const html = '<div>Settings</div>';
+const html = '<pre>Settings</pre>';
 
 class SettingsComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
@@ -19,14 +20,18 @@ class SettingsComponent extends Component {
 	}
 
 	preRender() {
-		AjaxModule.get('/settings')
+		AjaxModule.get(config.urls.private + window.location.pathname)
 			.then((response) => {
 				this._data = response;
-				this._el.textContent = JSON.stringify(this._data);
+				this._el.textContent = JSON.stringify(this._data, null, 4);
 			})
 			.catch((error) => {
 				console.error(error);
-				alert(error.message);
+				if (error.data) {
+					this._el.textContent = error.data.error;
+					return;
+				}
+				this._el.textContent = error.message;
 			});
 	}
 }

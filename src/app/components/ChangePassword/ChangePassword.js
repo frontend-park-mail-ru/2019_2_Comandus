@@ -12,26 +12,31 @@ export class ChangePassword extends Component {
 	}
 
 	render() {
-		// this.preRender();
-		return template({
+		const html = template({
 			data: this.data,
 			props: this.props,
 		});
+		const newElement = htmlToElement(html);
+		if (this._el && this._parent.contains(this._el)) {
+			this._parent.replaceChild(newElement, this._el);
+		} else {
+			this._parent.appendChild(newElement);
+		}
+		this._el = newElement;
 	}
 
 	preRender() {}
 
-	postRender(component) {
-		const passwordChangeForm = component.querySelector(
+	postRender() {
+		const passwordChangeForm = this._el.querySelector(
 			'#passwordChangeForm',
 		);
 		enableValidationAndSubmit(passwordChangeForm, (helper) => {
 			helper.event.preventDefault();
 
-			AjaxModule.put('/account/settings/password', helper.formToJSON())
+			AjaxModule.put(config.urls.changePassword, helper.formToJSON())
 				.then((response) => {
-					this.props.router.push('/settings/');
-					alert('Изменения успешны!');
+					helper.setResponseText('Изменения сохранены.', true);
 				})
 				.catch((error) => {
 					let text = error.message;
