@@ -7,7 +7,7 @@
 	"scripts": {
 		"start-build": "node server.js",
 		"test": "jest --watchAll",
-		"build": "NODE_ENV=production webpack && cp src/index.html dist/index.html",
+		"build": "NODE_ENV=production webpack && cp src/index.html dist/index.html && cp -a public/media dist/",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/**/*.{js,html,css}'",
 		"prettier:public": "prettier --config .prettierrc --write '{public,__{tests,mocks}__}/**/*.{js,html,css}'",
 		"start": "webpack-dev-server",
@@ -15,7 +15,8 @@
 		"lint:fix": "npm run lint -- --fix",
 		"lint:css": "eslint --ext .css src",
 		"lint:css:fix": "npm run lint:css -- --fix",
-		"api": "node api.js"
+		"api": "node api.js",
+		"deploy": "now -A mynow.json --prod"
 	},
 	"repository": {
 		"type": "git",

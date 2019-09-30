@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const port = process.argv[2] || 3000;
-const staticBasePath = './public';
+const staticBasePath = './dist';
 
 const extContentType = {
 	'.ico': 'image/x-icon',

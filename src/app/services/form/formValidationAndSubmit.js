@@ -48,6 +48,10 @@ const classes = {
 	responseTextSuccess: 'response-text-success',
 };
 
+const emailRegex = new RegExp(
+	'^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$',
+);
+
 function hasError(field) {
 	// Don't validate submits, buttons, file and reset inputs, and disabled fields
 	if (
@@ -57,6 +61,10 @@ function hasError(field) {
 		|| field.type === fieldTypes.submit
 		|| field.type === fieldTypes.button
 	) return;
+
+	if (field.type === fieldTypes.email && !emailRegex.test(field.value)) {
+		return config.messageTypeMismatchEmail;
+	}
 
 	const { validity } = field;
 
@@ -77,7 +85,9 @@ function hasError(field) {
 
 	// If not the right type
 	if (validity.typeMismatch) {
-		if (field.type === fieldTypes.email) return config.messageTypeMismatchEmail;
+		if (field.type === fieldTypes.email) {
+			return config.messageTypeMismatchEmail;
+		}
 
 		if (field.type === fieldTypes.url) return config.messageTypeMismatchURL;
 	}
@@ -332,6 +342,7 @@ function onBlur(event) {
 }
 
 export function enableValidationAndSubmit(formElement, onSubmit) {
+	formElement.setAttribute('novalidate', true);
 	formElement.setAttribute('novalidate', true);
 	formElement.classList.add('validate');
 	formElement.addEventListener('blur', onBlur, true);

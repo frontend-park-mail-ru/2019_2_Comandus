@@ -10,7 +10,7 @@
 				<img
 						class="tp-avatar tp-avatar-content-below"
 						alt="..."
-						src="/media/dev/avatar.jpg"
+						src="/media/dev/avatar.png"
 						width="120"
 						height="120"
 				/>
@@ -28,11 +28,12 @@
 						name="secondName"
 						id="secondName"
 						type="text"
-						minlength="2"
 						maxlength="20"
 						pattern="^[А-Яа-яA-Za-z]{2,}$"
+						title="Обычно фамилия так не выглядет. Это Ваша действительная фамилия?"
 						placeholder="Ваша фамилия"
 						value="{{ data.user.secondName }}"
+						required
 				/>
 				<label for="firstName">Имя</label>
 				<input
@@ -40,9 +41,9 @@
 						name="firstName"
 						id="firstName"
 						type="text"
-						minlength="2"
 						maxlength="20"
 						pattern="^[А-Яа-яA-Za-z]{2,}$"
+						title="Обычно имя так не выглядет. Это Ваше действительное имя?"
 						placeholder="Ваше имя"
 						value="{{ data.user.firstName }}"
 						required

@@ -1,6 +1,5 @@
 import Component from '../../../spa/Component';
 import template from './Select.handlebars';
-import { htmlToElement } from '../../services/utils';
 
 export class Select extends Component {
 	constructor({
@@ -32,18 +31,10 @@ export class Select extends Component {
 	preRender() {}
 
 	render() {
-		const html = template({
+		return template({
 			data: this.data,
 			props: this.props,
 		});
-		return html;
-		// const newElement = htmlToElement(html);
-		// if (this._el && this._parent.contains(this._el)) {
-		// 	this._parent.replaceChild(newElement, this._el);
-		// } else {
-		// 	this._parent.appendChild(newElement);
-		// }
-		// this._el = newElement;
 	}
 
 	handleChange(event) {

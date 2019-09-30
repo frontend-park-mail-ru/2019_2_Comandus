@@ -1,7 +1,6 @@
 {
-	"name": "comandus2019",
-	"version": 2,
-	"alias": ["comandus2019"],
+	"name": "comandus",
+	"alias": ["comandus"],
 	"builds": [
 		{
 			"src": "package.json",

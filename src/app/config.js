@@ -1,5 +1,6 @@
 export default {
-	baseAPIUrl: 'http://localhost:8080',
+	baseAPIUrl: 'https://flruserver.herokuapp.com',
+	// baseAPIUrl: 'localhost:8080',
 	// cookieAccountModeName: 'account_mode',
 	cookieAccountModeName: 'user_type',
 	urls: {

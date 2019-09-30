@@ -15,6 +15,9 @@
 				id="firstName"
 				type="text"
 				placeholder="Введите Ваше имя"
+				required
+				pattern="^[А-Яа-яA-Za-z]{2,}$"
+				title="Обычно имя так не выглядет. Это Ваше действительное имя?"
 			/>
 			<label for="secondName">Фамилия</label>
 			<input
@@ -23,13 +26,16 @@
 				id="secondName"
 				type="text"
 				placeholder="Введите Вашу фамилию"
+				required
+				pattern="^[А-Яа-яA-Za-z]{2,}$"
+				title="Обычно фамилия так не выглядет. Это Ваша действительная фамилия?"
 			/>
 			<label for="email">Электронная почта</label>
 			<input
 				class="tp-input"
 				name="email"
 				id="email"
-				type="text"
+				type="email"
 				placeholder="Электронная почта"
 				required
 			/>
