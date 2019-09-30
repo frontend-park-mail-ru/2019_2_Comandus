@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Photo Upload</title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/css/grid.css" type="text/css" />
+    <link rel="stylesheet" href="/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="/css/form.css" type="text/css" />
+</head>
+<body>
+<div class="tp-modal-shadow"></div>
+<div class="tp-modal-window">
+    <main class="tp-container tp-form-window">
+        <h1>Загрузка новой фотографии</h1>
+        <div class="tp-underline"></div>
+        <form
+                class="tp-form"
+                id="uploadImageForm"
+                method="post"
+                autocomplete="off"
+                novalidate="novalidate"
+        >
+            <div class="tp-container">
+                <div class="tp-row tp-row-centered">
+                    <span class="tp-text-centered">Вы можете загрузить изображение в формате JPG, GIF или PNG</span>
+                </div>
+                <div class="tp-row tp-row-centered">
+                    <input
+                            class="tp-input tp-input-file"
+                            name="uploadImage"
+                            id="uploadImage"
+                            type="file"
+                    />
+                    <label for="uploadImage" class="tp-input-file-button tp-label-file">
+                        <span class="">Выбрать файл</span>
+                    </label>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>
+</body>
+</html>

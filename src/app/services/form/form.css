@@ -1,0 +1,17 @@
+.error {
+	border-color: red !important;
+	box-shadow: 0 0 0 1px red;
+}
+
+.error-message {
+	color: red;
+	font-style: italic;
+}
+
+.response-text-error {
+	color: red;
+}
+
+.response-text-success {
+	color: #258051;
+}

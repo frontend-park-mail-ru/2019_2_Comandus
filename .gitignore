@@ -1,0 +1,16 @@
+.idea/
+node_modules/
+.env
+npm-debug.log*
+dist/
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+todo.md
+gist.js
+trash

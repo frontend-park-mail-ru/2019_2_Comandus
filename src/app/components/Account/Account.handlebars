@@ -1,0 +1,75 @@
+<div class="tp-container" id="{{props.id}}">
+	<div class="tp-row tp-underline">
+		<h2>
+			Основное
+		</h2>
+	</div>
+	<div class="tp-row tp-align-items-start">
+		<div class="tp-col-6">
+			<div class="tp-container tp-container-align-center">
+				<img
+						class="tp-avatar tp-avatar-content-below"
+						alt="..."
+						src="/media/dev/avatar.png"
+						width="120"
+						height="120"
+				/>
+				<a href="#" target="_self">Изменить</a>
+			</div>
+			<form
+					class="tp-form"
+					id="mainSettingsForm"
+					method="post"
+					autocomplete="off"
+			>
+				<label for="secondName">Фамилия</label>
+				<input
+						class="tp-input"
+						name="secondName"
+						id="secondName"
+						type="text"
+						maxlength="20"
+						pattern="^[А-Яа-яA-Za-z]{2,}$"
+						title="Обычно фамилия так не выглядет. Это Ваша действительная фамилия?"
+						placeholder="Ваша фамилия"
+						value="{{ data.user.secondName }}"
+						required
+				/>
+				<label for="firstName">Имя</label>
+				<input
+						class="tp-input"
+						name="firstName"
+						id="firstName"
+						type="text"
+						maxlength="20"
+						pattern="^[А-Яа-яA-Za-z]{2,}$"
+						title="Обычно имя так не выглядет. Это Ваше действительное имя?"
+						placeholder="Ваше имя"
+						value="{{ data.user.firstName }}"
+						required
+				/>
+
+				<label for="email">Email</label>
+				<input
+						class="tp-input"
+						name="email"
+						id="email"
+						type="email"
+						placeholder="Ваш e-mail"
+						value="{{ data.user.email }}"
+						required
+				/>
+				<input
+						class="tp-button-primary"
+						type="submit"
+						value="Сохранить изменения"
+				/>
+			</form>
+		</div>
+	</div>
+	<div class="tp-row tp-row-float-right">
+		<a href="#" target="_self">
+			Вы можете удалить свой аккаунт
+		</a>
+	</div>
+</div>

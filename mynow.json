@@ -1,0 +1,13 @@
+{
+	"name": "comandus",
+	"alias": ["comandus"],
+	"builds": [
+		{
+			"src": "package.json",
+			"use": "@now/static-build",
+			"config": {
+				"distDir": "dist"
+			}
+		}
+	]
+}

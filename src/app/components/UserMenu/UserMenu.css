@@ -1,0 +1,8 @@
+.active {
+	box-shadow: inset 4px 0px 0px 0px #623d76;
+}
+
+.account-switcher {
+	display: block;
+	cursor: pointer;
+}

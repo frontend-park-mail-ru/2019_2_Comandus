@@ -1,0 +1,505 @@
+.tp-navbar {
+	/*min-height: 55px;*/
+	box-shadow: 0 1px 6px rgba(57, 73, 76, 0.35);
+}
+
+.tp-navbar-logo {
+	flex-basis: auto;
+	min-height: 70px;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 55px;
+}
+
+.tp-navbar-brand {
+	background-image: url('https://via.placeholder.com/106x30?text=КОМАНДУС');
+	background-repeat: no-repeat;
+	background-size: 106px 30px;
+	display: block;
+	width: 106px;
+	height: 30px;
+	text-indent: -9999px;
+	margin-right: 5px;
+}
+
+.tp-navbar-nav-wrap {
+	display: flex;
+	padding: 0;
+	flex: 1;
+}
+
+.tp-navbar-navigate {
+	/* навигационная часть хэдэра */
+	list-style: none;
+	flex-direction: row;
+	margin: 0;
+	/*border: none;*/
+	padding: 0;
+	display: flex;
+}
+
+.tp-navbar-navigate > li {
+	display: flex;
+	margin-bottom: 0;
+}
+
+.tp-navbar-navigate > li > a,
+.tp-navbar-navigate > li > form {
+	font-size: 12px;
+	line-height: 12px;
+	color: #666;
+	padding-left: 9px;
+	padding-right: 9px;
+	display: flex;
+	align-items: center;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.tp-navbar-right-part {
+	flex: 1;
+	justify-content: flex-end;
+}
+
+.navbar-search form {
+}
+
+.tp-navbar-profile {
+	background-image: url('https://via.placeholder.com/30x30?text=NY');
+	background-repeat: no-repeat;
+	background-size: 30px 30px;
+	display: block;
+	width: 30px;
+	height: 30px;
+}
+
+/*.footer {*/
+/*	margin-top: auto;*/
+/*	background-color: #222;*/
+/*}*/
+
+footer a {
+	font-size: 14px;
+	color: #656565;
+}
+
+.tp-list-unstyled {
+	padding-left: 0;
+	list-style: none;
+}
+
+/** DropDown Menu */
+.tp-dropdown {
+	position: relative;
+	z-index: 9999;
+}
+
+.tp-dropdown-toggle {
+	display: block;
+	position: relative;
+}
+
+.tp-dropdown-content {
+	background-color: #fff;
+	min-width: 150px;
+
+	right: 0;
+
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	border-left: 1px solid rgba(0, 0, 0, 0.05);
+	border-radius: 3px;
+	box-shadow: 3px 2px 7px 1px rgba(0, 0, 0, 0.08);
+	/*margin-left: -16px;*/
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	top: 100%;
+	transform: scaley(0.4);
+	transform-origin: 10% top;
+	transition: 0s max-height 0.15s linear,
+		0.1s opacity cubic-bezier(0.39, 0.575, 0.565, 1),
+		0.15s transform cubic-bezier(0.1, 1.26, 0.83, 1);
+	z-index: 9999;
+
+	padding-left: 0;
+	list-style: none;
+}
+
+.tp-dropdown-content li {
+	color: #4c2d46;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-transform: none;
+}
+
+.tp-dropdown-content li:hover {
+	color: #4c2d46;
+	box-shadow: inset 4px 0px 0px 0px #623d76;
+	transition: 0.15s all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.tp-dropdown:hover .tp-dropdown-content {
+	/*display: block;*/
+	opacity: 1;
+	max-height: 700px;
+	transform: scaley(1);
+
+	transition-delay: 0.2s;
+	transition-duration: 0s, 0.2s, 0.2s;
+}
+
+/* Buttons/inputs */
+
+button {
+	height: 32px;
+	font-size: 15px;
+	padding: 0 12px;
+	margin: 1px 4px;
+	font-weight: 500;
+
+	border-radius: 0.5rem;
+	background: #5d49cc;
+	border: none;
+	/* сдвиг по x, сдвиг по y, размытие, растяжение */
+	box-shadow: 0 0 1px 0 #707070;
+	color: #69a6ff;
+	cursor: pointer;
+	transition: all 0.45s ease;
+}
+
+button:hover {
+	background-color: #4e419d;
+}
+
+button:active {
+	background-color: #2d235d;
+}
+
+button[disabled] {
+	opacity: 0.5;
+	pointer-events: none;
+	user-select: none;
+}
+
+.tp-nav-buttons-group {
+	background-color: var(--header-footer-color);
+}
+
+.tp-nav-buttons-group button {
+	background: transparent;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+.tp-nav-buttons-group button:hover {
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.tp-nav-buttons-group button:active {
+	background: rgba(0, 0, 0, 0.2);
+	transition: all 0.1s ease;
+}
+
+input,
+select {
+	height: 32px;
+	font-size: 15px;
+	padding: 0 12px;
+	margin: 2px 2px;
+
+	border-radius: 0.7rem;
+	border: none;
+	box-shadow: 0 0 0 1px #c5c5c5;
+	transition: box-shadow 0.3s ease;
+}
+
+
+
+input:focus {
+	box-shadow: 0 0 0 0px #FFFFFF,
+	0 0 0 2px #9fa2df;
+	transition: box-shadow 0.3s ease-out;
+}
+
+input[readonly]:focus {
+	box-shadow: 0 0 0 1px #c5c5c5;
+}
+
+textarea {
+	font-size: 15px;
+	padding: 6px 12px;
+	margin: 2px 2px;
+
+	border-radius: 0.7rem;
+	border: none;
+	box-shadow: 0 0 0 1px #c5c5c5;
+	transition: box-shadow 0.3s ease;
+}
+
+textarea:focus,
+select:focus {
+	box-shadow: 0 0 0 0px #FFFFFF,
+	0 0 0 2px #9fa2df;
+	transition: box-shadow 0.3s ease-out;
+}
+
+a {
+	padding: 0 4px;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+p {
+	padding: 0 4px;
+}
+
+h1 {
+	color: darkblue;
+}
+
+h2 {
+	margin-top: 2px;
+	margin-bottom: 10px;
+	margin-left: 6px;
+	padding: 0 4px;
+}
+
+#tp-main-page-photo {
+	display: flex;
+	height: 600px;
+	flex-direction: column;
+	align-items: center;
+	background-image: url('../media/dev/background_cut.jpg');
+	background-position: center top;
+	background-size: cover;
+	opacity: 0.85;
+}
+
+.tp-shadow {
+	display: inherit;
+	flex-direction: inherit;
+	align-items: inherit;
+	justify-content: inherit;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.tp-main-screen-buttons {
+	/*margin: auto;*/
+	height: 64px;
+	width: 280px;
+	font-size: 24px;
+	font-weight: 500;
+
+	color: white;
+}
+
+h1.tp-main-text {
+	color: #697287;
+	margin-top: auto;
+	margin-bottom: 10px;
+	font-size: 60px;
+	text-align: center;
+}
+
+.tp-h-100 {
+	height: 100%;
+}
+
+.tp-media {
+	margin: 5px 16px;
+	padding: 8px 8px;
+	display: flex;
+	flex-direction: column;
+	/*width: 100%;*/
+	min-height: 100px;
+	box-shadow: 0 0 2px 1px #c5c5c5;
+}
+
+.tp-container .tp-row {
+	justify-content: space-between;
+}
+
+img.tp-avatar {
+	margin: 12px 12px;
+	box-shadow: 1px 1px 3px 2px #c5c5c5;
+}
+
+.tp-avatar.tp-avatar-content-below {
+	margin-bottom: 2px;
+}
+
+.tp-row.tp-nav-buttons-group {
+	justify-content: space-around;
+}
+
+.tp-border-wrapper {
+	border: #f5f5f6 4px solid;
+}
+
+.tp-columns-row {
+	flex-wrap: nowrap;
+	align-items: flex-start;
+}
+
+.tp-align-items-start {
+	align-items: flex-start;
+}
+
+.tp-menu-navigate {
+	/* навигационная часть хэдэра */
+	list-style: none;
+	flex-direction: column;
+	margin: 32px -16px -16px;
+	/*box-shadow: 0 0 3px 0 #c5c5c5;*/
+	padding: 0;
+	display: flex;
+	/*margin: -10px ;*/
+}
+
+.tp-underline {
+	padding: 4px 0;
+	border-bottom: #e6e6e6 1px solid;
+}
+
+.tp-menu-navigate > li {
+	padding: 8px 0px;
+	display: flex;
+	justify-content: center;
+	border: #c5c5c5 1px solid;
+	transition: background-color 0.3s ease;
+}
+
+.tp-menu-navigate > li:hover {
+	background-color: #e6e6e6;
+	transition: background-color 0.3s ease;
+}
+
+.tp-menu-navigate > li > a {
+	font-size: 1.1rem;
+	text-align: center;
+	color: #666;
+	/*padding-left: 9px;*/
+	/*padding-right: 9px;*/
+	/*display: flex;*/
+	/*align-items: center;*/
+	/*vertical-align: middle;*/
+	font-weight: 500;
+	text-decoration: none;
+}
+
+a.tp-option-link {
+	margin-left: 16px;
+}
+
+.tp-modal-window {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	min-width: 400px;
+	max-width: 400px;
+	max-height: 75%;
+	background: inherit;
+}
+
+.tp-modal-window-scrolling {
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.tp-modal-window-medium {
+	max-width: 500px;
+}
+
+.tp-modal-window-big {
+	max-width: 650px;
+}
+
+.tp-modal-shadow {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	background: rgba(0, 0, 0, 0.4);;
+}
+
+.tp-framed-tag {
+    border: #e8eaf1 1px solid;
+    font-size: 1rem;
+    margin: 2px 6px;
+    padding: 6px 8px;
+    min-width: 40px;
+
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1px 0 #707070;
+}
+
+.tp-framed-tag-interactive {
+	border: #e2e4eb 1px solid;
+	background: #e8eaf1;
+	font-size: 0.8rem;
+	margin: 3px 3px;
+	padding: 6px 8px;
+	min-width: 30px;
+	border-radius: 0.3rem;
+}
+
+.tp-tag-content {
+	color: #323232;
+}
+
+.tp-tag-content::after {
+	content: "x";
+	color: #000000;
+	margin-left: 2px;
+	cursor: pointer;
+}
+
+
+.tp-row-right-part {
+    margin-left: auto;
+}
+
+.tp-ul-text {
+    margin: 2px 2px;
+}
+
+.tp-text-centered {
+	text-align: center;
+}
+
+.tp-paginator {
+	margin-right: 10px;
+	height: 32px;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: space-around;
+}
+
+.tp-paginator > li {
+	display: flex;
+	margin-bottom: 0;
+	border: #e8eaf1 1px solid;
+	align-items: center;
+}
+
+.tp-paginator > li > a {
+	font-size: 20px;
+	line-height: 12px;
+	color: #666;
+	padding-left: 9px;
+	padding-right: 9px;
+	font-weight: 500;
+}

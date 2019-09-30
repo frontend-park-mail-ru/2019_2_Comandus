@@ -1,0 +1,38 @@
+.projectForm__label, legend {
+	font-size: 1.5em;
+	font-weight: bold;
+	padding: 0;
+}
+
+.projectForm__loadFiles {
+	border: #484861 dashed 1px;
+	border-radius: 5px;
+	padding: 15px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.projectForm__loadFiles:hover {
+	border: #697287 dashed 1px;
+	color: #697287;
+}
+
+.fieldset {
+	margin-bottom: 30px;
+}
+
+.fieldset > div {
+	margin-top: 10px;
+	width: 100%;
+}
+
+/*.visuallyhidden {*/
+/*	border: 0;*/
+/*	clip: rect(0 0 0 0);*/
+/*	height: 1px;*/
+/*	margin: -1px;*/
+/*	overflow: hidden;*/
+/*	padding: 0;*/
+/*	position: absolute;*/
+/*	width: 1px;*/
+/*}*/

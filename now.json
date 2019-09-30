@@ -1,0 +1,14 @@
+{
+	"name": "comandus2019",
+	"version": 2,
+	"alias": ["comandus2019"],
+	"builds": [
+		{
+			"src": "package.json",
+			"use": "@now/static-build",
+			"config": {
+				"distDir": "dist"
+			}
+		}
+	]
+}
