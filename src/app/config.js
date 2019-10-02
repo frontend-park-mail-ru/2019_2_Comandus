@@ -17,6 +17,8 @@ export default {
 		authHistory: '/private/account/settings/auth-history',
 		company: '/company',
 		freelancers: '/freelancers',
+		uploadAccountAvatar: '/private/account/upload-avatar',
+		downloadAccountAvatar: '/private/account/download-avatar',
 	},
 	accountTypes: {
 		client: 'client',

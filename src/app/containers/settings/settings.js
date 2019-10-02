@@ -67,7 +67,6 @@ export class Settings extends Component {
 			const { children } = this.data;
 			children[ch.id] = ch.id;
 		});
-		console.log(this.data);
 
 		const html = template({
 			data: this.data,
