@@ -162,21 +162,21 @@ button {
 	font-weight: 500;
 
 	border-radius: 0.5rem;
-	background: #5d49cc;
+	/*background: #5d49cc;*/
 	border: none;
 	/* сдвиг по x, сдвиг по y, размытие, растяжение */
 	box-shadow: 0 0 1px 0 #707070;
-	color: #69a6ff;
+	/*color: #69a6ff;*/
 	cursor: pointer;
 	transition: all 0.45s ease;
 }
 
 button:hover {
-	background-color: #4e419d;
+	/*background-color: #4e419d;*/
 }
 
 button:active {
-	background-color: #2d235d;
+	/*background-color: #2d235d;*/
 }
 
 button[disabled] {
@@ -264,12 +264,12 @@ h1 {
 	color: darkblue;
 }
 
-h2 {
-	margin-top: 2px;
-	margin-bottom: 10px;
-	margin-left: 6px;
-	padding: 0 4px;
-}
+/*h2 {*/
+/*	margin-top: 2px;*/
+/*	margin-bottom: 10px;*/
+/*	margin-left: 6px;*/
+/*	padding: 0 4px;*/
+/*}*/
 
 #tp-main-page-photo {
 	display: flex;
@@ -299,7 +299,7 @@ h2 {
 	font-size: 24px;
 	font-weight: 500;
 
-	color: white;
+	color: black;
 }
 
 h1.tp-main-text {

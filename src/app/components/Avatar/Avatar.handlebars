@@ -1,0 +1,34 @@
+<div id="{{props.id}}">
+	<div class="avatar-wrapper">
+		<img
+				id="avatar"
+				class="tp-avatar tp-avatar-content-below avatar"
+				alt="{{props.imgAlt}}"
+				src="{{props.imgUrl}}"
+				width="{{props.imgWidth}}"
+				height="{{props.imgHeight}}"
+		/>
+	</div>
+	<a id="change-btn" href="#" target="_self" class="change-btn">Изменить</a>
+
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">&times;</span>
+				<h2>Загрузка новой фотографии</h2>
+			</div>
+			<div class="modal-body">
+				<div class="upload-avatar-modal-content">
+					<div>Вы можете загрузить изображение в формате JPG, GIF или PNG</div>
+					<div id="avatar-thumb" class="avatar-wrapper"></div>
+					<input type="file" id="upload-avatar-input" accept="image/*"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="upload-avatar-select" class="tp-button-primary">Выбрать файл</button>
+				<button id="upload-avatar" class="tp-button-primary">Сохранить</button>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -4,14 +4,29 @@ import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
 import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
 import config from '../../config';
+import { Avatar } from '../Avatar/Avatar';
 
+const children = [
+	{
+		id: 'myAccountAvatar',
+		component: Avatar,
+	},
+];
 export class Account extends Component {
 	constructor({ parent = document.body, ...props }) {
 		super(props);
 		this._parent = parent;
+		this._data = {
+			children: {},
+		};
 	}
 
 	render() {
+		children.forEach((ch) => {
+			const { children } = this.data;
+			children[ch.id] = ch.id;
+		});
+
 		const html = template({
 			data: this.data,
 			props: this.props,
@@ -23,6 +38,21 @@ export class Account extends Component {
 			this._parent.appendChild(newElement);
 		}
 		this._el = newElement;
+
+		children.forEach((ch) => {
+			const parent = this._el.querySelector(`#${ch.id}`);
+			if (parent) {
+				const component = this.props.spa._createComponent(
+					ch.component,
+					parent,
+					{
+						...this.props,
+						id: ch.id,
+					},
+				);
+				this.props.spa._renderComponent(component);
+			}
+		});
 	}
 
 	preRender() {
