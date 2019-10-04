@@ -1,6 +1,6 @@
 {
-	"name": "comandus2019",
 	"version": 2,
+	"name": "comandus2019",
 	"alias": ["comandus2019"],
 	"builds": [
 		{
@@ -10,5 +10,9 @@
 				"distDir": "dist"
 			}
 		}
+	],
+	"routes": [
+		{ "handle": "filesystem" },
+		{ "src": "/(.*)", "dest": "/index.html" }
 	]
 }

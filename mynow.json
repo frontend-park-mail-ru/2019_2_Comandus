@@ -1,4 +1,5 @@
 {
+	"version": 2,
 	"name": "comandus",
 	"alias": ["comandus"],
 	"builds": [
@@ -9,5 +10,9 @@
 				"distDir": "dist"
 			}
 		}
+	],
+	"routes": [
+		{ "handle": "filesystem" },
+		{ "src": "/(.*)", "dest": "/index.html" }
 	]
 }

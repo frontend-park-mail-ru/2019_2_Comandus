@@ -5,18 +5,19 @@
 	"private": true,
 	"main": "index.js",
 	"scripts": {
-		"start-build": "node server.js",
-		"test": "jest --watchAll",
+		"start": "webpack-dev-server",
+		"start:build": "node server.js",
 		"build": "NODE_ENV=production webpack && cp src/index.html dist/index.html && cp -a public/media dist/",
+		"deploy": "now -A mynow.json --prod",
+		"deploy:local": "now dev -A mynow.json",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/**/*.{js,html,css}'",
 		"prettier:public": "prettier --config .prettierrc --write '{public,__{tests,mocks}__}/**/*.{js,html,css}'",
-		"start": "webpack-dev-server",
 		"lint": "eslint --ext .js src",
 		"lint:fix": "npm run lint -- --fix",
 		"lint:css": "eslint --ext .css src",
 		"lint:css:fix": "npm run lint:css -- --fix",
 		"api": "node api.js",
-		"deploy": "now -A mynow.json --prod"
+		"test": "jest --watchAll"
 	},
 	"repository": {
 		"type": "git",
