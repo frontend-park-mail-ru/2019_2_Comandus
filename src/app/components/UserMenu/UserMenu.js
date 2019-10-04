@@ -74,13 +74,12 @@ export class UserMenu extends Component {
 			logout.addEventListener('click', (event) => {
 				event.preventDefault();
 
-				AjaxModule.post(config.urls.logout)
+				AjaxModule.delete(config.urls.logout)
 					.then((response) => {
 						this.props.router.push('/login/');
 					})
 					.catch((error) => {
 						console.error(error);
-						alert(error.message);
 					});
 			});
 		}
