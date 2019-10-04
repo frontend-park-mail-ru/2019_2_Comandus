@@ -1,4 +1,4 @@
-import Component from '../../../spa/Component';
+import Component from '../../../frame/Component';
 import template from './settings.handlebars';
 import { getCookie, htmlToElement } from '../../services/utils';
 import { Account } from '../../components/Account/Account';

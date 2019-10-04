@@ -1,4 +1,4 @@
-import Component from '../../../spa/Component';
+import Component from '../../../frame/Component';
 import template from './Select.handlebars';
 
 export class Select extends Component {

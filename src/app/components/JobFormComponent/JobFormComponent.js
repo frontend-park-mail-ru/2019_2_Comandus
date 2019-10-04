@@ -1,7 +1,7 @@
 import { htmlToElement } from '../../services/utils';
 import template from './JobFormComponent.handlebars';
 import './style.css';
-import Component from '../../../spa/Component';
+import Component from '../../../frame/Component';
 import { Select } from '../Select/Select';
 import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
 import AjaxModule from '../../services/ajax';

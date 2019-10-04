@@ -6,7 +6,7 @@ import { htmlToElement } from './services/utils';
 import HeaderComponent from './components/Header';
 import JobFormComponent from './components/JobFormComponent/JobFormComponent';
 import ClientSettingsComponent from './components/ClientSettingsComponent/ClientSettingsComponent';
-import Component from '../spa/Component';
+import Component from '../frame/Component';
 import template from './App.handlebars';
 import { Profile } from './containers/freelancerProfile';
 import { Settings } from './containers/settings/settings';

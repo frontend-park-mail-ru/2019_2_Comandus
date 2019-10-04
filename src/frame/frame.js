@@ -1,6 +1,13 @@
 import { Router } from '../app/services/router';
 
-class Spa {
+/**
+ * Каркас для SPA приложения
+ *
+ * Предоставляет метод для создания объекта компонента с передачей входных параметров props
+ * Вызывает методы жизненного цикла компонента
+ * Отвечает за роутинг
+ */
+class Frame {
 	render(Component, rootElement) {
 		window.addEventListener('load', () => {
 			const props = {};
@@ -33,4 +40,4 @@ class Spa {
 	}
 }
 
-export default new Spa();
+export default new Frame();

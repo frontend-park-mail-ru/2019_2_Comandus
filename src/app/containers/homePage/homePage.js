@@ -1,6 +1,6 @@
 import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
-import Component from '../../../spa/Component';
+import Component from '../../../frame/Component';
 import './style.css';
 
 class HomeComponent extends Component {

@@ -1,7 +1,7 @@
 import template from './index.handlebars';
 import { htmlToElement } from '../../services/utils';
 import AjaxModule from '../../services/ajax';
-import Component from '../../../spa/Component';
+import Component from '../../../frame/Component';
 import config from '../../config';
 import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
 
