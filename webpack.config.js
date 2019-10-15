@@ -1,11 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
-	entry: './src/index.js',
+	entry: {
+		app: './src/index.js'
+	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js',
+		// filename: 'bundle.js',
+		filename: '[name].bundle.[hash].js',
 		publicPath: '/'
 	},
 	module: {
@@ -25,8 +30,8 @@ module.exports = {
 			// 	}
 			// },
 			{
-				test: /\.css$/i,
-				use: ['style-loader', 'css-loader'],
+				test: /\.(s*)css$/,
+				use: ['style-loader', 'css-loader', 'sass-loader']
 			},
 			{
 				test: /\.(html)$/,
@@ -48,7 +53,7 @@ module.exports = {
 					'file-loader'
 				]
 			},
-			{ test: /\.handlebars$/, loader: "handlebars-loader" }
+			{test: /\.handlebars$/, loader: "handlebars-loader"}
 		]
 	},
 	resolve: {
@@ -63,14 +68,22 @@ module.exports = {
 		historyApiFallback: true,
 		// historyApiFallback: {
 		// 	rewrites: [
-				// { from: /^\/$/, to: '/index.html' },
-				// { from: /bundle.js$/, to: '/bundle.js' },
-				// { from: /./, to: '/views/404.html' }
-			// ],
+		// { from: /^\/$/, to: '/index.html' },
+		// { from: /bundle.js$/, to: '/bundle.js' },
+		// { from: /./, to: '/views/404.html' }
+		// ],
 		// },
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
+		new HtmlWebpackPlugin({
+			title: 'Caching',
+			template: "./src/index.html"
+		}),
 		new webpack.NamedModulesPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-	]
+	],
+	optimization: {
+		runtimeChunk: 'single',
+	},
 };
