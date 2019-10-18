@@ -17,7 +17,9 @@
 		"lint:css": "eslint --ext .css src",
 		"lint:css:fix": "npm run lint:css -- --fix",
 		"api": "node api.js",
-		"test": "jest --watchAll"
+		"test": "jest --watchAll",
+		"stylelint": "stylelint 'public/**/*.{css,scss}' 'src/**/*.{css,scss}' --syntax scss",
+		"stylelint:fix": "stylelint 'public/**/*.{css,scss}' 'src/**/*.{css,scss}' --syntax scss --fix"
 	},
 	"repository": {
 		"type": "git",
@@ -48,6 +50,8 @@
 		"prettier": "1.18.2",
 		"sass-loader": "^8.0.0",
 		"style-loader": "^1.0.0",
+		"stylelint": "^11.1.1",
+		"stylelint-config-recommended": "^3.0.0",
 		"url-loader": "^2.1.0",
 		"webpack": "^4.40.2",
 		"webpack-cli": "^3.3.8",
@@ -74,6 +78,7 @@
 		],
 		"src/**/*.scss": [
 			"npm run --silent lint:scss:fix",
+			"npm run --silent stylelint:fix",
 			"git add"
 		]
 	}
