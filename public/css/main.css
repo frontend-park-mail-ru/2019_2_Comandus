@@ -19,7 +19,7 @@ html {
 
 body {
 	background-color: var(--bg_color, #ffffff);
-	font-family: 'Roboto', 'Open Sans', sans-serif;
+	font-family: 'Roboto', Helvetica, Arial, 'Open Sans', sans-serif;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
