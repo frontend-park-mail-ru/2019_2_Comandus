@@ -79,7 +79,7 @@
 			"git add"
 		],
 		"src/**/*.scss": [
-
+			"npm run --silent stylelint:fix",
 			"git add"
 		]
 	}
