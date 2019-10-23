@@ -1,0 +1,18 @@
+<label for="{{id}}">{{label}}</label>
+<input id="{{id}}"
+	   type="{{type}}"
+	   name="{{name}}"
+	   class="text-field form__control {{classes}}"
+	   placeholder="{{placeholder}}"
+	   value="{{value}}"
+	   {{#required}}required{{/required}}
+	{{#if_eq type 'number'}}
+	   min="{{min}}"
+	   max="{{max}}"
+	{{else}}
+	   minlength="{{minlength}}"
+	   maxlength="{{maxlength}}"
+	{{/if_eq}}
+	{{attributes}}
+/>
+<span class="">{{error}}</span>

@@ -10,8 +10,10 @@ const config = {
 		'Выберите хотя бы одно значение пожалуйста.',
 	messageTypeMismatchEmail: 'Введите адрес электронной почты',
 	messageTypeMismatchURL: 'Введите пожалуйста URL.',
-	messageTooShort: (minLength, length) => `Просим написать ${minLength} и более символов. Сейчас у Вас ${length} символов.`,
-	messageTooLong: (maxLength, length) => `Просим написать не более ${maxLength} символов. Сейчас у Вас ${length} символов.`,
+	messageTooShort: (minLength, length) =>
+		`Просим написать ${minLength} и более символов. Сейчас у Вас ${length} символов.`,
+	messageTooLong: (maxLength, length) =>
+		`Просим написать не более ${maxLength} символов. Сейчас у Вас ${length} символов.`,
 	messagePatternMismatch: 'Некорректный формат введенных данных.',
 	messageBadInput: 'Веведите пожалуйста число.',
 	messageStepMismatch: 'Пожалуйста, выберите правильное значение.',
@@ -55,12 +57,13 @@ const emailRegex = new RegExp(
 function hasError(field) {
 	// Don't validate submits, buttons, file and reset inputs, and disabled fields
 	if (
-		field.disabled
-		|| field.type === fieldTypes.file
-		|| field.type === fieldTypes.reset
-		|| field.type === fieldTypes.submit
-		|| field.type === fieldTypes.button
-	) return;
+		field.disabled ||
+		field.type === fieldTypes.file ||
+		field.type === fieldTypes.reset ||
+		field.type === fieldTypes.submit ||
+		field.type === fieldTypes.button
+	)
+		return;
 
 	if (field.type === fieldTypes.email && !emailRegex.test(field.value)) {
 		return config.messageTypeMismatchEmail;
@@ -72,13 +75,16 @@ function hasError(field) {
 
 	// If field is required and empty
 	if (validity.valueMissing) {
-		if (field.type === 'checkbox') return config.messageValueMissingCheckbox;
+		if (field.type === 'checkbox')
+			return config.messageValueMissingCheckbox;
 
 		if (field.type === 'radio') return config.messageValueMissingRadio;
 
-		if (field.type === 'select-multiple') return config.messageValueMissingSelectMulti;
+		if (field.type === 'select-multiple')
+			return config.messageValueMissingSelectMulti;
 
-		if (field.type === 'select-one') return config.messageValueMissingSelect;
+		if (field.type === 'select-one')
+			return config.messageValueMissingSelect;
 
 		return config.messageValueMissing;
 	}
@@ -169,11 +175,12 @@ function showError(field, error) {
 		// If the field is a radio button or checkbox, insert error after the label
 		let label;
 		if (
-			field.type === fieldTypes.radio
-			|| field.type === fieldTypes.checkbox
+			field.type === fieldTypes.radio ||
+			field.type === fieldTypes.checkbox
 		) {
-			label =				field.form.querySelector(`label[for="${id}"]`)
-				|| field.parentNode;
+			label =
+				field.form.querySelector(`label[for="${id}"]`) ||
+				field.parentNode;
 			if (label) {
 				label.parentNode.insertBefore(message, label.nextSibling);
 			}

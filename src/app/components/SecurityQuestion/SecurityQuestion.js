@@ -1,7 +1,7 @@
 import Component from '../../../frame/Component';
 import template from './SecurityQuestion.handlebars';
-import { htmlToElement } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
+import { htmlToElement } from '../../../modules/utils';
+import AjaxModule from '../../../modules/ajax';
 import config from '../../config';
 
 export class SecurityQuestion extends Component {

@@ -1,17 +1,14 @@
 import Component from '../../../frame/Component';
 import template from './UserMenu.handlebars';
-import { getCookie, htmlToElement, setCookie } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
+import { getCookie, htmlToElement, setCookie } from '../../../modules/utils';
 import config from '../../config';
 import './UserMenu.css';
+import AccountService from '../../services/AccountService';
+import AuthService from '../../services/AuthService';
 
 export class UserMenu extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
-		this._data = {};
-		this._el = null;
 	}
 
 	created() {
@@ -29,10 +26,11 @@ export class UserMenu extends Component {
 			...this._data,
 			loaded: false,
 		};
-		AjaxModule.get(config.urls.roles)
+		AccountService.GetRoles()
 			.then((response) => {
 				response.forEach((role) => {
-					role.on =						role.role === getCookie(config.cookieAccountModeName);
+					role.on =
+						role.role === getCookie(config.cookieAccountModeName);
 				});
 				this._data = {
 					...this._data,
@@ -74,7 +72,7 @@ export class UserMenu extends Component {
 			logout.addEventListener('click', (event) => {
 				event.preventDefault();
 
-				AjaxModule.delete(config.urls.logout)
+				AuthService.Logout()
 					.then((response) => {
 						this.props.router.push('/login/');
 					})

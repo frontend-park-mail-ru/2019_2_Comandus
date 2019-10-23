@@ -1,5 +1,5 @@
-import { htmlToElement } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
+import { htmlToElement } from '../../../modules/utils';
+import AjaxModule from '../../../modules/ajax';
 import Component from '../../../frame/Component';
 import config from '../../config';
 

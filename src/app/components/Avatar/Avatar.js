@@ -1,15 +1,19 @@
 import Component from '../../../frame/Component';
 import template from './Avatar.handlebars';
-import { htmlToElement } from '../../services/utils';
+import { htmlToElement } from '../../../modules/utils';
 import './Avatar.css';
-import AjaxModule from '../../services/ajax';
-import config from '../../config';
+import bus from '../../../frame/bus';
 
 export class Avatar extends Component {
+	_modal;
+	_avatar;
+	_fileSelect;
+	_uploadBtn;
+
 	constructor({
 		parent = document.body,
-		imgUrl = `${'https://flruserver.herokuapp.com/private/account/download-avatar'
-			+ '?'}${new Date().getTime()}`,
+		imgUrl = `${'https://flruserver.herokuapp.com/private/account/download-avatar' +
+			'?'}${new Date().getTime()}`,
 		imgAlt = 'user avatar',
 		imgWidth = 120,
 		imgHeight = 120,
@@ -41,41 +45,41 @@ export class Avatar extends Component {
 	}
 
 	postRender() {
-		const fileSelect = this._el.querySelector('#upload-avatar-select');
+		this._fileSelect = this._el.querySelector('#upload-avatar-select');
 		const fileElem = this._el.querySelector('#upload-avatar-input');
 		const imgThumb = this._el.querySelector('#avatar-thumb');
 		const changeBtn = this._el.querySelector('#change-btn');
-		const modal = this._el.querySelector('#myModal');
+		this._modal = this._el.querySelector('#myModal');
 		const closeSpan = this._el.querySelectorAll('.close')[0];
-		const uploadBtn = this._el.querySelector('#upload-avatar');
-		const avatar = this._el.querySelector('#avatar');
+		this._uploadBtn = this._el.querySelector('#upload-avatar');
+		this._avatar = this._el.querySelector('#avatar');
 
 		let avatarFile = null;
 
-		changeBtn.onclick = function (e) {
+		changeBtn.onclick = (e) => {
 			e.preventDefault();
 			e.stopPropagation();
-			modal.style.display = 'block';
+			this._modal.style.display = 'block';
 			imgThumb.innerHTML = '';
 		};
 
-		closeSpan.onclick = function () {
-			modal.style.display = 'none';
-			fileSelect.textContent = 'Выбрать файл';
-			fileSelect.classList.add('tp-button-primary');
-			uploadBtn.style.display = 'none';
+		closeSpan.onclick = () => {
+			this._modal.style.display = 'none';
+			this._fileSelect.textContent = 'Выбрать файл';
+			this._fileSelect.classList.add('tp-button-primary');
+			this._uploadBtn.style.display = 'none';
 		};
 
-		window.onclick = function (event) {
-			if (event.target === modal) {
-				modal.style.display = 'none';
-				fileSelect.textContent = 'Выбрать файл';
-				fileSelect.classList.add('tp-button-primary');
-				uploadBtn.style.display = 'none';
+		window.onclick = (event) => {
+			if (event.target === this._modal) {
+				this._modal.style.display = 'none';
+				this._fileSelect.textContent = 'Выбрать файл';
+				this._fileSelect.classList.add('tp-button-primary');
+				this._uploadBtn.style.display = 'none';
 			}
 		};
 
-		fileSelect.addEventListener(
+		this._fileSelect.addEventListener(
 			'click',
 			(e) => {
 				if (fileElem) {
@@ -98,36 +102,47 @@ export class Avatar extends Component {
 					const img = document.createElement('img');
 					img.src = window.URL.createObjectURL(file);
 					img.height = 120;
-					img.onload = function () {
+					img.onload = function() {
 						window.URL.revokeObjectURL(this.src);
 					};
 					imgThumb.appendChild(img);
-					fileSelect.textContent = 'Выбрать другой файл';
-					fileSelect.classList.remove('tp-button-primary');
-					uploadBtn.style.display = 'inline-block';
+					this._fileSelect.textContent = 'Выбрать другой файл';
+					this._fileSelect.classList.remove('tp-button-primary');
+					this._uploadBtn.style.display = 'inline-block';
 				}
 			},
 			false,
 		);
 
-		uploadBtn.addEventListener('click', (event) => {
+		this._uploadBtn.addEventListener('click', (event) => {
 			if (avatarFile) {
 				const formData = new FormData();
 				formData.append('file', avatarFile);
-				AjaxModule.post(config.urls.uploadAccountAvatar, formData)
-					.then((response) => {
-						avatar.src = `${'https://flruserver.herokuapp.com/private/account/download-avatar'
-							+ '?'}${new Date().getTime()}`;
 
-						modal.style.display = 'none';
-						fileSelect.textContent = 'Выбрать файл';
-						fileSelect.classList.add('tp-button-primary');
-						uploadBtn.style.display = 'none';
-					})
-					.catch((error) => {
-						console.dir(error);
-					});
+				bus.on(
+					'account-avatar-upload-response',
+					this.onUploadAvatarResponse,
+				);
+				bus.emit('account-avatar-upload', formData);
 			}
 		});
 	}
+
+	onUploadAvatarResponse = (response) => {
+		bus.off('account-avatar-upload-response', this.onUploadAvatarResponse);
+
+		response
+			.then((res) => {
+				this._avatar.src = `${'https://flruserver.herokuapp.com/private/account/download-avatar' +
+					'?'}${new Date().getTime()}`;
+
+				this._modal.style.display = 'none';
+				this._fileSelect.textContent = 'Выбрать файл';
+				this._fileSelect.classList.add('tp-button-primary');
+				this._uploadBtn.style.display = 'none';
+			})
+			.catch((error) => {
+				console.dir(error);
+			});
+	};
 }

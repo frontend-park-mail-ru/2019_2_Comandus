@@ -32,7 +32,9 @@
 	"homepage": "https://github.com/frontend-park-mail-ru/2019_2_Comandus#readme",
 	"devDependencies": {
 		"@babel/core": "^7.6.0",
+		"@babel/plugin-proposal-class-properties": "^7.5.5",
 		"@babel/preset-env": "^7.6.0",
+		"babel-eslint": "^10.0.3",
 		"babel-loader": "^8.0.6",
 		"clean-webpack-plugin": "^3.0.0",
 		"css-loader": "^3.2.0",
@@ -77,8 +79,7 @@
 			"git add"
 		],
 		"src/**/*.scss": [
-			"npm run --silent lint:scss:fix",
-			"npm run --silent stylelint:fix",
+
 			"git add"
 		]
 	}

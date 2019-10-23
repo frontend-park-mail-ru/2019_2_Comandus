@@ -1,7 +1,9 @@
 export default class Component {
-	constructor(props) {
+	constructor({ parent, ...props } = {}) {
 		this._data = {};
 		this.props = props;
+		this._parent = parent;
+		this._el = null;
 	}
 
 	created() {}
@@ -17,11 +19,13 @@ export default class Component {
 	}
 
 	set data(newData) {
-		this._data = { ...newData };
+		this._data = { ...this._data, ...newData };
 	}
 
 	stateChanged() {
 		this.render();
 		this.postRender();
 	}
+
+	setProps() {}
 }

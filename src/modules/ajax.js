@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../app/config';
 
 /**
  * Creates a new URL by combining the specified URLs
@@ -20,11 +20,13 @@ function validateStatus(status) {
 function handleErrors(response) {
 	if (!response.ok) {
 		// throw Error(response.statusText);
-		return response.json().then((json) => Promise.reject({
-			message: response.statusText,
-			data: json,
-			response,
-		}));
+		return response.json().then((json) =>
+			Promise.reject({
+				message: response.statusText,
+				data: json,
+				response,
+			}),
+		);
 	}
 
 	return response;
@@ -70,9 +72,7 @@ class AjaxModule {
 		}).then((response) => response.json());
 	}
 
-	_fetch({
-		method = 'get', url = '/', data = null, headers = {},
-	} = {}) {
+	_fetch({ method = 'get', url = '/', data = null, headers = {} } = {}) {
 		url = combineURLs(this.baseUrl, url);
 
 		if (data && typeof data === 'object' && !(data instanceof FormData)) {

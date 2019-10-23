@@ -3,13 +3,11 @@
 		<div class="tp-col-8">
 			<h1>{{title}}</h1>
 			<form method="post" id="projectForm" autocomplete="off">
+				{{{textField}}}
 				<input id="hireManagerId" name="hireManagerId" type="number" hidden value="0" required/>
 				<input id="jobTypeId" name="jobTypeId" type="number" hidden value="{{jobTypeId}}" required/>
 				<div class="fieldset">
 					<legend>Название</legend>
-{{!--					<label class="projectForm__label" for="title"--}}
-{{!--					>Название</label--}}
-{{!--					>--}}
 					{{#if isProject}}
 						<div>
 							Напишите название вашего проекта. Название должно

@@ -1,6 +1,6 @@
 import Component from '../../../frame/Component';
 import template from './settings.handlebars';
-import { getCookie, htmlToElement } from '../../services/utils';
+import { getCookie, htmlToElement } from '../../../modules/utils';
 import { Account } from '../../components/Account/Account';
 import { Company } from '../../components/Company/Company';
 import { NotificationSettings } from '../../components/NotificationSettings/NotificationSettings';
@@ -9,6 +9,7 @@ import { AuthHistory } from '../../components/AuthHistory/AuthHistory';
 import { SecurityQuestion } from '../../components/SecurityQuestion/SecurityQuestion';
 import config from '../../config';
 import { FreelancerSettings } from '../../components/FreelancerSettings/FreelancerSettings';
+import Frame from '../../../frame/frame';
 
 const children = [
 	{
@@ -42,11 +43,8 @@ const children = [
 ];
 
 export class Settings extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this._parent = parent;
-
-		this._el = null;
 		this._data = {
 			children: {},
 		};
@@ -56,11 +54,11 @@ export class Settings extends Component {
 		this.data = {
 			...this.data,
 			isClientMode:
-				getCookie(config.cookieAccountModeName)
-				=== config.accountTypes.client,
+				getCookie(config.cookieAccountModeName) ===
+				config.accountTypes.client,
 			isFreelancerMode:
-				getCookie(config.cookieAccountModeName)
-				=== config.accountTypes.freelancer,
+				getCookie(config.cookieAccountModeName) ===
+				config.accountTypes.freelancer,
 		};
 
 		children.forEach((ch) => {
@@ -77,15 +75,11 @@ export class Settings extends Component {
 		children.forEach((ch) => {
 			const parent = this._el.querySelector(`#${ch.id}`);
 			if (parent) {
-				const component = this.props.spa._createComponent(
-					ch.component,
-					parent,
-					{
-						...this.props,
-						id: ch.id,
-					},
-				);
-				this.props.spa._renderComponent(component);
+				const component = Frame.createComponent(ch.component, parent, {
+					...this.props,
+					id: ch.id,
+				});
+				Frame.renderComponent(component);
 			}
 		});
 

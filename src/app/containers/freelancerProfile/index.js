@@ -1,6 +1,6 @@
 import Component from '../../../frame/Component';
 import template from './index.handlebars';
-import { htmlToElement } from '../../services/utils';
+import { htmlToElement } from '../../../modules/utils';
 
 export class Profile extends Component {
 	constructor({ parent = document.body, ...props }) {

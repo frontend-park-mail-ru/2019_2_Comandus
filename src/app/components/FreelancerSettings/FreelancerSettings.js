@@ -1,10 +1,12 @@
 import Component from '../../../frame/Component';
 import { Select } from '../Select/Select';
 import template from './FreelancerSettings.handlebars';
-import { htmlToElement } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
-import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
+import { htmlToElement } from '../../../modules/utils';
+import AjaxModule from '../../../modules/ajax';
+import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
 import config from '../../config';
+import Frame from '../../../frame/frame';
+import FreelancerService from '../../services/FreelancerService';
 
 export class FreelancerSettings extends Component {
 	constructor({ parent = document.body, ...props }) {
@@ -13,53 +15,45 @@ export class FreelancerSettings extends Component {
 	}
 
 	render() {
-		const countrySelect = this.props.spa._createComponent(
-			Select,
-			this._el,
-			{
-				id: 'country',
-				name: 'country',
-				className: 'tp-input',
-				items: [
-					{
-						label: 'Выберите страну',
-						value: 'nil',
-						selected: true,
-						disabled: true,
-					},
-					{ label: 'Россия', value: 'Россия', selected: false },
-					{ label: 'Украина', value: 'Украина', selected: false },
-					{ label: 'Беларусь', value: 'Беларусь', selected: false },
-					{ label: 'Казахстан', value: 'Казахстан', selected: false },
-					{ label: 'Армения', value: 'Армения', selected: false },
-				],
-				onChange(value) {
-					console.log('change: ', value);
+		const countrySelect = Frame.createComponent(Select, this._el, {
+			id: 'country',
+			name: 'country',
+			className: 'tp-input',
+			items: [
+				{
+					label: 'Выберите страну',
+					value: 'nil',
+					selected: true,
+					disabled: true,
 				},
+				{ label: 'Россия', value: 'Россия', selected: false },
+				{ label: 'Украина', value: 'Украина', selected: false },
+				{ label: 'Беларусь', value: 'Беларусь', selected: false },
+				{ label: 'Казахстан', value: 'Казахстан', selected: false },
+				{ label: 'Армения', value: 'Армения', selected: false },
+			],
+			onChange(value) {
+				console.log('change: ', value);
 			},
-		);
+		});
 
-		const visibilitySelect = this.props.spa._createComponent(
-			Select,
-			this._el,
-			{
-				id: 'visibility',
-				name: 'visibility',
-				className: 'tp-input',
-				items: [
-					{ label: 'Всем', value: 'Все', selected: true },
-					{
-						label: 'Только пользователям Сервиса',
-						value: 'Сервис',
-						selected: false,
-					},
-					{ label: 'Никому', value: 'Никто', selected: false },
-				],
-				onChange(value) {
-					console.log('change: ', value);
+		const visibilitySelect = Frame.createComponent(Select, this._el, {
+			id: 'visibility',
+			name: 'visibility',
+			className: 'tp-input',
+			items: [
+				{ label: 'Всем', value: 'Все', selected: true },
+				{
+					label: 'Только пользователям Сервиса',
+					value: 'Сервис',
+					selected: false,
 				},
+				{ label: 'Никому', value: 'Никто', selected: false },
+			],
+			onChange(value) {
+				console.log('change: ', value);
 			},
-		);
+		});
 
 		const html = template({
 			countrySelect: countrySelect.render(),
@@ -81,7 +75,7 @@ export class FreelancerSettings extends Component {
 			...this._data,
 			loaded: false,
 		};
-		AjaxModule.get(`${config.urls.freelancers}/freelancerId`)
+		FreelancerService.GetFreelancerById(0)
 			.then((response) => {
 				this.data = {
 					user: { ...response },
@@ -102,37 +96,25 @@ export class FreelancerSettings extends Component {
 
 	postRender() {
 		const contactsForm = this._el.querySelector('#contactsForm');
-		enableValidationAndSubmit(contactsForm, (helper) => {
-			helper.event.preventDefault();
-
-			AjaxModule.put('/freelancers/freelancerId', helper.formToJSON())
-				.then((response) => {
-					helper.setResponseText('Изменения сохранены.', true);
-				})
-				.catch((error) => {
-					let text = error.message;
-					if (error.data && error.data.error) {
-						text = error.data.error;
-					}
-					helper.setResponseText(text);
-				});
-		});
+		enableValidationAndSubmit(contactsForm, this.updateFreelancer);
 
 		const profileForm = this._el.querySelector('#profileSettingsForm');
-		enableValidationAndSubmit(profileForm, (helper) => {
-			helper.event.preventDefault();
-
-			AjaxModule.put('/freelancers/freelancerId', helper.formToJSON())
-				.then((response) => {
-					helper.setResponseText('Изменения сохранены.', true);
-				})
-				.catch((error) => {
-					let text = error.message;
-					if (error.data && error.data.error) {
-						text = error.data.error;
-					}
-					helper.setResponseText(text);
-				});
-		});
+		enableValidationAndSubmit(profileForm, this.updateFreelancer);
 	}
+
+	updateFreelancer = (helper) => {
+		helper.event.preventDefault();
+
+		FreelancerService.UpdateFreelancer(0, helper.formToJSON())
+			.then((res) => {
+				helper.setResponseText('Изменения сохранены.', true);
+			})
+			.catch((error) => {
+				let text = error.message;
+				if (error.data && error.data.error) {
+					text = error.data.error;
+				}
+				helper.setResponseText(text);
+			});
+	};
 }

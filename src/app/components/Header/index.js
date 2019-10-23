@@ -1,8 +1,9 @@
 import template from './index.handlebars';
-import { htmlToElement } from '../../services/utils';
+import { htmlToElement } from '../../../modules/utils';
 import Component from '../../../frame/Component';
 import { UserMenu } from '../UserMenu/UserMenu';
 import './style.css';
+import Frame from '../../../frame/frame';
 
 class HeaderComponent extends Component {
 	constructor({ parent = document.body, ...props }) {
@@ -22,12 +23,12 @@ class HeaderComponent extends Component {
 			this._parent.appendChild(newElement);
 		}
 
-		const component = this.props.spa._createComponent(
+		const component = Frame.createComponent(
 			UserMenu,
 			newElement.querySelector('#userMenuParent'),
 			{ ...this.props },
 		);
-		this.props.spa._renderComponent(component);
+		Frame.renderComponent(component);
 
 		this._el = newElement;
 	}

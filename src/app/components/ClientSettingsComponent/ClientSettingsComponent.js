@@ -1,4 +1,4 @@
-import { htmlToElement } from '../../services/utils';
+import { htmlToElement } from '../../../modules/utils';
 import template from './ClientSettingsComponent.handlebars';
 import Component from '../../../frame/Component';
 

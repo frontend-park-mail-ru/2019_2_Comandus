@@ -1,16 +1,16 @@
 import template from './index.handlebars';
-import { htmlToElement } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
+import { htmlToElement } from '../../../modules/utils';
 import Component from '../../../frame/Component';
-import config from '../../config';
-import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
+import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
+import bus from '../../../frame/bus';
 
 class LoginComponent extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
-		this._el = null;
+
+		this.onLoginResponse = this.onLoginResponse.bind(this);
+
+		this.helper = null;
 	}
 
 	render() {
@@ -25,18 +25,27 @@ class LoginComponent extends Component {
 		enableValidationAndSubmit(form, (helper) => {
 			helper.event.preventDefault();
 
-			AjaxModule.post(config.urls.login, helper.formToJSON())
-				.then((response) => {
-					this.props.router.push('/settings/');
-				})
-				.catch((error) => {
-					let text = error.message;
-					if (error.data && error.data.error) {
-						text = error.data.error;
-					}
-					helper.setResponseText(text);
-				});
+			this.helper = helper;
+
+			bus.on('login-response', this.onLoginResponse);
+			bus.emit('login', helper.formToJSON());
 		});
+	}
+
+	onLoginResponse(data) {
+		bus.off('login-response', this.onLoginResponse);
+		console.log(data);
+		const { response, error } = data;
+		if (error) {
+			let text = error.message;
+			if (error.data && error.data.error) {
+				text = error.data.error;
+			}
+			this.helper.setResponseText(text);
+			return;
+		}
+
+		this.props.router.push('/settings/');
 	}
 }
 

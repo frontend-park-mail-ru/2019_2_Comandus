@@ -10,7 +10,8 @@
 function getSelectValues(options) {
 	return [].reduce.call(
 		options,
-		(values, option) => (option.selected ? values.concat(option.value) : values),
+		(values, option) =>
+			option.selected ? values.concat(option.value) : values,
 		[],
 	);
 }

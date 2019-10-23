@@ -1,10 +1,10 @@
 import Component from '../../../frame/Component';
 import template from './Account.handlebars';
-import { htmlToElement } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
-import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
-import config from '../../config';
+import { htmlToElement } from '../../../modules/utils';
+import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
 import { Avatar } from '../Avatar/Avatar';
+import Frame from '../../../frame/frame';
+import bus from './../../../frame/bus';
 
 const children = [
 	{
@@ -12,13 +12,23 @@ const children = [
 		component: Avatar,
 	},
 ];
+
 export class Account extends Component {
 	constructor({ parent = document.body, ...props }) {
 		super(props);
 		this._parent = parent;
 		this._data = {
 			children: {},
+			...this._data,
+			loaded: false,
 		};
+
+		this.onAccountReceived = this.onAccountReceived.bind(this);
+
+		bus.on('account-get-response', this.onAccountReceived);
+		bus.emit('account-get');
+
+		this.helper = null;
 	}
 
 	render() {
@@ -42,28 +52,37 @@ export class Account extends Component {
 		children.forEach((ch) => {
 			const parent = this._el.querySelector(`#${ch.id}`);
 			if (parent) {
-				const component = this.props.spa._createComponent(
-					ch.component,
-					parent,
-					{
-						...this.props,
-						id: ch.id,
-					},
-				);
-				this.props.spa._renderComponent(component);
+				const component = Frame.createComponent(ch.component, parent, {
+					...this.props,
+					id: ch.id,
+				});
+				Frame.renderComponent(component);
 			}
 		});
 	}
 
-	preRender() {
-		this._data = {
-			...this._data,
-			loaded: false,
-		};
-		AjaxModule.get(config.urls.account)
-			.then((response) => {
+	postRender() {
+		const form = this._el.querySelector('#mainSettingsForm');
+		enableValidationAndSubmit(form, (helper) => {
+			helper.event.preventDefault();
+
+			this.helper = helper;
+
+			bus.on('account-put-response', this.onAccountPutResponse);
+			bus.emit('account-put', helper.formToJSON());
+		});
+	}
+
+	stateChanged() {
+		this.render();
+		this.postRender();
+	}
+
+	onAccountReceived(response) {
+		response
+			.then((res) => {
 				this.data = {
-					user: { ...response },
+					user: { ...res },
 					...this.data,
 				};
 			})
@@ -79,27 +98,18 @@ export class Account extends Component {
 			});
 	}
 
-	postRender() {
-		const form = this._el.querySelector('#mainSettingsForm');
-		enableValidationAndSubmit(form, (helper) => {
-			helper.event.preventDefault();
-
-			AjaxModule.put(config.urls.account, helper.formToJSON())
-				.then((response) => {
-					helper.setResponseText('Изменения сохранены.', true);
-				})
-				.catch((error) => {
-					let text = error.message;
-					if (error.data && error.data.error) {
-						text = error.data.error;
-					}
-					helper.setResponseText(text);
-				});
-		});
-	}
-
-	stateChanged() {
-		this.render();
-		this.postRender();
-	}
+	onAccountPutResponse = (response) => {
+		bus.off('account-put-response', this.onAccountPutResponse);
+		response
+			.then((res) => {
+				this.helper.setResponseText('Изменения сохранены.', true);
+			})
+			.catch((error) => {
+				let text = error.message;
+				if (error.data && error.data.error) {
+					text = error.data.error;
+				}
+				this.helper.setResponseText(text);
+			});
+	};
 }

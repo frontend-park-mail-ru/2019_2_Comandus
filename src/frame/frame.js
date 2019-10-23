@@ -1,5 +1,3 @@
-import { Router } from '../app/services/router';
-
 /**
  * Каркас для SPA приложения
  *
@@ -8,36 +6,33 @@ import { Router } from '../app/services/router';
  * Отвечает за роутинг
  */
 class Frame {
-	render(Component, rootElement) {
+	static bootstrap(RootComponent, rootElement, router) {
 		window.addEventListener('load', () => {
+			rootElement.innerHTML = '';
 			const props = {};
+			props.router = router;
+			const component = this.createComponent(
+				RootComponent,
+				rootElement,
+				props,
+			);
+			this.renderComponent(component);
 
-			const router = new Router(rootElement, ({ router }) => {
-				rootElement.innerHTML = '';
-				props.router = router;
-				props.spa = this;
-				const component = this._createComponent(
-					Component,
-					rootElement,
-					props,
-				);
-				this._renderComponent(component);
-			});
-			router._init();
+			router.init();
 		});
 	}
 
-	_createComponent(Component, rootElement, props) {
+	static createComponent(Component, rootElement, props) {
 		const component = new Component({ ...props, parent: rootElement });
 		component.created();
 		return component;
 	}
 
-	_renderComponent(component) {
+	static renderComponent(component) {
 		component.preRender();
 		component.render();
 		component.postRender();
 	}
 }
 
-export default new Frame();
+export default Frame;

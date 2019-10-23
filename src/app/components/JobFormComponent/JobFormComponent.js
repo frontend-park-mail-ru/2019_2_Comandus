@@ -1,11 +1,12 @@
-import { htmlToElement } from '../../services/utils';
+import { htmlToElement } from '../../../modules/utils';
 import template from './JobFormComponent.handlebars';
 import './style.css';
 import Component from '../../../frame/Component';
 import { Select } from '../Select/Select';
-import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
-import AjaxModule from '../../services/ajax';
-import config from '../../config';
+import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
+import Frame from '../../../frame/frame';
+import bus from '../../../frame/bus';
+import TextField from '../TextField/TextField';
 
 const modes = {
 	project: 'project',
@@ -13,17 +14,16 @@ const modes = {
 };
 
 class JobFormComponent extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
 		this._data = {
 			props,
 			isProject: () => props.mode === modes.project,
 			isVacancy: () => props.mode === modes.vacancy,
 			jobTypeId: props.mode === modes.vacancy ? 1 : 0,
 		};
-		this._el = null;
+
+		this.onCreateJobResponse = this.onCreateJobResponse.bind(this);
 
 		let title = '';
 		switch (this.props.mode) {
@@ -37,18 +37,12 @@ class JobFormComponent extends Component {
 			break;
 		}
 		this.data = { title, ...this.data };
-	}
 
-	get data() {
-		return this._data;
-	}
-
-	set data(newData) {
-		this._data = newData;
+		this.helper = null;
 	}
 
 	render() {
-		const component = this.props.spa._createComponent(Select, this._el, {
+		const component = Frame.createComponent(Select, this._el, {
 			id: 'mySelect',
 			items: [
 				{ label: 'text1', value: 'text1', selected: false },
@@ -58,13 +52,13 @@ class JobFormComponent extends Component {
 				console.log(value);
 			},
 		});
-		// component.preRender();
+		const textField = new TextField({ required: true, type: 'number' });
+
 		this.data = {
 			mySelect: component.render(),
+			textField: textField.render(),
 			...this.data,
 		};
-		// this.props.spa._renderComponent(component);
-
 		const html = template(this.data);
 		this._el = htmlToElement(html);
 
@@ -85,19 +79,28 @@ class JobFormComponent extends Component {
 			enableValidationAndSubmit(form, (helper) => {
 				helper.event.preventDefault();
 
-				AjaxModule.post(config.urls.jobs, helper.formToJSON())
-					.then((data) => {
-						this.props.router.push(`/jobs/${data.id}`);
-					})
-					.catch((error) => {
-						let text = error.message;
-						if (error.data && error.data.error) {
-							text = error.data.error;
-						}
-						helper.setResponseText(text);
-					});
+				this.helper = helper;
+
+				bus.on('job-create-response', this.onCreateJobResponse);
+				bus.emit('job-create', helper.formToJSON());
 			});
 		}
+	}
+
+	onCreateJobResponse(data) {
+		bus.off('job-create-response', this.onCreateJobResponse);
+		console.log('data', Math.random(), bus.listeners);
+		const { error, response } = data;
+		if (error) {
+			let text = error.message;
+			if (error.data && error.data.error) {
+				text = error.data.error;
+			}
+			this.helper.setResponseText(text);
+			return;
+		}
+
+		this.props.router.push(`/jobs/${response.id}`);
 	}
 }
 

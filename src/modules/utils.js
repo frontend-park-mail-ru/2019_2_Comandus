@@ -45,3 +45,8 @@ export function setCookie(name, value, days) {
 	}
 	document.cookie = `${name}=${value || ''}${expires}; path=/`;
 }
+
+export const uniqueId = () =>
+	`_${Math.random()
+		.toString(36)
+		.substr(2, 9)}`;
