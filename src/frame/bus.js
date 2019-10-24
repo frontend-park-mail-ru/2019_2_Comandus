@@ -7,20 +7,34 @@ class Bus {
 		// подписываемся на событие
 		this.listeners[event] = this.listeners[event] || [];
 		this.listeners[event].push(callback);
+		return this;
 	}
 
 	off(event, callback) {
 		// отписываемся от события
-		this.listeners[event] = this.listeners[event].filter(
-			(listener) => listener !== callback,
-		);
+		if (this.listeners[event]) {
+			this.listeners[event] = this.listeners[event].filter(
+				(listener) => listener !== callback,
+			);
+		} else {
+			console.error(
+				`Bus off: there is no subscribed such event: ${event}`,
+			);
+		}
 	}
 
 	emit(event, data) {
 		// публикуем (диспатчим, эмитим) событие
-		this.listeners[event].forEach((listener) => {
-			listener(data);
-		});
+		if (this.listeners[event]) {
+			this.listeners[event].forEach((listener) => {
+				listener(data);
+			});
+		} else {
+			console.error(
+				`Bus emit: there is no subscribed such event: ${event}`,
+			);
+		}
+		return this;
 	}
 }
 
