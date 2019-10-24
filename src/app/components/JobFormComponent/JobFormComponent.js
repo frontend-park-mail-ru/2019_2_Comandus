@@ -1,12 +1,13 @@
-import { htmlToElement } from '../../../modules/utils';
+import { htmlToElement } from '@modules/utils';
 import template from './JobFormComponent.handlebars';
 import './style.css';
-import Component from '../../../frame/Component';
-import { Select } from '../Select/Select';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
-import Frame from '../../../frame/frame';
-import bus from '../../../frame/bus';
-import TextField from '../TextField/TextField';
+import Component from '@frame/Component';
+import { Select } from '@components/Inputs/Select/Select';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import Frame from '@frame/frame';
+import bus from '@frame/bus';
+import TextField from '@components/Inputs/TextField/TextField';
+import DoubleSelect from '@components/Inputs/DoubleSelect/DoubleSelect';
 
 const modes = {
 	project: 'project',
@@ -16,7 +17,7 @@ const modes = {
 class JobFormComponent extends Component {
 	constructor({ ...props }) {
 		super(props);
-		this._data = {
+		this.data = {
 			props,
 			isProject: () => props.mode === modes.project,
 			isVacancy: () => props.mode === modes.vacancy,
@@ -42,39 +43,79 @@ class JobFormComponent extends Component {
 	}
 
 	render() {
+		const items = [
+			{ label: 'text1', value: 'text1', selected: false },
+			{ label: 'text2', value: 'text2', selected: true },
+		];
 		const component = Frame.createComponent(Select, this._el, {
 			id: 'mySelect',
-			items: [
-				{ label: 'text1', value: 'text1', selected: false },
-				{ label: 'text2', value: 'text2', selected: true },
-			],
+			items,
 			onChange(value) {
 				console.log(value);
 			},
 		});
-		const textField = new TextField({ required: true, type: 'number' });
+		const textField = new TextField({
+			required: true,
+			type: 'text',
+			label: 'Название',
+			placeholder: '',
+			hint: `<div> Напишите название вашего проекта. Название должно привлечь внимание и отразить суть проекта. </div> 
+				<div> Несколько хороших примеров: 
+				<ul>
+				<li> Нужен разрабтчик для создания адаптивной темы для WordPress </li> 
+				<li>Нужен дизайн нового логотипа компании</li> 
+				<li>Ищем специалиста по по 3D моделированию</li> 
+				</ul>
+				</div>`,
+		});
+		const descriptionField = new TextField({
+			required: true,
+			type: 'textarea',
+			label: 'Описание проекта',
+			placeholder: '',
+			hint: `<ul> <li> Укажите каким должен быть результат работы; требование к результату </li> <li> Каким должен быть фрилансер; требование к исполнителю </li> <li>Важная информация о проекте</li> <li>Сроки выполнения и другие условия</li> </ul>`,
+		});
+		const budgetField = new TextField({
+			required: true,
+			type: 'number',
+			label: 'Бюджет',
+			placeholder: '',
+		});
+
+		this._citySelect = new DoubleSelect({ items });
+		this._specialitySelect = new DoubleSelect({ items });
 
 		this.data = {
 			mySelect: component.render(),
 			textField: textField.render(),
+			descriptionField: descriptionField.render(),
+			budgetField: budgetField.render(),
+			citySelect: this._citySelect.render(),
+			specialitySelect: this._specialitySelect.render(),
 			...this.data,
 		};
-		const html = template(this.data);
-		this._el = htmlToElement(html);
+		this.html = template(this.data);
+		// this._el = htmlToElement(html);
+		//
+		// const mySelect = this._el.querySelector('#mySelect');
+		// if (mySelect) {
+		// 	component.postRender(mySelect);
+		// }
+		//
+		// this._parent.appendChild(this._el);
+		this.attachToParent();
 
-		const mySelect = this._el.querySelector('#mySelect');
-		if (mySelect) {
-			component.postRender(mySelect);
-		}
-
-		this._parent.appendChild(this._el);
+		return this.html;
 	}
 
 	preRender() {}
 
 	postRender() {
-		const form = this._el.querySelector('#projectForm');
+		this._citySelect.postRender();
+		this._specialitySelect.postRender();
 
+		// const form = this._el.querySelector('#projectForm');
+		const form = this.el.querySelector('#projectForm');
 		if (form) {
 			enableValidationAndSubmit(form, (helper) => {
 				helper.event.preventDefault();

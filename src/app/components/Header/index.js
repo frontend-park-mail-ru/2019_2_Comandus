@@ -1,9 +1,9 @@
 import template from './index.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import Component from '../../../frame/Component';
+import { htmlToElement } from '@modules/utils';
+import Component from '@frame/Component';
 import { UserMenu } from '../UserMenu/UserMenu';
 import './style.css';
-import Frame from '../../../frame/frame';
+import Frame from '@frame/frame';
 
 class HeaderComponent extends Component {
 	constructor({ parent = document.body, ...props }) {

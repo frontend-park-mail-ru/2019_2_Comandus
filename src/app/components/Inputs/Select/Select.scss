@@ -1,0 +1,17 @@
+@import "~@assets/scss/global";
+@import "../inputs";
+
+.select {
+	@include input
+}
+
+.select[disabled] {
+	background: var(--background-light);
+	&:hover{
+		box-shadow: 0 0 0 1px #c5c5c5;
+	}
+}
+
+.label {
+	@include label;
+}

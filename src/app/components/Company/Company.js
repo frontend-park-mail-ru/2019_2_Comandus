@@ -1,10 +1,10 @@
-import Component from '../../../frame/Component';
-import { Select } from '../Select/Select';
+import Component from '@frame/Component';
+import { Select } from '../Inputs/Select/Select';
 import template from './Company.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
-import Frame from '../../../frame/frame';
-import CompanyService from '../../services/CompanyService';
+import { htmlToElement } from '@modules/utils';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import Frame from '@frame/frame';
+import CompanyService from '@services/CompanyService';
 
 export class Company extends Component {
 	constructor({ ...props }) {

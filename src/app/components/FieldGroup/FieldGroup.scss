@@ -1,0 +1,11 @@
+.field-group {
+	display: grid;
+	grid-column-gap: 10px;
+	padding: 10px 0;
+}
+
+.field-group_two {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+

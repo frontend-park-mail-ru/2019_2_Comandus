@@ -1,8 +1,8 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './ChangePassword.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
-import bus from './../../../frame/bus';
+import { htmlToElement } from '@modules/utils';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import bus from '@frame/bus';
 
 export class ChangePassword extends Component {
 	constructor({ ...props }) {

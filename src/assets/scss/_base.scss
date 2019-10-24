@@ -1,0 +1,12 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+:root {
+	font-family: $font-stack;
+	font-size: $font-size;
+	color: var(--text-dark);
+}
+

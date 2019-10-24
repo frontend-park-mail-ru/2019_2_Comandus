@@ -1,10 +1,10 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './Account.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
-import { Avatar } from '../Avatar/Avatar';
-import Frame from '../../../frame/frame';
-import bus from './../../../frame/bus';
+import { htmlToElement } from '@modules/utils';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import { Avatar } from '@components/Avatar/Avatar';
+import Frame from '@frame/frame';
+import bus from '@frame/bus';
 
 const children = [
 	{

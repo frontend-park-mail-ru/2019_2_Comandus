@@ -1,21 +1,21 @@
 import AppComponent from './app/App';
 import '../public/css/index.css';
-import './index.css';
-import './assets/scss/main.scss';
-import Frame from './frame/frame';
-import HomeComponent from './app/containers/homePage/homePage';
-import SignUpComponent from './app/containers/signupPage/signupPage';
-import LoginComponent from './app/containers/loginPage/loginPage';
-import { Settings } from './app/containers/settings/settings';
-import ClientSettingsComponent from './app/components/ClientSettingsComponent/ClientSettingsComponent';
-import JobFormComponent from './app/components/JobFormComponent/JobFormComponent';
-import { Profile } from './app/containers/freelancerProfile';
-import SettingsComponent from './app/components/SettingsComponent/SettingsComponent';
-import { Router } from './modules/router';
-import bus from './frame/bus';
-import JobService from './app/services/JobService';
-import AuthService from './app/services/AuthService';
-import AccountService from './app/services/AccountService';
+// import './index.css';
+import '@assets/scss/main.scss';
+import Frame from '@frame/frame';
+import HomeComponent from '@containers/homePage/homePage';
+import SignUpComponent from '@containers/signupPage/signupPage';
+import LoginComponent from '@containers/loginPage/loginPage';
+import { Settings } from '@containers/settings/settings';
+import ClientSettingsComponent from '@components/ClientSettingsComponent/ClientSettingsComponent';
+import JobFormComponent from '@components/JobFormComponent/JobFormComponent';
+import { Profile } from '@containers/freelancerProfile';
+import SettingsComponent from '@components/SettingsComponent/SettingsComponent';
+import { Router } from '@modules/router';
+import bus from '@frame/bus';
+import JobService from '@services/JobService';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
 
 const handlers = [
 	{

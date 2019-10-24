@@ -1,6 +1,6 @@
 import template from './index.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import Component from '../../../frame/Component';
+import { htmlToElement } from '@modules/utils';
+import Component from '@frame/Component';
 // import './style.css';
 // import './style.scss';
 // import './chaice.scss';

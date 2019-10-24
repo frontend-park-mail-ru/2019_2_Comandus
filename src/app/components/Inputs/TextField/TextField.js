@@ -1,6 +1,6 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './TextField.handlebars';
-import { uniqueId } from '../../../modules/utils';
+import './TextField.scss';
 
 export default class TextField extends Component {
 	constructor({
@@ -22,7 +22,6 @@ export default class TextField extends Component {
 		super(props);
 
 		this.data = {
-			id: this.constructor.name + uniqueId(),
 			type,
 			name,
 			classes,

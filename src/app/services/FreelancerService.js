@@ -1,4 +1,4 @@
-import AjaxModule from '../../modules/ajax';
+import AjaxModule from '@modules/ajax';
 import config from '../config';
 
 export default class FreelancerService {

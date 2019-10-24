@@ -1,10 +1,10 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './UserMenu.handlebars';
-import { getCookie, htmlToElement, setCookie } from '../../../modules/utils';
+import { getCookie, htmlToElement, setCookie } from '@modules/utils';
 import config from '../../config';
 import './UserMenu.css';
-import AccountService from '../../services/AccountService';
-import AuthService from '../../services/AuthService';
+import AccountService from '@services/AccountService';
+import AuthService from '@services/AuthService';
 
 export class UserMenu extends Component {
 	constructor({ ...props }) {

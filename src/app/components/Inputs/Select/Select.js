@@ -1,34 +1,35 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './Select.handlebars';
+import './Select.scss';
 
 export class Select extends Component {
 	constructor({
-		id,
 		name,
 		className,
 		items,
 		value,
 		onChange,
-		parent,
+		// parent,
+		attributes,
+		required = false,
 		...props
 	}) {
 		super(props);
-		this._parent = parent;
+		// this._parent = parent;
 		this.props = {
-			id,
 			name,
 			className,
 			items,
 			value,
 			onChange,
+			attributes,
+			required,
 			...props,
 		};
-		this._el = null;
+		// this._el = null;
 
 		this.handleChange = this.handleChange.bind(this);
 	}
-
-	preRender() {}
 
 	render() {
 		return template({
@@ -42,7 +43,7 @@ export class Select extends Component {
 		this.props.onChange(target.value);
 	}
 
-	postRender(el) {
-		el.addEventListener('change', this.handleChange);
+	postRender() {
+		this.el.addEventListener('change', this.handleChange);
 	}
 }

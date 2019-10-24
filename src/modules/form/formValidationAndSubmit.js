@@ -43,7 +43,8 @@ const attributes = {
 
 const classes = {
 	error: 'error',
-	errorMessage: 'error-message',
+	// errorMessage: 'error-message',
+	errorMessage: 'text-field__error',
 	validate: 'validate',
 	responseText: 'response-text',
 	responseTextError: 'response-text-error',

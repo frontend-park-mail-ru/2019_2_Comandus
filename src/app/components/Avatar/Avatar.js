@@ -1,8 +1,8 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './Avatar.handlebars';
-import { htmlToElement } from '../../../modules/utils';
+import { htmlToElement } from '@modules/utils';
 import './Avatar.css';
-import bus from '../../../frame/bus';
+import bus from '@frame/bus';
 
 export class Avatar extends Component {
 	_modal;

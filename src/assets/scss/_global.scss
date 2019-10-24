@@ -1,0 +1,27 @@
+:root{
+	--primary-color: #3E6BB4;
+	--secondary-color: #eef2f7;
+	--secondary-color2: #F3F0E7;
+	--color3: #1c3f7b;
+	--color4: #1f7ce7;
+	--color5: #5fc9f6;
+	--success-color: #28a745;
+	--danger-color: #dc3545;
+	--warn-color: #e6af2e;
+	--text-light: var(--secondary-color);
+	--text-dark: #222;
+	--background-light: var(--secondary-color);
+	--background-dark: var(--primary-color);
+	--white: #ffffff;
+}
+
+$font-size-s: 14px;
+$font-size-m: 16px;
+$font-size-l: 20px;
+$font-size: $font-size-m;
+
+$font-stack: ('Roboto', 'Helvetica', 'Arial', 'Open Sans', sans-serif);
+
+$border-radius-s: 3px;
+$border-radius-m: 5px;
+$border-radius-l: 10px;

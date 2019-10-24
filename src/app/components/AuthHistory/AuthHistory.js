@@ -1,7 +1,7 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './AuthHistory.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import AjaxModule from '../../../modules/ajax';
+import { htmlToElement } from '@modules/utils';
+import AjaxModule from '@modules/ajax';
 
 export class AuthHistory extends Component {
 	constructor({ parent = document.body, ...props }) {

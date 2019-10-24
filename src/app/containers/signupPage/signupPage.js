@@ -1,8 +1,8 @@
 import template from './index.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import Component from '../../../frame/Component';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
-import bus from '../../../frame/bus';
+import { htmlToElement } from '@modules/utils';
+import Component from '@frame/Component';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import bus from '@frame/bus';
 
 class SignUpComponent extends Component {
 	constructor({ ...props }) {

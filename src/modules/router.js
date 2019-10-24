@@ -1,4 +1,4 @@
-import Frame from '../frame/frame';
+import Frame from '@frame/frame';
 /**
  * место для вставки роутов (switch)
  * ссылки

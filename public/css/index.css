@@ -1,8 +1,7 @@
-@import 'base.css';
+/*@import 'base.css';*/
 @import 'form.css';
-@import 'grid.css';
-@import 'main.css';
-@import 'sticky-footer.css';
+/*@import 'main.css';*/
+/*@import 'sticky-footer.css';*/
 @import 'styles.css';
-@import "table.css";
-@import "card.css";
+/*@import "table.css";*/
+/*@import "../../src/assets/scss/card.scss";*/

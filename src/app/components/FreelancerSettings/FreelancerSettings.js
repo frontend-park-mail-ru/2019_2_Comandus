@@ -1,12 +1,12 @@
-import Component from '../../../frame/Component';
-import { Select } from '../Select/Select';
+import Component from '@frame/Component';
+import { Select } from '../Inputs/Select/Select';
 import template from './FreelancerSettings.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import AjaxModule from '../../../modules/ajax';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
+import { htmlToElement } from '@modules/utils';
+import AjaxModule from '@modules/ajax';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import config from '../../config';
-import Frame from '../../../frame/frame';
-import FreelancerService from '../../services/FreelancerService';
+import Frame from '@frame/frame';
+import FreelancerService from '@services/FreelancerService';
 
 export class FreelancerSettings extends Component {
 	constructor({ parent = document.body, ...props }) {

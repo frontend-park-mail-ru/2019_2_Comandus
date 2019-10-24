@@ -1,8 +1,8 @@
-import { htmlToElement } from '../modules/utils';
-import HeaderComponent from './components/Header';
-import Component from '../frame/Component';
+import { htmlToElement } from '@modules/utils';
+import HeaderComponent from '@components/Header';
+import Component from '@frame/Component';
 import template from './App.handlebars';
-import Frame from '../frame/frame';
+import Frame from '@frame/frame';
 
 class AppComponent extends Component {
 	constructor({ parent = document.body, ...props }) {

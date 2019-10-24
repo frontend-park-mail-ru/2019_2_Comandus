@@ -1,6 +1,6 @@
-import { htmlToElement } from '../../../modules/utils';
-import AjaxModule from '../../../modules/ajax';
-import Component from '../../../frame/Component';
+import { htmlToElement } from '@modules/utils';
+import AjaxModule from '@modules/ajax';
+import Component from '@frame/Component';
 import config from '../../config';
 
 const html = '<pre>Settings</pre>';

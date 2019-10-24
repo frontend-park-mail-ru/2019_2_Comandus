@@ -1,15 +1,15 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './settings.handlebars';
-import { getCookie, htmlToElement } from '../../../modules/utils';
-import { Account } from '../../components/Account/Account';
-import { Company } from '../../components/Company/Company';
-import { NotificationSettings } from '../../components/NotificationSettings/NotificationSettings';
-import { ChangePassword } from '../../components/ChangePassword/ChangePassword';
-import { AuthHistory } from '../../components/AuthHistory/AuthHistory';
-import { SecurityQuestion } from '../../components/SecurityQuestion/SecurityQuestion';
+import { getCookie, htmlToElement } from '@modules/utils';
+import { Account } from '@components/Account/Account';
+import { Company } from '@components/Company/Company';
+import { NotificationSettings } from '@components/NotificationSettings/NotificationSettings';
+import { ChangePassword } from '@components/ChangePassword/ChangePassword';
+import { AuthHistory } from '@components/AuthHistory/AuthHistory';
+import { SecurityQuestion } from '@components/SecurityQuestion/SecurityQuestion';
 import config from '../../config';
-import { FreelancerSettings } from '../../components/FreelancerSettings/FreelancerSettings';
-import Frame from '../../../frame/frame';
+import { FreelancerSettings } from '@components/FreelancerSettings/FreelancerSettings';
+import Frame from '@frame/frame';
 
 const children = [
 	{

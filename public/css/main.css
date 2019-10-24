@@ -1,5 +1,5 @@
-@import "roboto-font.css";
-@import "open-sans-font.css";
+@import "../../src/assets/scss/roboto-font.scss";
+@import "../../src/assets/scss/open-sans-font.scss";
 
 :root {
 	--bg_color: #F2F2F2;
