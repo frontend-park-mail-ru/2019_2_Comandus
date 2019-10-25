@@ -3,7 +3,6 @@
 		<div class="tp-col-8">
 			<h1>{{title}}</h1>
 			<form method="post" id="projectForm" autocomplete="off">
-
 				<input id="hireManagerId" name="hireManagerId" type="number" hidden value="0" required/>
 				<input id="jobTypeId" name="jobTypeId" type="number" hidden value="{{jobTypeId}}" required/>
 				{{{textField}}}
@@ -119,23 +118,24 @@
 {{!--						<option value="4">3D Графика</option>--}}
 {{!--					</select>--}}
 {{!--				</div>--}}
-				<div class="fieldset">
+{{!--				<div class="fieldset">--}}
 					<legend class="projectForm__label"
 					>Требуемые навыки и компетенции</legend>
 					<div>Какие навыки и опыт более важны для вас?</div>
-					<div>
-						<span>Golang</span><span>Javascript</span
-					><span>HTML</span>
-					</div>
-					<input
-							id="skills"
-							name="skills"
-							class="tp-input"
-							type="text"
-							placeholder="Введите название навыка для добавления"
-							aria-label="Требуемые навыки и компетенции"
-					/>
-				</div>
+{{!--					<div>--}}
+{{!--						<span>Golang</span><span>Javascript</span--}}
+{{!--					><span>HTML</span>--}}
+{{!--					</div>--}}
+{{!--					<input--}}
+{{!--							id="skills"--}}
+{{!--							name="skills"--}}
+{{!--							class="tp-input"--}}
+{{!--							type="text"--}}
+{{!--							placeholder="Введите название навыка для добавления"--}}
+{{!--							aria-label="Требуемые навыки и компетенции"--}}
+{{!--					/>--}}
+{{!--				</div>--}}
+				{{{inputTags}}}
 				{{{budgetField}}}
 {{!--				<div class="fieldset">--}}
 {{!--					<legend class="projectForm__label">Бюджет</legend>--}}

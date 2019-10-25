@@ -1,4 +1,3 @@
-import { htmlToElement } from '@modules/utils';
 import template from './JobFormComponent.handlebars';
 import './style.css';
 import Component from '@frame/Component';
@@ -9,6 +8,7 @@ import bus from '@frame/bus';
 import TextField from '@components/Inputs/TextField/TextField';
 import DoubleSelect from '@components/Inputs/DoubleSelect/DoubleSelect';
 import RadioGroup from '@components/Inputs/RadioGroup/RadioGroup';
+import InputTags from '@components/Inputs/InputTags/InputTags';
 
 const modes = {
 	project: 'project',
@@ -98,13 +98,22 @@ class JobFormComponent extends Component {
 			placeholder: '',
 		});
 
-		this._citySelect = new DoubleSelect({ items });
-		this._specialitySelect = new DoubleSelect({ items });
+		this._citySelect = new DoubleSelect({ items, name: 'city' });
+		this._specialitySelect = new DoubleSelect({
+			items,
+			name: 'specialitySelect',
+		});
 		this._levelRadioGroup = new RadioGroup({
 			items: levels,
 			title: 'Уровень фрилансера',
 			required: true,
 			name: 'experienceLevelId',
+		});
+		this._inputTags = new InputTags({
+			name: 'skills',
+			max: 5,
+			duplicate: false,
+			tags: ['Golang', 'Javascript', 'HTML'],
 		});
 
 		this.data = {
@@ -115,17 +124,11 @@ class JobFormComponent extends Component {
 			citySelect: this._citySelect.render(),
 			specialitySelect: this._specialitySelect.render(),
 			levelRadioGroup: this._levelRadioGroup.render(),
-			...this.data,
+			inputTags: this._inputTags.render(),
 		};
+
 		this.html = template(this.data);
-		// this._el = htmlToElement(html);
-		//
-		// const mySelect = this._el.querySelector('#mySelect');
-		// if (mySelect) {
-		// 	component.postRender(mySelect);
-		// }
-		//
-		// this._parent.appendChild(this._el);
+
 		this.attachToParent();
 
 		return this.html;
@@ -134,10 +137,12 @@ class JobFormComponent extends Component {
 	preRender() {}
 
 	postRender() {
-		this._citySelect.postRender();
+		if (this.data.isVacancy()) {
+			this._citySelect.postRender();
+		}
 		this._specialitySelect.postRender();
+		this._inputTags.postRender();
 
-		// const form = this._el.querySelector('#projectForm');
 		const form = this.el.querySelector('#projectForm');
 		if (form) {
 			enableValidationAndSubmit(form, (helper) => {

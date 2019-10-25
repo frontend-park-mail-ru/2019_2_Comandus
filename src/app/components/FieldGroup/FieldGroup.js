@@ -11,9 +11,10 @@ export default class FieldGroup extends Component {
 		};
 	}
 	render() {
-		return template({
+		this.html = template({
 			...this.props,
 			...this.data,
 		});
+		return this.html;
 	}
 }

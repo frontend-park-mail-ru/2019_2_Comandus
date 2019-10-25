@@ -32,10 +32,11 @@ export class Select extends Component {
 	}
 
 	render() {
-		return template({
+		this.html = template({
 			data: this.data,
 			props: this.props,
 		});
+		return this.html;
 	}
 
 	handleChange(event) {
