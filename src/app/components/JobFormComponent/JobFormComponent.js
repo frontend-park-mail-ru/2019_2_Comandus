@@ -8,11 +8,27 @@ import Frame from '@frame/frame';
 import bus from '@frame/bus';
 import TextField from '@components/Inputs/TextField/TextField';
 import DoubleSelect from '@components/Inputs/DoubleSelect/DoubleSelect';
+import RadioGroup from '@components/Inputs/RadioGroup/RadioGroup';
 
 const modes = {
 	project: 'project',
 	vacancy: 'vacancy',
 };
+
+const levels = [
+	{
+		value: '1',
+		label: 'Начинающий. Базовые знания и небольшой опыт работы',
+	},
+	{
+		value: '2',
+		label: 'Продвинутый. Несколько лет профессионального опыта',
+	},
+	{
+		value: '3',
+		label: 'Эксперт. Многолетний опыт работы в сложных проектах',
+	},
+];
 
 class JobFormComponent extends Component {
 	constructor({ ...props }) {
@@ -84,6 +100,12 @@ class JobFormComponent extends Component {
 
 		this._citySelect = new DoubleSelect({ items });
 		this._specialitySelect = new DoubleSelect({ items });
+		this._levelRadioGroup = new RadioGroup({
+			items: levels,
+			title: 'Уровень фрилансера',
+			required: true,
+			name: 'experienceLevelId',
+		});
 
 		this.data = {
 			mySelect: component.render(),
@@ -92,6 +114,7 @@ class JobFormComponent extends Component {
 			budgetField: budgetField.render(),
 			citySelect: this._citySelect.render(),
 			specialitySelect: this._specialitySelect.render(),
+			levelRadioGroup: this._levelRadioGroup.render(),
 			...this.data,
 		};
 		this.html = template(this.data);

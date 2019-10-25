@@ -1,0 +1,16 @@
+<div class="radio-group" id="{{id}}">
+	<label class="radio-group__title">{{title}}</label>
+	<div class="radio-group__choices">
+		{{#each items}}
+			<label for="{{../id}}-input-{{value}}" class="radio">
+				<span class="radio__input-wrapper">
+					<input type="radio" class="radio__input" id="{{../id}}-input-{{value}}" value="{{value}}"  name="{{../name}}" {{#../required}}required{{/../required}}>
+					<span class="radio__inner"></span>
+				</span>
+				<span class="radio__label">{{label}}</span>
+			</label>
+		{{/each}}
+	</div>
+</div>
+
+

@@ -1,0 +1,102 @@
+@import "~@components/Inputs/inputs";
+
+.radio-group {
+	@include field;
+}
+
+.radio-group__choices {
+	//display: grid;
+}
+
+.radio-group__title {
+	@include label;
+}
+
+.radio {
+	margin-right: 8px;
+	line-height: 2;
+	padding: 0;
+	font-size: $font-size;
+	white-space: nowrap;
+	cursor: pointer;
+	display: block;
+}
+
+.radio__input-wrapper {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	outline: none;
+	vertical-align: middle;
+	cursor: pointer;
+	position: relative;
+}
+
+.radio__inner {
+	position: relative;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 16px;
+	height: 16px;
+	background-color: #fff;
+	border-color: #d9d9d9;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 100px;
+	transition: all .3s;
+
+	&::after {
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		display: table;
+		width: 8px;
+		height: 8px;
+		background-color: var(--primary-color);
+		border-top: 0;
+		border-left: 0;
+		border-radius: 8px;
+		transform: scale(0);
+		opacity: 0;
+		transition: all .3s cubic-bezier(.78, .14, .15, .86);
+		content: ' ';
+	}
+}
+
+.radio__input:checked ~ .radio__inner::after {
+	transform: scale(1);
+	opacity: 1;
+}
+
+.radio:hover .radio__inner, .radio__input:checked ~ .radio__inner {
+	border-color: var(--primary-color);
+	box-shadow: 0 0 2px 0 var(--primary-color);
+}
+
+.radio__input.error ~ .radio__inner {
+	border-color: var(--danger-color);
+	box-shadow: 0 0 2px 0 var(--danger-color);
+}
+
+.radio__input {
+	padding: 0;
+	outline: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	cursor: pointer;
+	opacity: 0;
+	touch-action: manipulation;
+	height: auto;
+	margin: 0;
+	box-shadow: none;
+}
+
+.radio__label {
+	padding: 0 8px;
+	vertical-align: middle;
+}
