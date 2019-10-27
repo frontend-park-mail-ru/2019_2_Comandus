@@ -1,13 +1,17 @@
 import Component from '../../../../frame/Component';
 import { Select } from './../Select/Select';
 import countriesCities from './../../../../assets/countries.min.json';
-import FieldGroup from '../../FieldGroup/FieldGroup';
+import FieldGroup from '../FieldGroup/FieldGroup';
 
 const toSelectElement = (el) => ({ label: el, value: el, selected: false });
 
 export default class DoubleSelect extends Component {
-	constructor({ items, required = false, ...props }) {
+	constructor({ items, required = false, label = '', ...props }) {
 		super(props);
+
+		this.data = {
+			label,
+		};
 
 		this._firstSelect = new Select({
 			items: Object.keys(countriesCities).map(toSelectElement),
@@ -26,6 +30,7 @@ export default class DoubleSelect extends Component {
 		this.html = new FieldGroup({
 			children: [this._firstSelect.render(), this._secondSelect.render()],
 			two: true,
+			...this.data,
 		}).render();
 		return this.html;
 	}

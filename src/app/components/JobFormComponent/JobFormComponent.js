@@ -9,6 +9,7 @@ import TextField from '@components/Inputs/TextField/TextField';
 import DoubleSelect from '@components/Inputs/DoubleSelect/DoubleSelect';
 import RadioGroup from '@components/Inputs/RadioGroup/RadioGroup';
 import InputTags from '@components/Inputs/InputTags/InputTags';
+import FieldGroup from '@components/Inputs/FieldGroup/FieldGroup';
 
 const modes = {
 	project: 'project',
@@ -98,14 +99,19 @@ class JobFormComponent extends Component {
 			placeholder: '',
 		});
 
-		this._citySelect = new DoubleSelect({ items, name: 'city' });
+		this._citySelect = new DoubleSelect({
+			items,
+			name: 'city',
+			label: 'Нужен исполнитель из...',
+		});
 		this._specialitySelect = new DoubleSelect({
 			items,
 			name: 'specialitySelect',
+			label: 'Специализация проекта',
 		});
 		this._levelRadioGroup = new RadioGroup({
 			items: levels,
-			title: 'Уровень фрилансера',
+			// title: 'Уровень фрилансера',
 			required: true,
 			name: 'experienceLevelId',
 		});
@@ -118,13 +124,34 @@ class JobFormComponent extends Component {
 
 		this.data = {
 			mySelect: component.render(),
-			textField: textField.render(),
-			descriptionField: descriptionField.render(),
-			budgetField: budgetField.render(),
+			textField: new FieldGroup({
+				children: [textField.render()],
+				label: 'Название',
+			}).render(),
+			descriptionField: new FieldGroup({
+				children: [descriptionField.render()],
+				label: 'Описание проекта',
+			}).render(),
+			budgetField: new FieldGroup({
+				children: [budgetField.render()],
+				label: 'Бюджет',
+			}).render(),
 			citySelect: this._citySelect.render(),
 			specialitySelect: this._specialitySelect.render(),
-			levelRadioGroup: this._levelRadioGroup.render(),
-			inputTags: this._inputTags.render(),
+			levelRadioGroup: new FieldGroup({
+				children: [
+					'<div> Выберите требуемый уровень фрилансера для выполнения вашего проекта. </div>',
+					this._levelRadioGroup.render(),
+				],
+				label: 'Уровень фрилансера',
+			}).render(),
+			inputTags: new FieldGroup({
+				children: [
+					'<div>Какие навыки и опыт более важны для вас?</div>',
+					this._inputTags.render(),
+				],
+				label: 'Требуемые навыки и компетенции',
+			}).render(),
 		};
 
 		this.html = template(this.data);

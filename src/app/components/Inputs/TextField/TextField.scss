@@ -6,7 +6,7 @@
 	width: 100%;
 	display: inline-block;
 	margin: 0;
-	padding: 10px 0;
+	//padding: 10px 0;
 	position: relative;
 }
 
@@ -15,7 +15,8 @@
 }
 
 .text-field__label {
-	@include label
+	@include label;
+	display: none;
 }
 
 .text-field__error {
