@@ -1,5 +1,5 @@
 import Component from '@frame/Component';
-import { Select } from '../Inputs/Select/Select';
+import { Select } from '../inputs/Select/Select';
 import template from './FreelancerSettings.handlebars';
 import { htmlToElement } from '@modules/utils';
 import AjaxModule from '@modules/ajax';

@@ -16,6 +16,8 @@ export default class TextField extends Component {
 		max = null,
 		label = '',
 		error = null,
+		pattern = null,
+		title = null,
 		attributes = '',
 		...props
 	} = {}) {
@@ -35,6 +37,8 @@ export default class TextField extends Component {
 			label,
 			error,
 			attributes,
+			pattern,
+			title,
 		};
 	}
 

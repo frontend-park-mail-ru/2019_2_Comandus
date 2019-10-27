@@ -9,6 +9,7 @@
 				  minlength="{{minlength}}"
 				  maxlength="{{maxlength}}"
 				  {{#required}}required{{/required}}
+				  title="{{title}}"
 			{{attributes}}
 		></textarea>
 	{{else}}
@@ -27,6 +28,8 @@
 			   maxlength="{{maxlength}}"
 			{{/if_eq}}
 			{{attributes}}
+			   pattern="{{pattern}}"
+			   title="{{title}}"
 		/>
 	{{/if_eq}}
 	{{#if hint}}

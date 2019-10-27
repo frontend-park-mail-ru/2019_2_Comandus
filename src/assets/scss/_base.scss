@@ -10,3 +10,14 @@
 	color: var(--text-dark);
 }
 
+body {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+}
+
+.text-center {
+	text-align: center;
+}
+

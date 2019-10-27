@@ -1,6 +1,6 @@
-<div class="tp-modal-window">
-	<main class="tp-container tp-form-window card">
-		<h1>Войти</h1>
+<div class="tp-modal-window" id="{{id}}">
+	<main class="tp-container card">
+		<h1 class="text-center">Войти</h1>
 		<form
 			class="tp-form"
 			id="loginForm"
@@ -8,33 +8,26 @@
 			autocomplete="off"
 			novalidate="novalidate"
 		>
-			<label for="email">Электронная почта</label>
-			<input
-				class="tp-input"
-				name="email"
-				id="email"
-				type="email"
-				placeholder="Электронная почта"
-				required
-			/>
-			<label for="password">Пароль</label>
-			<input
-				class="tp-input"
-				name="password"
-				id="password"
-				type="password"
-				placeholder="Пароль"
-				required
-			/>
-{{!--			<div class="tp-row tp-row-float-left">--}}
-{{!--				<input--}}
-{{!--					class="tp-input"--}}
-{{!--					id="rememberMe"--}}
-{{!--					name="rememberMe"--}}
-{{!--					type="checkbox"--}}
-{{!--				/>--}}
-{{!--				<label for="rememberMe">Запомнить меня</label>--}}
-{{!--			</div>--}}
+{{!--			<label for="email">Электронная почта</label>--}}
+{{!--			<input--}}
+{{!--				class="tp-input"--}}
+{{!--				name="email"--}}
+{{!--				id="email"--}}
+{{!--				type="email"--}}
+{{!--				placeholder="Электронная почта"--}}
+{{!--				required--}}
+{{!--			/>--}}
+			{{{emailField}}}
+{{!--			<label for="password">Пароль</label>--}}
+{{!--			<input--}}
+{{!--				class="tp-input"--}}
+{{!--				name="password"--}}
+{{!--				id="password"--}}
+{{!--				type="password"--}}
+{{!--				placeholder="Пароль"--}}
+{{!--				required--}}
+{{!--			/>--}}
+			{{{passwordField}}}
 			<input class="tp-button-primary" type="submit" value="Войти" />
 		</form>
 	</main>

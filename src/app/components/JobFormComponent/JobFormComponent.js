@@ -1,15 +1,15 @@
 import template from './JobFormComponent.handlebars';
 import './style.css';
 import Component from '@frame/Component';
-import { Select } from '@components/Inputs/Select/Select';
+import { Select } from '@components/inputs/Select/Select';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import Frame from '@frame/frame';
 import bus from '@frame/bus';
-import TextField from '@components/Inputs/TextField/TextField';
-import DoubleSelect from '@components/Inputs/DoubleSelect/DoubleSelect';
-import RadioGroup from '@components/Inputs/RadioGroup/RadioGroup';
-import InputTags from '@components/Inputs/InputTags/InputTags';
-import FieldGroup from '@components/Inputs/FieldGroup/FieldGroup';
+import TextField from '@components/inputs/TextField/TextField';
+import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
+import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
+import InputTags from '@components/inputs/InputTags/InputTags';
+import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 
 const modes = {
 	project: 'project',
@@ -135,6 +135,7 @@ class JobFormComponent extends Component {
 			budgetField: new FieldGroup({
 				children: [budgetField.render()],
 				label: 'Бюджет',
+				two: true,
 			}).render(),
 			citySelect: this._citySelect.render(),
 			specialitySelect: this._specialitySelect.render(),
