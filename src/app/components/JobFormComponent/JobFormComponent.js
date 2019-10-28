@@ -10,6 +10,7 @@ import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import InputTags from '@components/inputs/InputTags/InputTags';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import Button from '@components/inputs/Button/Button';
 
 const modes = {
 	project: 'project',
@@ -121,6 +122,10 @@ class JobFormComponent extends Component {
 			duplicate: false,
 			tags: ['Golang', 'Javascript', 'HTML'],
 		});
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Опубликовать проект',
+		});
 
 		this.data = {
 			mySelect: component.render(),
@@ -152,6 +157,9 @@ class JobFormComponent extends Component {
 					this._inputTags.render(),
 				],
 				label: 'Требуемые навыки и компетенции',
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
 			}).render(),
 		};
 

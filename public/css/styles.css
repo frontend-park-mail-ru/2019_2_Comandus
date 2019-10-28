@@ -11,15 +11,18 @@
 	justify-content: space-between;
 	align-items: center;
 	height: 55px;
+	font-size: 1.5em;
 }
 
 .tp-navbar-brand {
-	background-image: url('https://via.placeholder.com/106x30?text=КОМАНДУС');
+	/*background-image: url('https://via.placeholder.com/106x30?text=КОМАНДУС');*/
+	background-image: url('../../src/assets/img/logo.png');
 	background-repeat: no-repeat;
-	background-size: 106px 30px;
+	background-size: 40px 40px;
 	display: block;
-	width: 106px;
-	height: 30px;
+	width: 40px;
+	/*height: 30px;*/
+	height: 40px;
 	text-indent: -9999px;
 	margin-right: 5px;
 }

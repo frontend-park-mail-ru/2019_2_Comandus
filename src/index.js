@@ -1,6 +1,5 @@
 import AppComponent from './app/App';
 import '../public/css/index.css';
-// import './index.css';
 import '@assets/scss/main.scss';
 import Frame from '@frame/frame';
 import HomeComponent from '@containers/homePage/homePage';

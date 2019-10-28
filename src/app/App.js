@@ -23,7 +23,9 @@ class AppComponent extends Component {
 		const component = Frame.createComponent(HeaderComponent, el, props);
 		Frame.renderComponent(component);
 
-		el.appendChild(document.createElement('router-outlet'));
+		const outlet = document.createElement('router-outlet');
+		outlet.className = 'page';
+		el.appendChild(outlet);
 
 		this._parent.appendChild(el);
 	}

@@ -1,10 +1,11 @@
 import template from './index.handlebars';
-import { htmlToElement } from '@modules/utils';
 import Component from '@frame/Component';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import Button from '@components/inputs/Button/Button';
+import './login.scss';
 
 class LoginComponent extends Component {
 	constructor({ ...props }) {
@@ -30,6 +31,10 @@ class LoginComponent extends Component {
 			placeholder: 'Пароль',
 			name: 'password',
 		});
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Войти',
+		});
 		this.data = {
 			emailField: new FieldGroup({
 				children: [emailField.render()],
@@ -38,6 +43,9 @@ class LoginComponent extends Component {
 			passwordField: new FieldGroup({
 				children: [passwordField.render()],
 				label: passwordField.data.label,
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
 			}).render(),
 		};
 

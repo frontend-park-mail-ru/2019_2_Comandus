@@ -1,16 +1,18 @@
-@import "~@components/inputs/inputs";
+@import "~@components/inputs/inputs.scss";
 
 .tag {
 	display: inline-block;
 	background-color: $primary-color;
 	color: white;
 	border-radius: 40px;
-	padding: 0 3px 0 7px;
+	padding: 5px 10px;
 	margin-right: 5px;
-	margin-bottom:5px;
-	box-shadow: 0 5px 15px -2px rgba( $color4, .7);
+	margin-bottom:10px;
+	box-shadow: 0 5px 15px -2px rgba( $color4, .5);
 	user-select: none;
 	transition: background-color .3s ease;
+	font-size: $font-size-s;
+	line-height: 1;
 
 	&:hover {
 		background-color: rgba($primary-color, .8);
@@ -19,8 +21,8 @@
 
 .tag__delete {
 	cursor: pointer;
-	padding: 0 7px 3px;
 	display: inline-block;
+	padding-left: 10px;
 	color: rgba( $color5, .5);
 	&:hover {
 		color: $white;

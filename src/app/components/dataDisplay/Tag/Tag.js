@@ -22,8 +22,10 @@ export default class Tag extends Component {
 	}
 
 	postRender() {
-		this._deleteBtn = this.el.querySelector('.tag__delete');
-		this._deleteBtn.addEventListener('click', this.onDelete);
+		if (this.data.onDelete) {
+			this._deleteBtn = this.el.querySelector('.tag__delete');
+			this._deleteBtn.addEventListener('click', this.onDelete);
+		}
 	}
 
 	onDelete = (event) => {

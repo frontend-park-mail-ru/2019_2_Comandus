@@ -1,6 +1,6 @@
 import Component from '@frame/Component';
 import template from './InputTags.handlebars';
-import Tag from '@components/inputs/InputTags/Tag/Tag';
+import Tag from '@components/dataDisplay/Tag/Tag';
 import TextField from '@components/inputs/TextField/TextField';
 import './InputTags.scss';
 

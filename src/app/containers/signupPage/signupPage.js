@@ -6,6 +6,7 @@ import bus from '@frame/bus';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
+import Button from '@components/inputs/Button/Button';
 
 const roles = [
 	{
@@ -65,6 +66,10 @@ class SignUpComponent extends Component {
 			required: true,
 			name: 'type',
 		});
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Создать аккаунт',
+		});
 
 		this.data = {
 			firstNameField: new FieldGroup({
@@ -87,6 +92,9 @@ class SignUpComponent extends Component {
 				children: [rolesRadio.render()],
 				label: 'Я хочу:',
 				// two: true
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
 			}).render(),
 		};
 
