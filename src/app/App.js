@@ -10,7 +10,9 @@ class AppComponent extends Component {
 	}
 
 	render() {
-		this._header = new HeaderComponent({});
+		this._header = new HeaderComponent({
+			...this.props,
+		});
 		const footer = new Footer();
 
 		this.data = {

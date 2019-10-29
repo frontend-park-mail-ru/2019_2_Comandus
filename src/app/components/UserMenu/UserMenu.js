@@ -5,6 +5,9 @@ import config from '../../config';
 import './UserMenu.css';
 import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
+import bus from '@frame/bus';
+import AjaxModule from '@modules/ajax';
+import JobService from '@services/JobService';
 
 export class UserMenu extends Component {
 	constructor({ ...props }) {
@@ -68,7 +71,7 @@ export class UserMenu extends Component {
 
 				AuthService.Logout()
 					.then((response) => {
-						this.props.router.push('/login/');
+						this.props.router.push('/login');
 					})
 					.catch((error) => {
 						console.error(error);
@@ -83,12 +86,20 @@ export class UserMenu extends Component {
 				event.preventDefault();
 				event.stopPropagation();
 
+				AjaxModule.post('/setusertype', {
+					type: event.target.dataset.mode,
+				});
 				setCookie(
 					config.cookieAccountModeName,
 					event.target.dataset.mode,
 				);
 				this.props.router.push('/');
 			});
+		});
+
+		bus.on('get-role', () => {
+			console.log('GEEEEEEEEEEEET');
+			this.preRender();
 		});
 	}
 }

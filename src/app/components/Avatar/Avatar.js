@@ -3,6 +3,7 @@ import template from './Avatar.handlebars';
 import { htmlToElement } from '@modules/utils';
 import './Avatar.css';
 import bus from '@frame/bus';
+import config from '@app/config';
 
 export class Avatar extends Component {
 	_modal;
@@ -12,7 +13,7 @@ export class Avatar extends Component {
 
 	constructor({
 		parent = document.body,
-		imgUrl = `${'https://flruserver.herokuapp.com/private/account/download-avatar' +
+		imgUrl = `${config.baseAPIUrl}${'/account/download-avatar' +
 			'?'}${new Date().getTime()}`,
 		imgAlt = 'user avatar',
 		imgWidth = 120,
@@ -133,8 +134,9 @@ export class Avatar extends Component {
 
 		response
 			.then((res) => {
-				this._avatar.src = `${'https://flruserver.herokuapp.com/private/account/download-avatar' +
-					'?'}${new Date().getTime()}`;
+				this._avatar.src = `${
+					config.baseAPIUrl
+				}${'/account/download-avatar' + '?'}${new Date().getTime()}`;
 
 				this._modal.style.display = 'none';
 				this._fileSelect.textContent = 'Выбрать файл';

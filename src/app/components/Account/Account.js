@@ -17,12 +17,12 @@ const children = [
 ];
 
 export class Account extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this._parent = parent;
-		this._data = {
+		// this._parent = parent;
+		this.data = {
 			children: {},
-			...this._data,
+			// ...this._data,
 			loaded: false,
 		};
 
@@ -52,6 +52,7 @@ export class Account extends Component {
 			pattern: '^[А-Яа-яA-Za-z]{2,}$',
 			title:
 				'Обычно фамилия так не выглядит. Это Ваша настоящая фамилия?',
+			value: this.data.user ? this.data.user.secondName : '',
 		});
 		const firstNameField = new TextField({
 			required: true,
@@ -62,6 +63,7 @@ export class Account extends Component {
 			maxlength: '20',
 			pattern: '^[А-Яа-яA-Za-z]{2,}$',
 			title: 'Обычно имя так не выглядит. Это Ваше настоящая имя?',
+			value: this.data.user ? this.data.user.firstName : '',
 		});
 		const emailField = new TextField({
 			required: true,
@@ -69,6 +71,7 @@ export class Account extends Component {
 			type: 'email',
 			label: 'E-mail',
 			placeholder: 'Ваш e-mail',
+			value: this.data.user ? this.data.user.email : '',
 		});
 		const submitBtn = new Button({
 			type: 'submit',
@@ -140,7 +143,6 @@ export class Account extends Component {
 			.then((res) => {
 				this.data = {
 					user: { ...res },
-					...this.data,
 				};
 			})
 			.catch((error) => {

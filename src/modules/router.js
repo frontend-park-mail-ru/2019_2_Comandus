@@ -1,3 +1,5 @@
+import bus from '@frame/bus';
+
 import Frame from '@frame/frame';
 /**
  * место для вставки роутов (switch)
@@ -97,6 +99,8 @@ export class Router {
 			component,
 			el,
 		};
+
+		bus.emit('get-role');
 	}
 
 	match(route, requestPath) {

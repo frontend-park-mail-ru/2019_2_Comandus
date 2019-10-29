@@ -9,7 +9,9 @@ class HeaderComponent extends Component {
 	}
 
 	render() {
-		this._userMenu = new UserMenu({});
+		this._userMenu = new UserMenu({
+			...this.props,
+		});
 
 		this.data = {
 			userMenu: this._userMenu.render(),

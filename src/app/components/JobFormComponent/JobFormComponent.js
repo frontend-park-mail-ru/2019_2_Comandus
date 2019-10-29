@@ -85,6 +85,7 @@ class JobFormComponent extends Component {
 				<li>Ищем специалиста по по 3D моделированию</li> 
 				</ul>
 				</div>`,
+			name: 'title',
 		});
 		const descriptionField = new TextField({
 			required: true,
@@ -92,12 +93,14 @@ class JobFormComponent extends Component {
 			label: 'Описание проекта',
 			placeholder: '',
 			hint: `<ul> <li> Укажите каким должен быть результат работы; требование к результату </li> <li> Каким должен быть фрилансер; требование к исполнителю </li> <li>Важная информация о проекте</li> <li>Сроки выполнения и другие условия</li> </ul>`,
+			name: 'description',
 		});
 		const budgetField = new TextField({
 			required: true,
 			type: 'number',
 			label: 'Бюджет',
 			placeholder: '',
+			name: 'paymentAmount',
 		});
 
 		this._citySelect = new DoubleSelect({
@@ -107,7 +110,7 @@ class JobFormComponent extends Component {
 		});
 		this._specialitySelect = new DoubleSelect({
 			items,
-			name: 'specialitySelect',
+			name: 'specialityId',
 			label: 'Специализация проекта',
 		});
 		this._levelRadioGroup = new RadioGroup({

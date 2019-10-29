@@ -142,7 +142,7 @@ footer a {
 }
 
 .tp-dropdown-content li {
-	color: #4c2d46;
+	color: #1f7ce7;
 	padding: 12px 16px;
 	text-decoration: none;
 	display: block;
@@ -150,8 +150,8 @@ footer a {
 }
 
 .tp-dropdown-content li:hover {
-	color: #4c2d46;
-	box-shadow: inset 4px 0px 0px 0px #623d76;
+	color: #1f7ce7;
+	box-shadow: inset 4px 0px 0px 0px #1f7ce7;
 	transition: 0.15s all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 
