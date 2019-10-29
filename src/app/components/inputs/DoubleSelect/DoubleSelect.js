@@ -2,8 +2,7 @@ import Component from '../../../../frame/Component';
 import { Select } from './../Select/Select';
 import countriesCities from './../../../../assets/countries.min.json';
 import FieldGroup from '../FieldGroup/FieldGroup';
-
-const toSelectElement = (el) => ({ label: el, value: el, selected: false });
+import { toSelectElement } from '@modules/utils';
 
 export default class DoubleSelect extends Component {
 	constructor({ items, required = false, label = '', ...props }) {

@@ -1,0 +1,85 @@
+<div id="{{id}}">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row  card card_no-padding">
+			<div class="tp-col-9">
+				<div class="job-details job-details_clear-margins">
+					<h2 class="job-details__inner-item job-details_title">{{job.title}}</h2>
+					<div class="job-details__inner-item">
+						<div class="job-details__category">
+							<a href="/search/jobs?category={{job.specialityId}}">{{job.specialityId}}</a>
+						</div>
+						<div>{{job.created}}</div>
+					</div>
+					<div class="job-details__inner-item job-details__description">{{job.description}}</div>
+					<div class="job-details__inner-item">
+						<ul class="job-details__features">
+							<li class="job-feature">
+								<strong>{{job.jobTypeId}}</strong>
+								<small>Тип работы</small>
+							</li>
+							<li class="job-feature">
+								<strong>{{job.paymentAmount}} ₽</strong>
+								<small>Бюджет</small>
+							</li>
+							<li class="job-feature">
+								<strong>{{job.experienceLevel}}</strong>
+								<small>Уровень фрилансера</small>
+							</li>
+						</ul>
+					</div>
+					<div class="job-details__inner-item job-item__tags">
+						{{#each job.skills}}
+							<span class="tag">{{this}}</span>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+			<div class="tp-col-3">
+				<div class="job-details-sidebar">
+					<div class="buttons job-details__inner-item">
+						{{{submitProposal}}}
+						{{{saveBtn}}}
+					</div>
+					<div class="job-details__inner-item">
+						<strong>О заказчике</strong>
+						<ul class="about-client">
+							<li>
+								<strong>{{job.hireManagerId}}</strong>
+								<small>{{job.hireManagerId}}</small>
+							</li>
+							<li>
+								<strong></strong>
+								<small>Отзывы фрилансеров</small>
+							</li>
+							<li>
+								<strong></strong>
+								<small>Зарегистрирован</small>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tp-row tp-row-centered">
+			<div class="tp-col-6 card card_no-padding">
+				<div class="job-details">
+					<h2 class="job-details__inner-item job-details_title">Ответ фрилансера</h2>
+					<div class="job-details__inner-item">
+						<form>
+							{{{budgetField}}}
+							{{{timeSelect}}}
+							{{{proposalField}}}
+						</form>
+					</div>
+					<div class="job-details__inner-item">
+						<div class="buttons-group">
+							{{{submitProposal}}}
+							{{{cancelBtn}}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

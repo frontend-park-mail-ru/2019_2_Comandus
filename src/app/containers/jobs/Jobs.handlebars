@@ -1,0 +1,28 @@
+<div id="{{id}}">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row">
+			<div class="tp-col-8 ">
+				<div class="card card_no-padding">
+					{{#each jobs}}
+						<section class="job-item">
+							<div>
+								<a class="job-item__title" href="/jobs/{{id}}">{{title}}</a>
+								<div class="job-item__small__info job-item__small">{{paymentAmount}} ₽ - {{experienceLevel}} - {{created}}</div>
+								<div class="job-item__description">
+									{{description}}
+								</div>
+								<div class="job-item__tags">
+									{{#each skills}}
+										<span class="tag">{{this}}</span>
+									{{/each}}
+								</div>
+								<div class="job-item__small">Ответов: {{proposals}} - {{country}}</div>
+							</div>
+						</section>
+					{{/each}}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

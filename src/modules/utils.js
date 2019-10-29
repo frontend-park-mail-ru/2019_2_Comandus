@@ -50,3 +50,9 @@ export const uniqueId = () =>
 	`_${Math.random()
 		.toString(36)
 		.substr(2, 9)}`;
+
+export const toSelectElement = (el) => ({
+	label: el,
+	value: el,
+	selected: false,
+});

@@ -1,0 +1,85 @@
+@import '~@assets/scss/global';
+
+@mixin inner-item {
+	padding: 30px;
+	border-top: 1px solid #E0E0E0;
+}
+
+.job-details_title {
+	margin: 0;
+}
+
+.job-details_clear-margins {
+	margin: 0 -15px;
+}
+.job-details {
+	border-right: 1px solid #E0E0E0;
+}
+
+.job-details__inner-item {
+	@include inner-item;
+}
+
+.job-details-sidebar {
+	margin: 0 -15px;
+}
+
+.job-details__category {
+	color: $primary-color;
+}
+
+.job-details__features {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
+	margin: 0;
+}
+
+.job-feature {
+	width: 33.33%;
+	position: relative;
+	padding-left: 29px;
+	padding-right: 10px;
+}
+
+.job-feature strong, .job-feature small {
+	display: block;
+}
+
+.buttons {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: column;
+}
+
+.buttons button {
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.about-client {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
+	margin: 0;
+	flex-direction: column;
+}
+
+.about-client li {
+	position: relative;
+	padding-top: 10px;
+}
+
+.about-client li strong, .about-client li small {
+	display: block;
+}
+
+.buttons-group {
+	display: flex;
+}
+
+.buttons-group button {
+	margin-right: 15px;
+}

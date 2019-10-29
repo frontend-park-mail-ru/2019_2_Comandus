@@ -15,6 +15,9 @@ import bus from '@frame/bus';
 import JobService from '@services/JobService';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
+import Jobs from '@containers/jobs/Jobs';
+import Freelancers from '@containers/freelancers/Freelancers';
+import Job from '@containers/Job/Job';
 
 const handlers = [
 	{
@@ -89,7 +92,9 @@ const routes = [
 		path: '/with-children',
 		children: [{ path: '/signup', Component: SignUpComponent }],
 	},
-	{ path: '/jobs/:jobId', Component: SettingsComponent },
+	{ path: '/jobs/:jobId', Component: Job },
+	{ path: '/jobs', Component: Jobs },
+	{ path: '/freelancers', Component: Freelancers },
 ];
 
 const router = new Router(document.getElementById('root'), {

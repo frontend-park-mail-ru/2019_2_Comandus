@@ -1,0 +1,46 @@
+@import "~@assets/scss/global";
+
+.job-item {
+	border-bottom: 1px solid #E0E0E0;
+	padding: 20px 30px;
+	//margin: 0 -16px;
+	user-select: none;
+
+	&:hover {
+		background-color: $secondary-color;
+	}
+}
+
+.job-item:hover .job-item__title {
+	color: $primary-color;
+}
+
+.job-item__title {
+	font-size: 1.2em;
+	margin-bottom: 15px;
+	display: block;
+}
+
+.job-item__description {
+	font-size: .9em;
+	margin-bottom: 15px;
+}
+
+.job-item__small__info {
+	margin-bottom: 15px;
+}
+
+.job-item__small {
+	color: #656565;
+	font-size: .9em;
+}
+
+.job-item__tags {
+	//margin-bottom: 15px;
+}
+
+.job-item__tags  .tag {
+	background-color: #E0E0E0;
+	color: $text-dark;
+	box-shadow: none;
+}
