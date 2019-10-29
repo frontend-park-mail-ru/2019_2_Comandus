@@ -18,8 +18,9 @@
 			   name="{{name}}"
 			   class="text-field__input form__control {{classes}}"
 			   placeholder="{{placeholder}}"
-			{{!--		   value="{{value}}"--}}
+			   value="{{value}}"
 			{{#required}}required{{/required}}
+			{{#readonly}}readonly{{/readonly}}
 			{{#if_eq type 'number'}}
 			   min="{{min}}"
 			   max="{{max}}"
