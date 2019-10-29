@@ -5,6 +5,9 @@ import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit
 import { Avatar } from '@components/Avatar/Avatar';
 import Frame from '@frame/frame';
 import bus from '@frame/bus';
+import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import TextField from '@components/inputs/TextField/TextField';
+import Button from '@components/inputs/Button/Button';
 
 const children = [
 	{
@@ -36,6 +39,60 @@ export class Account extends Component {
 			const { children } = this.data;
 			children[ch.id] = ch.id;
 		});
+
+		// TODO: отображение уже существующих данных, которые мы получаем с сервера
+
+		const secondNameField = new TextField({
+			required: true,
+			name: 'secondName',
+			type: 'text',
+			label: 'Фамилия',
+			placeholder: 'Ваша фамилия',
+			maxlength: '20',
+			pattern: '^[А-Яа-яA-Za-z]{2,}$',
+			title:
+				'Обычно фамилия так не выглядит. Это Ваша настоящая фамилия?',
+		});
+		const firstNameField = new TextField({
+			required: true,
+			name: 'firstName',
+			type: 'text',
+			label: 'Имя',
+			placeholder: 'Ваше имя',
+			maxlength: '20',
+			pattern: '^[А-Яа-яA-Za-z]{2,}$',
+			title: 'Обычно имя так не выглядит. Это Ваше настоящая имя?',
+		});
+		const emailField = new TextField({
+			required: true,
+			name: 'email',
+			type: 'email',
+			label: 'E-mail',
+			placeholder: 'Ваш e-mail',
+		});
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Сохранить изменения',
+		});
+
+		// console.log(secondNameField);
+		this.data = {
+			secondNameField: new FieldGroup({
+				children: [secondNameField.render()],
+				label: 'Фамилия',
+			}).render(),
+			firstNameField: new FieldGroup({
+				children: [firstNameField.render()],
+				label: 'Имя',
+			}).render(),
+			emailField: new FieldGroup({
+				children: [emailField.render()],
+				label: 'E-mail',
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
+			}).render(),
+		};
 
 		const html = template({
 			data: this.data,
