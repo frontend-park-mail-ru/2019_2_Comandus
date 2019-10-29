@@ -1,6 +1,6 @@
 import Component from '@frame/Component';
 import template from './UserMenu.handlebars';
-import { getCookie, htmlToElement, setCookie } from '@modules/utils';
+import { getCookie, setCookie } from '@modules/utils';
 import config from '../../config';
 import './UserMenu.css';
 import AccountService from '@services/AccountService';
@@ -9,6 +9,12 @@ import AuthService from '@services/AuthService';
 export class UserMenu extends Component {
 	constructor({ ...props }) {
 		super(props);
+
+		this.created();
+		this.data = {
+			loaded: false,
+		};
+		this.preRender();
 	}
 
 	created() {
@@ -22,26 +28,22 @@ export class UserMenu extends Component {
 	}
 
 	preRender() {
-		this._data = {
-			...this._data,
-			loaded: false,
-		};
 		AccountService.GetRoles()
 			.then((response) => {
 				response.forEach((role) => {
 					role.on =
 						role.role === getCookie(config.cookieAccountModeName);
 				});
-				this._data = {
-					...this._data,
+				this.data = {
 					roles: response,
 					loggedIn: () => !!response,
 				};
 			})
-			.catch((error) => {})
+			.catch((error) => {
+				console.error(error);
+			})
 			.finally(() => {
-				this._data = {
-					...this._data,
+				this.data = {
 					loaded: true,
 				};
 				this.stateChanged();
@@ -49,24 +51,16 @@ export class UserMenu extends Component {
 	}
 
 	render() {
-		this._data = {
-			...this._data,
-		};
-		const html = template({
+		this.html = template({
 			...this.props,
 			...this._data,
 		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
-		this._el = newElement;
+
+		return this.html;
 	}
 
 	postRender() {
-		const logout = this._el.querySelector('#logout');
+		const logout = this.el.querySelector('#logout');
 
 		if (logout) {
 			logout.addEventListener('click', (event) => {
@@ -82,7 +76,7 @@ export class UserMenu extends Component {
 			});
 		}
 
-		const switchersArray = this._el.querySelectorAll('.account-switcher');
+		const switchersArray = this.el.querySelectorAll('.account-switcher');
 
 		switchersArray.forEach((el) => {
 			el.addEventListener('click', (event) => {
@@ -96,10 +90,5 @@ export class UserMenu extends Component {
 				this.props.router.push('/');
 			});
 		});
-	}
-
-	stateChanged() {
-		this.render();
-		this.postRender();
 	}
 }

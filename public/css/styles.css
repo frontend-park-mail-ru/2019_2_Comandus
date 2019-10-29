@@ -157,36 +157,36 @@ footer a {
 
 /* Buttons/inputs */
 
-button {
-	height: 32px;
-	font-size: 15px;
-	padding: 0 12px;
-	margin: 1px 4px;
-	font-weight: 500;
+/*button {*/
+/*	height: 32px;*/
+/*	font-size: 15px;*/
+/*	padding: 0 12px;*/
+/*	margin: 1px 4px;*/
+/*	font-weight: 500;*/
 
-	border-radius: 0.5rem;
-	/*background: #5d49cc;*/
-	border: none;
-	/* сдвиг по x, сдвиг по y, размытие, растяжение */
-	box-shadow: 0 0 1px 0 #707070;
-	/*color: #69a6ff;*/
-	cursor: pointer;
-	transition: all 0.45s ease;
-}
+/*	border-radius: 0.5rem;*/
+/*	!*background: #5d49cc;*!*/
+/*	border: none;*/
+/*	!* сдвиг по x, сдвиг по y, размытие, растяжение *!*/
+/*	box-shadow: 0 0 1px 0 #707070;*/
+/*	!*color: #69a6ff;*!*/
+/*	cursor: pointer;*/
+/*	transition: all 0.45s ease;*/
+/*}*/
 
-button:hover {
-	/*background-color: #4e419d;*/
-}
+/*button:hover {*/
+/*	!*background-color: #4e419d;*!*/
+/*}*/
 
-button:active {
-	/*background-color: #2d235d;*/
-}
+/*button:active {*/
+/*	!*background-color: #2d235d;*!*/
+/*}*/
 
-button[disabled] {
-	opacity: 0.5;
-	pointer-events: none;
-	user-select: none;
-}
+/*button[disabled] {*/
+/*	opacity: 0.5;*/
+/*	pointer-events: none;*/
+/*	user-select: none;*/
+/*}*/
 
 .tp-nav-buttons-group {
 	background-color: var(--header-footer-color);
@@ -207,48 +207,48 @@ button[disabled] {
 	transition: all 0.1s ease;
 }
 
-input,
-select {
-	height: 32px;
-	font-size: 15px;
-	padding: 0 12px;
-	margin: 2px 2px;
+/*input,*/
+/*select {*/
+/*	height: 32px;*/
+/*	font-size: 15px;*/
+/*	padding: 0 12px;*/
+/*	margin: 2px 2px;*/
 
-	border-radius: 0.7rem;
-	border: none;
-	box-shadow: 0 0 0 1px #c5c5c5;
-	transition: box-shadow 0.3s ease;
-}
+/*	border-radius: 0.7rem;*/
+/*	border: none;*/
+/*	box-shadow: 0 0 0 1px #c5c5c5;*/
+/*	transition: box-shadow 0.3s ease;*/
+/*}*/
 
 
 
-input:focus {
-	box-shadow: 0 0 0 0px #FFFFFF,
-	0 0 0 2px #9fa2df;
-	transition: box-shadow 0.3s ease-out;
-}
+/*input:focus {*/
+/*	box-shadow: 0 0 0 0px #FFFFFF,*/
+/*	0 0 0 2px #9fa2df;*/
+/*	transition: box-shadow 0.3s ease-out;*/
+/*}*/
 
-input[readonly]:focus {
-	box-shadow: 0 0 0 1px #c5c5c5;
-}
+/*input[readonly]:focus {*/
+/*	box-shadow: 0 0 0 1px #c5c5c5;*/
+/*}*/
 
-textarea {
-	font-size: 15px;
-	padding: 6px 12px;
-	margin: 2px 2px;
+/*textarea {*/
+/*	font-size: 15px;*/
+/*	padding: 6px 12px;*/
+/*	margin: 2px 2px;*/
 
-	border-radius: 0.7rem;
-	border: none;
-	box-shadow: 0 0 0 1px #c5c5c5;
-	transition: box-shadow 0.3s ease;
-}
+/*	border-radius: 0.7rem;*/
+/*	border: none;*/
+/*	box-shadow: 0 0 0 1px #c5c5c5;*/
+/*	transition: box-shadow 0.3s ease;*/
+/*}*/
 
-textarea:focus,
-select:focus {
-	box-shadow: 0 0 0 0px #FFFFFF,
-	0 0 0 2px #9fa2df;
-	transition: box-shadow 0.3s ease-out;
-}
+/*textarea:focus,*/
+/*select:focus {*/
+/*	box-shadow: 0 0 0 0px #FFFFFF,*/
+/*	0 0 0 2px #9fa2df;*/
+/*	transition: box-shadow 0.3s ease-out;*/
+/*}*/
 
 a {
 	padding: 0 4px;

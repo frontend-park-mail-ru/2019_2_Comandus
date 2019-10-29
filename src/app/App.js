@@ -1,33 +1,30 @@
-import { htmlToElement } from '@modules/utils';
 import HeaderComponent from '@components/Header';
 import Component from '@frame/Component';
 import template from './App.handlebars';
-import Frame from '@frame/frame';
+import Footer from '@components/Footer/Footer';
+import './App.scss';
 
 class AppComponent extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
 	}
 
 	render() {
-		const html = template(this.data);
-		const el = htmlToElement(html);
+		this._header = new HeaderComponent({});
+		const footer = new Footer();
 
-		const props = {
-			...this.props,
-			parent: el,
+		this.data = {
+			header: this._header.render(),
+			footer: footer.render(),
 		};
 
-		const component = Frame.createComponent(HeaderComponent, el, props);
-		Frame.renderComponent(component);
+		this.html = template(this.data);
+		this.attachToParent();
+		return this.html;
+	}
 
-		const outlet = document.createElement('router-outlet');
-		outlet.className = 'page';
-		el.appendChild(outlet);
-
-		this._parent.appendChild(el);
+	postRender() {
+		this._header.postRender();
 	}
 }
 

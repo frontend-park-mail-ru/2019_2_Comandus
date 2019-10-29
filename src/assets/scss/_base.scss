@@ -1,31 +1,17 @@
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-}
+//@import "global";
 
-:root {
-	font-family: $font-stack;
-	font-size: $font-size;
-	color: var(--text-dark);
-}
+//*,
+//*::before,
+//*::after {
+//	box-sizing: border-box;
+//}
 
-body {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-}
+//:root {
+	//font-family: $font-stack;
+	//font-size: $font-size;
+	//color: var(--text-dark);
+//}
 
 .text-center {
 	text-align: center;
-}
-
-
-#root {
-	all: inherit;
-}
-
-.page {
-	height: 100%;
 }
