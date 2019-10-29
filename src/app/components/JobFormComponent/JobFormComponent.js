@@ -139,7 +139,7 @@ class JobFormComponent extends Component {
 			}).render(),
 			budgetField: new FieldGroup({
 				children: [budgetField.render()],
-				label: 'Бюджет',
+				label: 'Бюджет (руб)',
 				two: true,
 			}).render(),
 			citySelect: this._citySelect.render(),

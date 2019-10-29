@@ -276,13 +276,14 @@ h1 {
 
 #tp-main-page-photo {
 	display: flex;
-	height: 600px;
+	/*height: 600px;*/
 	flex-direction: column;
 	align-items: center;
 	background-image: url('../media/dev/background_cut.jpg');
 	background-position: center top;
 	background-size: cover;
 	opacity: 0.85;
+	height: 100%;
 }
 
 .tp-shadow {
@@ -292,7 +293,8 @@ h1 {
 	justify-content: inherit;
 	height: 100%;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.6);
+	/*background: rgba(0, 0, 0, 0.6);*/
+	background: linear-gradient(130deg, #5fc9f645 0%, #3e6bb461 51%, #1f7ce761 75%);
 }
 
 .tp-main-screen-buttons {
@@ -302,7 +304,13 @@ h1 {
 	font-size: 24px;
 	font-weight: 500;
 
-	color: black;
+	color: white;
+	background-color: #1f7ce7;
+	border-radius: 4px;
+	text-align: center;
+	display:flex;/*CSS3*/
+	align-items:center;/*Vertical align*/
+	justify-content:center;/*horizontal align*/
 }
 
 h1.tp-main-text {

@@ -3,9 +3,10 @@
 .footer {
 	background-color: $footer-background;
 	color: $white;
+	position: relative;
 }
 
 .copyright {
-	margin-top: 60px;
-	margin-bottom: 30px;
+	padding-top: 60px;
+	padding-bottom: 30px;
 }
