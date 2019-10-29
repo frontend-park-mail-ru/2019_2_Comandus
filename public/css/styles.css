@@ -3,7 +3,7 @@
 	box-shadow: 0 10px 16px -6px rgba(0,0,0,.08);
 }
 
-.tp-navbar-logo {
+.tp-navbar-logo-wrapper {
 	flex-basis: auto;
 	min-height: 70px;
 
@@ -12,6 +12,12 @@
 	align-items: center;
 	height: 55px;
 	font-size: 1.5em;
+}
+
+.tp-navbar-logo {
+	display: flex;
+	align-items: flex-end;
+	line-height: 1em;
 }
 
 .tp-navbar-brand {
