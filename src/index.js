@@ -20,6 +20,7 @@ import Freelancers from '@containers/freelancers/Freelancers';
 import Job from '@containers/Job/Job';
 import AjaxModule from '@modules/ajax';
 import config from '@app/config';
+import { getCookie } from '@modules/utils';
 
 const handlers = [
 	{
@@ -74,6 +75,11 @@ bus.on('account-avatar-upload', (data) => {
 bus.on('change-password', (data) => {
 	const response = AccountService.ChangePassword(data);
 	bus.emit('change-password-response', response);
+});
+
+bus.on('get-role', () => {
+	const response = AccountService.GetRoles();
+	bus.emit('get-role-response', response);
 });
 
 const routes = [

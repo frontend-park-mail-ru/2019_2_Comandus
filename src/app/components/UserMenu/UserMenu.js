@@ -3,11 +3,9 @@ import template from './UserMenu.handlebars';
 import { getCookie, setCookie } from '@modules/utils';
 import config from '../../config';
 import './UserMenu.css';
-import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
 import bus from '@frame/bus';
 import AjaxModule from '@modules/ajax';
-import JobService from '@services/JobService';
 
 export class UserMenu extends Component {
 	constructor({ ...props }) {
@@ -17,7 +15,8 @@ export class UserMenu extends Component {
 		this.data = {
 			loaded: false,
 		};
-		this.preRender();
+		bus.on('get-role-response', this.onGetRoleResponse);
+		bus.emit('get-role');
 	}
 
 	created() {
@@ -28,29 +27,6 @@ export class UserMenu extends Component {
 				config.accountTypes.freelancer,
 			);
 		}
-	}
-
-	preRender() {
-		AccountService.GetRoles()
-			.then((response) => {
-				response.forEach((role) => {
-					role.on =
-						role.role === getCookie(config.cookieAccountModeName);
-				});
-				this.data = {
-					roles: response,
-					loggedIn: () => !!response,
-				};
-			})
-			.catch((error) => {
-				console.error(error);
-			})
-			.finally(() => {
-				this.data = {
-					loaded: true,
-				};
-				this.stateChanged();
-			});
 	}
 
 	render() {
@@ -96,10 +72,26 @@ export class UserMenu extends Component {
 				this.props.router.push('/');
 			});
 		});
-
-		bus.on('get-role', () => {
-			console.log('GEEEEEEEEEEEET');
-			this.preRender();
-		});
 	}
+
+	onGetRoleResponse = (res) => {
+		res.then((response) => {
+			response.forEach((role) => {
+				role.on = role.role === getCookie(config.cookieAccountModeName);
+			});
+			this.data = {
+				roles: response,
+				loggedIn: () => !!response,
+			};
+		})
+			.catch((error) => {
+				console.error(error);
+			})
+			.finally(() => {
+				this.data = {
+					loaded: true,
+				};
+				this.stateChanged();
+			});
+	};
 }
