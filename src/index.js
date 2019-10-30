@@ -18,17 +18,12 @@ import AccountService from '@services/AccountService';
 import Jobs from '@containers/jobs/Jobs';
 import Freelancers from '@containers/freelancers/Freelancers';
 import Job from '@containers/Job/Job';
-import AjaxModule from '@modules/ajax';
-import config from '@app/config';
-import { getCookie } from '@modules/utils';
 
 const handlers = [
 	{
 		eventName: 'job-create',
 		handler: (data) => {
-			// return AjaxModule.post('/setusertype', {type: 'client'}).then(() => {
 			return JobService.CreateJob(data);
-			// })
 		},
 		eventEndName: 'job-create-response',
 	},
