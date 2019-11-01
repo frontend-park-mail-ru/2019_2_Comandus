@@ -1,6 +1,6 @@
-<div id="{{data.id}}">
-	<label for="{{data.id}}-input" class="label">{{props.label}}</label>
-	<select id="{{data.id}}-input" name="{{props.name}}" class="select {{props.className}}" {{props.attributes}}>
+<div id="{{data._id}}">
+	<label for="{{data._id}}-input" class="label">{{props.label}}</label>
+	<select id="{{data._id}}-input" name="{{props.name}}" class="select {{props.className}}" {{props.attributes}}>
 		<option disabled value="" selected>Выберите</option>
 		{{#each props.items}}
 			<option value="{{value}}"

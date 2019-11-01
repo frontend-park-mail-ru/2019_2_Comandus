@@ -1,7 +1,7 @@
 <div class="text-field">
-	<label for="{{id}}" class="text-field__label">{{label}}</label>
+	<label for="{{_id}}" class="text-field__label">{{label}}</label>
 	{{#if_eq type 'textarea'}}
-		<textarea id="{{id}}"
+		<textarea id="{{_id}}"
 				  name="{{name}}"
 				  class="text-field__input form__control {{classes}}"
 				  placeholder="{{placeholder}}"
@@ -13,7 +13,7 @@
 			{{attributes}}
 		></textarea>
 	{{else}}
-		<input id="{{id}}"
+		<input id="{{_id}}"
 			   type="{{type}}"
 			   name="{{name}}"
 			   class="text-field__input form__control {{classes}}"
@@ -36,5 +36,5 @@
 	{{#if hint}}
 		<div class="text-field__hint">{{{hint}}}</div>
 	{{/if}}
-	<span class="text-field__error" id="error-for-{{id}}">{{error}}</span>
+	<span class="text-field__error" id="error-for-{{_id}}">{{error}}</span>
 </div>

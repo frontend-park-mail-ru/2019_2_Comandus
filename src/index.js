@@ -18,6 +18,8 @@ import AccountService from '@services/AccountService';
 import Jobs from '@containers/jobs/Jobs';
 import Freelancers from '@containers/freelancers/Freelancers';
 import Job from '@containers/Job/Job';
+import Search from '@containers/search';
+import Messages from '@containers/messages';
 
 const handlers = [
 	{
@@ -102,6 +104,8 @@ const routes = [
 	{ path: '/jobs/:jobId', Component: Job },
 	{ path: '/jobs', Component: Jobs },
 	{ path: '/freelancers', Component: Freelancers },
+	{ path: '/search', Component: Search },
+	{ path: '/messages', Component: Messages },
 ];
 
 const router = new Router(document.getElementById('root'), {

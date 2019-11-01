@@ -1,15 +1,13 @@
-<div id="{{id}}">
+<div id="{{_id}}">
 	<div class="tp-container tp-centered-container">
-		<div class="tp-row card">
-			{{#each freelancers}}
-				<div class="tp-col-12 ">
-					<a href="/freelancers/{{id}}">{{id}}</a>
-					{{overview}}
-					{{registrationDate}}
-					{{country}}
-					{{city}}
+		<div class="tp-row">
+			<div class="tp-col-8">
+				<div class="card card_no-padding">
+					{{#each freelancers}}
+						{{{this}}}
+					{{/each}}
 				</div>
-			{{/each}}
+			</div>
 		</div>
 	</div>
 </div>

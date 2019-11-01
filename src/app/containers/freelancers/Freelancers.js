@@ -1,6 +1,8 @@
 import Component from '@frame/Component';
 import template from './Freelancers.handlebars';
 import './Freelancers.scss';
+import FreelancerItem from '@components/dataDisplay/FreelancerItem';
+import Item from '@components/surfaces/Item';
 
 const freelancers = [
 	{
@@ -35,8 +37,20 @@ export default class Freelancers extends Component {
 	constructor(props) {
 		super(props);
 
+		const freelancersHtml = freelancers.map((f) => {
+			const freelancerItem = new FreelancerItem({
+				...f,
+			});
+
+			const item = new Item({
+				children: [freelancerItem.render()],
+			});
+
+			return item.render();
+		});
+
 		this.data = {
-			freelancers,
+			freelancers: freelancersHtml,
 		};
 	}
 	render() {

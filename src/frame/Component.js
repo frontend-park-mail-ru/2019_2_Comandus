@@ -4,7 +4,7 @@ export default class Component {
 	constructor({ parent, ...props } = {}) {
 		this._id = this.constructor.name + uniqueId();
 		this._data = {
-			id: this.id,
+			_id: this.id,
 		};
 		this.props = props;
 		this._parent = parent;

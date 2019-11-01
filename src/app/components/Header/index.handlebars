@@ -1,4 +1,4 @@
-<div id="{{id}}">
+<div id="{{_id}}">
 	<header class="tp-navbar">
 		<div class="tp-container tp-centered-container">
 			<div class="tp-row" id="userMenuParent">
@@ -31,13 +31,23 @@
 							Фрилансеры id
 						</a>
 					</li>
-					<li class="tp-navbar-search">
-						<form method="GET" role="search">
-							<div>
-								<input/>
-							</div>
-						</form>
+					<li class="">
+						<a href="/search" target="_self" role="menuitem">
+							Search
+						</a>
 					</li>
+					<li class="">
+						<a href="/messages" target="_self" role="menuitem">
+							messages
+						</a>
+					</li>
+{{!--					<li class="tp-navbar-search">--}}
+{{!--						<form method="GET" role="search">--}}
+{{!--							<div>--}}
+{{!--								<input/>--}}
+{{!--							</div>--}}
+{{!--						</form>--}}
+{{!--					</li>--}}
 				</ul>
 				{{{userMenu}}}
 			</div>
