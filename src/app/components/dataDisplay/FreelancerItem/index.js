@@ -6,6 +6,9 @@ export default class FreelancerItem extends Component {
 	constructor({
 		id = null,
 		overview = '',
+		firstName = '',
+		lastName = '',
+		avatar = '',
 		registrationDate = '',
 		city = '',
 		country = 0,
@@ -19,6 +22,9 @@ export default class FreelancerItem extends Component {
 			registrationDate,
 			city,
 			country,
+			firstName,
+			lastName,
+			avatar,
 		};
 	}
 

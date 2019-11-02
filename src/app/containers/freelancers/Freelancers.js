@@ -17,6 +17,9 @@ const freelancers = [
 		overview: 'string',
 		experienceLevelId: 0,
 		specialityId: 0,
+		firstName: 'Nozim',
+		lastName: 'Y',
+		avatar: 'https://eu.ui-avatars.com/api/?name=Nozim+Y',
 	},
 	{
 		id: 2,
@@ -30,6 +33,9 @@ const freelancers = [
 		overview: 'string',
 		experienceLevelId: 0,
 		specialityId: 0,
+		firstName: 'Nozim',
+		lastName: 'Y',
+		avatar: 'https://eu.ui-avatars.com/api/?name=Nozim+Y',
 	},
 ];
 
