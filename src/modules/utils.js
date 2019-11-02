@@ -56,3 +56,23 @@ export const toSelectElement = (el) => ({
 	value: el,
 	selected: false,
 });
+
+export function hasClass(cls, el) {
+	return new RegExp('(^|\\s+)' + cls + '(\\s+|$)').test(el.className);
+}
+
+export function addClass(cls, el) {
+	if (!hasClass(cls, el))
+		return (el.className += el.className === '' ? cls : ' ' + cls);
+}
+
+export function removeClass(cls, el) {
+	el.className = el.className.replace(
+		new RegExp('(^|\\s+)' + cls + '(\\s+|$)'),
+		'',
+	);
+}
+
+export function toggleClass(cls, el) {
+	!hasClass(cls, el) ? addClass(cls, el) : removeClass(cls, el);
+}

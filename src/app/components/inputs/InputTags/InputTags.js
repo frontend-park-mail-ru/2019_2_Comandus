@@ -3,6 +3,7 @@ import template from './InputTags.handlebars';
 import Tag from '@components/dataDisplay/Tag/Tag';
 import TextField from '@components/inputs/TextField/TextField';
 import './InputTags.scss';
+import { addClass, removeClass } from '@modules/utils';
 
 const KEYS = {
 	ENTER: 13,
@@ -41,23 +42,6 @@ function oneListener(el, type, fn, capture) {
 }
 
 const transitionEnd = whichTransitionEnd();
-
-function hasClass(cls, el) {
-	return new RegExp('(^|\\s+)' + cls + '(\\s+|$)').test(el.className);
-}
-function addClass(cls, el) {
-	if (!hasClass(cls, el))
-		return (el.className += el.className === '' ? cls : ' ' + cls);
-}
-function removeClass(cls, el) {
-	el.className = el.className.replace(
-		new RegExp('(^|\\s+)' + cls + '(\\s+|$)'),
-		'',
-	);
-}
-function toggleClass(cls, el) {
-	!hasClass(cls, el) ? addClass(cls, el) : removeClass(cls, el);
-}
 
 export default class InputTags extends Component {
 	constructor({
@@ -166,7 +150,11 @@ export default class InputTags extends Component {
 
 	indicateException = (str, all) => {
 		Array.prototype.forEach.call(this._wrapper.children, function(tag) {
-			if (!all && tag.firstChild.textContent !== str) {
+			if (
+				!all &&
+				tag.firstChild.textContent &&
+				tag.firstChild.textContent.trim() !== str
+			) {
 				return;
 			}
 			addClass('tag--exists', tag);
