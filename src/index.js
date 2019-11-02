@@ -20,6 +20,8 @@ import Freelancers from '@containers/freelancers/Freelancers';
 import Job from '@containers/Job/Job';
 import Search from '@containers/search';
 import Messages from '@containers/messages';
+import About from '@containers/about';
+import NotFound from '@containers/NotFound';
 
 const handlers = [
 	{
@@ -106,6 +108,8 @@ const routes = [
 	{ path: '/freelancers', Component: Freelancers },
 	{ path: '/search', Component: Search },
 	{ path: '/messages', Component: Messages },
+	{ path: '/about', Component: About },
+	{ path: '/page-not-found', Component: NotFound },
 ];
 
 const router = new Router(document.getElementById('root'), {

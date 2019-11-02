@@ -12,6 +12,8 @@ export default class Job extends Component {
 	constructor(props) {
 		super(props);
 
+		console.log('Job props', props);
+
 		const job = { ...jobs[0] };
 		job['skills'] = job['skills'].split(',');
 		job['experienceLevel'] = levels[job['experienceLevelId']];

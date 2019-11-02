@@ -32,6 +32,8 @@ export default class Jobs extends Component {
 	}
 
 	render() {
+		console.log('JOBS props', this.props);
+
 		this.html = template(this.data);
 
 		this.attachToParent();

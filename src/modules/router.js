@@ -1,6 +1,14 @@
 import bus from '@frame/bus';
-
 import Frame from '@frame/frame';
+
+function getParamsFromSearch(search) {
+	const params = {};
+	for (const [key, value] of new URLSearchParams(search).entries()) {
+		params[key] = value;
+	}
+	return params;
+}
+
 /**
  * место для вставки роутов (switch)
  * ссылки
@@ -45,28 +53,46 @@ export class Router {
 
 			const pathName = target.pathname;
 
-			this.push(pathName);
+			this.push(pathName, target.search);
 		});
 
 		window.addEventListener('popstate', () => {
 			const currentPath = window.location.pathname;
 
-			this.push(currentPath);
+			this.push(currentPath, window.location.search);
+		});
+
+		const routerLinks = document.getElementsByClassName('router-link');
+		Array.from(routerLinks).forEach((element) => {
+			element.addEventListener('click', (event) => {
+				event.preventDefault();
+				const { currentTarget } = event;
+				this.push(currentTarget.pathname, currentTarget.search);
+			});
 		});
 
 		const currentPath = window.location.pathname;
 
 		this.outlet = document.getElementsByTagName(this.outletName)[0];
-		this.push(currentPath);
+		this.push(currentPath, window.location.search);
 	}
 
-	_pushToHistory(path) {
-		if (window.location.pathname !== path) {
+	_pushToHistory(path, search) {
+		if (
+			window.location.pathname !== path ||
+			window.location.search !== search
+		) {
+			search = search ? search : '';
+			path = path + search;
 			window.history.pushState(null, '', path);
 		}
 	}
 
-	push(path) {
+	push(path, search) {
+		if (path !== '/') {
+			path = path.replace(/\/$/, '');
+		}
+
 		const routeIndex = this.routes.findIndex((route) =>
 			this.match(route, path),
 		);
@@ -77,11 +103,11 @@ export class Router {
 		this.outlet.innerHTML = '';
 
 		if (!route) {
-			this.push('/');
+			this.push('/page-not-found');
 			return;
 		}
 
-		this._pushToHistory(path);
+		this._pushToHistory(path, search);
 
 		let { Component, component, el, props } = route;
 
@@ -89,6 +115,10 @@ export class Router {
 			props = { ...props, router: this };
 			component = Frame.createComponent(Component, this.outlet, props);
 		}
+
+		component.setProps({
+			params: getParamsFromSearch(search),
+		});
 
 		this.outlet.dataset.view = component.constructor.name;
 		Frame.renderComponent(component);
@@ -115,6 +145,7 @@ export class Router {
 
 		let params = {};
 		const routeMatch = requestPath.match(new RegExp(regexPath));
+
 		if (routeMatch !== null) {
 			params = routeMatch.slice(1).reduce((params, value, index) => {
 				if (params === null) {
@@ -124,6 +155,7 @@ export class Router {
 				return params;
 			}, null);
 		}
+
 		route.props = { ...route.props, params };
 
 		return routeMatch;
