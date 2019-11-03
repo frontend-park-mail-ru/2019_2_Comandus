@@ -1,16 +1,20 @@
 @import "~@components/inputs/inputs";
 
-$button-height: 40px;
+$button-m-height: 40px;
+$button-s-height: 26px;
+
+@mixin btn-m {
+	height: $button-m-height;
+	font-weight: 600;
+	font-size: $font-size;
+}
 
 .btn {
-	height: $button-height;
 	background-color: $primary-color;
 	color: $white;
 	overflow: hidden;
 	width: fit-content;
 	cursor: pointer;
-	font-weight: 600;
-	font-size: $font-size;
 	margin: 0;
 	outline: none;
 	padding: 0 1em;
@@ -18,8 +22,20 @@ $button-height: 40px;
 	border: none;
 	box-shadow: 0 2px 3px 0 #707070;
 	transition: all 0.45s ease;
+	@include btn-m;
 }
 
-.btn:hover{
+.btn:hover {
 	box-shadow: 0 1px 1px 0 #707070;
+}
+
+
+.btn-m {
+	@include btn-m;
+}
+
+.btn-s {
+	height: $button-s-height;
+	font-weight: normal;
+	font-size: $font-size-s;
 }

@@ -9,6 +9,7 @@ export default class Button extends Component {
 		type = 'button',
 		className = 'btn_primary',
 		text = 'Кнопка',
+		size = 'm',
 		...props
 	}) {
 		super(props);
@@ -17,6 +18,7 @@ export default class Button extends Component {
 			text,
 			type,
 			className,
+			size,
 		};
 	}
 	render() {

@@ -1,6 +1,7 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './index.scss';
+import Button from '@components/inputs/Button/Button';
 
 export default class FreelancerItem extends Component {
 	constructor({
@@ -29,6 +30,15 @@ export default class FreelancerItem extends Component {
 	}
 
 	render() {
+		const btn = new Button({
+			text: 'Предложить заказ',
+			size: 's',
+		});
+
+		this.data = {
+			btn: btn.render(),
+		};
+
 		this.html = template({
 			...this.props,
 			...this.data,

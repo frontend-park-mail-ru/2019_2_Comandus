@@ -7,8 +7,8 @@
 	border-radius: 40px;
 	padding: 5px 10px;
 	margin-right: 5px;
-	margin-bottom:10px;
-	box-shadow: 0 5px 15px -2px rgba( $color4, .5);
+	margin-bottom: 10px;
+	box-shadow: 0 5px 15px -2px rgba($color4, .5);
 	user-select: none;
 	transition: background-color .3s ease;
 	font-size: $font-size-s;
@@ -23,7 +23,8 @@
 	cursor: pointer;
 	display: inline-block;
 	padding-left: 10px;
-	color: rgba( $color5, .5);
+	color: rgba($color5, .5);
+
 	&:hover {
 		color: $white;
 	}
@@ -45,4 +46,14 @@
 	background-color: $color-warn2;
 	-webkit-animation: shake 1s linear;
 	animation: shake 1s linear;
+}
+
+.tag_secondary {
+	background-color: #E0E0E0;
+	color: $text-dark;
+	box-shadow: none;
+
+	&:hover {
+		background-color: #E0E0E0;
+	}
 }
