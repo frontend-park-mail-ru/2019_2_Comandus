@@ -130,7 +130,7 @@ export class Router {
 			el,
 		};
 
-		bus.emit('get-role');
+		// bus.emit('get-role');
 	}
 
 	match(route, requestPath) {

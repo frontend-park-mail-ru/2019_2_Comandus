@@ -3,6 +3,7 @@ import template from './Freelancers.handlebars';
 import './Freelancers.scss';
 import FreelancerItem from '@components/dataDisplay/FreelancerItem';
 import Item from '@components/surfaces/Item';
+import { defaultAvatarUrl } from '@modules/utils';
 
 const freelancers = [
 	{
@@ -20,7 +21,7 @@ const freelancers = [
 		specialityId: 0,
 		firstName: 'Nozim',
 		lastName: 'Y',
-		avatar: 'https://eu.ui-avatars.com/api/?name=Nozim+Y',
+		avatar: defaultAvatarUrl('Nozim', 'Y'),
 		skills: [
 			'Javascript',
 			'Go',
@@ -52,7 +53,7 @@ const freelancers = [
 		specialityId: 0,
 		firstName: 'Nozim',
 		lastName: 'Y',
-		avatar: 'https://eu.ui-avatars.com/api/?name=Nozim+Y',
+		avatar: defaultAvatarUrl('Nozim', 'Y'),
 		skills: ['Javascript', 'Go'],
 	},
 ];

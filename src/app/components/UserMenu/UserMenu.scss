@@ -1,0 +1,5 @@
+@import "~@assets/scss/global.scss";
+
+.user-menu__avatar {
+	@include small-avatar;
+}

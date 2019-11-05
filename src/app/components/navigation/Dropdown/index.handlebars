@@ -1,0 +1,9 @@
+<li id="{{_id}}" class="dropdown {{#hover }}dropdown_hover{{/hover}}">
+	<button class="dropdown__toggle {{toggleClassname}}">{{{text}}}</button>
+	<div class="dropdown__content {{#contentRight}}dropdown__content_right{{/contentRight}}">
+		{{#each items}}
+			<a href="{{url}}" class="dropdown__content-item">{{text}}</a>
+		{{/each}}
+{{!--		{{{content}}}--}}
+	</div>
+</li>
