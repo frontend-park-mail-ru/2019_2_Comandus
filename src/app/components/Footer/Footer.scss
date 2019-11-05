@@ -1,7 +1,7 @@
 @import "~@assets/scss/global";
 
 .footer {
-	background-color: $footer-background;
+	background: linear-gradient(90deg, rgba(28,79,123,1) 0%, rgba(28,69,123,1) 20%, rgba($footer-background, 1) 74%);
 	color: $white;
 	position: relative;
 }
