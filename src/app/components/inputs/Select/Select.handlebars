@@ -1,5 +1,7 @@
 <div id="{{data._id}}">
-	<label for="{{data._id}}-input" class="label">{{props.label}}</label>
+	{{#if props.label}}
+		<label for="{{data._id}}-input" class="label">{{props.label}}</label>
+	{{/if}}
 	<select id="{{data._id}}-input" name="{{props.name}}" class="select {{props.className}}" {{props.attributes}}>
 		<option disabled value="" selected>Выберите</option>
 		{{#each props.items}}

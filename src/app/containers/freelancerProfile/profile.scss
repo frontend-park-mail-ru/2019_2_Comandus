@@ -1,0 +1,161 @@
+@import '~@assets/scss/global';
+
+.profile-info {
+	&__avatar {
+		display: flex;
+		margin-right: 10px;
+	}
+	&__main-info {
+		display: flex;
+		flex-direction: column;
+	}
+	&__rating {
+		margin-left: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	&__description {
+		margin-bottom: 10px;
+	}
+	&__features {
+
+	}
+}
+
+.main-info {
+
+	&__name {
+		font-size: 1.5em;
+		letter-spacing: 0.08em;
+	}
+	&__region {
+		margin-top: 5px;
+	}
+}
+
+.profile-region {
+	&__city {
+	}
+	&__time {
+	}
+	&__description {
+		font-size: 0.9em;
+	}
+}
+
+.profile-description {
+	&__title {
+		font-size: 1.4em;
+		font-weight: 400;
+		margin: 10px 0;
+	}
+	&__text {
+		padding: 0;
+	}
+}
+
+.card_no-padding > .profile-history__header {
+	margin: 0;
+}
+
+.profile-history {
+	&__header {
+	}
+	&__items {
+		margin: 0 -1.5em;
+	}
+	&__footer {
+		margin: 0 -1.5em -1.5em -1.5em;
+	}
+}
+
+.profile-skills {
+	&__row {
+		flex-wrap: wrap;
+		margin-top: 1.5em;
+	}
+}
+
+.profile-sidebar {
+	padding: 20px;
+
+	&__buttons {
+		margin: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+
+		& > *:not(:first-child) {
+			margin-top: 10px;
+		}
+	}
+
+	&__availability {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+	&__profile-link {
+		margin: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	&__languages {
+
+	}
+}
+
+.sidebar-availability {
+	&__availability {
+		font-size: 1.8em;
+		color: $color4;
+		letter-spacing: 0.08em;
+	}
+	&__description {
+		font-size: 0.95em;
+	}
+}
+
+.profile-link {
+	&__title {
+
+	}
+	&__link {
+
+	}
+	&__copy {
+		font-size: 0.9em;
+		margin-top: -5px;
+		color: $color4;
+	}
+}
+
+.sidebar-languages {
+	&__title {
+		margin-left: 10px;
+		font-size: 16px;
+		font-weight: 700;
+	}
+
+	&__table {
+		margin: 5px 10px;
+	}
+}
+
+.languages-table {
+	&__language {
+		display: flex;
+		justify-content: flex-start;
+		color: $color3;
+	}
+	&__type {
+		display: flex;
+		justify-content: flex-end;
+		color: $color4;
+	}
+}

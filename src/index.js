@@ -22,6 +22,8 @@ import Search from '@containers/search';
 import Messages from '@containers/messages';
 import About from '@containers/about';
 import NotFound from '@containers/NotFound';
+import { getCookie } from '@modules/utils';
+import config from '@app/config';
 
 const handlers = [
 	{
@@ -98,7 +100,17 @@ const routes = [
 		Component: JobFormComponent,
 		props: { mode: 'vacancy' },
 	},
-	{ path: '/freelancers/:freelancerId', Component: Profile },
+	{
+		path: '/freelancers/:freelancerId',
+		Component: Profile,
+		props: {
+			currentAccountRole:
+				getCookie(config.cookieAccountModeName) ===
+				config.accountTypes.client
+					? config.accountTypes.client
+					: config.accountTypes.freelancer,
+		},
+	},
 	{
 		path: '/with-children',
 		children: [{ path: '/signup', Component: SignUpComponent }],

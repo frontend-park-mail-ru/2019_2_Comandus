@@ -1,11 +1,11 @@
 <div id="{{ props.id }}">
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_stretch tp-underline">
 			<h2>
 				Контакты
 			</h2>
 		</div>
-		<div class="tp-row tp-align-items-start">
+		<div class="tp-row tp-row_content_stretch">
 			<div class="tp-col-12">
 				<div class="tp-container">
 					<form
@@ -45,12 +45,12 @@
 	</div>
 
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_stretch tp-underline">
 			<h2>
 				Мой профиль
 			</h2>
 		</div>
-		<div class="tp-row tp-align-items-start">
+		<div class="tp-row tp-row_content_left">
 			<div class="tp-col-6">
 				<form
 						class="tp-form"
@@ -70,17 +70,17 @@
 	</div>
 
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_stretch tp-row_align_center tp-underline">
 			<h2>
 				Выбор специализации и категорий услуг
 			</h2>
-			<a class="tp-row-right-part" href="#" target="_self">Изменить</a>
+			<a class="tp-row__right " href="#" target="_self">Изменить</a>
 		</div>
 	</div>
 	<div class="tp-col-12">
 		{{#each data.skills}}
 			<label class="field-group__label">{{section}}</label>
-			<div class="tp-row tp-row-float-left">
+			<div class="tp-row tp-row_content_left">
 				{{#each categories}}
 					{{{ this }}}
 				{{/each}}
