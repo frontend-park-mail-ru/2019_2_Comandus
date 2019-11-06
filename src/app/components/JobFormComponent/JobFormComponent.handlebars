@@ -3,7 +3,8 @@
 		<div class="tp-col-8 card">
 			<h1>{{title}}</h1>
 			<form method="post" id="projectForm" autocomplete="off">
-				<input id="hireManagerId" name="hireManagerId" type="number" hidden value="0" required/>
+{{!--				<input id="hireManagerId" name="hireManagerId" type="number" hidden value="0" required/>--}}
+				<input id="managerId" name="managerId" type="number" hidden value="0" required/>
 				<input id="jobTypeId" name="jobTypeId" type="number" hidden value="{{jobTypeId}}" required/>
 				{{{textField}}}
 				{{{descriptionField}}}

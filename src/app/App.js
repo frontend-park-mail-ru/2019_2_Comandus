@@ -3,6 +3,8 @@ import Component from '@frame/Component';
 import template from './App.handlebars';
 import Footer from '@components/Footer/Footer';
 import './App.scss';
+import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
 
 class AppComponent extends Component {
 	constructor({ ...props }) {
@@ -13,6 +15,7 @@ class AppComponent extends Component {
 		this._header = new HeaderComponent({
 			...this.props,
 		});
+
 		const footer = new Footer();
 
 		this.data = {
@@ -22,11 +25,14 @@ class AppComponent extends Component {
 
 		this.html = template(this.data);
 		this.attachToParent();
+
 		return this.html;
 	}
 
 	postRender() {
 		this._header.postRender();
+
+		bus.emit(busEvents.ACCOUNT_GET);
 	}
 }
 

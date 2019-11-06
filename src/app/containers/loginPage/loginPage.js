@@ -6,6 +6,7 @@ import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import Button from '@components/inputs/Button/Button';
 import './login.scss';
+import { busEvents } from '@app/constants';
 
 class LoginComponent extends Component {
 	constructor({ ...props }) {
@@ -65,13 +66,13 @@ class LoginComponent extends Component {
 
 			this.helper = helper;
 
-			bus.on('login-response', this.onLoginResponse);
-			bus.emit('login', helper.formToJSON());
+			bus.on(busEvents.LOGIN_RESPONSE, this.onLoginResponse);
+			bus.emit(busEvents.LOGIN, helper.formToJSON());
 		});
 	}
 
 	onLoginResponse(data) {
-		bus.off('login-response', this.onLoginResponse);
+		bus.off(busEvents.LOGIN_RESPONSE, this.onLoginResponse);
 		console.log(data);
 		const { response, error } = data;
 		if (error) {

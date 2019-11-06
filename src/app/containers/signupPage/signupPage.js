@@ -7,6 +7,7 @@ import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import Button from '@components/inputs/Button/Button';
+import { busEvents } from '@app/constants';
 
 const roles = [
 	{
@@ -113,13 +114,13 @@ class SignUpComponent extends Component {
 		enableValidationAndSubmit(form, (helper) => {
 			helper.event.preventDefault();
 			this.helper = helper;
-			bus.on('signup-response', this.onSignupResponse);
-			bus.emit('signup', helper.formToJSON());
+			bus.on(busEvents.SIGNUP_RESPONSE, this.onSignupResponse);
+			bus.emit(busEvents.SIGNUP, helper.formToJSON());
 		});
 	}
 
 	onSignupResponse(data) {
-		bus.off('signup-response', this.onSignupResponse);
+		bus.off(busEvents.SIGNUP_RESPONSE, this.onSignupResponse);
 		const { response, error } = data;
 		if (error) {
 			let text = error.message;

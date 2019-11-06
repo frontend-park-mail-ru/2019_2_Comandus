@@ -1,20 +1,25 @@
 <ul id="{{_id}}" class="navbar__nav">
-	<li class="nav__item">
-		<a href="/new-project" role="menuitem" class="btn btn-s btn_primary">
-			Разместить заказ
-		</a>
-	</li>
-	{{{_dropdown}}}
-	<li class="nav__item">
-		<a href="/login" role="menuitem" class="btn btn-s btn_primary">
-			Войти
-		</a>
-	</li>
-	<li class="nav__item">
-		<a href="/signup" role="menuitem" class="nav__link">
-			Регистрация
-		</a>
-	</li>
+	{{#loggedIn}}
+		{{#isClient}}
+			<li class="nav__item">
+				<a href="/new-project" role="menuitem" class="btn btn-s btn_primary">
+					Разместить заказ
+				</a>
+			</li>
+		{{/isClient}}
+		{{{_dropdown}}}
+	{{else}}
+		<li class="nav__item">
+			<a href="/login" role="menuitem" class="btn btn-s btn_primary">
+				Войти
+			</a>
+		</li>
+		<li class="nav__item">
+			<a href="/signup" role="menuitem" class="nav__link">
+				Регистрация
+			</a>
+		</li>
+	{{/loggedIn}}
 </ul>
 
 {{!--<ul--}}

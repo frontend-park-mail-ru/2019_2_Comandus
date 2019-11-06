@@ -47,11 +47,12 @@ export default class Navbar extends Component {
 	}
 
 	postRender() {
-		this.toggler = document.querySelector('.navbar__toggler');
-		this.toggler.addEventListener('click', this.toggle);
-
 		this._dropdown.postRender();
 		this._othersDropdown.postRender();
+		this._userMenu.postRender();
+
+		this.toggler = document.querySelector('.navbar__toggler');
+		this.toggler.addEventListener('click', this.toggle);
 
 		document.addEventListener('click', (event) => {
 			if (!(event.target instanceof HTMLAnchorElement)) {
@@ -60,8 +61,6 @@ export default class Navbar extends Component {
 			const bar = document.getElementById(this.id);
 			removeClass('navbar__nav_responsive', bar);
 		});
-
-		this._userMenu.postRender();
 	}
 
 	toggle = () => {

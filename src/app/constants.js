@@ -62,3 +62,18 @@ export const dueTimes = [
 	'От 3 до 6 месяцев',
 	'Более 6 месяцев',
 ];
+
+export const busEvents = {
+	USER_UPDATED: 'USER_UPDATE',
+	LOGIN: 'LOGIN',
+	LOGIN_RESPONSE: 'LOGIN_RESPONSE',
+	SIGNUP: 'SIGNUP',
+	SIGNUP_RESPONSE: 'SIGNUP_RESPONSE',
+	LOGOUT: 'LOGOUT',
+	ACCOUNT_GET: 'ACCOUNT_GET',
+	CHANGE_USER_TYPE: 'CHANGE_USER_TYPE',
+	JOBS_UPDATED: 'JOBS_UPDATED',
+	JOBS_GET: 'JOBS_GET',
+};
+
+export const CSRF_TOKEN_NAME = 'csrf-token';

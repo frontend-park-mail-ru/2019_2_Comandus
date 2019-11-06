@@ -19,6 +19,8 @@ export default {
 		freelancers: '/freelancers',
 		uploadAccountAvatar: '/account/upload-avatar',
 		downloadAccountAvatar: '/account/download-avatar',
+		csrfToken: '/token',
+		setUserType: '/setusertype',
 	},
 	accountTypes: {
 		client: 'client',

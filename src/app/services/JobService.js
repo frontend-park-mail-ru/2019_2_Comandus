@@ -1,13 +1,19 @@
 import AjaxModule from '@modules/ajax';
 import config from '../config';
+import AuthService from '@services/AuthService';
 
 export default class JobService {
-	countries = [];
 	static CreateJob(jobData) {
-		return AjaxModule.post(config.urls.jobs, jobData);
+		return AjaxModule.post(config.urls.jobs, jobData, {
+			headers: AuthService.getCsrfHeader(),
+		});
 	}
 
-	// static GetCountries(){
-	// 	return AjaxModule.get()
-	// }
+	static GetAllJobs() {
+		return AjaxModule.get(config.urls.jobs, {
+			headers: AuthService.getCsrfHeader(),
+		}).then((jobs) => {
+			console.log('jobs', jobs);
+		});
+	}
 }

@@ -110,3 +110,7 @@ export function defaultAvatarUrl(firstName = '', lastName = '') {
 function randomHexColor() {
 	return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
 }
+
+export function deepCopy(obj) {
+	return JSON.parse(JSON.stringify(obj));
+}

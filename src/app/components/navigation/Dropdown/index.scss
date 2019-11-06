@@ -1,5 +1,10 @@
 @import "~@assets/scss/global";
 
+@mixin active-item {
+	color: $primary-color;
+	background-color: $secondary-color;
+}
+
 .dropdown {
 	position: relative;
 	display: inline-block;
@@ -41,8 +46,7 @@
 	padding: 8px 20px;
 	text-decoration: none;
 	&:hover {
-		color: $primary-color;
-		background-color: $secondary-color;
+		@include active-item;
 		text-decoration: none;
 	}
 	white-space: nowrap;
@@ -50,4 +54,9 @@
 
 .dropdown__content_right {
 	right: 0;
+}
+
+.dropdown__content-item_active{
+	@include active-item;
+	box-shadow: inset 4px 0 0 0 $primary-color;
 }
