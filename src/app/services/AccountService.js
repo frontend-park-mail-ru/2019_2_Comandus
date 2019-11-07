@@ -17,15 +17,21 @@ export default class AccountService {
 	}
 
 	static PutAccount(data) {
-		return AjaxModule.put(config.urls.account, data);
+		return AjaxModule.put(config.urls.account, data, {
+			headers: AuthService.getCsrfHeader(),
+		});
 	}
 
 	static UploadAvatar(data) {
-		return AjaxModule.post(config.urls.uploadAccountAvatar, data);
+		return AjaxModule.post(config.urls.uploadAccountAvatar, data, {
+			headers: AuthService.getCsrfHeader(),
+		});
 	}
 
 	static ChangePassword(data) {
-		return AjaxModule.put(config.urls.changePassword, data);
+		return AjaxModule.put(config.urls.changePassword, data, {
+			headers: AuthService.getCsrfHeader(),
+		});
 	}
 
 	static GetRoles() {

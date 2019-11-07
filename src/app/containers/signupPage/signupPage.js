@@ -1,5 +1,4 @@
 import template from './index.handlebars';
-import { htmlToElement } from '@modules/utils';
 import Component from '@frame/Component';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';
@@ -11,11 +10,11 @@ import { busEvents } from '@app/constants';
 
 const roles = [
 	{
-		value: '1',
+		value: 'client',
 		label: 'Найти исполнителя',
 	},
 	{
-		value: '2',
+		value: 'freelancer',
 		label: 'Работать фрилансером',
 	},
 ];
@@ -100,15 +99,12 @@ class SignUpComponent extends Component {
 		};
 
 		this.html = template(this.data);
-		// this._el = htmlToElement(html);
-		// this._parent.appendChild(this._el);
 		this.attachToParent();
 
 		return this.html;
 	}
 
 	postRender() {
-		// const form = this._el.getElementsByTagName('form')[0];
 		const form = this.el.getElementsByTagName('form')[0];
 
 		enableValidationAndSubmit(form, (helper) => {
