@@ -38,13 +38,13 @@ export class UserMenu extends Component {
 			items: [
 				{
 					url: '#',
-					text: this.data.freelancerLabel,
+					text: 'Фрилансер: ' + this.data.freelancerLabel,
 					active: !this.data.isClient,
 					id: 'switchToFreelancer',
 				},
 				{
 					url: '#',
-					text: 'company name',
+					text: 'Компания: ' + 'company name',
 					active: this.data.isClient,
 					id: 'switchToClient',
 				},

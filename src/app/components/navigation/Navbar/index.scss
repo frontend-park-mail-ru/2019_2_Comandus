@@ -139,7 +139,7 @@
 	background: linear-gradient(21deg, #10abff, $primary-color);
 
 	// the width of the input border
-	padding: 2px;
+	padding: 1px;
 
 	// we want inline fields by default
 	display: inline-block;
@@ -155,7 +155,7 @@
 		margin: 0;
 		border: none;
 		outline: none;
-		padding: 0.3em .325em;
+		padding: 0.3em .725em;
 		z-index: 1; // needs to be above the :focus span
 		color: $text-dark;
 
