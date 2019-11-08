@@ -5,10 +5,10 @@
 				<div class="job-details job-details_clear-margins">
 					<h2 class="job-details__inner-item job-details_title">{{job.title}}</h2>
 					<div class="job-details__inner-item">
-						<div class="job-details__category">
-							<a href="/search/jobs?category={{job.specialityId}}">{{job.specialityId}}</a>
+						<div class="">
+							<a class="job-details__category" href="/search/jobs?category={{job.specialityId}}">{{job.speciality}}</a>
 						</div>
-						<div>{{job.created}}</div>
+						<small>{{job.created}}</small>
 					</div>
 					<div class="job-details__inner-item job-details__description">{{job.description}}</div>
 					{{{ jobFeatures }}}
@@ -22,8 +22,16 @@
 			<div class="tp-col-3">
 				<div class="job-details-sidebar">
 					<div class="buttons job-details__inner-item">
-						{{{submitProposal}}}
-						{{{saveBtn}}}
+						{{#loggedIn}}
+							{{#isClient}}
+								<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
+							{{else}}
+								{{{submitProposal}}}
+								{{{saveBtn}}}
+							{{/isClient}}
+						{{else}}
+							<a href="/login" class="btn btn_primary btn-m">Войти</a>
+						{{/loggedIn}}
 					</div>
 					<div class="job-details__inner-item">
 						<strong>О заказчике</strong>
@@ -46,25 +54,30 @@
 			</div>
 		</div>
 
-		<div class="tp-row tp-row-centered">
-			<div class="tp-col-6 card card_no-padding">
-				<div class="job-details">
-					<h2 class="job-details__inner-item job-details_title">Ответ фрилансера</h2>
-					<div class="job-details__inner-item">
-						<form>
-							{{{budgetField}}}
-							{{{timeSelect}}}
-							{{{proposalField}}}
+		{{#loggedIn}}
+			{{#isClient}}
+			{{else}}
+				<div class="tp-row tp-row-centered">
+					<div class="tp-col-6 card card_no-padding">
+						<form class="job-details" method="post" id="addProposal" autocomplete="off">
+							<h2 class="job-details__inner-item job-details_title">Ответ фрилансера</h2>
+							<div class="job-details__inner-item">
+{{!--								<form>--}}
+									{{{budgetField}}}
+									{{{timeSelect}}}
+									{{{proposalField}}}
+{{!--								</form>--}}
+							</div>
+							<div class="job-details__inner-item">
+								<div class="buttons-group">
+									{{{submitProposal}}}
+									{{{cancelBtn}}}
+								</div>
+							</div>
 						</form>
 					</div>
-					<div class="job-details__inner-item">
-						<div class="buttons-group">
-							{{{submitProposal}}}
-							{{{cancelBtn}}}
-						</div>
-					</div>
 				</div>
-			</div>
-		</div>
+			{{/isClient}}
+		{{/loggedIn}}
 	</div>
 </div>

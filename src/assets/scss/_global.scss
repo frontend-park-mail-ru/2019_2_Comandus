@@ -1,4 +1,4 @@
-:root{
+:root {
 	--primary-color: #3E6BB4;
 	--secondary-color: #eef2f7;
 	--secondary-color2: #F3F0E7;
@@ -33,6 +33,7 @@ $background-dark: $primary-color;
 $white: #ffffff;
 $color-warn2: #EDB5A1;
 $footer-background: $color3;
+$light-text-color: #666;
 
 $font-size-s: 14px;
 $font-size-m: 16px;
@@ -45,4 +46,22 @@ $border-radius-l: 10px;
 
 .width-auto {
 	width: auto;
+}
+
+@mixin small-avatar {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	color: #E0E0E0;
+	border: solid 1px #E0E0E0;
+	object-fit: cover;
+}
+
+@mixin active {
+	color: $primary-color;
+}
+
+.page-header {
+	padding-top: 20px;
+	font-size: 1.6em;
 }

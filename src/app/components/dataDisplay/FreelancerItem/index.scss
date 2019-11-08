@@ -18,12 +18,7 @@
 }
 
 .freelancer-item__avatar {
-	height: 40px;
-	width: 40px;
-	border-radius: 50%;
-	color: #E0E0E0;
-	border: solid 1px #E0E0E0;
-	object-fit: cover;
+	@include small-avatar;
 }
 
 .freelancer-item__name {

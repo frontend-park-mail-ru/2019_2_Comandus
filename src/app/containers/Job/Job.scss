@@ -10,6 +10,8 @@
 
 .job-details_title {
 	margin: 0;
+	overflow-wrap: break-word;
+
 }
 
 .job-details_clear-margins {
@@ -29,6 +31,7 @@
 
 .job-details__category {
 	color: $primary-color;
+	padding: 0;
 }
 
 //.job-details__features {
@@ -56,7 +59,7 @@
 	flex-direction: column;
 }
 
-.buttons button {
+.buttons button, .buttons a {
 	margin-bottom: 10px;
 	width: 100%;
 }
@@ -85,4 +88,8 @@
 
 .buttons-group button {
 	margin-right: 15px;
+}
+
+.job-details__description {
+	overflow-wrap: break-word;
 }

@@ -1,7 +1,13 @@
 import Component from '@frame/Component';
 import template from './Job.handlebars';
 import './Job.scss';
-import { jobs, levels, dueTimes } from '@app/constants';
+import {
+	jobTypes,
+	levels,
+	dueTimes,
+	busEvents,
+	specialitiesRow,
+} from '@app/constants';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import { Select } from '@components/inputs/Select/Select';
@@ -9,25 +15,41 @@ import { toSelectElement } from '@modules/utils';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import FeaturesList from '@components/dataDisplay/FeaturesList';
+import store from '@modules/store';
+import bus from '@frame/bus';
+import AccountService from '@services/AccountService';
+import AuthService from '@services/AuthService';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import { router } from '../../../index';
+import config from '@app/config';
 
 export default class Job extends Component {
 	constructor(props) {
 		super(props);
 
-		console.log('Job props', props);
+		this.data = {
+			job: {},
+		};
 
-		const job = { ...jobs[0] };
-		job['skills'] = job['skills'].split(',');
-		job['experienceLevel'] = levels[job['experienceLevelId']];
+		bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
+	}
+
+	preRender() {
+		bus.emit(busEvents.JOB_GET, this.props.params.jobId);
+
+		const loggedIn = AuthService.isLoggedIn();
+		const isClient = AccountService.isClient();
 
 		this.data = {
-			job,
+			loggedIn,
+			isClient,
 		};
 	}
 
 	render() {
 		this._submitProposal = new Button({
-			type: 'button',
+			type: 'submit',
 			text: 'Ответить на проект',
 		});
 		this._save = new Button({
@@ -100,6 +122,72 @@ export default class Job extends Component {
 
 		this.html = template(this.data);
 		this.attachToParent();
+
 		return this.html;
 	}
+
+	postRender() {
+		const form = this.el.querySelector('#addProposal');
+		if (form) {
+			enableValidationAndSubmit(form, (helper) => {
+				helper.event.preventDefault();
+
+				this.helper = helper;
+
+				bus.on(
+					busEvents.PROPOSAL_CREATE_RESPONSE,
+					this.onProposalsResponse,
+				);
+				bus.emit(busEvents.PROPOSAL_CREATE, {
+					jobId: this.props.params.jobId,
+					formData: helper.formToJSON(),
+				});
+			});
+		}
+	}
+
+	jobUpdated = () => {
+		const job = store.get(['job']);
+		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
+		job['experienceLevel'] = levels[job['experienceLevelId'] - 1];
+		job['speciality'] = specialitiesRow[job['specialityId']];
+		job['created'] = new Date(job.date).toDateString();
+		job['type'] = jobTypes.find(
+			(el) => el.value === parseInt(job.jobTypeId),
+		).label;
+
+		this.data = {
+			job: job,
+		};
+
+		this.stateChanged();
+	};
+
+	userUpdated = () => {
+		const loggedIn = AuthService.isLoggedIn();
+		const isClient = AccountService.isClient();
+
+		this.data = {
+			loggedIn,
+			isClient,
+		};
+
+		//todo: одновременное userUpdate и router.push вызывают this._parent.innerHtml = 'something'
+		this.stateChanged();
+	};
+
+	onProposalsResponse = (data) => {
+		bus.off(busEvents.PROPOSAL_CREATE_RESPONSE, this.onProposalsResponse);
+		const { error, response } = data;
+		if (error) {
+			let text = error.message;
+			if (error.data && error.data.error) {
+				text = error.data.error;
+			}
+			this.helper.setResponseText(text);
+			return;
+		}
+
+		router.push(config.urls.proposals);
+	};
 }
