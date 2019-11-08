@@ -1,0 +1,19 @@
+@import "~@assets/scss/global";
+
+.offline-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100%;
+}
+
+.offline {
+	text-align: center;
+}
+
+.offline_text {
+	text-align: center;
+	padding: 20px;
+	font-size: 1.5em;
+	color: $primary-color;
+}

@@ -26,6 +26,7 @@ import Proposals from '@containers/Proposals';
 import FreelancerService from '@services/FreelancerService';
 import { getCookie } from '@modules/utils';
 import config from '@app/config';
+import { offlineHOC } from '@containers/offlineHOC';
 
 const handlers = [
 	{
@@ -148,10 +149,10 @@ bus.on('get-role', () => {
 });
 
 const routes = [
-	{ path: '/', Component: HomeComponent },
-	{ path: '/signup', Component: SignUpComponent },
-	{ path: '/login', Component: LoginComponent },
-	{ path: '/settings', Component: Settings, props: {} },
+	{ path: '/', Component: offlineHOC(HomeComponent) },
+	{ path: '/signup', Component: offlineHOC(SignUpComponent) },
+	{ path: '/login', Component: offlineHOC(LoginComponent) },
+	{ path: '/settings', Component: offlineHOC(Settings), props: {} },
 	{ path: '/settings-template', Component: ClientSettingsComponent },
 	// {
 	// 	path: '/new-project',
@@ -165,11 +166,11 @@ const routes = [
 	// },
 	{
 		path: '/new-job',
-		Component: JobFormComponent,
+		Component: offlineHOC(JobFormComponent),
 	},
 	{
 		path: '/freelancers/:freelancerId',
-		Component: Profile,
+		Component: offlineHOC(Profile),
 		props: {
 			currentAccountRole:
 				getCookie(config.cookieAccountModeName) ===
@@ -182,14 +183,14 @@ const routes = [
 		path: '/with-children',
 		children: [{ path: '/signup', Component: SignUpComponent }],
 	},
-	{ path: '/jobs/:jobId', Component: Job },
-	{ path: '/jobs', Component: Jobs },
-	{ path: '/freelancers', Component: Freelancers },
+	{ path: '/jobs/:jobId', Component: offlineHOC(Job) },
+	{ path: '/jobs', Component: offlineHOC(Jobs) },
+	{ path: '/freelancers', Component: offlineHOC(Freelancers) },
 	{ path: '/search', Component: Search },
-	{ path: '/messages', Component: Messages },
-	{ path: '/about', Component: About },
+	{ path: '/messages', Component: offlineHOC(Messages) },
+	{ path: '/about', Component: offlineHOC(About) },
 	{ path: '/page-not-found', Component: NotFound },
-	{ path: '/proposals', Component: Proposals },
+	{ path: '/proposals', Component: offlineHOC(Proposals) },
 	{ path: '/saved', Component: Search },
 ];
 
@@ -199,3 +200,13 @@ export const router = new Router(document.getElementById('root'), {
 router.register(routes);
 
 Frame.bootstrap(AppComponent, document.getElementById('root'), router);
+
+// if ('serviceWorker' in navigator) {
+// 	navigator.serviceWorker.register('sw.js')
+// 		.then(registration => {
+// 			console.log('ServiceWorker registration', registration);
+// 		})
+// 		.catch(err => {
+// 			console.log('SW Registration failed with ' + err);
+// 		})
+// }
