@@ -1,0 +1,13 @@
+$font-stack: ('Roboto', 'Helvetica', 'Arial', 'Open Sans', sans-serif);
+
+html{
+	//font-size: 1px;/*for using REM units*/
+	font-size: 1em;
+}
+body{
+	font-family: $font-stack;
+	//font-size: 16rem;
+	font-weight: 400;
+	line-height: 1.3;
+	color: #222;
+}

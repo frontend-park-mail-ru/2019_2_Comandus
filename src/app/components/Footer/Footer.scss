@@ -1,0 +1,13 @@
+@import "~@assets/scss/global";
+
+.footer {
+	background: linear-gradient(90deg, rgba(28,79,123,1) 0%, rgba(28,69,123,1) 20%, rgba($footer-background, 1) 74%);
+	color: $white;
+	position: relative;
+}
+
+.copyright {
+	display: block;
+	padding-top: 60px;
+	padding-bottom: 30px;
+}

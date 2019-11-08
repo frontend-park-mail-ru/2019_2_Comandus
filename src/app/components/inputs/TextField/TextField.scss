@@ -1,0 +1,47 @@
+@import "~@assets/scss/global";
+@import "../inputs";
+
+.text-field {
+	max-width: 100%;
+	width: 100%;
+	display: inline-block;
+	margin: 0;
+	position: relative;
+}
+
+.text-field__input {
+	@include input;
+}
+
+.text-field__label {
+	@include label;
+	display: none;
+}
+
+.text-field__error {
+	display: block;
+	color: var(--danger-color);
+	font-size: $font-size-s;
+}
+
+.text-field__hint {
+	z-index: -1;
+	opacity: 0;
+	position: absolute;
+	background: #eef2f7;
+	width: 100%;
+	padding: 20px;
+	border-radius: 5px;
+	margin-top: 10px;
+	transition: all 0.3s ease-in-out;
+	box-shadow: 0 0 10px 1px #c5c5c5;
+}
+
+.text-field__input:focus + .text-field__hint {
+	z-index: 100;
+	opacity: 1;
+}
+
+.error {
+	box-shadow: 0 0 0 1px var(--danger-color);
+}

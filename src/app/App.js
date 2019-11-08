@@ -1,31 +1,38 @@
-import { htmlToElement } from '../modules/utils';
-import HeaderComponent from './components/Header';
-import Component from '../frame/Component';
+import HeaderComponent from '@components/Header';
+import Component from '@frame/Component';
 import template from './App.handlebars';
-import Frame from '../frame/frame';
+import Footer from '@components/Footer/Footer';
+import './App.scss';
+import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
 
 class AppComponent extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
 	}
 
 	render() {
-		const html = template(this.data);
-		const el = htmlToElement(html);
-
-		const props = {
+		this._header = new HeaderComponent({
 			...this.props,
-			parent: el,
+		});
+
+		const footer = new Footer();
+
+		this.data = {
+			header: this._header.render(),
+			footer: footer.render(),
 		};
 
-		const component = Frame.createComponent(HeaderComponent, el, props);
-		Frame.renderComponent(component);
+		this.html = template(this.data);
+		this.attachToParent();
 
-		el.appendChild(document.createElement('router-outlet'));
+		return this.html;
+	}
 
-		this._parent.appendChild(el);
+	postRender() {
+		this._header.postRender();
+
+		bus.emit(busEvents.ACCOUNT_GET);
 	}
 }
 

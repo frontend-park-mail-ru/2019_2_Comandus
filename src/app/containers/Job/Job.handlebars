@@ -1,0 +1,82 @@
+<div id="{{_id}}">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row  card card_no-padding">
+			<div class="tp-col-9">
+				<div class="job-details job-details_clear-margins">
+					<h2 class="job-details__inner-item job-details_title">{{job.title}}</h2>
+					<div class="job-details__inner-item">
+						<div class="">
+							<a class="job-details__category" href="/search/jobs?category={{job.specialityId}}
+							">{{job.speciality}}</a>
+						</div>
+						<small>{{job.created}}</small>
+					</div>
+					<div class="job-details__inner-item job-details__description">{{job.description}}</div>
+					{{{ jobFeatures }}}
+					<div class="job-details__inner-item job-item__tags">
+						{{#each job.skills}}
+							<span class="tag">{{this}}</span>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+			<div class="tp-col-3">
+				<div class="job-details-sidebar">
+					<div class="buttons job-details__inner-item">
+						{{#loggedIn}}
+							{{#isClient}}
+								<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
+							{{else}}
+								{{{submitProposal}}}
+								{{{saveBtn}}}
+							{{/isClient}}
+						{{else}}
+							<a href="/login" class="btn btn_primary btn-m">Войти</a>
+						{{/loggedIn}}
+					</div>
+					<div class="job-details__inner-item">
+						<strong>О заказчике</strong>
+						<ul class="about-client">
+							<li>
+								<strong>{{job.hireManagerId}}</strong>
+								<small>{{job.hireManagerId}}</small>
+							</li>
+							<li>
+								<strong></strong>
+								<small>Отзывы фрилансеров</small>
+							</li>
+							<li>
+								<strong></strong>
+								<small>Зарегистрирован</small>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{#loggedIn}}
+			{{#isClient}}
+			{{else}}
+				<div class="tp-row tp-row-centered">
+					<div class="tp-col-6 card card_no-padding">
+						<form class="job-details" method="post" id="addProposal" autocomplete="off">
+							<h2 class="job-details__inner-item job-details_title">Ответ фрилансера</h2>
+							<div class="job-details__inner-item">
+								{{{budgetField}}}
+								{{{timeSelect}}}
+								{{{proposalField}}}
+							</div>
+							<div class="job-details__inner-item">
+								<div class="buttons-group">
+									{{{submitProposal}}}
+									{{{cancelBtn}}}
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			{{/isClient}}
+		{{/loggedIn}}
+	</div>
+</div>

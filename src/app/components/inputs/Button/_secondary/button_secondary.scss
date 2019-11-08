@@ -1,0 +1,15 @@
+@import "~@components/inputs/inputs";
+
+.btn_secondary {
+	background-color: $secondary-color;
+	//color: $text-dark;
+	color: $primary-color
+}
+
+.btn_secondary:hover {
+	background-color: lighten($secondary-color, 2);
+}
+
+.btn_secondary:active {
+	background-color: darken($secondary-color, 10);
+}

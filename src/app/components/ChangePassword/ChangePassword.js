@@ -1,8 +1,11 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './ChangePassword.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
-import bus from './../../../frame/bus';
+import { htmlToElement } from '@modules/utils';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import bus from '@frame/bus';
+import Button from '@components/inputs/Button/Button';
+import TextField from '@components/inputs/TextField/TextField';
+import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 
 export class ChangePassword extends Component {
 	constructor({ ...props }) {
@@ -12,6 +15,48 @@ export class ChangePassword extends Component {
 	}
 
 	render() {
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Сохранить изменения',
+		});
+
+		const currentPasswordField = new TextField({
+			required: true,
+			name: 'password',
+			type: 'password',
+			label: 'Старый пароль',
+		});
+		const newPasswordField = new TextField({
+			required: true,
+			name: 'newPassword',
+			type: 'newPassword',
+			label: 'Новый пароль',
+		});
+		const newPasswordConfirmField = new TextField({
+			required: true,
+			name: 'newPasswordConfirmation',
+			type: 'newPasswordConfirmation',
+			label: 'Повторите пароль',
+		});
+
+		this.data = {
+			currentPasswordField: new FieldGroup({
+				children: [currentPasswordField.render()],
+				label: 'Текущий пароль',
+			}).render(),
+			newPasswordField: new FieldGroup({
+				children: [newPasswordField.render()],
+				label: 'Новый пароль',
+			}).render(),
+			newPasswordConfirmField: new FieldGroup({
+				children: [newPasswordConfirmField.render()],
+				label: 'Повторите пароль',
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
+			}).render(),
+		};
+
 		const html = template({
 			data: this.data,
 			props: this.props,

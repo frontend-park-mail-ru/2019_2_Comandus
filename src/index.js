@@ -1,37 +1,39 @@
 import AppComponent from './app/App';
 import '../public/css/index.css';
-import './index.css';
-import './assets/scss/main.scss';
-import Frame from './frame/frame';
-import HomeComponent from './app/containers/homePage/homePage';
-import SignUpComponent from './app/containers/signupPage/signupPage';
-import LoginComponent from './app/containers/loginPage/loginPage';
-import { Settings } from './app/containers/settings/settings';
-import ClientSettingsComponent from './app/components/ClientSettingsComponent/ClientSettingsComponent';
-import JobFormComponent from './app/components/JobFormComponent/JobFormComponent';
-import { Profile } from './app/containers/freelancerProfile';
-import SettingsComponent from './app/components/SettingsComponent/SettingsComponent';
-import { Router } from './modules/router';
-import bus from './frame/bus';
-import JobService from './app/services/JobService';
-import AuthService from './app/services/AuthService';
-import AccountService from './app/services/AccountService';
+import '@assets/scss/main.scss';
+import Frame from '@frame/frame';
+import HomeComponent from '@containers/homePage/homePage';
+import SignUpComponent from '@containers/signupPage/signupPage';
+import LoginComponent from '@containers/loginPage/loginPage';
+import { Settings } from '@containers/settings/settings';
+import ClientSettingsComponent from '@components/ClientSettingsComponent/ClientSettingsComponent';
+import JobFormComponent from '@components/JobFormComponent/JobFormComponent';
+import { Profile } from '@containers/freelancerProfile';
+import { Router } from '@modules/router';
+import bus from '@frame/bus';
+import JobService from '@services/JobService';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
+import Jobs from '@containers/jobs/Jobs';
+import Freelancers from '@containers/freelancers/Freelancers';
+import Job from '@containers/Job/Job';
+import Search from '@containers/search';
+import Messages from '@containers/messages';
+import About from '@containers/about';
+import NotFound from '@containers/NotFound';
+import { busEvents } from '@app/constants';
+import Proposals from '@containers/Proposals';
+import FreelancerService from '@services/FreelancerService';
+import { getCookie } from '@modules/utils';
+import config from '@app/config';
 
 const handlers = [
 	{
 		eventName: 'job-create',
-		handler: JobService.CreateJob,
+		handler: (data) => {
+			return JobService.CreateJob(data);
+		},
 		eventEndName: 'job-create-response',
-	},
-	{
-		eventName: 'login',
-		handler: AuthService.Login,
-		eventEndName: 'login-response',
-	},
-	{
-		eventName: 'signup',
-		handler: AuthService.Signup,
-		eventEndName: 'signup-response',
 	},
 ];
 
@@ -47,6 +49,78 @@ handlers.forEach(({ eventName, handler, eventEndName }) => {
 				});
 			});
 	});
+});
+
+bus.on(busEvents.LOGIN, (data) => {
+	AuthService.Login(data)
+		.then((response) => {
+			bus.emit(busEvents.LOGIN_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.LOGIN_RESPONSE, { error });
+		})
+		.finally(() => {
+			bus.emit(busEvents.USER_UPDATED);
+		});
+});
+
+bus.on(busEvents.SIGNUP, (data) => {
+	AuthService.Signup(data)
+		.then((response) => {
+			bus.emit(busEvents.SIGNUP_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.SIGNUP_RESPONSE, { error });
+		})
+		.finally(() => {
+			bus.emit(busEvents.USER_UPDATED);
+		});
+});
+
+bus.on(busEvents.LOGOUT, () => {
+	AuthService.Logout().then(() => {
+		bus.emit(busEvents.USER_UPDATED);
+	});
+});
+
+bus.on(busEvents.ACCOUNT_GET, () => {
+	AccountService.GetAccount().then(() => {
+		bus.emit(busEvents.USER_UPDATED);
+	});
+});
+
+bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
+	AccountService.SetUserType(newType).then(() => {
+		bus.emit(busEvents.USER_UPDATED);
+	});
+});
+
+bus.on(busEvents.JOBS_GET, () => {
+	JobService.GetAllJobs().then(() => {
+		bus.emit(busEvents.JOBS_UPDATED);
+	});
+});
+
+bus.on(busEvents.JOB_GET, (jobId) => {
+	JobService.GetJobById(jobId).then(() => {
+		bus.emit(busEvents.JOB_UPDATED);
+	});
+});
+
+bus.on(busEvents.PROPOSALS_GET, () => {
+	FreelancerService.GetProposals().then(() => {
+		bus.emit(busEvents.PROPOSALS_UPDATED);
+	});
+});
+
+bus.on(busEvents.PROPOSAL_CREATE, (data) => {
+	FreelancerService.CreateProposal(data)
+		.then((response) => {
+			bus.emit(busEvents.PROPOSAL_CREATE_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.PROPOSAL_CREATE_RESPONSE, { error });
+		});
 });
 
 bus.on('account-get', () => {
@@ -68,32 +142,58 @@ bus.on('change-password', (data) => {
 	bus.emit('change-password-response', response);
 });
 
+bus.on('get-role', () => {
+	const response = AccountService.GetRoles();
+	bus.emit('get-role-response', response);
+});
+
 const routes = [
 	{ path: '/', Component: HomeComponent },
 	{ path: '/signup', Component: SignUpComponent },
 	{ path: '/login', Component: LoginComponent },
 	{ path: '/settings', Component: Settings, props: {} },
-	// {path: '/settings/', Component: ClientSettingsComponent},
 	{ path: '/settings-template', Component: ClientSettingsComponent },
+	// {
+	// 	path: '/new-project',
+	// 	Component: JobFormComponent,
+	// 	props: { mode: 'project' },
+	// },
+	// {
+	// 	path: '/new-vacancy',
+	// 	Component: JobFormComponent,
+	// 	props: { mode: 'vacancy' },
+	// },
 	{
-		path: '/new-project',
+		path: '/new-job',
 		Component: JobFormComponent,
-		props: { mode: 'project' },
 	},
 	{
-		path: '/new-vacancy',
-		Component: JobFormComponent,
-		props: { mode: 'vacancy' },
+		path: '/freelancers/:freelancerId',
+		Component: Profile,
+		props: {
+			currentAccountRole:
+				getCookie(config.cookieAccountModeName) ===
+				config.accountTypes.client
+					? config.accountTypes.client
+					: config.accountTypes.freelancer,
+		},
 	},
-	{ path: '/freelancers/:freelancerId', Component: Profile },
 	{
 		path: '/with-children',
 		children: [{ path: '/signup', Component: SignUpComponent }],
 	},
-	{ path: '/jobs/:jobId', Component: SettingsComponent },
+	{ path: '/jobs/:jobId', Component: Job },
+	{ path: '/jobs', Component: Jobs },
+	{ path: '/freelancers', Component: Freelancers },
+	{ path: '/search', Component: Search },
+	{ path: '/messages', Component: Messages },
+	{ path: '/about', Component: About },
+	{ path: '/page-not-found', Component: NotFound },
+	{ path: '/proposals', Component: Proposals },
+	{ path: '/saved', Component: Search },
 ];
 
-const router = new Router(document.getElementById('root'), {
+export const router = new Router(document.getElementById('root'), {
 	outletName: 'router-outlet',
 });
 router.register(routes);

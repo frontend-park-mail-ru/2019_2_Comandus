@@ -1,13 +1,13 @@
 <div id="{{props.id}}">
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_left tp-underline">
 			<h2>
 				О компании
 			</h2>
 		</div>
-		<div class="tp-row tp-align-items-start">
+		<div class="tp-row tp-row_content_left">
 			<div class="tp-col-12">
-				<div class="tp-container tp-container-align-center">
+				<div class="tp-container tp-container_align_center">
 					<img
 							class="tp-avatar tp-avatar-content-below"
 							alt="..."
@@ -24,68 +24,25 @@
 							method="post"
 							autocomplete="off"
 					>
-						<label for="companyName">Название</label>
-						<input
-								class="tp-input"
-								name="companyName"
-								id="companyName"
-								type="text"
-								minlength="3"
-								maxlength="20"
-								placeholder="Технопарк"
-								value="{{ company.companyName }}"
-								required
-						/>
-						<label for="site">Сайт</label>
-						<input
-								class="tp-input"
-								name="site"
-								id="site"
-								type="text"
-								minlength="5"
-								maxlength="30"
-								placeholder="park.mail.ru"
-								value="{{ company.site }}"
-						/>
 
-						<label for="tagline"
-						>Заголовок описания (Tagline)</label
-						>
-						<input
-								class="tp-input"
-								name="tagline"
-								id="tagline"
-								type="text"
-								placeholder="Бауманская 7"
-								value="{{ company.tagline }}"
-								required
-						/>
-						<label for="description">Описание</label>
-						<textarea
-								class="tp-input"
-								name="description"
-								id="description"
-								placeholder="Спасите меня"
-								value="{{ company.description }}"
-								required
-						></textarea>
-						<input
-								class="tp-button-primary"
-								type="submit"
-								value="Сохранить изменения"
-						/>
+						{{{ data.titleField }}}
+						{{{ data.siteField }}}
+						{{{ data.headerField }}}
+						{{{ data.descriptionField }}}
+
+						{{{ data.submitBtn }}}
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_left tp-underline">
 			<h3>
 				Контакты компании
 			</h3>
 		</div>
-		<div class="tp-row tp-align-items-start">
+		<div class="tp-row tp-row_content_left">
 			<div class="tp-col-12">
 				<div class="tp-container">
 					<form
@@ -94,54 +51,12 @@
 							method="post"
 							autocomplete="off"
 					>
-						<label for="companyOwner">Владелец</label>
-						<input
-								class="tp-input"
-								name="companyOwner"
-								id="companyOwner"
-								type="text"
-								readonly
-								value="Хлоя Прайс"
-						/>
-						<label for="country">Страна</label>
-						{{{ countrySelect }}}
-						<label for="city">Город</label>
-						<input
-								class="tp-input"
-								name="city"
-								id="city"
-								type="text"
-								placeholder="Москва"
-								pattern="^[А-Яа-яA-Za-z]{2,}$"
-								value="{{ company.city }}"
-								required
-						/>
-						<label for="address">Адрес</label>
-						<input
-								class="tp-input"
-								name="address"
-								id="address"
-								type="text"
-								placeholder="Бауманская 7"
-								value="{{ company.address }}"
-						/>
-						<label for="phone">Телефон</label>
-						<input
-								class="tp-input"
-								name="phone"
-								id="phone"
-								type="text"
-								pattern="^\+[0-9]{11,12}$"
-								title="Неправильный формат номера телефона. Пример: +7 900 90 90 900"
-								placeholder="+78005553535"
-								value="{{ company.phone }}"
-								required
-						/>
-						<input
-								class="tp-button-primary"
-								type="submit"
-								value="Сохранить изменения"
-						/>
+						{{{ data.ownerField }}}
+						{{{ data.citySelect }}}
+						{{{ data.addressField }}}
+						{{{ data.phoneField }}}
+
+						{{{ data.submitBtn }}}
 					</form>
 				</div>
 			</div>

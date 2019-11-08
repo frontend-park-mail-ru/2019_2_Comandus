@@ -66,6 +66,16 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.js'],
+		alias: {
+			'@app': path.resolve(__dirname, 'src/app'),
+			'@frame': path.resolve(__dirname, 'src/frame'),
+			'@modules': path.resolve(__dirname, 'src/modules'),
+			'@assets': path.resolve(__dirname, 'src/assets'),
+			'@services': path.resolve(__dirname, 'src/app/services'),
+			'@components': path.resolve(__dirname, 'src/app/components'),
+			'@containers': path.resolve(__dirname, 'src/app/containers'),
+			'@index': path.resolve(__dirname, 'src/index'),
+		}
 	},
 	mode: 'development',
 	devServer: {

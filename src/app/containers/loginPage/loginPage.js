@@ -1,8 +1,12 @@
 import template from './index.handlebars';
-import { htmlToElement } from '../../../modules/utils';
-import Component from '../../../frame/Component';
-import { enableValidationAndSubmit } from '../../../modules/form/formValidationAndSubmit';
-import bus from '../../../frame/bus';
+import Component from '@frame/Component';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import bus from '@frame/bus';
+import TextField from '@components/inputs/TextField/TextField';
+import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import Button from '@components/inputs/Button/Button';
+import './login.scss';
+import { busEvents } from '@app/constants';
 
 class LoginComponent extends Component {
 	constructor({ ...props }) {
@@ -14,26 +18,61 @@ class LoginComponent extends Component {
 	}
 
 	render() {
-		const html = template(this.data);
-		this._el = htmlToElement(html);
-		this._parent.appendChild(this._el);
+		const emailField = new TextField({
+			required: true,
+			type: 'email',
+			label: 'Электронная почта',
+			placeholder: 'Электронная почта',
+			name: 'email',
+		});
+		const passwordField = new TextField({
+			required: true,
+			type: 'password',
+			label: 'Пароль',
+			placeholder: 'Пароль',
+			name: 'password',
+		});
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Войти',
+		});
+		this.data = {
+			emailField: new FieldGroup({
+				children: [emailField.render()],
+				label: emailField.data.label,
+			}).render(),
+			passwordField: new FieldGroup({
+				children: [passwordField.render()],
+				label: passwordField.data.label,
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
+			}).render(),
+		};
+
+		this.html = template(this.data);
+		// this._el = htmlToElement(html);
+		// this._parent.appendChild(this._el);
+		this.attachToParent();
+
+		return this.html;
 	}
 
 	postRender() {
-		const form = this._el.getElementsByTagName('form')[0];
+		const form = this.el.getElementsByTagName('form')[0];
 
 		enableValidationAndSubmit(form, (helper) => {
 			helper.event.preventDefault();
 
 			this.helper = helper;
 
-			bus.on('login-response', this.onLoginResponse);
-			bus.emit('login', helper.formToJSON());
+			bus.on(busEvents.LOGIN_RESPONSE, this.onLoginResponse);
+			bus.emit(busEvents.LOGIN, helper.formToJSON());
 		});
 	}
 
 	onLoginResponse(data) {
-		bus.off('login-response', this.onLoginResponse);
+		bus.off(busEvents.LOGIN_RESPONSE, this.onLoginResponse);
 		console.log(data);
 		const { response, error } = data;
 		if (error) {
@@ -45,7 +84,7 @@ class LoginComponent extends Component {
 			return;
 		}
 
-		this.props.router.push('/settings/');
+		this.props.router.push('/settings');
 	}
 }
 

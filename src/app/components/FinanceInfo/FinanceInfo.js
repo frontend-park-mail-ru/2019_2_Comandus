@@ -1,6 +1,6 @@
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 import template from './FinanceInfo.handlebars';
-import { htmlToElement } from '../../../modules/utils';
+import { htmlToElement } from '@modules/utils';
 
 export class FinanceInfo extends Component {
 	constructor({ parent = document.body, ...props }) {

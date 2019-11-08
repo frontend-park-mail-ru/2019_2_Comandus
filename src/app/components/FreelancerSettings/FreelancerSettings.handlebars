@@ -1,11 +1,11 @@
 <div id="{{ props.id }}">
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_stretch tp-underline">
 			<h2>
 				Контакты
 			</h2>
 		</div>
-		<div class="tp-row tp-align-items-start">
+		<div class="tp-row tp-row_content_stretch">
 			<div class="tp-col-12">
 				<div class="tp-container">
 					<form
@@ -14,76 +14,29 @@
 							method="post"
 							autocomplete="off"
 					>
-						<div class="tp-col-4 tp-col_padding_0">
-							<label for="country">Страна</label>
-<!--							<select-->
-<!--									class="tp-input"-->
-<!--									name="country"-->
-<!--									id="country"-->
-<!--									required-->
-<!--							>-->
-<!--								<option selected disabled>Выберите страну</option>-->
-<!--								<option value="Россия">Россия</option>-->
-<!--								<option value="Украина">Украина</option>-->
-<!--								<option value="Беларусь">Беларусь</option>-->
-<!--								<option value="Армения">Армения</option>-->
-<!--								<option value="Казахстан">Казахстан</option>-->
-<!--							</select>-->
-							{{{ countrySelect }}}
-						</div>
+						<div class="tp-col-8 tp-col_padding_0">
 
-						<div class="tp-col-4 tp-col_padding_0">
-							<label for="town">Город</label>
-							<input
-									class="tp-input"
-									name="city"
-									id="city"
-									type="text"
-									minlength="2"
-									maxlength="20"
-									pattern="^[А-Яа-яA-Za-z]{2,}$"
-									placeholder="Москва"
-									required
-							/>
+							{{{data.citySelect}}}
+
+						</div>
+						<div class="tp-col-8 tp-col_padding_0">
+
+							{{{ data.addressField }}}
+
+							<span class="tp-label-note">Мы серьезно относимся к соблюдению конфиденциальности.
+												Только ваш город и страна будут доступны клиентам</span>
 						</div>
 
 						<div class="tp-col-8 tp-col_padding_0">
-							<label for="address">Адрес</label>
-							<div class="tp-container">
-								<input
-										class="tp-input"
-										name="address"
-										id="address"
-										type="text"
-										minlength="5"
-										maxlength="40"
-										placeholder="Бауманская 7"
-								/>
-								<span class="tp-label-note">Мы серьезно относимся к соблюдению конфиденциальности.
-												Только ваш город и страна будут доступны клиентам</span>
-							</div>
+
+							{{{ data.phoneField }}}
+
 						</div>
 
-						<div class="tp-col-4 tp-col_padding_0">
-							<label for="phone">Телефон</label>
-							<input
-									class="tp-input"
-									name="phone"
-									id="phone"
-									type="text"
-									pattern="^\+[0-9]{11,12}$"
-									title="Неправильный формат номера телефона. Пример: +7 900 90 90 900"
-									placeholder="+78005553535"
-									required
-							/>
-						</div>
+						<div class="tp-col-8 tp-col_padding_0">
 
-						<div class="tp-col-4 tp-col_padding_0">
-							<input
-									class="tp-button-primary"
-									type="submit"
-									value="Сохранить изменения"
-							/>
+							{{{data.submitBtn}}}
+
 						</div>
 					</form>
 				</div>
@@ -92,12 +45,12 @@
 	</div>
 
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_stretch tp-underline">
 			<h2>
 				Мой профиль
 			</h2>
 		</div>
-		<div class="tp-row tp-align-items-start">
+		<div class="tp-row tp-row_content_left">
 			<div class="tp-col-6">
 				<form
 						class="tp-form"
@@ -106,84 +59,32 @@
 						autocomplete="off"
 						novalidate="novalidate"
 				>
-					<label for="visible">Кому в интернете видна моя страница</label>
-					{{{ visibilitySelect }}}
-					<div class="tp-form-choice">
-						<span>Ваш уровень опыта</span>
-						<div class="tp-row">
-							<input
-									class="tp-input"
-									id="junior"
-									type="radio"
-									name="experienceLevelId"
-									value="1"
-									required
-							/>
-							<label for="junior">
-								Начальный
-							</label>
-							<input
-									class="tp-input"
-									id="middle"
-									type="radio"
-									name="experienceLevelId"
-									value="2"
-									required
-							/>
-							<label for="middle">
-								Средний
-							</label>
-							<input
-									class="tp-input"
-									id="senior"
-									type="radio"
-									name="experienceLevelId"
-									value="3"
-									required
-							/>
-							<label for="senior">
-								Эксперт
-							</label>
-						</div>
-					</div>
-					<input
-							class="tp-button-primary"
-							type="submit"
-							value="Сохранить изменения"
-					/>
+
+					{{{ data.levelRadioGroup }}}
+
+					{{{ data.submitBtn }}}
+
 				</form>
 			</div>
 		</div>
 	</div>
 
 	<div class="tp-container">
-		<div class="tp-row tp-underline">
+		<div class="tp-row tp-row_content_stretch tp-row_align_center tp-underline">
 			<h2>
 				Выбор специализации и категорий услуг
 			</h2>
-			<a class="tp-row-right-part" href="#" target="_self">Изменить</a>
+			<a class="tp-row__right " href="#" target="_self">Изменить</a>
 		</div>
 	</div>
 	<div class="tp-col-12">
-		<div class="tp-container">
-			<div class="tp-row">
-				<span class="tp-text-title">Программирование</span>
+		{{#each data.skills}}
+			<label class="field-group__label">{{section}}</label>
+			<div class="tp-row tp-row_content_left">
+				{{#each categories}}
+					{{{ this }}}
+				{{/each}}
 			</div>
-			<div class="tp-row tp-row-float-left">
-				<span class="tp-framed-tag">Веб-программирование</span>
-				<span class="tp-framed-tag">Базы данных</span>
-				<span class="tp-framed-tag">Программирование игр</span>
-				<span class="tp-framed-tag">Встраиваемые системы</span>
-			</div>
-		</div>
-		<div class="tp-container">
-			<div class="tp-row">
-				<span class="tp-text-title">Дизайн и арт</span>
-			</div>
-			<div class="tp-row tp-row-float-left">
-				<span class="tp-framed-tag">Логотипы</span>
-				<span class="tp-framed-tag">Векторная графика</span>
-			</div>
-		</div>
+		{{/each}}
 	</div>
 </div>

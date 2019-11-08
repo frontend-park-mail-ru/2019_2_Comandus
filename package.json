@@ -7,7 +7,7 @@
 	"scripts": {
 		"start": "webpack-dev-server",
 		"start:build": "node server.js",
-		"build": "NODE_ENV=production webpack && cp -a public/media dist/",
+		"build": "NODE_ENV=production webpack --mode=production && cp -a public/media dist/",
 		"deploy": "now -A mynow.json --prod",
 		"deploy:local": "now dev -A mynow.json",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/**/*.{js,html,css}'",
@@ -79,7 +79,6 @@
 			"git add"
 		],
 		"src/**/*.scss": [
-			"npm run --silent stylelint:fix",
 			"git add"
 		]
 	}

@@ -1,6 +1,6 @@
-import { htmlToElement } from '../../../modules/utils';
+import { htmlToElement } from '@modules/utils';
 import template from './ClientSettingsComponent.handlebars';
-import Component from '../../../frame/Component';
+import Component from '@frame/Component';
 
 class ClientSettingsComponent extends Component {
 	constructor({ parent = document.body, ...props }) {

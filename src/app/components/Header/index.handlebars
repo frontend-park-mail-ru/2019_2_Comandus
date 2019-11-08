@@ -1,42 +1,7 @@
-<div>
-	<header class="tp-navbar">
-		<div class="tp-container tp-centered-container">
-			<div class="tp-row" id="userMenuParent">
-				<div class="tp-navbar-logo">
-					<a class="tp-navbar-brand" href="/" target="_self">
-						Командус
-					</a>
-				</div>
-				<ul class="tp-navbar-navigate" role="menubar">
-					<li class="">
-						<a href="/jobs?=type=project" target="_self" role="menuitem">
-							Проекты
-						</a>
-					</li>
-					<li class="">
-						<a href="/jobs?type=vacancy" target="_self" role="menuitem">
-							Вакансии
-						</a>
-					</li>
-					<li class="">
-						<a href="/freelancers" target="_self" role="menuitem">
-							Фрилансеры
-						</a>
-					</li>
-					<li class="">
-						<a href="/freelancers/some-id" target="_self" role="menuitem">
-							Фрилансеры id
-						</a>
-					</li>
-					<li class="tp-navbar-search">
-						<form method="GET" role="search">
-							<div>
-								<input/>
-							</div>
-						</form>
-					</li>
-				</ul>
-			</div>
+<header id="{{_id}}" class="header">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-col-12">
+			{{{navbar}}}
 		</div>
-	</header>
-</div>
+	</div>
+</header>
