@@ -1,9 +1,7 @@
 import template from './JobFormComponent.handlebars';
 import './style.css';
 import Component from '@frame/Component';
-import { Select } from '@components/inputs/Select/Select';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
-import Frame from '@frame/frame';
 import bus from '@frame/bus';
 import TextField from '@components/inputs/TextField/TextField';
 import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
@@ -20,11 +18,6 @@ import {
 	jobTypes,
 } from '@app/constants';
 
-const modes = {
-	project: 'project',
-	vacancy: 'vacancy',
-};
-
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
 	cities[i] = countriesCitiesRow[el].map(toSelectElement);
@@ -36,24 +29,12 @@ class JobFormComponent extends Component {
 		super(props);
 		this.data = {
 			props,
-			// isProject: () => props.mode === modes.project,
-			// isVacancy: () => props.mode === modes.vacancy,
-			// jobTypeId: props.mode === modes.vacancy ? 1 : 0,
 		};
 
 		this.onCreateJobResponse = this.onCreateJobResponse.bind(this);
 
 		let title = 'Новая работа';
-		// switch (this.props.mode) {
-		// case modes.project:
-		// 	title = 'Новый проект';
-		// 	break;
-		// case modes.vacancy:
-		// 	title = 'Новая вакансия';
-		// 	break;
-		// default:
-		// 	break;
-		// }
+
 		this.data = { title, ...this.data };
 
 		this.helper = null;

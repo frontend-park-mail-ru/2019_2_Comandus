@@ -36,6 +36,7 @@ export default class DoubleSelect extends Component {
 			name: name,
 		});
 	}
+
 	render() {
 		this.html = new FieldGroup({
 			children: [this._firstSelect.render(), this._secondSelect.render()],
@@ -44,6 +45,7 @@ export default class DoubleSelect extends Component {
 		}).render();
 		return this.html;
 	}
+
 	postRender() {
 		this._firstSelect.postRender();
 	}

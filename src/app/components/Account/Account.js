@@ -19,10 +19,8 @@ const children = [
 export class Account extends Component {
 	constructor({ ...props }) {
 		super(props);
-		// this._parent = parent;
 		this.data = {
 			children: {},
-			// ...this._data,
 			loaded: false,
 		};
 
@@ -76,7 +74,6 @@ export class Account extends Component {
 			text: 'Сохранить изменения',
 		});
 
-		// console.log(secondNameField);
 		this.data = {
 			secondNameField: new FieldGroup({
 				children: [secondNameField.render()],

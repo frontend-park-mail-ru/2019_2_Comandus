@@ -35,16 +35,6 @@ const handlers = [
 		},
 		eventEndName: 'job-create-response',
 	},
-	// {
-	// 	eventName: busEvents.LOGIN,
-	// 	handler: AuthService.Login,
-	// 	eventEndName: busEvents.LOGIN_RESPONSE,
-	// },
-	// {
-	// 	eventName: 'signup',
-	// 	handler: AuthService.Signup,
-	// 	eventEndName: 'signup-response',
-	// },
 ];
 
 handlers.forEach(({ eventName, handler, eventEndName }) => {

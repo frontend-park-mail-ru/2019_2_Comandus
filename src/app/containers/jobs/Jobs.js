@@ -11,15 +11,6 @@ export default class Jobs extends Component {
 	constructor(props) {
 		super(props);
 
-		// const jobsLocal = jobs.map((job) => {
-		// 	const el = { ...job };
-		// 	el['experienceLevel'] = levels[el['experienceLevelId']];
-		// 	el['skills'] = el['skills'].split(',');
-		// 	return el;
-		// });
-		//
-		// const jobsHtml = this.renderJobs(jobsLocal);
-
 		this.data = {
 			jobs: [],
 		};

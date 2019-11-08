@@ -3,7 +3,6 @@ export default {
 		process.env.NODE_ENV === 'production'
 			? 'https://flruserver.herokuapp.com'
 			: 'http://localhost:8080',
-	// cookieAccountModeName: 'account_mode',
 	cookieAccountModeName: 'user_type',
 	urls: {
 		account: '/account',

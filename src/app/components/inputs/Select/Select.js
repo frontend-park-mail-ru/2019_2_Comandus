@@ -9,13 +9,11 @@ export class Select extends Component {
 		items,
 		value,
 		onChange,
-		// parent,
 		attributes,
 		required = false,
 		...props
 	}) {
 		super(props);
-		// this._parent = parent;
 		this.props = {
 			name,
 			className,
@@ -26,7 +24,6 @@ export class Select extends Component {
 			required,
 			...props,
 		};
-		// this._el = null;
 
 		this.handleChange = this.handleChange.bind(this);
 	}

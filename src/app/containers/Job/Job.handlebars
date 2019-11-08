@@ -6,7 +6,8 @@
 					<h2 class="job-details__inner-item job-details_title">{{job.title}}</h2>
 					<div class="job-details__inner-item">
 						<div class="">
-							<a class="job-details__category" href="/search/jobs?category={{job.specialityId}}">{{job.speciality}}</a>
+							<a class="job-details__category" href="/search/jobs?category={{job.specialityId}}
+							">{{job.speciality}}</a>
 						</div>
 						<small>{{job.created}}</small>
 					</div>
@@ -62,11 +63,9 @@
 						<form class="job-details" method="post" id="addProposal" autocomplete="off">
 							<h2 class="job-details__inner-item job-details_title">Ответ фрилансера</h2>
 							<div class="job-details__inner-item">
-{{!--								<form>--}}
-									{{{budgetField}}}
-									{{{timeSelect}}}
-									{{{proposalField}}}
-{{!--								</form>--}}
+								{{{budgetField}}}
+								{{{timeSelect}}}
+								{{{proposalField}}}
 							</div>
 							<div class="job-details__inner-item">
 								<div class="buttons-group">

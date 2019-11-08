@@ -1,9 +1,7 @@
 import Component from '@frame/Component';
-import { Select } from '../inputs/Select/Select';
 import template from './Company.handlebars';
 import { htmlToElement } from '@modules/utils';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
-import Frame from '@frame/frame';
 import CompanyService from '@services/CompanyService';
 import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
 import Button from '@components/inputs/Button/Button';
@@ -16,28 +14,6 @@ export class Company extends Component {
 	}
 
 	render() {
-		// const countrySelect = Frame.createComponent(Select, this._el, {
-		// 	id: 'country',
-		// 	name: 'country',
-		// 	className: 'tp-input',
-		// 	items: [
-		// 		{
-		// 			label: 'Выберите страну',
-		// 			value: 'nil',
-		// 			selected: true,
-		// 			disabled: true,
-		// 		},
-		// 		{ label: 'Россия', value: 'Россия', selected: false },
-		// 		{ label: 'Украина', value: 'Украина', selected: false },
-		// 		{ label: 'Беларусь', value: 'Беларусь', selected: false },
-		// 		{ label: 'Казахстан', value: 'Казахстан', selected: false },
-		// 		{ label: 'Армения', value: 'Армения', selected: false },
-		// 	],
-		// 	onChange(value) {
-		// 		console.log('change: ', value);
-		// 	},
-		// });
-
 		this._citySelect = new DoubleSelect({
 			name: 'city',
 		});
