@@ -1,5 +1,4 @@
 import template from './index.handlebars';
-import { htmlToElement } from '@modules/utils';
 import Component from '@frame/Component';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';
@@ -7,14 +6,15 @@ import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import Button from '@components/inputs/Button/Button';
+import { busEvents } from '@app/constants';
 
 const roles = [
 	{
-		value: '1',
+		value: 'client',
 		label: 'Найти исполнителя',
 	},
 	{
-		value: '2',
+		value: 'freelancer',
 		label: 'Работать фрилансером',
 	},
 ];
@@ -99,27 +99,24 @@ class SignUpComponent extends Component {
 		};
 
 		this.html = template(this.data);
-		// this._el = htmlToElement(html);
-		// this._parent.appendChild(this._el);
 		this.attachToParent();
 
 		return this.html;
 	}
 
 	postRender() {
-		// const form = this._el.getElementsByTagName('form')[0];
 		const form = this.el.getElementsByTagName('form')[0];
 
 		enableValidationAndSubmit(form, (helper) => {
 			helper.event.preventDefault();
 			this.helper = helper;
-			bus.on('signup-response', this.onSignupResponse);
-			bus.emit('signup', helper.formToJSON());
+			bus.on(busEvents.SIGNUP_RESPONSE, this.onSignupResponse);
+			bus.emit(busEvents.SIGNUP, helper.formToJSON());
 		});
 	}
 
 	onSignupResponse(data) {
-		bus.off('signup-response', this.onSignupResponse);
+		bus.off(busEvents.SIGNUP_RESPONSE, this.onSignupResponse);
 		const { response, error } = data;
 		if (error) {
 			let text = error.message;

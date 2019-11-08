@@ -1,10 +1,15 @@
 <div id="{{_id}}">
 	<div class="tp-container tp-centered-container">
 		<div class="tp-row">
-			<div class="tp-col-8 ">
+			<div class="tp-col-9">
+				<div class="page-header">
+					Мои отклики
+				</div>
 				<div class="card card_no-padding">
-					{{#each jobs}}
-						{{{this}}}
+					{{#each proposals}}
+						<div>
+							{{{this}}}
+						</div>
 					{{/each}}
 				</div>
 			</div>

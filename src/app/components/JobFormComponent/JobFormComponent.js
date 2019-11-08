@@ -11,67 +11,55 @@ import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import InputTags from '@components/inputs/InputTags/InputTags';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import Button from '@components/inputs/Button/Button';
+import countriesCitiesRow from './../../../assets/countries.min.json';
+import { toSelectElement } from '@modules/utils';
+import {
+	categories,
+	specialities,
+	levelsRadio,
+	jobTypes,
+} from '@app/constants';
 
 const modes = {
 	project: 'project',
 	vacancy: 'vacancy',
 };
 
-const levels = [
-	{
-		value: '1',
-		label: 'Начинающий. Базовые знания и небольшой опыт работы',
-	},
-	{
-		value: '2',
-		label: 'Продвинутый. Несколько лет профессионального опыта',
-	},
-	{
-		value: '3',
-		label: 'Эксперт. Многолетний опыт работы в сложных проектах',
-	},
-];
+const cities = {};
+const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
+	cities[i] = countriesCitiesRow[el].map(toSelectElement);
+	return toSelectElement(el, i);
+});
 
 class JobFormComponent extends Component {
 	constructor({ ...props }) {
 		super(props);
 		this.data = {
 			props,
-			isProject: () => props.mode === modes.project,
-			isVacancy: () => props.mode === modes.vacancy,
-			jobTypeId: props.mode === modes.vacancy ? 1 : 0,
+			// isProject: () => props.mode === modes.project,
+			// isVacancy: () => props.mode === modes.vacancy,
+			// jobTypeId: props.mode === modes.vacancy ? 1 : 0,
 		};
 
 		this.onCreateJobResponse = this.onCreateJobResponse.bind(this);
 
-		let title = '';
-		switch (this.props.mode) {
-		case modes.project:
-			title = 'Новый проект';
-			break;
-		case modes.vacancy:
-			title = 'Новая вакансия';
-			break;
-		default:
-			break;
-		}
+		let title = 'Новая работа';
+		// switch (this.props.mode) {
+		// case modes.project:
+		// 	title = 'Новый проект';
+		// 	break;
+		// case modes.vacancy:
+		// 	title = 'Новая вакансия';
+		// 	break;
+		// default:
+		// 	break;
+		// }
 		this.data = { title, ...this.data };
 
 		this.helper = null;
 	}
 
 	render() {
-		const items = [
-			{ label: 'text1', value: 'text1', selected: false },
-			{ label: 'text2', value: 'text2', selected: true },
-		];
-		const component = Frame.createComponent(Select, this._el, {
-			id: 'mySelect',
-			items,
-			onChange(value) {
-				console.log(value);
-			},
-		});
 		const textField = new TextField({
 			required: true,
 			type: 'text',
@@ -104,18 +92,25 @@ class JobFormComponent extends Component {
 		});
 
 		this._citySelect = new DoubleSelect({
-			items,
+			items: countriesCities,
+			label1: 'Страна',
+			items2: cities,
+			label2: 'Город',
 			name: 'city',
 			label: 'Нужен исполнитель из...',
 		});
 		this._specialitySelect = new DoubleSelect({
-			items,
+			items: categories,
+			label1: 'Категория',
+			items2: specialities,
+			label2: 'Специализация',
 			name: 'specialityId',
 			label: 'Специализация проекта',
+			required: true,
 		});
 		this._levelRadioGroup = new RadioGroup({
-			items: levels,
-			// title: 'Уровень фрилансера',
+			items: levelsRadio,
+			column: true,
 			required: true,
 			name: 'experienceLevelId',
 		});
@@ -130,8 +125,16 @@ class JobFormComponent extends Component {
 			text: 'Опубликовать проект',
 		});
 
+		this._jobTypeRadio = new RadioGroup({
+			items: jobTypes,
+			required: true,
+			name: 'jobTypeId',
+			onClick: (value) => {
+				console.log(value);
+			},
+		});
+
 		this.data = {
-			mySelect: component.render(),
 			textField: new FieldGroup({
 				children: [textField.render()],
 				label: 'Название',
@@ -164,6 +167,10 @@ class JobFormComponent extends Component {
 			submitBtn: new FieldGroup({
 				children: [submitBtn.render()],
 			}).render(),
+			_jobTypeRadio: new FieldGroup({
+				children: [this._jobTypeRadio.render()],
+				label: 'Тип работы',
+			}).render(),
 		};
 
 		this.html = template(this.data);
@@ -176,11 +183,12 @@ class JobFormComponent extends Component {
 	preRender() {}
 
 	postRender() {
-		if (this.data.isVacancy()) {
-			this._citySelect.postRender();
-		}
+		// if (this.data.isVacancy()) {
+		this._citySelect.postRender();
+		// }
 		this._specialitySelect.postRender();
 		this._inputTags.postRender();
+		this._jobTypeRadio.postRender();
 
 		const form = this.el.querySelector('#projectForm');
 		if (form) {
@@ -197,7 +205,6 @@ class JobFormComponent extends Component {
 
 	onCreateJobResponse(data) {
 		bus.off('job-create-response', this.onCreateJobResponse);
-		console.log('data', Math.random(), bus.listeners);
 		const { error, response } = data;
 		if (error) {
 			let text = error.message;

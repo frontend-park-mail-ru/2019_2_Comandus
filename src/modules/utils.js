@@ -51,9 +51,9 @@ export const uniqueId = () =>
 		.toString(36)
 		.substr(2, 9)}`;
 
-export const toSelectElement = (el) => ({
+export const toSelectElement = (el, i) => ({
 	label: el,
-	value: el,
+	value: i,
 	selected: false,
 });
 
@@ -109,4 +109,8 @@ export function defaultAvatarUrl(firstName = '', lastName = '') {
 
 function randomHexColor() {
 	return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
+}
+
+export function deepCopy(obj) {
+	return JSON.parse(JSON.stringify(obj));
 }

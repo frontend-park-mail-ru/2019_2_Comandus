@@ -11,23 +11,23 @@ class HeaderComponent extends Component {
 	}
 
 	render() {
-		this._userMenu = new UserMenu({
-			...this.props,
-		});
-		this._dropdown = new Dropdown({
-			text: 'Работа',
-			items: [
-				{ url: '/jobs?type=project', text: 'Проекты' },
-				{ url: '/jobs/?type=vacancy', text: 'Вакансии' },
-			],
-		});
+		// this._userMenu = new UserMenu({
+		// 	...this.props,
+		// });
+		// this._dropdown = new Dropdown({
+		// 	text: 'Работа',
+		// 	items: [
+		// 		{ url: '/jobs?type=project', text: 'Проекты' },
+		// 		{ url: '/jobs/?type=vacancy', text: 'Вакансии' },
+		// 	],
+		// });
 		this._navbar = new Navbar({
 			...this.props,
 		});
 
 		this.data = {
-			userMenu: this._userMenu.render(),
-			_dropdown: this._dropdown.render(),
+			// userMenu: this._userMenu.render(),
+			// _dropdown: this._dropdown.render(),
 			navbar: this._navbar.render(),
 		};
 

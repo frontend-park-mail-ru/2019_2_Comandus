@@ -1,6 +1,8 @@
 export default {
-	// baseAPIUrl: 'https://flruserver.herokuapp.com',
-	baseAPIUrl: 'http://localhost:8080',
+	baseAPIUrl:
+		process.env.NODE_ENV === 'production'
+			? 'https://flruserver.herokuapp.com'
+			: 'http://localhost:8080',
 	// cookieAccountModeName: 'account_mode',
 	cookieAccountModeName: 'user_type',
 	urls: {
@@ -19,6 +21,9 @@ export default {
 		freelancers: '/freelancers',
 		uploadAccountAvatar: '/account/upload-avatar',
 		downloadAccountAvatar: '/account/download-avatar',
+		csrfToken: '/token',
+		setUserType: '/setusertype',
+		proposals: '/proposals',
 	},
 	accountTypes: {
 		client: 'client',

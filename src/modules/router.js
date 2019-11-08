@@ -1,4 +1,3 @@
-import bus from '@frame/bus';
 import Frame from '@frame/frame';
 
 function getParamsFromSearch(search) {
@@ -117,7 +116,11 @@ export class Router {
 		}
 
 		component.setProps({
-			params: getParamsFromSearch(search),
+			params: {
+				...component.params,
+				...props.params,
+				...getParamsFromSearch(search),
+			},
 		});
 
 		this.outlet.dataset.view = component.constructor.name;
@@ -128,9 +131,8 @@ export class Router {
 			Component,
 			component,
 			el,
+			props,
 		};
-
-		// bus.emit('get-role');
 	}
 
 	match(route, requestPath) {

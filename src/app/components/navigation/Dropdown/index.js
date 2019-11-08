@@ -8,6 +8,7 @@ function hideOnClickOutside(element, content) {
 		if (element.contains(event.target) || !isVisible(content)) {
 			return;
 		}
+
 		removeClass('dropdown__content_display', content);
 	};
 
@@ -58,6 +59,10 @@ export default class Dropdown extends Component {
 	}
 
 	postRender() {
+		if (!this.el) {
+			return;
+		}
+
 		this._btn = this.el.querySelector('.dropdown__toggle');
 		this._content = this.el.querySelector('.dropdown__content');
 		this._btn.addEventListener('click', this.onClick);

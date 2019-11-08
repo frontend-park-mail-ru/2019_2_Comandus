@@ -1,33 +1,33 @@
 import Component from '@frame/Component';
 import template from './UserMenu.handlebars';
-import { defaultAvatarUrl, getCookie, setCookie } from '@modules/utils';
+import { defaultAvatarUrl } from '@modules/utils';
 import config from '../../config';
 import './UserMenu.scss';
 import AuthService from '@services/AuthService';
 import bus from '@frame/bus';
-import AjaxModule from '@modules/ajax';
 import Dropdown from '@components/navigation/Dropdown';
+import store from '@modules/store';
+import AccountService from '@services/AccountService';
+import { busEvents } from '@app/constants';
+import { router } from '@index';
 
 export class UserMenu extends Component {
 	constructor({ ...props }) {
 		super(props);
 
-		this.created();
+		const user = store.get(['user']);
+		const isClient = AccountService.isClient();
+		const loggedIn = AuthService.isLoggedIn();
+
 		this.data = {
 			loaded: false,
+			user,
+			freelancerLabel: user ? `${user.firstName} ${user.secondName}` : '',
+			loggedIn,
+			isClient,
 		};
-		bus.on('get-role-response', this.onGetRoleResponse);
-		bus.emit('get-role');
-	}
 
-	created() {
-		const mode = getCookie(config.cookieAccountModeName);
-		if (!mode) {
-			setCookie(
-				config.cookieAccountModeName,
-				config.accountTypes.freelancer,
-			);
-		}
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
 	render() {
@@ -36,10 +36,20 @@ export class UserMenu extends Component {
 		this._dropdown = new Dropdown({
 			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,
 			items: [
-				{ url: '/jobs?type=project', text: 'switch to freelancer' },
-				{ url: '/jobs/?type=vacancy', text: 'switch to client' },
-				{ url: '/settings', text: 'Настройки' },
-				{ url: '/logout', text: 'Выйти' },
+				{
+					url: '#',
+					text: 'Фрилансер: ' + this.data.freelancerLabel,
+					active: !this.data.isClient,
+					id: 'switchToFreelancer',
+				},
+				{
+					url: '#',
+					text: 'Компания: ' + 'company name',
+					active: this.data.isClient,
+					id: 'switchToClient',
+				},
+				{ url: config.urls.settings, text: 'Настройки' },
+				{ url: '#', text: 'Выйти', id: 'logout' },
 			],
 			contentRight: true,
 			toggleClassname: 'nav__item',
@@ -56,61 +66,57 @@ export class UserMenu extends Component {
 	}
 
 	postRender() {
-		// const logout = this.el.querySelector('#logout');
-		//
-		// if (logout) {
-		// 	logout.addEventListener('click', (event) => {
-		// 		event.preventDefault();
-		//
-		// 		AuthService.Logout()
-		// 			.then((response) => {
-		// 				this.props.router.push('/login');
-		// 			})
-		// 			.catch((error) => {
-		// 				console.error(error);
-		// 			});
-		// 	});
-		// }
-		//
-		// const switchersArray = this.el.querySelectorAll('.account-switcher');
-		//
-		// switchersArray.forEach((el) => {
-		// 	el.addEventListener('click', (event) => {
-		// 		event.preventDefault();
-		// 		event.stopPropagation();
-		//
-		// 		AjaxModule.post('/setusertype', {
-		// 			type: event.target.dataset.mode,
-		// 		});
-		// 		setCookie(
-		// 			config.cookieAccountModeName,
-		// 			event.target.dataset.mode,
-		// 		);
-		// 		this.props.router.push('/');
-		// 	});
-		// });
-
 		this._dropdown.postRender();
+
+		// todo: Убрать условие
+		if (this.el) {
+			const logout = this.el.querySelector('#logout');
+
+			if (logout) {
+				logout.addEventListener('click', this.logout);
+			}
+
+			const switchToFreelancer = this.el.querySelector(
+				'#switchToFreelancer',
+			);
+			const switchToClient = this.el.querySelector('#switchToClient');
+
+			if (switchToFreelancer && switchToClient) {
+				switchToFreelancer.addEventListener('click', this.switchRole);
+				switchToClient.addEventListener('click', this.switchRole);
+			}
+		}
 	}
 
-	onGetRoleResponse = (res) => {
-		// 	res.then((response) => {
-		// 		response.forEach((role) => {
-		// 			role.on = role.role === getCookie(config.cookieAccountModeName);
-		// 		});
-		// 		this.data = {
-		// 			roles: response,
-		// 			loggedIn: () => !!response,
-		// 		};
-		// 	})
-		// 		.catch((error) => {
-		// 			console.error(error);
-		// 		})
-		// 		.finally(() => {
-		// 			this.data = {
-		// 				loaded: true,
-		// 			};
-		// 			this.stateChanged();
-		// 		});
+	userUpdated = () => {
+		const user = store.get(['user']);
+		const isClient = AccountService.isClient();
+		const loggedIn = AuthService.isLoggedIn();
+
+		this.data = {
+			user,
+			loggedIn,
+			isClient,
+			freelancerLabel: user ? `${user.firstName} ${user.secondName}` : '',
+		};
+
+		this.stateChanged();
+	};
+
+	logout = (event) => {
+		event.preventDefault();
+		bus.emit(busEvents.LOGOUT);
+		router.push(config.urls.login);
+	};
+
+	switchRole = (event) => {
+		event.preventDefault();
+
+		const newRole =
+			event.target.id === 'switchToFreelancer'
+				? config.accountTypes.freelancer
+				: config.accountTypes.client;
+
+		bus.emit(busEvents.CHANGE_USER_TYPE, newRole);
 	};
 }

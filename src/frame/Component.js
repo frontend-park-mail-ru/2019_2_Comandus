@@ -39,7 +39,9 @@ export default class Component {
 
 	stateChanged() {
 		this.html = this.render();
-		this.el.replaceWith(htmlToElement(this.html));
+		if (this.el) {
+			this.el.replaceWith(htmlToElement(this.html));
+		}
 		this.postRender();
 	}
 

@@ -9,7 +9,6 @@ import { Settings } from '@containers/settings/settings';
 import ClientSettingsComponent from '@components/ClientSettingsComponent/ClientSettingsComponent';
 import JobFormComponent from '@components/JobFormComponent/JobFormComponent';
 import { Profile } from '@containers/freelancerProfile';
-import SettingsComponent from '@components/SettingsComponent/SettingsComponent';
 import { Router } from '@modules/router';
 import bus from '@frame/bus';
 import JobService from '@services/JobService';
@@ -22,6 +21,9 @@ import Search from '@containers/search';
 import Messages from '@containers/messages';
 import About from '@containers/about';
 import NotFound from '@containers/NotFound';
+import { busEvents } from '@app/constants';
+import Proposals from '@containers/Proposals';
+import FreelancerService from '@services/FreelancerService';
 
 const handlers = [
 	{
@@ -31,16 +33,16 @@ const handlers = [
 		},
 		eventEndName: 'job-create-response',
 	},
-	{
-		eventName: 'login',
-		handler: AuthService.Login,
-		eventEndName: 'login-response',
-	},
-	{
-		eventName: 'signup',
-		handler: AuthService.Signup,
-		eventEndName: 'signup-response',
-	},
+	// {
+	// 	eventName: busEvents.LOGIN,
+	// 	handler: AuthService.Login,
+	// 	eventEndName: busEvents.LOGIN_RESPONSE,
+	// },
+	// {
+	// 	eventName: 'signup',
+	// 	handler: AuthService.Signup,
+	// 	eventEndName: 'signup-response',
+	// },
 ];
 
 handlers.forEach(({ eventName, handler, eventEndName }) => {
@@ -55,6 +57,78 @@ handlers.forEach(({ eventName, handler, eventEndName }) => {
 				});
 			});
 	});
+});
+
+bus.on(busEvents.LOGIN, (data) => {
+	AuthService.Login(data)
+		.then((response) => {
+			bus.emit(busEvents.LOGIN_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.LOGIN_RESPONSE, { error });
+		})
+		.finally(() => {
+			bus.emit(busEvents.USER_UPDATED);
+		});
+});
+
+bus.on(busEvents.SIGNUP, (data) => {
+	AuthService.Signup(data)
+		.then((response) => {
+			bus.emit(busEvents.SIGNUP_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.SIGNUP_RESPONSE, { error });
+		})
+		.finally(() => {
+			bus.emit(busEvents.USER_UPDATED);
+		});
+});
+
+bus.on(busEvents.LOGOUT, () => {
+	AuthService.Logout().then(() => {
+		bus.emit(busEvents.USER_UPDATED);
+	});
+});
+
+bus.on(busEvents.ACCOUNT_GET, () => {
+	AccountService.GetAccount().then(() => {
+		bus.emit(busEvents.USER_UPDATED);
+	});
+});
+
+bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
+	AccountService.SetUserType(newType).then(() => {
+		bus.emit(busEvents.USER_UPDATED);
+	});
+});
+
+bus.on(busEvents.JOBS_GET, () => {
+	JobService.GetAllJobs().then(() => {
+		bus.emit(busEvents.JOBS_UPDATED);
+	});
+});
+
+bus.on(busEvents.JOB_GET, (jobId) => {
+	JobService.GetJobById(jobId).then(() => {
+		bus.emit(busEvents.JOB_UPDATED);
+	});
+});
+
+bus.on(busEvents.PROPOSALS_GET, () => {
+	FreelancerService.GetProposals().then(() => {
+		bus.emit(busEvents.PROPOSALS_UPDATED);
+	});
+});
+
+bus.on(busEvents.PROPOSAL_CREATE, (data) => {
+	FreelancerService.CreateProposal(data)
+		.then((response) => {
+			bus.emit(busEvents.PROPOSAL_CREATE_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.PROPOSAL_CREATE_RESPONSE, { error });
+		});
 });
 
 bus.on('account-get', () => {
@@ -86,17 +160,20 @@ const routes = [
 	{ path: '/signup', Component: SignUpComponent },
 	{ path: '/login', Component: LoginComponent },
 	{ path: '/settings', Component: Settings, props: {} },
-	// {path: '/settings/', Component: ClientSettingsComponent},
 	{ path: '/settings-template', Component: ClientSettingsComponent },
+	// {
+	// 	path: '/new-project',
+	// 	Component: JobFormComponent,
+	// 	props: { mode: 'project' },
+	// },
+	// {
+	// 	path: '/new-vacancy',
+	// 	Component: JobFormComponent,
+	// 	props: { mode: 'vacancy' },
+	// },
 	{
-		path: '/new-project',
+		path: '/new-job',
 		Component: JobFormComponent,
-		props: { mode: 'project' },
-	},
-	{
-		path: '/new-vacancy',
-		Component: JobFormComponent,
-		props: { mode: 'vacancy' },
 	},
 	{ path: '/freelancers/:freelancerId', Component: Profile },
 	{
@@ -110,9 +187,11 @@ const routes = [
 	{ path: '/messages', Component: Messages },
 	{ path: '/about', Component: About },
 	{ path: '/page-not-found', Component: NotFound },
+	{ path: '/proposals', Component: Proposals },
+	{ path: '/saved', Component: Search },
 ];
 
-const router = new Router(document.getElementById('root'), {
+export const router = new Router(document.getElementById('root'), {
 	outletName: 'router-outlet',
 });
 router.register(routes);

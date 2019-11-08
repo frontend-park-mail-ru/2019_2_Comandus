@@ -40,8 +40,6 @@ export class Account extends Component {
 			children[ch.id] = ch.id;
 		});
 
-		// TODO: отображение уже существующих данных, которые мы получаем с сервера
-
 		const secondNameField = new TextField({
 			required: true,
 			name: 'secondName',
