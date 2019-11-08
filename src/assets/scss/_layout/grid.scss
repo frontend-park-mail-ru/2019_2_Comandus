@@ -40,19 +40,19 @@
 
 	&_content {
 		&_center {
-			justify-content: center !important;
+			justify-content: center;
 		}
 
 		&_left {
-			justify-content: flex-start !important;
+			justify-content: flex-start;
 		}
 
 		&_right {
-			justify-content: flex-end !important;
+			justify-content: flex-end;
 		}
 
 		&_stretch {
-			justify-content: space-between !important;
+			justify-content: space-between;
 		}
 	}
 
