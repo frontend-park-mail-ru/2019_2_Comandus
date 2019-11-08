@@ -7,7 +7,7 @@
 	"scripts": {
 		"start": "webpack-dev-server",
 		"start:build": "node server.js",
-		"build": "NODE_ENV=production webpack --mode=production && cp -a public/media dist/",
+		"build": "NODE_ENV=production webpack --mode=production && cp -a public/media dist/ && npm run sw",
 		"deploy": "now -A mynow.json --prod",
 		"deploy:local": "now dev -A mynow.json",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/**/*.{js,html,css}'",
@@ -19,7 +19,8 @@
 		"api": "node api.js",
 		"test": "jest --watchAll",
 		"stylelint": "stylelint 'public/**/*.{css,scss}' 'src/**/*.{css,scss}' --syntax scss",
-		"stylelint:fix": "stylelint 'public/**/*.{css,scss}' 'src/**/*.{css,scss}' --syntax scss --fix"
+		"stylelint:fix": "stylelint 'public/**/*.{css,scss}' 'src/**/*.{css,scss}' --syntax scss --fix",
+		"sw": "cp src/sw.js dist/ && cp src/readDist.js dist/ && node dist/readDist.js"
 	},
 	"repository": {
 		"type": "git",
