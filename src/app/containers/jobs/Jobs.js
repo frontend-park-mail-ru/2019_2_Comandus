@@ -11,17 +11,17 @@ export default class Jobs extends Component {
 	constructor(props) {
 		super(props);
 
-		const jobsLocal = jobs.map((job) => {
-			const el = { ...job };
-			el['experienceLevel'] = levels[el['experienceLevelId']];
-			el['skills'] = el['skills'].split(',');
-			return el;
-		});
-
-		const jobsHtml = this.renderJobs(jobsLocal);
+		// const jobsLocal = jobs.map((job) => {
+		// 	const el = { ...job };
+		// 	el['experienceLevel'] = levels[el['experienceLevelId']];
+		// 	el['skills'] = el['skills'].split(',');
+		// 	return el;
+		// });
+		//
+		// const jobsHtml = this.renderJobs(jobsLocal);
 
 		this.data = {
-			jobs: jobsHtml,
+			jobs: [],
 		};
 
 		bus.on(busEvents.JOBS_UPDATED, this.jobsUpdated);
@@ -32,8 +32,6 @@ export default class Jobs extends Component {
 	}
 
 	render() {
-		console.log('JOBS props', this.props);
-
 		this.html = template(this.data);
 		this.attachToParent();
 
@@ -41,7 +39,7 @@ export default class Jobs extends Component {
 	}
 
 	jobsUpdated = () => {
-		const jobs = store.get('jobs');
+		const jobs = store.get(['jobs']);
 
 		const jobsHtml = this.renderJobs(jobs);
 

@@ -1,28 +1,39 @@
 import Component from '../../../../frame/Component';
 import { Select } from './../Select/Select';
-import countriesCities from './../../../../assets/countries.min.json';
 import FieldGroup from '../FieldGroup/FieldGroup';
-import { toSelectElement } from '@modules/utils';
 
 export default class DoubleSelect extends Component {
-	constructor({ items, required = false, label = '', ...props }) {
+	constructor({
+		items = [],
+		items2 = {},
+		required = false,
+		label = '',
+		label1 = '',
+		label2 = '',
+		name = '',
+		...props
+	}) {
 		super(props);
 
 		this.data = {
 			label,
+			items,
+			items2,
+			required,
 		};
 
 		this._firstSelect = new Select({
-			items: Object.keys(countriesCities).map(toSelectElement),
+			items: items,
 			onChange: this.onCountryChange,
-			attributes: 'required',
-			label: 'Страна',
+			attributes: required ? 'required' : '',
+			label: label1,
 		});
 		this._secondSelect = new Select({
 			items: [],
-			attributes: 'disabled required',
+			attributes: required ? 'disabled required' : 'disabled',
 			onChange: this.onCityChange,
-			label: 'Город',
+			label: label2,
+			name: name,
 		});
 	}
 	render() {
@@ -40,8 +51,8 @@ export default class DoubleSelect extends Component {
 	onCountryChange = (val) => {
 		console.log(val);
 		this._secondSelect.setProps({
-			items: countriesCities[val].map(toSelectElement),
-			attributes: 'required',
+			items: this.data.items2[val],
+			attributes: this.data.required ? 'required' : '',
 		});
 		this._secondSelect.stateChanged();
 	};

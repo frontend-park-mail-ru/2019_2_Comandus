@@ -68,18 +68,23 @@ export class UserMenu extends Component {
 	postRender() {
 		this._dropdown.postRender();
 
-		const logout = this.el.querySelector('#logout');
+		// todo: Убрать условие
+		if (this.el) {
+			const logout = this.el.querySelector('#logout');
 
-		if (logout) {
-			logout.addEventListener('click', this.logout);
-		}
+			if (logout) {
+				logout.addEventListener('click', this.logout);
+			}
 
-		const switchToFreelancer = this.el.querySelector('#switchToFreelancer');
-		const switchToClient = this.el.querySelector('#switchToClient');
+			const switchToFreelancer = this.el.querySelector(
+				'#switchToFreelancer',
+			);
+			const switchToClient = this.el.querySelector('#switchToClient');
 
-		if (switchToFreelancer && switchToClient) {
-			switchToFreelancer.addEventListener('click', this.switchRole);
-			switchToClient.addEventListener('click', this.switchRole);
+			if (switchToFreelancer && switchToClient) {
+				switchToFreelancer.addEventListener('click', this.switchRole);
+				switchToClient.addEventListener('click', this.switchRole);
+			}
 		}
 	}
 

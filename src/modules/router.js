@@ -118,6 +118,7 @@ export class Router {
 		component.setProps({
 			params: {
 				...component.params,
+				...props.params,
 				...getParamsFromSearch(search),
 			},
 		});

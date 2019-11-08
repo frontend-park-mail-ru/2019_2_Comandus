@@ -5,7 +5,12 @@
 }
 
 .radio-group__choices {
-	//display: grid;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.radio-group__choices_column {
+	flex-direction: column;
 }
 
 .radio-group__title {

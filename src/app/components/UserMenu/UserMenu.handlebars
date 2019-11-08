@@ -2,7 +2,7 @@
 	{{#loggedIn}}
 		{{#isClient}}
 			<li class="nav__item">
-				<a href="/new-project" role="menuitem" class="btn btn-s btn_primary">
+				<a href="/new-job" role="menuitem" class="btn btn-s btn_primary">
 					Разместить заказ
 				</a>
 			</li>
@@ -21,73 +21,3 @@
 		</li>
 	{{/loggedIn}}
 </ul>
-
-{{!--<ul--}}
-{{!--		id="{{_id}}"--}}
-{{!--		class="tp-navbar-navigate tp-navbar-right-part"--}}
-{{!--		role="menubar"--}}
-{{!-->--}}
-{{!--	<li>--}}
-{{!--		<a href="/new-project" role="menuitem">--}}
-{{!--			Разместить заказ--}}
-{{!--		</a>--}}
-{{!--	</li>--}}
-{{!--	<li>--}}
-{{!--		<a href="/new-vacancy" role="menuitem">--}}
-{{!--			Разместить вакансию--}}
-{{!--		</a>--}}
-{{!--	</li>--}}
-{{!--	{{#loaded}}--}}
-{{!--		{{#if roles}}--}}
-{{!--			<li class="tp-dropdown" role="none">--}}
-{{!--				<a class="tp-dropdown-toggle" role="menuitem">--}}
-{{!--					<div class="tp-navbar-profile"></div>--}}
-{{!--				</a>--}}
-{{!--				<ul class="tp-dropdown-content">--}}
-{{!--					{{#each roles}}--}}
-{{!--						<li role="none" class="{{#on}}active{{/on}}">--}}
-{{!--							<a class='account-switcher' data-mode="{{role}}">{{label}}--}}
-{{!--								<span style="display: block">{{role}}</span>--}}
-{{!--							</a>--}}
-{{!--						</li>--}}
-{{!--					{{/each}}--}}
-{{!--					<li role="none">--}}
-{{!--						<a--}}
-{{!--								href="/freelancers/freelancerId"--}}
-{{!--						>--}}
-{{!--							Страница фрилансера--}}
-{{!--						</a>--}}
-{{!--					</li>--}}
-{{!--					<li role="none">--}}
-{{!--						<a href="/settings">--}}
-{{!--							Настройки--}}
-{{!--						</a>--}}
-{{!--					</li>--}}
-{{!--					<li role="none">--}}
-{{!--						<a href="/settings-template">--}}
-{{!--							Client Settings Template--}}
-{{!--						</a>--}}
-{{!--					</li>--}}
-{{!--					<li role="none">--}}
-{{!--						<a href="/logout" id="logout">--}}
-{{!--							Выйти--}}
-{{!--						</a>--}}
-{{!--					</li>--}}
-{{!--				</ul>--}}
-{{!--			</li>--}}
-{{!--		{{else}}--}}
-{{!--			<li>--}}
-{{!--				<a href="/login" role="menuitem">--}}
-{{!--					Войти--}}
-{{!--				</a>--}}
-{{!--			</li>--}}
-{{!--			<li>--}}
-{{!--				<a href="/signup" role="menuitem">--}}
-{{!--					Регистрация--}}
-{{!--				</a>--}}
-{{!--			</li>--}}
-{{!--		{{/if}}--}}
-{{!--	{{/loaded}}--}}
-{{!--</ul>--}}
-
-

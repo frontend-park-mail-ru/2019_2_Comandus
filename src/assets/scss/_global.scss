@@ -60,3 +60,8 @@ $border-radius-l: 10px;
 @mixin active {
 	color: $primary-color;
 }
+
+.page-header {
+	padding-top: 20px;
+	font-size: 1.6em;
+}

@@ -23,6 +23,7 @@ export default {
 		downloadAccountAvatar: '/account/download-avatar',
 		csrfToken: '/token',
 		setUserType: '/setusertype',
+		proposals: '/proposals',
 	},
 	accountTypes: {
 		client: 'client',

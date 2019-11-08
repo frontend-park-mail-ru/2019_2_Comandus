@@ -74,6 +74,124 @@ export const busEvents = {
 	CHANGE_USER_TYPE: 'CHANGE_USER_TYPE',
 	JOBS_UPDATED: 'JOBS_UPDATED',
 	JOBS_GET: 'JOBS_GET',
+	JOB_GET: 'JOB_GET',
+	JOB_UPDATED: 'JOB_UPDATED',
+	PROPOSALS_GET: 'PROPOSALS_GET',
+	PROPOSALS_UPDATED: 'PROPOSALS_UPDATED',
+	PROPOSAL_CREATE: 'PROPOSALS_CREATE',
+	PROPOSAL_CREATE_RESPONSE: 'PROPOSALS_CREATE_RESPONSE',
 };
 
 export const CSRF_TOKEN_NAME = 'csrf-token';
+
+export const categories = [
+	{
+		label: 'Разработка сайтов',
+		value: 0,
+		selected: false,
+	},
+	{
+		label: 'Программирование',
+		value: 1,
+		selected: false,
+	},
+	{
+		label: 'Дизайн и Арт',
+		value: 2,
+		selected: false,
+	},
+];
+
+export const specialitiesRow = {
+	0: 'Дизайн сайтов',
+	1: 'Верстка',
+	2: 'Веб-программирование',
+	3: 'Прикладное программирование',
+	4: 'Системное программрование',
+	5: 'Базы данных',
+	6: 'Технический дизайн',
+	7: 'Векторная графика',
+	8: '2D Анимация',
+};
+
+export const specialities = {
+	0: [
+		{
+			label: 'Дизайн сайтов',
+			value: 0,
+			selected: false,
+		},
+		{
+			label: 'Верстка',
+			value: 1,
+			selected: false,
+		},
+		{
+			label: 'Веб-программирование',
+			value: 2,
+			selected: false,
+		},
+	],
+	1: [
+		{
+			label: 'Прикладное программирование',
+			value: 3,
+			selected: false,
+		},
+		{
+			label: 'Системное программрование',
+			value: 4,
+			selected: false,
+		},
+		{
+			label: 'Базы данных',
+			value: 5,
+			selected: false,
+		},
+	],
+	2: [
+		{
+			label: 'Технический дизайн',
+			value: 6,
+			selected: false,
+		},
+		{
+			label: 'Векторная графика',
+			value: 7,
+			selected: false,
+		},
+		{
+			label: '2D Анимация',
+			value: 8,
+			selected: false,
+		},
+	],
+};
+
+export const levelsRadio = [
+	{
+		value: '1',
+		label: 'Начинающий. Базовые знания и небольшой опыт работы',
+	},
+	{
+		value: '2',
+		label: 'Продвинутый. Несколько лет профессионального опыта',
+	},
+	{
+		value: '3',
+		label: 'Эксперт. Многолетний опыт работы в сложных проектах',
+	},
+];
+
+export const jobTypes = [
+	{
+		value: 0,
+		label: 'Проект',
+		checked: true,
+	},
+	{
+		value: 1,
+		label: 'Вакансия',
+		checked: false,
+	},
+];

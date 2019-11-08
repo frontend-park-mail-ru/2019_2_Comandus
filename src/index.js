@@ -22,6 +22,8 @@ import Messages from '@containers/messages';
 import About from '@containers/about';
 import NotFound from '@containers/NotFound';
 import { busEvents } from '@app/constants';
+import Proposals from '@containers/Proposals';
+import FreelancerService from '@services/FreelancerService';
 
 const handlers = [
 	{
@@ -102,7 +104,31 @@ bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
 });
 
 bus.on(busEvents.JOBS_GET, () => {
-	JobService.GetAllJobs().then(() => {});
+	JobService.GetAllJobs().then(() => {
+		bus.emit(busEvents.JOBS_UPDATED);
+	});
+});
+
+bus.on(busEvents.JOB_GET, (jobId) => {
+	JobService.GetJobById(jobId).then(() => {
+		bus.emit(busEvents.JOB_UPDATED);
+	});
+});
+
+bus.on(busEvents.PROPOSALS_GET, () => {
+	FreelancerService.GetProposals().then(() => {
+		bus.emit(busEvents.PROPOSALS_UPDATED);
+	});
+});
+
+bus.on(busEvents.PROPOSAL_CREATE, (data) => {
+	FreelancerService.CreateProposal(data)
+		.then((response) => {
+			bus.emit(busEvents.PROPOSAL_CREATE_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.PROPOSAL_CREATE_RESPONSE, { error });
+		});
 });
 
 bus.on('account-get', () => {
@@ -135,15 +161,19 @@ const routes = [
 	{ path: '/login', Component: LoginComponent },
 	{ path: '/settings', Component: Settings, props: {} },
 	{ path: '/settings-template', Component: ClientSettingsComponent },
+	// {
+	// 	path: '/new-project',
+	// 	Component: JobFormComponent,
+	// 	props: { mode: 'project' },
+	// },
+	// {
+	// 	path: '/new-vacancy',
+	// 	Component: JobFormComponent,
+	// 	props: { mode: 'vacancy' },
+	// },
 	{
-		path: '/new-project',
+		path: '/new-job',
 		Component: JobFormComponent,
-		props: { mode: 'project' },
-	},
-	{
-		path: '/new-vacancy',
-		Component: JobFormComponent,
-		props: { mode: 'vacancy' },
 	},
 	{ path: '/freelancers/:freelancerId', Component: Profile },
 	{
@@ -157,6 +187,8 @@ const routes = [
 	{ path: '/messages', Component: Messages },
 	{ path: '/about', Component: About },
 	{ path: '/page-not-found', Component: NotFound },
+	{ path: '/proposals', Component: Proposals },
+	{ path: '/saved', Component: Search },
 ];
 
 export const router = new Router(document.getElementById('root'), {
