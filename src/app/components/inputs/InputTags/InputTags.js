@@ -112,15 +112,11 @@ export default class InputTags extends Component {
 
 	anyErrors = (str) => {
 		if (this.data.max != null && this.data.tags.length >= this.data.max) {
-			console.log('max tags limit reached');
-
 			this.indicateException(str, true);
 
 			return true;
 		}
 		if (!this.data.duplicate && this.data.tags.indexOf(str) !== -1) {
-			console.log('duplicate found " ' + str + ' " ');
-
 			this.indicateException(str, false);
 
 			return true;

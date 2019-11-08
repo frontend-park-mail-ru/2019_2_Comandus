@@ -97,8 +97,6 @@ class AjaxModule {
 			init.body = data;
 		}
 
-		console.log('ajax: url, data', url, data);
-
 		return fetch(url, init).then(handleErrors);
 	}
 }

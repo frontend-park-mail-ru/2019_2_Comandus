@@ -97,8 +97,6 @@ export class Router {
 		);
 		const route = this.routes[routeIndex];
 
-		console.log('route', route);
-
 		this.outlet.innerHTML = '';
 
 		if (!route) {

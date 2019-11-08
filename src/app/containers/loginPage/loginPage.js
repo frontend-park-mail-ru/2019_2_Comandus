@@ -73,7 +73,7 @@ class LoginComponent extends Component {
 
 	onLoginResponse(data) {
 		bus.off(busEvents.LOGIN_RESPONSE, this.onLoginResponse);
-		console.log(data);
+
 		const { response, error } = data;
 		if (error) {
 			let text = error.message;

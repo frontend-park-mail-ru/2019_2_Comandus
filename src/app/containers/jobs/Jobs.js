@@ -13,6 +13,7 @@ export default class Jobs extends Component {
 
 		this.data = {
 			jobs: [],
+			loading: true,
 		};
 
 		bus.on(busEvents.JOBS_UPDATED, this.jobsUpdated);
@@ -29,14 +30,17 @@ export default class Jobs extends Component {
 		return this.html;
 	}
 
-	jobsUpdated = () => {
+	jobsUpdated = (err) => {
 		const jobs = store.get(['jobs']);
 
-		const jobsHtml = this.renderJobs(jobs);
+		const jobsHtml = jobs ? this.renderJobs(jobs) : '';
 
 		this.data = {
 			jobs: jobsHtml,
+			loading: false,
 		};
+
+		console.log(this.data, err);
 
 		this.stateChanged();
 	};

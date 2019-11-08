@@ -1,10 +1,8 @@
-<div id="{{_id}}">
-	<div class="tp-container tp-centered-container">
-		<div class="tp-row  card card_no-padding">
-			Messages
-		</div>
+<div id="{{_id}}" class="messages-wrap">
+	<div class="messages">
+		{{{conversationImg}}}
+		<div class="messages_text">Здесь будут сообщения</div>
 	</div>
-
 	{{#each children}}
 		{{{this}}}
 	{{/each}}

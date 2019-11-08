@@ -97,15 +97,23 @@ bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
 });
 
 bus.on(busEvents.JOBS_GET, () => {
-	JobService.GetAllJobs().then(() => {
-		bus.emit(busEvents.JOBS_UPDATED);
-	});
+	JobService.GetAllJobs()
+		.then(() => {
+			bus.emit(busEvents.JOBS_UPDATED);
+		})
+		.catch((error) => {
+			bus.emit(busEvents.JOBS_UPDATED, error);
+		});
 });
 
 bus.on(busEvents.JOB_GET, (jobId) => {
-	JobService.GetJobById(jobId).then(() => {
-		bus.emit(busEvents.JOB_UPDATED);
-	});
+	JobService.GetJobById(jobId)
+		.then(() => {
+			bus.emit(busEvents.JOB_UPDATED);
+		})
+		.catch((error) => {
+			bus.emit(busEvents.JOB_UPDATED, error);
+		});
 });
 
 bus.on(busEvents.PROPOSALS_GET, () => {

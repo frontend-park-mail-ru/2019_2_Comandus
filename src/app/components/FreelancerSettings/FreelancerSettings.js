@@ -105,8 +105,6 @@ export class FreelancerSettings extends Component {
 			return result;
 		}, []);
 
-		// console.log(skills);
-
 		this.data = {
 			citySelect: this._citySelect.render(),
 			addressField: new FieldGroup({

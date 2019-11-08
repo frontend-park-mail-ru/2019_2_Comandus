@@ -6,7 +6,11 @@
 					{{#each jobs}}
 						{{{this}}}
 					{{/each}}
+
 				</div>
+				{{#loading}}
+					<div>Загрузка...</div>
+				{{/loading}}
 			</div>
 		</div>
 	</div>

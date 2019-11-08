@@ -51,7 +51,6 @@ export default class DoubleSelect extends Component {
 	}
 
 	onCountryChange = (val) => {
-		console.log(val);
 		this._secondSelect.setProps({
 			items: this.data.items2[val],
 			attributes: this.data.required ? 'required' : '',
@@ -59,7 +58,5 @@ export default class DoubleSelect extends Component {
 		this._secondSelect.stateChanged();
 	};
 
-	onCityChange = (val) => {
-		console.log(val);
-	};
+	onCityChange = (val) => {};
 }
