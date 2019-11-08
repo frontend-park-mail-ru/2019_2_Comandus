@@ -94,7 +94,7 @@
 	&__availability {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		//align-items: center;
 		margin-bottom: 10px;
 	}
 
@@ -112,7 +112,7 @@
 
 .sidebar-availability {
 	&__availability {
-		font-size: 1.8em;
+		font-size: 1em;
 		color: $color4;
 		letter-spacing: 0.08em;
 	}
