@@ -1,0 +1,23 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+#root {
+	all: inherit;
+}
+
+.app-body {
+	min-height: 100%;
+	display: grid;
+	grid-template-rows: 1fr auto;
+}
+
+.footer {
+	grid-row-start: 2;
+	grid-row-end: 3;
+}
+
+.outlet {
+	height: 100%;
+}

@@ -1,0 +1,19 @@
+@import "~@assets/scss/global";
+
+.page-icon-info-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100%;
+}
+
+.page-icon-info {
+	text-align: center;
+}
+
+.page-icon-info_text {
+	text-align: center;
+	padding: 20px;
+	font-size: 1.5em;
+	color: $primary-color;
+}

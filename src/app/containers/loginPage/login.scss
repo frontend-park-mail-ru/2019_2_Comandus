@@ -1,0 +1,10 @@
+@import "~@assets/scss/global";
+
+.login-page {
+	height: 100%;
+	background-image: linear-gradient(130deg, $color5 0%, $color4 51%, $primary-color 75%);
+}
+
+.login-block {
+	margin: 10% 30%
+}

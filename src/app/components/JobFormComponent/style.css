@@ -1,4 +1,5 @@
-.projectForm__label, legend {
+.projectForm__label,
+legend {
 	font-size: 1.5em;
 	font-weight: bold;
 	padding: 0;
@@ -25,14 +26,3 @@
 	margin-top: 10px;
 	width: 100%;
 }
-
-/*.visuallyhidden {*/
-/*	border: 0;*/
-/*	clip: rect(0 0 0 0);*/
-/*	height: 1px;*/
-/*	margin: -1px;*/
-/*	overflow: hidden;*/
-/*	padding: 0;*/
-/*	position: absolute;*/
-/*	width: 1px;*/
-/*}*/

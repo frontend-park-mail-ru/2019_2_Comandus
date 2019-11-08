@@ -1,0 +1,18 @@
+<div id="{{_id}}" class="tp-row tp-row_content_left">
+	<ul class="paginator-row">
+		<li class="paginator-row__item">
+			<a class="paginator-item__link" href="#">&laquo;</a>
+		</li>
+		{{#each pages}}
+			<li class="paginator-row__item {{#if this.isActive}} paginator-row__item_active {{/if}}">
+				<a class="paginator-item__link" href="#">
+					{{ this.number }}
+				</a>
+			</li>
+		{{/each}}
+
+		<li class="paginator-row__item">
+			<a class="paginator-item__link" href="#">&raquo;</a>
+		</li>
+	</ul>
+</div>

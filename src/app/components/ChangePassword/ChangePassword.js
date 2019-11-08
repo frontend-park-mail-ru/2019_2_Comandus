@@ -1,17 +1,62 @@
-import Component from '../../../spa/Component';
+import Component from '@frame/Component';
 import template from './ChangePassword.handlebars';
-import { htmlToElement } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
-import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
-import config from '../../config';
+import { htmlToElement } from '@modules/utils';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import bus from '@frame/bus';
+import Button from '@components/inputs/Button/Button';
+import TextField from '@components/inputs/TextField/TextField';
+import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 
 export class ChangePassword extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this._parent = parent;
+
+		this.helper = null;
 	}
 
 	render() {
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Сохранить изменения',
+		});
+
+		const currentPasswordField = new TextField({
+			required: true,
+			name: 'password',
+			type: 'password',
+			label: 'Старый пароль',
+		});
+		const newPasswordField = new TextField({
+			required: true,
+			name: 'newPassword',
+			type: 'newPassword',
+			label: 'Новый пароль',
+		});
+		const newPasswordConfirmField = new TextField({
+			required: true,
+			name: 'newPasswordConfirmation',
+			type: 'newPasswordConfirmation',
+			label: 'Повторите пароль',
+		});
+
+		this.data = {
+			currentPasswordField: new FieldGroup({
+				children: [currentPasswordField.render()],
+				label: 'Текущий пароль',
+			}).render(),
+			newPasswordField: new FieldGroup({
+				children: [newPasswordField.render()],
+				label: 'Новый пароль',
+			}).render(),
+			newPasswordConfirmField: new FieldGroup({
+				children: [newPasswordConfirmField.render()],
+				label: 'Повторите пароль',
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
+			}).render(),
+		};
+
 		const html = template({
 			data: this.data,
 			props: this.props,
@@ -34,17 +79,26 @@ export class ChangePassword extends Component {
 		enableValidationAndSubmit(passwordChangeForm, (helper) => {
 			helper.event.preventDefault();
 
-			AjaxModule.put(config.urls.changePassword, helper.formToJSON())
-				.then((response) => {
-					helper.setResponseText('Изменения сохранены.', true);
-				})
-				.catch((error) => {
-					let text = error.message;
-					if (error.data && error.data.error) {
-						text = error.data.error;
-					}
-					helper.setResponseText(text);
-				});
+			this.helper = helper;
+
+			bus.on('change-password-response', this.onChangePasswordResponse);
+			bus.emit('change-password', helper.formToJSON());
 		});
 	}
+
+	onChangePasswordResponse = (response) => {
+		bus.off('change-password-response', this.onChangePasswordResponse);
+
+		response
+			.then((res) => {
+				this.helper.setResponseText('Изменения сохранены.', true);
+			})
+			.catch((error) => {
+				let text = error.message;
+				if (error.data && error.data.error) {
+					text = error.data.error;
+				}
+				this.helper.setResponseText(text);
+			});
+	};
 }

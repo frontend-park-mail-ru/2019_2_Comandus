@@ -1,0 +1,16 @@
+@import "~@assets/scss/global";
+
+.card_no-padding > .card-header {
+	margin: 0;
+}
+
+.card-header {
+	margin: -1.5em -1.5em 0 -1.5em;
+	padding: 10px 1.5em;
+	border-bottom: 1px solid #E0E0E0;
+	background-color: $secondary-color;
+
+	&__title {
+		margin: 0;
+	}
+}

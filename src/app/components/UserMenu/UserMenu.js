@@ -1,108 +1,122 @@
-import Component from '../../../spa/Component';
+import Component from '@frame/Component';
 import template from './UserMenu.handlebars';
-import { getCookie, htmlToElement, setCookie } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
+import { defaultAvatarUrl } from '@modules/utils';
 import config from '../../config';
-import './UserMenu.css';
+import './UserMenu.scss';
+import AuthService from '@services/AuthService';
+import bus from '@frame/bus';
+import Dropdown from '@components/navigation/Dropdown';
+import store from '@modules/store';
+import AccountService from '@services/AccountService';
+import { busEvents } from '@app/constants';
+import { router } from '@index';
 
 export class UserMenu extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
-		this._data = {};
-		this._el = null;
-	}
 
-	created() {
-		const mode = getCookie(config.cookieAccountModeName);
-		if (!mode) {
-			setCookie(
-				config.cookieAccountModeName,
-				config.accountTypes.freelancer,
-			);
-		}
-	}
+		const user = store.get(['user']);
+		const isClient = AccountService.isClient();
+		const loggedIn = AuthService.isLoggedIn();
 
-	preRender() {
-		this._data = {
-			...this._data,
+		this.data = {
 			loaded: false,
+			user,
+			freelancerLabel: user ? `${user.firstName} ${user.secondName}` : '',
+			loggedIn,
+			isClient,
 		};
-		AjaxModule.get(config.urls.roles)
-			.then((response) => {
-				response.forEach((role) => {
-					role.on =						role.role === getCookie(config.cookieAccountModeName);
-				});
-				this._data = {
-					...this._data,
-					roles: response,
-					loggedIn: () => !!response,
-				};
-			})
-			.catch((error) => {})
-			.finally(() => {
-				this._data = {
-					...this._data,
-					loaded: true,
-				};
-				this.stateChanged();
-			});
+
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
 	render() {
-		this._data = {
-			...this._data,
+		const avatar = defaultAvatarUrl('N', 'Y');
+		const alt = '';
+		this._dropdown = new Dropdown({
+			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,
+			items: [
+				{
+					url: '#',
+					text: 'Фрилансер: ' + this.data.freelancerLabel,
+					active: !this.data.isClient,
+					id: 'switchToFreelancer',
+				},
+				{
+					url: '#',
+					text: 'Компания: ' + 'company name',
+					active: this.data.isClient,
+					id: 'switchToClient',
+				},
+				{ url: config.urls.settings, text: 'Настройки' },
+				{ url: '#', text: 'Выйти', id: 'logout' },
+			],
+			contentRight: true,
+			toggleClassname: 'nav__item',
+		});
+		this.data = {
+			_dropdown: this._dropdown.render(),
 		};
-		const html = template({
+		this.html = template({
 			...this.props,
 			...this._data,
 		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
-		this._el = newElement;
+
+		return this.html;
 	}
 
 	postRender() {
-		const logout = this._el.querySelector('#logout');
+		this._dropdown.postRender();
 
-		if (logout) {
-			logout.addEventListener('click', (event) => {
-				event.preventDefault();
+		// todo: Убрать условие
+		if (this.el) {
+			const logout = this.el.querySelector('#logout');
 
-				AjaxModule.post(config.urls.logout)
-					.then((response) => {
-						this.props.router.push('/login/');
-					})
-					.catch((error) => {
-						console.error(error);
-						alert(error.message);
-					});
-			});
+			if (logout) {
+				logout.addEventListener('click', this.logout);
+			}
+
+			const switchToFreelancer = this.el.querySelector(
+				'#switchToFreelancer',
+			);
+			const switchToClient = this.el.querySelector('#switchToClient');
+
+			if (switchToFreelancer && switchToClient) {
+				switchToFreelancer.addEventListener('click', this.switchRole);
+				switchToClient.addEventListener('click', this.switchRole);
+			}
 		}
-
-		const switchersArray = this._el.querySelectorAll('.account-switcher');
-
-		switchersArray.forEach((el) => {
-			el.addEventListener('click', (event) => {
-				event.preventDefault();
-				event.stopPropagation();
-
-				setCookie(
-					config.cookieAccountModeName,
-					event.target.dataset.mode,
-				);
-				this.props.router.push('/');
-			});
-		});
 	}
 
-	stateChanged() {
-		this.render();
-		this.postRender();
-	}
+	userUpdated = () => {
+		const user = store.get(['user']);
+		const isClient = AccountService.isClient();
+		const loggedIn = AuthService.isLoggedIn();
+
+		this.data = {
+			user,
+			loggedIn,
+			isClient,
+			freelancerLabel: user ? `${user.firstName} ${user.secondName}` : '',
+		};
+
+		this.stateChanged();
+	};
+
+	logout = (event) => {
+		event.preventDefault();
+		bus.emit(busEvents.LOGOUT);
+		router.push(config.urls.login);
+	};
+
+	switchRole = (event) => {
+		event.preventDefault();
+
+		const newRole =
+			event.target.id === 'switchToFreelancer'
+				? config.accountTypes.freelancer
+				: config.accountTypes.client;
+
+		bus.emit(busEvents.CHANGE_USER_TYPE, newRole);
+	};
 }

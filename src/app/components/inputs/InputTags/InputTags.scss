@@ -1,0 +1,9 @@
+@import "~@components/inputs/inputs";
+
+.input-tags{
+	@include field
+}
+
+.input-tags__tags-wrapper{
+	padding-bottom: 5px;
+}

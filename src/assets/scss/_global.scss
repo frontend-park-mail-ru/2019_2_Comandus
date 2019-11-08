@@ -1,0 +1,67 @@
+:root {
+	--primary-color: #3E6BB4;
+	--secondary-color: #eef2f7;
+	--secondary-color2: #F3F0E7;
+	--color3: #1c3f7b;
+	--color4: #1f7ce7;
+	--color5: #5fc9f6;
+	--success-color: #28a745;
+	--danger-color: #dc3545;
+	--warn-color: #e6af2e;
+	--text-light: var(--secondary-color);
+	--text-dark: #222;
+	--background-light: var(--secondary-color);
+	--background-dark: var(--primary-color);
+	--white: #ffffff;
+}
+
+//$primary-color: #3E6BB4;
+$primary-color: #1f7ce7;
+$secondary-color: #eef2f7;
+$secondary-color2: #F3F0E7;
+$color3: #1c3f7b;
+//$color4: #1f7ce7;
+$color4: #3E6BB4;
+$color5: #5fc9f6;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$warn-color: #e6af2e;
+$text-light: $secondary-color;
+$text-dark: #222;
+$background-light: $secondary-color;
+$background-dark: $primary-color;
+$white: #ffffff;
+$color-warn2: #EDB5A1;
+$footer-background: $color3;
+$light-text-color: #666;
+
+$font-size-s: 14px;
+$font-size-m: 16px;
+$font-size-l: 20px;
+$font-size: $font-size-m;
+
+$border-radius-s: 3px;
+$border-radius-m: 5px;
+$border-radius-l: 10px;
+
+.width-auto {
+	width: auto;
+}
+
+@mixin small-avatar {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	color: #E0E0E0;
+	border: solid 1px #E0E0E0;
+	object-fit: cover;
+}
+
+@mixin active {
+	color: $primary-color;
+}
+
+.page-header {
+	padding-top: 20px;
+	font-size: 1.6em;
+}

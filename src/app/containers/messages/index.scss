@@ -1,0 +1,19 @@
+@import "~@assets/scss/global";
+
+.messages-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100%;
+}
+
+.messages {
+	text-align: center;
+}
+
+.messages_text {
+	text-align: center;
+	padding: 20px;
+	font-size: 1.5em;
+	color: $primary-color;
+}

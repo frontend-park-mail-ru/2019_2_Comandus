@@ -1,95 +1,25 @@
-<div class="tp-modal-window">
-	<main class="tp-container tp-form-window card">
-		<h1>Создайте свой бесплатный аккаунт</h1>
-		<form
-			class="tp-form"
-			id="signupForm"
-			method="post"
-			autocomplete="off"
-			novalidate="novalidate"
-		>
-			<label for="firstName">Имя</label>
-			<input
-				class="tp-input"
-				name="firstName"
-				id="firstName"
-				type="text"
-				placeholder="Введите Ваше имя"
-				required
-				pattern="^[А-Яа-яA-Za-z]{2,}$"
-				title="Обычно имя так не выглядет. Это Ваше действительное имя?"
-			/>
-			<label for="secondName">Фамилия</label>
-			<input
-				class="tp-input"
-				name="secondName"
-				id="secondName"
-				type="text"
-				placeholder="Введите Вашу фамилию"
-				required
-				pattern="^[А-Яа-яA-Za-z]{2,}$"
-				title="Обычно фамилия так не выглядет. Это Ваша действительная фамилия?"
-			/>
-			<label for="email">Электронная почта</label>
-			<input
-				class="tp-input"
-				name="email"
-				id="email"
-				type="email"
-				placeholder="Электронная почта"
-				required
-			/>
-			<label for="password">Пароль</label>
-			<input
-				class="tp-input"
-				name="password"
-				id="password"
-				type="password"
-				placeholder="Придумайте пароль"
-				required
-				minlength="6"
-			/>
-			<div class="tp-form-choice">
-				<p>Я хочу:</p>
-				<div class="tp-row">
-					<div class="tp-col-6">
-						<input
-							class="tp-input"
-							id="beCustomer"
-							type="radio"
-							checked="checked"
-							name="type"
-							value="client"
-						/>
-						<label for="beCustomer">
-							Найти исполнителя
-						</label>
-					</div>
-					<div class="tp-col-6">
-						<input
-							class="tp-input"
-							id="beFreelancer"
-							type="radio"
-							name="type"
-							value="freelancer"
-						/>
-						<label for="beFreelancer">
-							Работать фрилансером
-						</label>
-					</div>
-				</div>
-			</div>
-<!--			<div class="tp-row tp-row-float-left">-->
-<!--				<input id="agreement" name="agreement" type="checkbox" />-->
-<!--				<label for="agreement"-->
-<!--					>Даю согласие на обработку персональных данных</label-->
-<!--				>-->
-<!--			</div>-->
-			<input
-				class="tp-button-primary"
-				type="submit"
-				value="Создать аккаунт"
-			/>
-		</form>
+<div class="login-page" id="{{_id}}">
+	<main class="tp-container tp-centered-container">
+		<div class="login-block card">
+			<h1 class="text-center">Создайте свой бесплатный аккаунт</h1>
+			<form
+					class="tp-form"
+					id="signupForm"
+					method="post"
+					autocomplete="off"
+					novalidate="novalidate"
+			>
+				{{{firstNameField}}}
+
+				{{{secondNameField}}}
+
+				{{{emailField}}}
+
+				{{{passwordField}}}
+
+				{{{rolesRadio}}}
+				{{{submitBtn}}}
+			</form>
+		</div>
 	</main>
 </div>

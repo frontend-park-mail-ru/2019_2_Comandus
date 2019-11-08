@@ -1,0 +1,14 @@
+<div id="{{_id}}" class="job-item">
+	<a class="job-item__title" href="/jobs/{{id}}">{{title}}</a>
+	<div class="job-item__small__info job-item__small">{{paymentAmount}} ₽
+		- {{experienceLevel}} - {{created}}</div>
+	<div class="job-item__description">
+		{{description}}
+	</div>
+	<div class="job-item__tags">
+		{{#each skills}}
+			<span class="tag tag_secondary">{{this}}</span>
+		{{/each}}
+	</div>
+	<div class="job-item__small">Ответов: {{proposals}} - {{country}}</div>
+</div>

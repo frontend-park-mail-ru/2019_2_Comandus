@@ -1,35 +1,29 @@
 import template from './index.handlebars';
-import { htmlToElement } from '../../services/utils';
-import Component from '../../../spa/Component';
-import { UserMenu } from '../UserMenu/UserMenu';
+import Component from '@frame/Component';
 import './style.css';
+import Navbar from '@components/navigation/Navbar';
 
 class HeaderComponent extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
-		this._data = {};
-		this._el = null;
 	}
 
 	render() {
-		const html = template(this._data);
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
+		this._navbar = new Navbar({
+			...this.props,
+		});
 
-		const component = this.props.spa._createComponent(
-			UserMenu,
-			newElement.querySelector('#userMenuParent'),
-			{ ...this.props },
-		);
-		this.props.spa._renderComponent(component);
+		this.data = {
+			navbar: this._navbar.render(),
+		};
 
-		this._el = newElement;
+		this.html = template(this.data);
+
+		return this.html;
+	}
+
+	postRender() {
+		this._navbar.postRender();
 	}
 }
 

@@ -1,0 +1,9 @@
+<div class="field-group" id="{{_id}}">
+	<label class="field-group__label">{{label}}</label>
+	<div class="field-group__fields {{#two}}field-group__fields_two{{/two}}">
+		{{#each children}}
+			{{{this}}}
+		{{/each}}
+	</div>
+{{!--	<span class="field-group__error" id="error-for-{{_id}}">{{error}}</span>--}}
+</div>

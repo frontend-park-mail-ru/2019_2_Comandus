@@ -1,0 +1,19 @@
+@import "~@components/inputs/inputs";
+
+.field-group {
+	@include field
+}
+
+.field-group__fields{
+	display: grid;
+	grid-column-gap: 10px;
+}
+
+.field-group__fields_two {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.field-group__label {
+	@include label;
+	font-weight: 700;
+}

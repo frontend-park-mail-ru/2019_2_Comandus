@@ -1,0 +1,24 @@
+@import "~@assets/scss/global";
+
+.job-item__title {
+	font-size: 1.2em;
+	margin-bottom: 15px;
+	display: block;
+	padding: 0;
+	overflow-wrap: break-word;
+}
+
+.job-item__description {
+	font-size: .9em;
+	margin-bottom: 15px;
+	overflow-wrap: break-word;
+}
+
+.job-item__small__info {
+	margin-bottom: 15px;
+}
+
+.job-item__small {
+	color: #656565;
+	font-size: .9em;
+}

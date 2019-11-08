@@ -1,103 +1,202 @@
-import { htmlToElement } from '../../services/utils';
 import template from './JobFormComponent.handlebars';
 import './style.css';
-import Component from '../../../spa/Component';
-import { Select } from '../Select/Select';
-import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
-import AjaxModule from '../../services/ajax';
-import config from '../../config';
+import Component from '@frame/Component';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
+import bus from '@frame/bus';
+import TextField from '@components/inputs/TextField/TextField';
+import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
+import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
+import InputTags from '@components/inputs/InputTags/InputTags';
+import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import Button from '@components/inputs/Button/Button';
+import countriesCitiesRow from './../../../assets/countries.min.json';
+import { toSelectElement } from '@modules/utils';
+import {
+	categories,
+	specialities,
+	levelsRadio,
+	jobTypes,
+} from '@app/constants';
 
-const modes = {
-	project: 'project',
-	vacancy: 'vacancy',
-};
+const cities = {};
+const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
+	cities[i] = countriesCitiesRow[el].map(toSelectElement);
+	return toSelectElement(el, i);
+});
 
 class JobFormComponent extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor({ ...props }) {
 		super(props);
-		this.props = props;
-		this._parent = parent;
-		this._data = {
+		this.data = {
 			props,
-			isProject: () => props.mode === modes.project,
-			isVacancy: () => props.mode === modes.vacancy,
-			jobTypeId: props.mode === modes.vacancy ? 1 : 0,
 		};
-		this._el = null;
 
-		let title = '';
-		switch (this.props.mode) {
-		case modes.project:
-			title = 'Новый проект';
-			break;
-		case modes.vacancy:
-			title = 'Новая вакансия';
-			break;
-		default:
-			break;
-		}
+		this.onCreateJobResponse = this.onCreateJobResponse.bind(this);
+
+		let title = 'Новая работа';
+
 		this.data = { title, ...this.data };
-	}
 
-	get data() {
-		return this._data;
-	}
-
-	set data(newData) {
-		this._data = newData;
+		this.helper = null;
 	}
 
 	render() {
-		const component = this.props.spa._createComponent(Select, this._el, {
-			id: 'mySelect',
-			items: [
-				{ label: 'text1', value: 'text1', selected: false },
-				{ label: 'text2', value: 'text2', selected: true },
-			],
-			onChange(value) {
+		const textField = new TextField({
+			required: true,
+			type: 'text',
+			label: 'Название',
+			placeholder: '',
+			hint: `<div> Напишите название вашего проекта. Название должно привлечь внимание и отразить суть проекта. </div> 
+				<div> Несколько хороших примеров: 
+				<ul>
+				<li> Нужен разрабтчик для создания адаптивной темы для WordPress </li> 
+				<li>Нужен дизайн нового логотипа компании</li> 
+				<li>Ищем специалиста по по 3D моделированию</li> 
+				</ul>
+				</div>`,
+			name: 'title',
+		});
+		const descriptionField = new TextField({
+			required: true,
+			type: 'textarea',
+			label: 'Описание проекта',
+			placeholder: '',
+			hint: `<ul> <li> Укажите каким должен быть результат работы; требование к результату </li> <li> Каким должен быть фрилансер; требование к исполнителю </li> <li>Важная информация о проекте</li> <li>Сроки выполнения и другие условия</li> </ul>`,
+			name: 'description',
+		});
+		const budgetField = new TextField({
+			required: true,
+			type: 'number',
+			label: 'Бюджет',
+			placeholder: '',
+			name: 'paymentAmount',
+		});
+
+		this._citySelect = new DoubleSelect({
+			items: countriesCities,
+			label1: 'Страна',
+			items2: cities,
+			label2: 'Город',
+			name: 'city',
+			label: 'Нужен исполнитель из...',
+		});
+		this._specialitySelect = new DoubleSelect({
+			items: categories,
+			label1: 'Категория',
+			items2: specialities,
+			label2: 'Специализация',
+			name: 'specialityId',
+			label: 'Специализация проекта',
+			required: true,
+		});
+		this._levelRadioGroup = new RadioGroup({
+			items: levelsRadio,
+			column: true,
+			required: true,
+			name: 'experienceLevelId',
+		});
+		this._inputTags = new InputTags({
+			name: 'skills',
+			max: 5,
+			duplicate: false,
+			tags: ['Golang', 'Javascript', 'HTML'],
+		});
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Опубликовать проект',
+		});
+
+		this._jobTypeRadio = new RadioGroup({
+			items: jobTypes,
+			required: true,
+			name: 'jobTypeId',
+			onClick: (value) => {
 				console.log(value);
 			},
 		});
-		// component.preRender();
+
 		this.data = {
-			mySelect: component.render(),
-			...this.data,
+			textField: new FieldGroup({
+				children: [textField.render()],
+				label: 'Название',
+			}).render(),
+			descriptionField: new FieldGroup({
+				children: [descriptionField.render()],
+				label: 'Описание проекта',
+			}).render(),
+			budgetField: new FieldGroup({
+				children: [budgetField.render()],
+				label: 'Бюджет (руб)',
+				two: true,
+			}).render(),
+			citySelect: this._citySelect.render(),
+			specialitySelect: this._specialitySelect.render(),
+			levelRadioGroup: new FieldGroup({
+				children: [
+					'<div> Выберите требуемый уровень фрилансера для выполнения вашего проекта. </div>',
+					this._levelRadioGroup.render(),
+				],
+				label: 'Уровень фрилансера',
+			}).render(),
+			inputTags: new FieldGroup({
+				children: [
+					'<div>Какие навыки и опыт более важны для вас?</div>',
+					this._inputTags.render(),
+				],
+				label: 'Требуемые навыки и компетенции',
+			}).render(),
+			submitBtn: new FieldGroup({
+				children: [submitBtn.render()],
+			}).render(),
+			_jobTypeRadio: new FieldGroup({
+				children: [this._jobTypeRadio.render()],
+				label: 'Тип работы',
+			}).render(),
 		};
-		// this.props.spa._renderComponent(component);
 
-		const html = template(this.data);
-		this._el = htmlToElement(html);
+		this.html = template(this.data);
 
-		const mySelect = this._el.querySelector('#mySelect');
-		if (mySelect) {
-			component.postRender(mySelect);
-		}
+		this.attachToParent();
 
-		this._parent.appendChild(this._el);
+		return this.html;
 	}
 
 	preRender() {}
 
 	postRender() {
-		const form = this._el.querySelector('#projectForm');
+		// if (this.data.isVacancy()) {
+		this._citySelect.postRender();
+		// }
+		this._specialitySelect.postRender();
+		this._inputTags.postRender();
+		this._jobTypeRadio.postRender();
 
+		const form = this.el.querySelector('#projectForm');
 		if (form) {
 			enableValidationAndSubmit(form, (helper) => {
 				helper.event.preventDefault();
 
-				AjaxModule.post(config.urls.jobs, helper.formToJSON())
-					.then((data) => {
-						this.props.router.push(`/jobs/${data.id}`);
-					})
-					.catch((error) => {
-						let text = error.message;
-						if (error.data && error.data.error) {
-							text = error.data.error;
-						}
-						helper.setResponseText(text);
-					});
+				this.helper = helper;
+
+				bus.on('job-create-response', this.onCreateJobResponse);
+				bus.emit('job-create', helper.formToJSON());
 			});
 		}
+	}
+
+	onCreateJobResponse(data) {
+		bus.off('job-create-response', this.onCreateJobResponse);
+		const { error, response } = data;
+		if (error) {
+			let text = error.message;
+			if (error.data && error.data.error) {
+				text = error.data.error;
+			}
+			this.helper.setResponseText(text);
+			return;
+		}
+
+		this.props.router.push(`/jobs/${response.id}`);
 	}
 }
 

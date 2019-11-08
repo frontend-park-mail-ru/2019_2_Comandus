@@ -1,0 +1,23 @@
+<div id="{{_id}}">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row tp-row_content_left">
+			<div class="tp-col-9">
+				<div class="search-page card card_no-padding">
+					{{{ searchCardHeader }}}
+					<div class="search-page__input">
+						<div class="search-input__input">
+							{{{ searchInput }}}
+						</div>
+					</div>
+					<div class="search-page__results">
+						<div class="search-results__items">
+							{{#each searchResults}}
+								{{{this}}}
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

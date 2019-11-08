@@ -1,0 +1,59 @@
+@import "~@assets/scss/global";
+
+@mixin active-item {
+	color: $primary-color;
+	background-color: $secondary-color;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+.dropdown__toggle {
+	cursor: pointer;
+	position: relative;
+	border: none;
+	outline: none;
+	margin: 0;
+	height: 100%;
+}
+
+.dropdown__content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0 1px 6px rgba(57,73,76,.35);
+	padding: 5px 0;
+	z-index: 1;
+}
+
+.dropdown__content_display {
+	display: block;
+}
+
+.dropdown_hover:hover .dropdown__content {
+	display: block;
+}
+
+.dropdown__content-item {
+	display: block;
+	padding: 8px 20px;
+	text-decoration: none;
+	&:hover {
+		@include active-item;
+		text-decoration: none;
+	}
+	white-space: nowrap;
+}
+
+.dropdown__content_right {
+	right: 0;
+}
+
+.dropdown__content-item_active{
+	@include active-item;
+	box-shadow: inset 4px 0 0 0 $primary-color;
+}

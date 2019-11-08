@@ -1,0 +1,40 @@
+<div class="text-field">
+	<label for="{{_id}}" class="text-field__label">{{label}}</label>
+	{{#if_eq type 'textarea'}}
+		<textarea id="{{_id}}"
+				  name="{{name}}"
+				  class="text-field__input form__control {{classes}}"
+				  placeholder="{{placeholder}}"
+				  rows="3"
+				  minlength="{{minlength}}"
+				  maxlength="{{maxlength}}"
+				  {{#required}}required{{/required}}
+				  title="{{title}}"
+			{{attributes}}
+		></textarea>
+	{{else}}
+		<input id="{{_id}}"
+			   type="{{type}}"
+			   name="{{name}}"
+			   class="text-field__input form__control {{classes}}"
+			   placeholder="{{placeholder}}"
+			   value="{{value}}"
+			{{#required}}required{{/required}}
+			{{#readonly}}readonly{{/readonly}}
+			{{#if_eq type 'number'}}
+			   min="{{min}}"
+			   max="{{max}}"
+			{{else}}
+			   minlength="{{minlength}}"
+			   maxlength="{{maxlength}}"
+			{{/if_eq}}
+			{{attributes}}
+			   pattern="{{pattern}}"
+			   title="{{title}}"
+		/>
+	{{/if_eq}}
+	{{#if hint}}
+		<div class="text-field__hint">{{{hint}}}</div>
+	{{/if}}
+	<span class="text-field__error" id="error-for-{{_id}}">{{error}}</span>
+</div>

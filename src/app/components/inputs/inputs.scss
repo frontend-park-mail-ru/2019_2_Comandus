@@ -1,0 +1,42 @@
+@import "~@assets/scss/global";
+
+@mixin label {
+	display: block;
+	font-size: $font-size-m;
+	word-wrap: break-word;
+	margin-bottom: .4rem;
+	font-weight: 500;
+	user-select: none;
+}
+
+@mixin input {
+	width: 100%;
+	position: relative;
+	border-radius: $border-radius-m;
+
+	margin: 0;
+	font-size: $font-size;
+	padding: 10px 16px;
+	height: auto;
+	line-height: 1.5;
+	border: none;
+	box-shadow: 0 0 0 1px #c5c5c5;
+	outline: 0;
+	background: var(--white);
+	transition: background 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+	text-align: left;
+
+	&:hover{
+		box-shadow: 0 0 0 1px #636363;
+	}
+	&:focus {
+		box-shadow: 0 0 0 0 #FFFFFF, 0 0 0 2px var(--primary-color);
+	}
+}
+
+@mixin field {
+	width: 100%;
+	margin: 0;
+	padding: 10px 0;
+	position: relative;
+}

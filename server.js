@@ -30,22 +30,29 @@ const server = http.createServer((req, res) => {
 	 * to refer to a parent directory using .. you won't be able to access any parent directories outside of
 	 * 'public', so our other data is safe.
 	 */
-	const resolvedBase = path.resolve(staticBasePath);
-	const safeSuffix = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
-	url = path.join(resolvedBase, safeSuffix);
+	url = path.normalize(url).replace(/^(\.\.[\/\\])+/, ''); // safeSuffix
 
-	if (/\/$/.test(url)) {
-		url = `${url}index.html`;
-	}
+	// if (/\/$/.test(url)) {
+	// 	url = `${url}index.html`;
+	// }
 
 	const ext = path.extname(url);
-	res.setHeader('Content-type', extContentType[ext] || 'text/plain' );
-	res.setHeader('it-is-nodejs', "yes" );
+	if (!extContentType[ext] || extContentType[ext] === extContentType['.html'] ) {
+		url = '/index.html';
+		console.log(url);
+	} else {
+		res.setHeader('Content-type', extContentType[ext] || 'text/plain' );
+		res.setHeader('it-is-nodejs', "yes" );
+	}
+
+	// const resolvedBase = path.resolve(staticBasePath);
+	url = path.join(path.join(__dirname, './dist'), url);
 
 	const stream = fs.createReadStream(url);
 	stream.on('error', () => {
+		console.log('ERROR', url);
 		res.writeHead(404, 'Not Found');
-		res.write('404: File Not Found!');
+		res.write('404: File Not Found!' + ' ' + url);
 		res.end();
 	});
 	res.statusCode = 200;

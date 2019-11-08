@@ -1,8 +1,8 @@
-import Component from '../../../spa/Component';
+import Component from '@frame/Component';
 import template from './NotificationSettings.handlebars';
-import { htmlToElement } from '../../services/utils';
-import AjaxModule from '../../services/ajax';
-import { enableValidationAndSubmit } from '../../services/form/formValidationAndSubmit';
+import { htmlToElement } from '@modules/utils';
+import AjaxModule from '@modules/ajax';
+import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import config from '../../config';
 
 export class NotificationSettings extends Component {
