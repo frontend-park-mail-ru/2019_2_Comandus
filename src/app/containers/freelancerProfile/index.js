@@ -2,7 +2,7 @@ import Component from '@frame/Component';
 import template from './index.handlebars';
 import './profile.scss';
 import { historySortBy, jobs, levels, availability } from '@app/constants';
-import { toSelectElement } from '@modules/utils';
+import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
 import { Select } from '@components/inputs/Select/Select';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import FeaturesList from '@components/dataDisplay/FeaturesList';
@@ -23,28 +23,28 @@ export class Profile extends Component {
 		const profilePortfolios = [
 			{
 				projectTitle: 'Проект 1',
-				projectFile: '',
+				projectFile: defaultAvatarUrl('П', '1', 600),
 				projectUrl: '#',
 			},
 			{
 				projectTitle: 'Проект 2',
-				projectFile: '',
+				projectFile: defaultAvatarUrl('П', '2', 600),
 				projectUrl: '#',
 			},
 			{
 				projectTitle: 'Проект 3',
-				projectFile: '',
+				projectFile: defaultAvatarUrl('П', '3', 600),
 				projectUrl: '#',
 			},
 			{
 				projectTitle: 'Проект 4',
-				projectFile: '',
+				projectFile: defaultAvatarUrl('П', '4', 600),
 				projectUrl: '#',
 			},
 		];
 
 		const freelancerObj = {
-			avatarUrl: '',
+			avatarUrl: defaultAvatarUrl('А', 'К', 200),
 			firstName: 'Александр',
 			lastName: 'Косенков',
 			city: 'Москва, Россия',

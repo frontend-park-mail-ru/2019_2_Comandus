@@ -77,10 +77,9 @@ export function toggleClass(cls, el) {
 	!hasClass(cls, el) ? addClass(cls, el) : removeClass(cls, el);
 }
 
-export function defaultAvatarUrl(firstName = '', lastName = '') {
+export function defaultAvatarUrl(firstName = '', lastName = '', size = 64) {
 	// return `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}`
 
-	const size = 64;
 	const letters = firstName.charAt(0) + lastName.charAt(0);
 
 	let canvas = document.createElement('canvas');
