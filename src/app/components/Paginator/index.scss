@@ -1,0 +1,35 @@
+@import "~@assets/scss/global";
+
+.paginator-row {
+	margin-top: 10px;
+	padding: 0;
+	height: 32px;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: space-around;
+
+	&__item {
+		display: flex;
+		border: #e8eaf1 1px solid;
+		align-items: center;
+
+		&_active {
+			background-color: $secondary-color;
+		}
+	}
+}
+
+.paginator-item {
+	&__link {
+		font-size: 20px;
+		line-height: 12px;
+		color: #666;
+		padding-left: 9px;
+		padding-right: 9px;
+		font-weight: 500;
+
+	}
+}
+

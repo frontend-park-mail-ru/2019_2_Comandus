@@ -24,6 +24,8 @@ import NotFound from '@containers/NotFound';
 import { busEvents } from '@app/constants';
 import Proposals from '@containers/Proposals';
 import FreelancerService from '@services/FreelancerService';
+import { getCookie } from '@modules/utils';
+import config from '@app/config';
 
 const handlers = [
 	{
@@ -175,7 +177,17 @@ const routes = [
 		path: '/new-job',
 		Component: JobFormComponent,
 	},
-	{ path: '/freelancers/:freelancerId', Component: Profile },
+	{
+		path: '/freelancers/:freelancerId',
+		Component: Profile,
+		props: {
+			currentAccountRole:
+				getCookie(config.cookieAccountModeName) ===
+				config.accountTypes.client
+					? config.accountTypes.client
+					: config.accountTypes.freelancer,
+		},
+	},
 	{
 		path: '/with-children',
 		children: [{ path: '/signup', Component: SignUpComponent }],

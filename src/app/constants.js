@@ -195,3 +195,14 @@ export const jobTypes = [
 		checked: false,
 	},
 ];
+
+export const historySortBy = [
+	'Сначала новые',
+	'Сначала старые',
+	'По релевантности',
+];
+
+export const availability = {
+	0: 'Занят',
+	1: 'Свободен',
+};

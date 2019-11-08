@@ -11,22 +11,7 @@
 						<small>{{job.created}}</small>
 					</div>
 					<div class="job-details__inner-item job-details__description">{{job.description}}</div>
-					<div class="job-details__inner-item">
-						<ul class="job-details__features">
-							<li class="job-feature">
-								<strong>{{job.type}}</strong>
-								<small>Тип работы</small>
-							</li>
-							<li class="job-feature">
-								<strong>{{job.paymentAmount}} ₽</strong>
-								<small>Бюджет</small>
-							</li>
-							<li class="job-feature">
-								<strong>{{job.experienceLevel}}</strong>
-								<small>Уровень фрилансера</small>
-							</li>
-						</ul>
-					</div>
+					{{{ jobFeatures }}}
 					<div class="job-details__inner-item job-item__tags">
 						{{#each job.skills}}
 							<span class="tag">{{this}}</span>

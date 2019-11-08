@@ -13,6 +13,8 @@ import TextField from '@components/inputs/TextField/TextField';
 import { Select } from '@components/inputs/Select/Select';
 import { toSelectElement } from '@modules/utils';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import FeatureComponent from '@components/dataDisplay/FeatureComponent';
+import FeaturesList from '@components/dataDisplay/FeaturesList';
 import store from '@modules/store';
 import bus from '@frame/bus';
 import AccountService from '@services/AccountService';
@@ -79,6 +81,19 @@ export default class Job extends Component {
 			className: 'width-auto',
 		});
 
+		this._jobType = new FeatureComponent({
+			title: 'Тип работы',
+			data: this.data.job['jobTypeId'],
+		});
+		this._jobBudget = new FeatureComponent({
+			title: 'Бюджет',
+			data: this.data.job['paymentAmount'] + ' ₽',
+		});
+		this._jobLevel = new FeatureComponent({
+			title: 'Уровень фрилансера',
+			data: this.data.job['experienceLevel'],
+		});
+
 		this.data = {
 			submitProposal: this._submitProposal.render(),
 			saveBtn: this._save.render(),
@@ -94,6 +109,14 @@ export default class Job extends Component {
 			timeSelect: new FieldGroup({
 				children: [this._timeSelect.render()],
 				label: 'Сколько времени займет этот проект',
+			}).render(),
+			jobFeatures: new FeaturesList({
+				children: [
+					this._jobType.render(),
+					this._jobBudget.render(),
+					this._jobLevel.render(),
+				],
+				className: 'job-details__inner-item',
 			}).render(),
 		};
 
