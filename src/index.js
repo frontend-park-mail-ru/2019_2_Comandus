@@ -201,12 +201,13 @@ router.register(routes);
 
 Frame.bootstrap(AppComponent, document.getElementById('root'), router);
 
-// if ('serviceWorker' in navigator) {
-// 	navigator.serviceWorker.register('sw.js')
-// 		.then(registration => {
-// 			console.log('ServiceWorker registration', registration);
-// 		})
-// 		.catch(err => {
-// 			console.log('SW Registration failed with ' + err);
-// 		})
-// }
+if ('serviceWorker' in navigator) {
+	navigator.serviceWorker
+		.register('sw.js')
+		.then((registration) => {
+			console.log('ServiceWorker registration', registration);
+		})
+		.catch((err) => {
+			console.log('SW Registration failed with ' + err);
+		});
+}
