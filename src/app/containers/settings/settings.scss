@@ -1,0 +1,43 @@
+@import '~@assets/scss/global';
+
+.settings-sidebar {
+	//padding: 5px 20px;
+	&__navigate {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		//align-items: center;
+		margin: 20px 6px;
+		padding: 0;
+		box-shadow: 0 0 3px 1px rgba(57,73,76,0.35);
+		border-radius: 5px;
+	}
+}
+
+.sidebar-navigate {
+	&__item {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		height: 32px;
+		align-self: stretch;
+		font-size: 18px;
+		&:not(:first-child) {
+			border-top: 1px solid #E0E0E0;
+		}
+		&:hover {
+			background-color: $secondary-color;
+			transition: all 0.45s ease;
+			cursor: pointer;
+		}
+		&_active {
+			background-color: $primary-color;
+			color: $white;
+			&:hover {
+				background-color: $primary-color;
+			}
+		}
+	}
+}

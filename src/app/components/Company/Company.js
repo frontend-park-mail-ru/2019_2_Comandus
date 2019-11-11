@@ -1,6 +1,5 @@
 import Component from '@frame/Component';
 import template from './Company.handlebars';
-import { htmlToElement } from '@modules/utils';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import CompanyService from '@services/CompanyService';
 import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
@@ -123,18 +122,12 @@ export class Company extends Component {
 			}).render(),
 		};
 
-		const html = template({
-			// countrySelect: countrySelect.render(),
-			data: this.data,
-			props: this.props,
+		this.html = template({
+			...this.data,
+			...this.props,
 		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
-		this._el = newElement;
+
+		return this.html;
 	}
 
 	preRender() {
@@ -162,6 +155,10 @@ export class Company extends Component {
 	}
 
 	postRender() {
+		super.postRender();
+
+		this._citySelect.postRender();
+
 		const companySettingsForm = this._el.querySelector(
 			'#companySettingsForm',
 		);

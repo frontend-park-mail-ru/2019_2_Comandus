@@ -1,4 +1,4 @@
-<div id="{{ props.id }}">
+<div id="{{_id}}">
 	<div class="tp-container">
 		<div class="tp-row tp-row_content_stretch tp-underline">
 			<h2>
@@ -9,34 +9,26 @@
 			<div class="tp-col-12">
 				<div class="tp-container">
 					<form
-							class="tp-form"
-							id="contactsForm"
-							method="post"
-							autocomplete="off"
+						class="tp-form"
+						id="contactsForm"
+						method="post"
+						autocomplete="off"
 					>
 						<div class="tp-col-8 tp-col_padding_0">
-
-							{{{data.citySelect}}}
-
+							{{{citySelect}}}
 						</div>
 						<div class="tp-col-8 tp-col_padding_0">
-
-							{{{ data.addressField }}}
-
+							{{{ addressField }}}
 							<span class="tp-label-note">Мы серьезно относимся к соблюдению конфиденциальности.
 												Только ваш город и страна будут доступны клиентам</span>
 						</div>
 
 						<div class="tp-col-8 tp-col_padding_0">
-
-							{{{ data.phoneField }}}
-
+							{{{ phoneField }}}
 						</div>
 
 						<div class="tp-col-8 tp-col_padding_0">
-
-							{{{data.submitBtn}}}
-
+							{{{ submitBtn }}}
 						</div>
 					</form>
 				</div>
@@ -53,16 +45,16 @@
 		<div class="tp-row tp-row_content_left">
 			<div class="tp-col-6">
 				<form
-						class="tp-form"
-						id="profileSettingsForm"
-						method="post"
-						autocomplete="off"
-						novalidate="novalidate"
+					class="tp-form"
+					id="profileSettingsForm"
+					method="post"
+					autocomplete="off"
+					novalidate="novalidate"
 				>
 
-					{{{ data.levelRadioGroup }}}
+					{{{ levelRadioGroup }}}
 
-					{{{ data.submitBtn }}}
+					{{{ submitBtn }}}
 
 				</form>
 			</div>
@@ -78,7 +70,7 @@
 		</div>
 	</div>
 	<div class="tp-col-12">
-		{{#each data.skills}}
+		{{#each skills}}
 			<label class="field-group__label">{{section}}</label>
 			<div class="tp-row tp-row_content_left">
 				{{#each categories}}

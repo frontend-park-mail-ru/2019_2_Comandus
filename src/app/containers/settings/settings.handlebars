@@ -1,35 +1,51 @@
-<div>
-	<div class="tp-container tp-centered-container ">
-		<div class="tp-row tp-columns-row">
-			<div class="tp-col-2 tp-border-wrapper card">
-				<ul class="tp-menu-navigate" role="menubar">
-					<li>
-						<a href="#" target="_self" role="menuitem">
-							Основное
-						</a>
-					</li>
-					<li>
-						<a href="#" target="_self" role="menuitem">
-							Уведомления
-						</a>
-					</li>
-					<li>
-						<a href="#" target="_self" role="menuitem">
-							Пароль и безопасность
-						</a>
-					</li>
-				</ul>
+<div class="tp-container tp-centered-container ">
+	<div class="tp-row">
+		<div class="tp-col-9 tp-col_padding_0">
+			<div class="settings-account card">
+				{{{ myAccountHeader }}}
+				{{{ myAccount }}}
 			</div>
-			<div class="tp-col-10 tp-border-wrapper card">
-				<div id="{{data.children.myAccount}}"></div>
-				{{#if data.isClientMode}}
-					<div id="{{data.children.companyComponent}}"></div>
-				{{else}}
-					<div id="{{data.children.freelancerSettingsComponent}}"></div>
-					<div id="{{data.children.companyComponent}}"></div>
-				{{/if}}
-				<div id="{{data.children.changePasswordComponent}}"></div>
+			{{#if data.isClientMode}}
+			<div class="settings-company card">
+				{{{ companySettingsHeader }}}
+				{{{ companySettings }}}
 			</div>
+			{{else}}
+			<div class="settings-freelancer card">
+				{{{ freelancerSettingsHeader }}}
+				{{{ freelancerSettings }}}
+			</div>
+			<div class="settings-company card">
+				{{{ companySettingsHeader }}}
+				{{{ companySettings }}}
+			</div>
+			{{/if}}
+{{!--				<div id="{{data.children.notificationSettingsComponent}}"></div>--}}
+			<div class="settings-password card">
+				{{{ changePasswordHeader }}}
+				{{{ changePassword }}}
+			</div>
+{{!--				<div id="{{data.children.authHistoryComponent}}"></div>--}}
+{{!--				<div id="{{data.children.securityQuestionComponent}}"></div>--}}
+		</div>
+		<div class="tp-col-3 settings-sidebar">
+			<ul class="settings-sidebar__navigate" role="menubar">
+				<li class="sidebar-navigate__item">
+					<a href="#" target="_self" role="menuitem">
+						Основное
+					</a>
+				</li>
+				<li class="sidebar-navigate__item">
+					<a href="#" target="_self" role="menuitem">
+						Уведомления
+					</a>
+				</li>
+				<li class="sidebar-navigate__item sidebar-navigate__item_active">
+					<a href="#" target="_self" role="menuitem">
+						Пароль и безопасность
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>

@@ -1,36 +1,35 @@
-<div id="{{props.id}}">
+<div id="{{_id}}">
 	<div class="tp-container">
-		<div class="tp-row tp-row_content_left tp-underline">
-			<h2>
-				О компании
-			</h2>
-		</div>
+<!--		<div class="tp-row tp-row_content_left tp-underline">-->
+<!--			<h2>-->
+<!--				О компании-->
+<!--			</h2>-->
+<!--		</div>-->
 		<div class="tp-row tp-row_content_left">
 			<div class="tp-col-12">
 				<div class="tp-container tp-container_align_center">
 					<img
-							class="tp-avatar tp-avatar-content-below"
-							alt="..."
-							src="/media/dev/avatar.png"
-							width="120"
-							height="120"
+						class="tp-avatar tp-avatar-content-below"
+						alt="..."
+						src="/media/dev/avatar.png"
+						width="120"
+						height="120"
 					/>
 					<a href="#" target="_self">Изменить лого</a>
 				</div>
 				<div class="tp-container">
 					<form
-							class="tp-form"
-							id="companySettingsForm"
-							method="post"
-							autocomplete="off"
+						class="tp-form"
+						id="companySettingsForm"
+						method="post"
+						autocomplete="off"
 					>
+						{{{ titleField }}}
+						{{{ siteField }}}
+						{{{ headerField }}}
+						{{{ descriptionField }}}
 
-						{{{ data.titleField }}}
-						{{{ data.siteField }}}
-						{{{ data.headerField }}}
-						{{{ data.descriptionField }}}
-
-						{{{ data.submitBtn }}}
+						{{{ submitBtn }}}
 					</form>
 				</div>
 			</div>
@@ -46,17 +45,17 @@
 			<div class="tp-col-12">
 				<div class="tp-container">
 					<form
-							class="tp-form"
-							id="companyContactsForm"
-							method="post"
-							autocomplete="off"
+						class="tp-form"
+						id="companyContactsForm"
+						method="post"
+						autocomplete="off"
 					>
-						{{{ data.ownerField }}}
-						{{{ data.citySelect }}}
-						{{{ data.addressField }}}
-						{{{ data.phoneField }}}
+						{{{ ownerField }}}
+						{{{ citySelect }}}
+						{{{ addressField }}}
+						{{{ phoneField }}}
 
-						{{{ data.submitBtn }}}
+						{{{ submitBtn }}}
 					</form>
 				</div>
 			</div>

@@ -1,11 +1,6 @@
 import Component from '@frame/Component';
-import { Select } from '../inputs/Select/Select';
 import template from './FreelancerSettings.handlebars';
-import { htmlToElement } from '@modules/utils';
-import AjaxModule from '@modules/ajax';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
-import config from '../../config';
-import Frame from '@frame/frame';
 import FreelancerService from '@services/FreelancerService';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
@@ -125,17 +120,12 @@ export class FreelancerSettings extends Component {
 			}).render(),
 		};
 
-		const html = template({
-			data: this.data,
-			props: this.props,
+		this.html = template({
+			...this.data,
+			...this.props,
 		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
-		this._el = newElement;
+
+		return this.html;
 	}
 
 	preRender() {
@@ -163,6 +153,10 @@ export class FreelancerSettings extends Component {
 	}
 
 	postRender() {
+		super.postRender();
+
+		this._citySelect.postRender();
+
 		const contactsForm = this._el.querySelector('#contactsForm');
 		enableValidationAndSubmit(contactsForm, this.updateFreelancer);
 

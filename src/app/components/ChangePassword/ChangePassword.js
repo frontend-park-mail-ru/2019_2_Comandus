@@ -1,6 +1,5 @@
 import Component from '@frame/Component';
 import template from './ChangePassword.handlebars';
-import { htmlToElement } from '@modules/utils';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';
 import Button from '@components/inputs/Button/Button';
@@ -57,22 +56,19 @@ export class ChangePassword extends Component {
 			}).render(),
 		};
 
-		const html = template({
-			data: this.data,
-			props: this.props,
+		this.html = template({
+			...this.data,
+			...this.props,
 		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
-		this._el = newElement;
+
+		return this.html;
 	}
 
 	preRender() {}
 
 	postRender() {
+		super.postRender();
+
 		const passwordChangeForm = this._el.querySelector(
 			'#passwordChangeForm',
 		);

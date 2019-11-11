@@ -15,6 +15,7 @@ import CardBoard from '@components/dataDisplay/CardBoard';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import { Avatar } from '@components/Avatar/Avatar';
 
 export class Profile extends Component {
 	constructor(props) {
@@ -103,6 +104,11 @@ export class Profile extends Component {
 			[],
 		);
 
+		this._avatar = new Avatar({
+			imgUrl: this.data.avatarUrl,
+			changing: true,
+		});
+
 		this._hourCost = new FeatureComponent({
 			title: 'Стоимость часа работы',
 			data: this.data.hourCost + ' ₽',
@@ -141,6 +147,7 @@ export class Profile extends Component {
 		});
 
 		this.data = {
+			profileAvatar: this._avatar.render(),
 			profileInfoFeatures: new FeaturesList({
 				children: [
 					this._hourCost.render(),
@@ -182,5 +189,9 @@ export class Profile extends Component {
 		this.attachToParent();
 
 		return this.html;
+	}
+
+	postRender() {
+		this._avatar.postRender();
 	}
 }

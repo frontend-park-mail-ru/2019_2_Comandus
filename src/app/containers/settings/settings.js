@@ -1,56 +1,25 @@
 import Component from '@frame/Component';
 import template from './settings.handlebars';
-import { getCookie, htmlToElement } from '@modules/utils';
+import { getCookie } from '@modules/utils';
 import { Account } from '@components/Account/Account';
 import { Company } from '@components/Company/Company';
-import { NotificationSettings } from '@components/NotificationSettings/NotificationSettings';
 import { ChangePassword } from '@components/ChangePassword/ChangePassword';
-import { AuthHistory } from '@components/AuthHistory/AuthHistory';
-import { SecurityQuestion } from '@components/SecurityQuestion/SecurityQuestion';
 import config from '../../config';
 import { FreelancerSettings } from '@components/FreelancerSettings/FreelancerSettings';
-import Frame from '@frame/frame';
-
-const children = [
-	{
-		id: 'myAccount',
-		component: Account,
-	},
-	{
-		id: 'notificationSettingsComponent',
-		component: NotificationSettings,
-	},
-	{
-		id: 'changePasswordComponent',
-		component: ChangePassword,
-	},
-	{
-		id: 'authHistoryComponent',
-		component: AuthHistory,
-	},
-	{
-		id: 'securityQuestionComponent',
-		component: SecurityQuestion,
-	},
-	{
-		id: 'companyComponent',
-		component: Company,
-	},
-	{
-		id: 'freelancerSettingsComponent',
-		component: FreelancerSettings,
-	},
-];
+import CardTitle from '@components/dataDisplay/CardTitle';
+import './settings.scss';
 
 export class Settings extends Component {
 	constructor({ ...props }) {
 		super(props);
-		this._data = {
-			children: {},
-		};
 	}
 
 	render() {
+		this._myAccount = new Account({});
+		this._companySettings = new Company({});
+		this._freelancerSettings = new FreelancerSettings({});
+		this._changePassword = new ChangePassword({});
+
 		this.data = {
 			...this.data,
 			isClientMode:
@@ -59,30 +28,36 @@ export class Settings extends Component {
 			isFreelancerMode:
 				getCookie(config.cookieAccountModeName) ===
 				config.accountTypes.freelancer,
+			myAccount: this._myAccount.render(),
+			companySettings: this._companySettings.render(),
+			freelancerSettings: this._freelancerSettings.render(),
+			changePassword: this._changePassword.render(),
+			myAccountHeader: new CardTitle({
+				title: 'Основное',
+			}).render(),
+			companySettingsHeader: new CardTitle({
+				title: 'О компании',
+			}).render(),
+			freelancerSettingsHeader: new CardTitle({
+				title: 'Дополнительно',
+			}).render(),
+			changePasswordHeader: new CardTitle({
+				title: 'Изменение пароля',
+			}).render(),
 		};
 
-		children.forEach((ch) => {
-			const { children } = this.data;
-			children[ch.id] = ch.id;
-		});
+		this.html = template(this.data);
+		this.attachToParent();
 
-		const html = template({
-			data: this.data,
-			props: this.props,
-		});
-		this._el = htmlToElement(html);
+		return this.html;
+	}
 
-		children.forEach((ch) => {
-			const parent = this._el.querySelector(`#${ch.id}`);
-			if (parent) {
-				const component = Frame.createComponent(ch.component, parent, {
-					...this.props,
-					id: ch.id,
-				});
-				Frame.renderComponent(component);
-			}
-		});
+	postRender() {
+		super.postRender();
 
-		this._parent.appendChild(this._el);
+		this._myAccount.postRender();
+		this._companySettings.postRender();
+		this._freelancerSettings.postRender();
+		this._changePassword.postRender();
 	}
 }
