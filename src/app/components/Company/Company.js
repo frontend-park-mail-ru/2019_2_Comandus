@@ -1,12 +1,14 @@
 import Component from '@frame/Component';
 import template from './Company.handlebars';
-import { htmlToElement } from '@modules/utils';
+import { defaultAvatarUrl, htmlToElement } from '@modules/utils';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import CompanyService from '@services/CompanyService';
 import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+
+const avatar = defaultAvatarUrl('C', 'C', 200, 200);
 
 export class Company extends Component {
 	constructor({ ...props }) {
@@ -121,6 +123,7 @@ export class Company extends Component {
 			submitBtn: new FieldGroup({
 				children: [submitBtn.render()],
 			}).render(),
+			avatar,
 		};
 
 		const html = template({

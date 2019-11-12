@@ -20,10 +20,10 @@ self.addEventListener('fetch', function(event) {
 			return fetch(event.request).then((response) => {
 				// const url = new URL(event.request.url);
 				// if (/.jpg|.jpeg|.png$/.test(url.pathname)) {
-				// 	let responseClone = response.clone();
-				// 	caches.open(CACHE_NAME).then((cache) => {
-				// 		cache.put(event.request, responseClone);
-				// 	});
+				let responseClone = response.clone();
+				caches.open(CACHE_NAME).then((cache) => {
+					cache.put(event.request, responseClone);
+				});
 				// }
 
 				return response;

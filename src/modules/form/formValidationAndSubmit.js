@@ -51,10 +51,6 @@ const classes = {
 	responseTextSuccess: 'response-text-success',
 };
 
-const emailRegex = new RegExp(
-	'^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$',
-);
-
 function hasError(field) {
 	// Don't validate submits, buttons, file and reset inputs, and disabled fields
 	if (
@@ -65,10 +61,6 @@ function hasError(field) {
 		field.type === fieldTypes.button
 	)
 		return;
-
-	if (field.type === fieldTypes.email && !emailRegex.test(field.value)) {
-		return config.messageTypeMismatchEmail;
-	}
 
 	const { validity } = field;
 
