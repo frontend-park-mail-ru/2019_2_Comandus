@@ -132,6 +132,12 @@ bus.on(busEvents.PROPOSAL_CREATE, (data) => {
 		});
 });
 
+bus.on(busEvents.ON_PAGE_LOAD, () => {
+	AuthService.FetchCsrfToken().then((response) => {
+		bus.emit(busEvents.ACCOUNT_GET);
+	});
+});
+
 bus.on('account-get', () => {
 	const response = AccountService.GetAccount();
 	bus.emit('account-get-response', response);
