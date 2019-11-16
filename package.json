@@ -75,7 +75,8 @@
 	},
 	"lint-staged": {
 		"src/**/*.{js}": [
-
+			"npm run prettier",
+			"npm run --silent lint:fix",
 			"git add"
 		],
 		"src/**/*.scss": [
