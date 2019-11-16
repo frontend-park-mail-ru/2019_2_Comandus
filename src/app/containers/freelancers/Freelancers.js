@@ -1,9 +1,11 @@
 import Component from '@frame/Component';
 import template from './Freelancers.handlebars';
+import contentTemplate from './content.handlebars';
 import './Freelancers.scss';
 import FreelancerItem from '@components/dataDisplay/FreelancerItem';
 import Item from '@components/surfaces/Item';
 import { defaultAvatarUrl } from '@modules/utils';
+import PageWithTitle from '@components/PageWithTitle';
 
 const freelancers = [
 	{
@@ -80,6 +82,14 @@ export default class Freelancers extends Component {
 	}
 
 	render() {
+		const page = new PageWithTitle({
+			title: 'Фрилансеры',
+			children: [contentTemplate(this.data)],
+		}).render();
+		this.data = {
+			page,
+		};
+
 		this.html = template(this.data);
 
 		this.attachToParent();
