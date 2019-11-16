@@ -6,6 +6,15 @@ import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import countriesCitiesRow from '@assets/countries.min.json';
+import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
+import { Avatar } from '@components/Avatar/Avatar';
+
+const cities = {};
+const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
+	cities[i] = countriesCitiesRow[el].map(toSelectElement);
+	return toSelectElement(el, i);
+});
 
 export class Company extends Component {
 	constructor({ ...props }) {
@@ -13,7 +22,15 @@ export class Company extends Component {
 	}
 
 	render() {
+		this._companyLogo = new Avatar({
+			imgUrl: defaultAvatarUrl('C', 'L', 200),
+		});
+
 		this._citySelect = new DoubleSelect({
+			items: countriesCities,
+			label1: 'Страна',
+			items2: cities,
+			label2: 'Город',
 			name: 'city',
 		});
 		const submitBtn = new Button({
@@ -81,13 +98,14 @@ export class Company extends Component {
 			name: 'phone',
 			type: 'text',
 			label: 'Телефон',
-			pattern: '^+[0-9]{11,12}$',
+			pattern: '\\+[0-9]{11,12}',
 			title:
 				'Неправильный формат номера телефона. Пример: +7 900 90 90 900',
 			placeholder: '+78005553535',
 		});
 
 		this.data = {
+			companyLogo: this._companyLogo.render(),
 			citySelect: this._citySelect.render(),
 			siteField: new FieldGroup({
 				children: [siteField.render()],

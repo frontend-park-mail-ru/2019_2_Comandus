@@ -22,6 +22,9 @@ export class Settings extends Component {
 
 		this.data = {
 			...this.data,
+			pageHeader: new CardTitle({
+				title: 'Настройки',
+			}).render(),
 			isClientMode:
 				getCookie(config.cookieAccountModeName) ===
 				config.accountTypes.client,

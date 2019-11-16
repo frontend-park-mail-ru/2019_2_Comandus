@@ -1,7 +1,13 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './profile.scss';
-import { historySortBy, jobs, levels, availability } from '@app/constants';
+import {
+	historySortBy,
+	jobs,
+	levels,
+	availability,
+	busEvents,
+} from '@app/constants';
 import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
 import { Select } from '@components/inputs/Select/Select';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
@@ -16,10 +22,15 @@ import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import { Avatar } from '@components/Avatar/Avatar';
+import store from '@modules/store';
+import AccountService from '@services/AccountService';
+import bus from '@frame/bus';
 
 export class Profile extends Component {
 	constructor(props) {
 		super(props);
+
+		const user = store.get(['user']);
 
 		const profilePortfolios = [
 			{
@@ -45,7 +56,12 @@ export class Profile extends Component {
 		];
 
 		const freelancerObj = {
-			avatarUrl: defaultAvatarUrl('А', 'К', 200),
+			avatarUrl: this.data.user
+				? defaultAvatarUrl(
+					this.data.user.firstName[0],
+					this.data.user.secondName[0],
+				  )
+				: defaultAvatarUrl('F', 'W'),
 			firstName: 'Александр',
 			lastName: 'Косенков',
 			city: 'Москва, Россия',
@@ -73,6 +89,7 @@ export class Profile extends Component {
 
 		this.data = {
 			...freelancerObj,
+			user,
 		};
 
 		this.data.profileHistory = this.data.profileHistory
@@ -91,6 +108,8 @@ export class Profile extends Component {
 				});
 				return item.render();
 			});
+
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
 	render() {
@@ -128,11 +147,13 @@ export class Profile extends Component {
 
 		this._projectSuggestBtn = new Button({
 			type: 'button',
+			noFit: true,
 			text: 'Предложить проект',
 		});
 		this._saveBtn = new Button({
 			type: 'button',
 			text: 'Добавить в избранное',
+			noFit: true,
 			className: 'btn_secondary',
 		});
 
@@ -154,6 +175,9 @@ export class Profile extends Component {
 					this._monthCost.render(),
 					this._selected.render(),
 				],
+			}).render(),
+			pageHeader: new CardTitle({
+				title: 'Профиль',
 			}).render(),
 			historyCardHeader: new CardTitle({
 				children: [this._sortSelect.render()],
@@ -194,4 +218,16 @@ export class Profile extends Component {
 	postRender() {
 		this._avatar.postRender();
 	}
+
+	userUpdated = () => {
+		const user = store.get(['user']);
+		const isClient = AccountService.isClient();
+
+		this.data = {
+			user,
+			isClient,
+		};
+
+		this.stateChanged();
+	};
 }

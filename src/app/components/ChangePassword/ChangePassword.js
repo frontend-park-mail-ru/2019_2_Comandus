@@ -28,13 +28,13 @@ export class ChangePassword extends Component {
 		const newPasswordField = new TextField({
 			required: true,
 			name: 'newPassword',
-			type: 'newPassword',
+			type: 'password',
 			label: 'Новый пароль',
 		});
 		const newPasswordConfirmField = new TextField({
 			required: true,
 			name: 'newPasswordConfirmation',
-			type: 'newPasswordConfirmation',
+			type: 'password',
 			label: 'Повторите пароль',
 		});
 

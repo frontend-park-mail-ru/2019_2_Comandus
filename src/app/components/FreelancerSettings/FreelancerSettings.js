@@ -9,7 +9,15 @@ import TextField from '@components/inputs/TextField/TextField';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import Tag from '@components/dataDisplay/Tag/Tag';
 import '../inputs/FieldGroup/FieldGroup.scss';
-// TODO: Стиль подтягиваю чисто для label перед тэгами. Надо вынести в отдельный файл
+import CardTitle from '@components/dataDisplay/CardTitle';
+import countriesCitiesRow from './../../../assets/countries.min.json';
+import { toSelectElement } from '@modules/utils';
+
+const cities = {};
+const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
+	cities[i] = countriesCitiesRow[el].map(toSelectElement);
+	return toSelectElement(el, i);
+});
 
 const experienceLevels = [
 	{
@@ -29,11 +37,14 @@ const experienceLevels = [
 export class FreelancerSettings extends Component {
 	constructor({ parent = document.body, ...props }) {
 		super(props);
-		this._parent = parent;
 	}
 
 	render() {
 		this._citySelect = new DoubleSelect({
+			items: countriesCities,
+			label1: 'Страна',
+			items2: cities,
+			label2: 'Город',
 			name: 'city',
 		});
 		const submitBtn = new Button({
@@ -56,7 +67,7 @@ export class FreelancerSettings extends Component {
 			name: 'phone',
 			type: 'text',
 			label: 'Телефон',
-			pattern: '^+[0-9]{11,12}$',
+			pattern: '\\+[0-9]{11,12}',
 			title:
 				'Неправильный формат номера телефона. Пример: +7 900 90 90 900',
 			placeholder: '+78005553535',
@@ -64,6 +75,7 @@ export class FreelancerSettings extends Component {
 
 		this._levelRadioGroup = new RadioGroup({
 			items: experienceLevels,
+			column: true,
 			// title: 'Уровень фрилансера',
 			required: true,
 			name: 'experienceLevelId',
@@ -103,7 +115,11 @@ export class FreelancerSettings extends Component {
 		this.data = {
 			citySelect: this._citySelect.render(),
 			addressField: new FieldGroup({
-				children: [addressField.render()],
+				children: [
+					addressField.render(),
+					`<span class="">Мы серьезно относимся к соблюдению конфиденциальности.
+				Только ваш город и страна будут доступны клиентам</span>`,
+				],
 				label: 'Адрес',
 			}).render(),
 			phoneField: new FieldGroup({
@@ -113,6 +129,16 @@ export class FreelancerSettings extends Component {
 			levelRadioGroup: new FieldGroup({
 				children: [this._levelRadioGroup.render()],
 				label: 'Ваш уровень опыта',
+			}).render(),
+			contactsSettingsHeader: new CardTitle({
+				title: 'Контакты',
+			}).render(),
+			experienceSettingsHeader: new CardTitle({
+				title: 'Уровень опыта',
+			}).render(),
+			specializationSettingsHeader: new CardTitle({
+				children: ['<a class="" href="#" target="_self">Изменить</a>'],
+				title: 'Выбор специализации и категорий услуг',
 			}).render(),
 			skills,
 			submitBtn: new FieldGroup({

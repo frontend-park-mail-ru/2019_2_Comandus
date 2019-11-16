@@ -5,6 +5,15 @@
 	margin-bottom: 20px;
 	margin-top: 20px;
 	padding: 1.5em;
+
+	&_page-header {
+		padding: 1.5em 1.5em 0 1.5em;
+		margin: 20px 15px 0 0;
+
+		&_fit {
+			margin: 20px 0 0 0;
+		}
+	}
 }
 
 .card_no-padding {

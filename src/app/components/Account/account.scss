@@ -4,4 +4,15 @@
 		flex-direction: column;
 		align-items: center;
 	}
+	&__delete {
+		height: 100%;
+		margin-bottom: 0;
+	}
+}
+
+.account-delete {
+	&__btn {
+		margin-top: auto;
+		margin-bottom: 10px;
+	}
 }

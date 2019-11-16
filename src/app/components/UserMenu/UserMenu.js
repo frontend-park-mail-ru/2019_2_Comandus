@@ -31,7 +31,12 @@ export class UserMenu extends Component {
 	}
 
 	render() {
-		const avatar = defaultAvatarUrl('N', 'Y');
+		const avatar = this.data.user
+			? defaultAvatarUrl(
+				this.data.user.firstName[0],
+				this.data.user.secondName[0],
+			  )
+			: defaultAvatarUrl('F', 'W');
 		const alt = '';
 		this._dropdown = new Dropdown({
 			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,
@@ -44,11 +49,11 @@ export class UserMenu extends Component {
 				},
 				{
 					url: '#',
-					text: 'Компания: ' + 'company name',
+					text: 'Компания: ' + 'Командус',
 					active: this.data.isClient,
 					id: 'switchToClient',
 				},
-				{ url: config.urls.settings, text: 'Настройки' },
+
 				{ url: '#', text: 'Выйти', id: 'logout' },
 			],
 			contentRight: true,

@@ -11,6 +11,7 @@ export default class Button extends Component {
 		className = 'btn_primary',
 		text = 'Кнопка',
 		size = 'm',
+		noFit = false,
 		onClick = null,
 		...props
 	}) {
@@ -24,6 +25,7 @@ export default class Button extends Component {
 			type,
 			className,
 			size,
+			noFit,
 		};
 	}
 	render() {

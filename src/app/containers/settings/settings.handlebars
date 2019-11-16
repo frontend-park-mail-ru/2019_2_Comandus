@@ -1,6 +1,37 @@
 <div class="tp-container tp-centered-container ">
+	<div class="tp-row tp-row_content_left">
+		<div class="tp-col-12 tp-col_padding_0">
+			<div class="card card_page-header">
+				{{{ pageHeader }}}
+			</div>
+		</div>
+	</div>
 	<div class="tp-row">
-		<div class="tp-col-9 tp-col_padding_0">
+		<div class="tp-col-3 tp-col_padding_0 settings-sidebar">
+			<ul class="settings-sidebar__navigate" role="menubar">
+				<li class="sidebar-navigate__item">
+					<a href="#" target="_self" role="menuitem">
+						Основное
+					</a>
+				</li>
+				<li class="sidebar-navigate__item">
+					<a href="#" target="_self" role="menuitem">
+						Дополнительно
+					</a>
+				</li>
+				<li class="sidebar-navigate__item sidebar-navigate__item_active">
+					<a href="#" target="_self" role="menuitem">
+						О компании
+					</a>
+				</li>
+				<li class="sidebar-navigate__item">
+					<a href="#" target="_self" role="menuitem">
+						Изменение пароля
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="tp-col-9">
 			<div class="settings-account card">
 				{{{ myAccountHeader }}}
 				{{{ myAccount }}}
@@ -11,8 +42,8 @@
 				{{{ companySettings }}}
 			</div>
 			{{else}}
-			<div class="settings-freelancer card">
-				{{{ freelancerSettingsHeader }}}
+			<div class="settings-freelancer">
+<!--				{{{ freelancerSettingsHeader }}}-->
 				{{{ freelancerSettings }}}
 			</div>
 			<div class="settings-company card">
@@ -27,25 +58,6 @@
 			</div>
 {{!--				<div id="{{data.children.authHistoryComponent}}"></div>--}}
 {{!--				<div id="{{data.children.securityQuestionComponent}}"></div>--}}
-		</div>
-		<div class="tp-col-3 settings-sidebar">
-			<ul class="settings-sidebar__navigate" role="menubar">
-				<li class="sidebar-navigate__item">
-					<a href="#" target="_self" role="menuitem">
-						Основное
-					</a>
-				</li>
-				<li class="sidebar-navigate__item">
-					<a href="#" target="_self" role="menuitem">
-						Уведомления
-					</a>
-				</li>
-				<li class="sidebar-navigate__item sidebar-navigate__item_active">
-					<a href="#" target="_self" role="menuitem">
-						Пароль и безопасность
-					</a>
-				</li>
-			</ul>
 		</div>
 	</div>
 </div>

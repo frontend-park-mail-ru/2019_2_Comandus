@@ -2,12 +2,18 @@
 
 .modal-window {
 	background-color: #fefefe;
-	margin: 15% 15%; /* 15% from the top and centered */
+	//margin: 15% 30%; /* 15% from the top and centered */
 	/*padding: 20px;*/
+	position: absolute;
+	transform: translate(-50%, -50%);
+	top: 40%;
+	left: 50%;
+
 	padding: 0;
 	//border: 1px solid #888;
 	/*width: 80%; !* Could be more or less, depending on screen size *!*/
 	width: fit-content;
+	width: -moz-fit-content;
 
 	&__wrapper {
 		position: fixed; /* Stay in place */

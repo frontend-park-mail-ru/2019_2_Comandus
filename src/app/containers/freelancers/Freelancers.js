@@ -4,6 +4,7 @@ import './Freelancers.scss';
 import FreelancerItem from '@components/dataDisplay/FreelancerItem';
 import Item from '@components/surfaces/Item';
 import { defaultAvatarUrl } from '@modules/utils';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 const freelancers = [
 	{
@@ -80,6 +81,11 @@ export default class Freelancers extends Component {
 	}
 
 	render() {
+		this.data = {
+			pageHeader: new CardTitle({
+				title: 'Фрилансеры',
+			}).render(),
+		};
 		this.html = template(this.data);
 
 		this.attachToParent();

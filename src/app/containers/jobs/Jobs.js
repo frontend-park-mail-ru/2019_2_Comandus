@@ -6,6 +6,7 @@ import JobItem from '@components/dataDisplay/JobItem';
 import Item from '@components/surfaces/Item';
 import bus from '@frame/bus';
 import store from '@modules/store';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 export default class Jobs extends Component {
 	constructor(props) {
@@ -24,6 +25,11 @@ export default class Jobs extends Component {
 	}
 
 	render() {
+		this.data = {
+			pageHeader: new CardTitle({
+				title: 'Работа',
+			}).render(),
+		};
 		this.html = template(this.data);
 		this.attachToParent();
 

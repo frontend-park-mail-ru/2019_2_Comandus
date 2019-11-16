@@ -55,6 +55,11 @@ export default class fileUploadModal extends Component {
 
 		this._el = document.getElementById(this._id);
 
+		if (!this._el) {
+			console.log('this._el for ' + this.is + ' is null');
+			return;
+		}
+
 		this._selectBtnElement = this._el.querySelector(
 			'#upload-avatar-select',
 		);

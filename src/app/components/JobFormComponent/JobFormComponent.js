@@ -17,6 +17,7 @@ import {
 	levelsRadio,
 	jobTypes,
 } from '@app/constants';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
@@ -116,6 +117,9 @@ class JobFormComponent extends Component {
 		});
 
 		this.data = {
+			pageHeader: new CardTitle({
+				title: 'Размещение заказа',
+			}).render(),
 			textField: new FieldGroup({
 				children: [textField.render()],
 				label: 'Название',

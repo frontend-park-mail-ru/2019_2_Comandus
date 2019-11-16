@@ -1,12 +1,8 @@
 <div id="{{_id}}">
-	<div class="tp-container">
-		<div class="tp-row tp-row_content_stretch tp-underline">
-			<h2>
-				Контакты
-			</h2>
-		</div>
-		<div class="tp-row tp-row_content_stretch">
-			<div class="tp-col-12">
+	<div class="contacts-settings card">
+		{{{ contactsSettingsHeader }}}
+<!--		<div class="tp-row tp-row_content_stretch">-->
+<!--			<div class="tp-col-12">-->
 				<div class="tp-container">
 					<form
 						class="tp-form"
@@ -14,36 +10,20 @@
 						method="post"
 						autocomplete="off"
 					>
-						<div class="tp-col-8 tp-col_padding_0">
-							{{{citySelect}}}
-						</div>
-						<div class="tp-col-8 tp-col_padding_0">
+							{{{ citySelect }}}
 							{{{ addressField }}}
-							<span class="tp-label-note">Мы серьезно относимся к соблюдению конфиденциальности.
-												Только ваш город и страна будут доступны клиентам</span>
-						</div>
-
-						<div class="tp-col-8 tp-col_padding_0">
 							{{{ phoneField }}}
-						</div>
-
-						<div class="tp-col-8 tp-col_padding_0">
 							{{{ submitBtn }}}
-						</div>
 					</form>
 				</div>
-			</div>
-		</div>
+<!--			</div>-->
+<!--		</div>-->
 	</div>
 
-	<div class="tp-container">
-		<div class="tp-row tp-row_content_stretch tp-underline">
-			<h2>
-				Мой профиль
-			</h2>
-		</div>
+	<div class="experience-settings card">
+		{{{ experienceSettingsHeader }}}
 		<div class="tp-row tp-row_content_left">
-			<div class="tp-col-6">
+			<div class="tp-col-6 tp-col_padding_0">
 				<form
 					class="tp-form"
 					id="profileSettingsForm"
@@ -51,32 +31,22 @@
 					autocomplete="off"
 					novalidate="novalidate"
 				>
-
 					{{{ levelRadioGroup }}}
-
 					{{{ submitBtn }}}
-
 				</form>
 			</div>
 		</div>
 	</div>
 
-	<div class="tp-container">
-		<div class="tp-row tp-row_content_stretch tp-row_align_center tp-underline">
-			<h2>
-				Выбор специализации и категорий услуг
-			</h2>
-			<a class="tp-row__right " href="#" target="_self">Изменить</a>
-		</div>
-	</div>
-	<div class="tp-col-12">
-		{{#each skills}}
-			<label class="field-group__label">{{section}}</label>
-			<div class="tp-row tp-row_content_left">
-				{{#each categories}}
-					{{{ this }}}
-				{{/each}}
-			</div>
-		{{/each}}
+	<div class="specialization-settings card">
+		{{{ specializationSettingsHeader }}}
+			{{#each skills}}
+				<label class="field-group__label">{{section}}</label>
+				<div class="tp-row tp-row_content_left">
+					{{#each categories}}
+						{{{ this }}}
+					{{/each}}
+				</div>
+			{{/each}}
 	</div>
 </div>
