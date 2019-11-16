@@ -121,8 +121,11 @@ bus.on('account-get', () => {
 });
 
 bus.on('account-put', (data) => {
-	const response = AccountService.PutAccount(data);
-	bus.emit('account-put-response', response);
+	const response = AccountService.PutAccount(data).then((res) => {
+		bus.emit('account-put-response', response);
+		bus.emit(busEvents.ACCOUNT_GET);
+		return res;
+	});
 });
 
 bus.on('account-avatar-upload', (data) => {

@@ -31,7 +31,10 @@ export class UserMenu extends Component {
 	}
 
 	render() {
-		const avatar = defaultAvatarUrl('N', 'Y');
+		const avatar = defaultAvatarUrl(
+			this.data.user.firstName,
+			this.data.user.secondName,
+		);
 		const alt = '';
 		this._dropdown = new Dropdown({
 			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,
