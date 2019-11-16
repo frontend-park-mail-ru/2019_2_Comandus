@@ -35,9 +35,10 @@ export default class AuthService {
 		return AjaxModule.delete(config.urls.logout, {
 			headers: AuthService.getCsrfHeader(),
 		}).then((res) => {
-			return store.setState({
+			store.setState({
 				user: null,
 			});
+			AccountService.PutUserToLocalStorage();
 		});
 	}
 
