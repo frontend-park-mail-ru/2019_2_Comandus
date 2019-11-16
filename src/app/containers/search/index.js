@@ -33,6 +33,12 @@ export default class Search extends Component {
 			});
 	}
 
+	preRender() {
+		this.data = {
+			q: this.props.params.q,
+		};
+	}
+
 	render() {
 		this._searchField = new TextField({
 			required: true,
@@ -41,6 +47,7 @@ export default class Search extends Component {
 			label: 'Поиск',
 			placeholder: 'Поиск работ',
 			maxlength: '20',
+			value: this.data.q,
 		});
 
 		this.data = {
