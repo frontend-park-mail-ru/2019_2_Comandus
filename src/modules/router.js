@@ -1,4 +1,6 @@
 import Frame from '@frame/frame';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
 
 function getParamsFromSearch(search) {
 	const params = {};
@@ -102,6 +104,22 @@ export class Router {
 		if (!route) {
 			this.push('/page-not-found');
 			return;
+		}
+
+		if (AuthService.isLoggedIn()) {
+			if (path === '/login' || path === '/signup') {
+				this.push('/');
+				return;
+			}
+
+			if (path === '/') {
+				if (AccountService.isClient()) {
+					this.push('/freelancers');
+					return;
+				}
+				this.push('/jobs');
+				return;
+			}
 		}
 
 		this._pushToHistory(path, search);

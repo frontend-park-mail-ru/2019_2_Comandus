@@ -7,7 +7,7 @@
 	"scripts": {
 		"start": "webpack-dev-server",
 		"start:build": "node server.js",
-		"build": "NODE_ENV=production webpack --mode=production && cp -a public/media dist/ && npm run sw",
+		"build": "NODE_ENV=production webpack --mode=production && cp -a public/media dist/ && cp -a src/assets dist/ && npm run sw",
 		"deploy": "now -A mynow.json --prod",
 		"deploy:local": "now dev -A mynow.json",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/**/*.{js,html,css}'",
