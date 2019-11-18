@@ -1,7 +1,13 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './profile.scss';
-import { historySortBy, jobs, levels, availability } from '@app/constants';
+import {
+	historySortBy,
+	jobs,
+	levels,
+	availability,
+	busEvents,
+} from '@app/constants';
 import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
 import { Select } from '@components/inputs/Select/Select';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
@@ -15,6 +21,10 @@ import CardBoard from '@components/dataDisplay/CardBoard';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import bus from '@frame/bus';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
+import store from '@modules/store';
 
 export class Profile extends Component {
 	constructor(props) {
@@ -50,7 +60,8 @@ export class Profile extends Component {
 			city: 'Москва, Россия',
 			rating: '100',
 			tagline: 'Frontend разработчик',
-			description: 'Some description',
+			description:
+				"I've been administering Microsoft and Citrix server infrastructures for the last 9 years, and have in-depth experience with design, deployment, repair and support of all Citrix, VMWare and many Microsoft technologies. My experiences range from server administration roles, specialized application support, desktop support, administrator to advanced virtualization implementations jobs combined with programming skills .",
 			hourCost: '7000',
 			monthCost: '40000',
 			selectCount: '44',
@@ -72,6 +83,9 @@ export class Profile extends Component {
 
 		this.data = {
 			...freelancerObj,
+			profilePortfolios,
+			profileHistory: jobs,
+			freelancer: {},
 		};
 
 		this.data.profileHistory = this.data.profileHistory
@@ -90,6 +104,20 @@ export class Profile extends Component {
 				});
 				return item.render();
 			});
+
+		bus.on(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
+	}
+
+	preRender() {
+		bus.emit(busEvents.FREELANCER_GET, this.props.params.freelancerId);
+
+		const loggedIn = AuthService.isLoggedIn();
+		const isClient = AccountService.isClient();
+
+		this.data = {
+			loggedIn,
+			isClient,
+		};
 	}
 
 	render() {
@@ -183,4 +211,29 @@ export class Profile extends Component {
 
 		return this.html;
 	}
+
+	freelancerUpdated = (err) => {
+		if (err) {
+			return;
+		}
+
+		const freelancer = store.get(['freelancer']);
+
+		this.data = {
+			freelancer: freelancer,
+			...freelancer,
+		};
+
+		if (freelancer) {
+			this.data = {
+				avatarUrl: defaultAvatarUrl(
+					freelancer.firstName,
+					freelancer.secondName,
+					200,
+				),
+			};
+		}
+
+		this.stateChanged();
+	};
 }

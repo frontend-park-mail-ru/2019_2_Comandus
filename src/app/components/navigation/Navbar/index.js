@@ -28,7 +28,7 @@ export default class Navbar extends Component {
 			jobItems.push({ url: '/saved', text: 'Закладки' });
 			jobItems.push({ url: '/proposals', text: 'Отклики' });
 			jobItems.push({
-				url: `/freelancers/${this.data.user.id}`,
+				url: `/freelancers/${this.data.user.freelancerId}`,
 				text: 'Профиль',
 			});
 		}

@@ -8,7 +8,7 @@
 					</div>
 					<div class="profile-info__main-info">
 						<span class="main-info__name">
-							{{ firstName }} {{ lastName }}
+							{{ firstName }} {{ secondName }}
 						</span>
 						<span class="main-info__region">
 							<span class="profile-region__city">{{ city }}</span>
@@ -58,9 +58,9 @@
 			<div class="profile-skills card">
 				{{{ skillsCardHeader }}}
 				<div class="profile-skills__row tp-row tp-row_content_left tp-row_align_center">
-					{{#each skills}}
-						<span class="tag">{{this}}</span>
-					{{/each}}
+{{!--					{{#each skills}}--}}
+{{!--						<span class="tag">{{this}}</span>--}}
+{{!--					{{/each}}--}}
 				</div>
 			</div>
 		</div>
@@ -75,23 +75,23 @@
 					Копиоровать ссылку
 				</a>
 			</div>
-			<div class="profile-sidebar__languages">
-				<span class="sidebar-languages__title">
-					Языки
-				</span>
-				<div class="sidebar-languages__table">
-					{{#each languages}}
-						<div class="tp-row">
-							<div class="tp-col-6 tp-col_padding_0">
-								<span class="languages-table__language">{{ language }}</span>
-							</div>
-							<div class="tp-col-6 tp-col_padding_0">
-								<span class="languages-table__type">{{ type }}</span>
-							</div>
-						</div>
-					{{/each}}
-				</div>
-			</div>
+{{!--			<div class="profile-sidebar__languages">--}}
+{{!--				<span class="sidebar-languages__title">--}}
+{{!--					Языки--}}
+{{!--				</span>--}}
+{{!--				<div class="sidebar-languages__table">--}}
+{{!--					{{#each languages}}--}}
+{{!--						<div class="tp-row">--}}
+{{!--							<div class="tp-col-6 tp-col_padding_0">--}}
+{{!--								<span class="languages-table__language">{{ language }}</span>--}}
+{{!--							</div>--}}
+{{!--							<div class="tp-col-6 tp-col_padding_0">--}}
+{{!--								<span class="languages-table__type">{{ type }}</span>--}}
+{{!--							</div>--}}
+{{!--						</div>--}}
+{{!--					{{/each}}--}}
+{{!--				</div>--}}
+{{!--			</div>--}}
 		</div>
 
 	</div>

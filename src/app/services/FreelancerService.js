@@ -5,7 +5,14 @@ import AuthService from '@services/AuthService';
 
 export default class FreelancerService {
 	static GetFreelancerById(id) {
-		return AjaxModule.get(`${config.urls.freelancers}/${id}`);
+		return AjaxModule.get(`${config.urls.freelancers}/${id}`, {
+			headers: AuthService.getCsrfHeader(),
+		}).then((freelancer) => {
+			console.log('GetFreelancerById', freelancer);
+			store.setState({
+				freelancer: freelancer,
+			});
+		});
 	}
 
 	static UpdateFreelancer(id, data) {
@@ -25,6 +32,18 @@ export default class FreelancerService {
 	static CreateProposal(data) {
 		return AjaxModule.post(`/jobs/proposal/${data.jobId}`, data.formData, {
 			headers: AuthService.getCsrfHeader(),
+		});
+	}
+
+	static GetAllFreelancers() {
+		return AjaxModule.get(config.urls.freelancers, {
+			headers: AuthService.getCsrfHeader(),
+		}).then((freelancers) => {
+			store.setState({
+				freelancers,
+			});
+
+			return freelancers;
 		});
 	}
 }

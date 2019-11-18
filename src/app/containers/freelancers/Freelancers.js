@@ -64,22 +64,26 @@ export default class Freelancers extends Component {
 	constructor(props) {
 		super(props);
 
-		const freelancersHtml = freelancers.map((f) => {
-			const freelancerItem = new FreelancerItem({
-				...f,
-			});
+		// const freelancersHtml = freelancers.map((f) => {
+		// 	const freelancerItem = new FreelancerItem({
+		// 		...f,
+		// 	});
+		//
+		// 	const item = new Item({
+		// 		children: [freelancerItem.render()],
+		// 	});
+		//
+		// 	return item.render();
+		// });
+		//
+		// this.data = {
+		// 	freelancers: freelancersHtml,
+		// };
 
-			const item = new Item({
-				children: [freelancerItem.render()],
-			});
-
-			return item.render();
-		});
-
-		this.data = {
-			freelancers: freelancersHtml,
-		};
+		this.mapFreelancers(freelancers);
 	}
+
+	preRender() {}
 
 	render() {
 		const page = new PageWithTitle({
@@ -95,4 +99,24 @@ export default class Freelancers extends Component {
 		this.attachToParent();
 		return this.html;
 	}
+
+	mapFreelancers = (freelancers) => {
+		const freelancersHtml = freelancers.map((f) => {
+			const freelancerItem = new FreelancerItem({
+				...f,
+			});
+
+			const item = new Item({
+				children: [freelancerItem.render()],
+			});
+
+			return item.render();
+		});
+
+		this.data = {
+			freelancers: freelancersHtml,
+		};
+	};
+
+	freelancersUpdated = () => {};
 }

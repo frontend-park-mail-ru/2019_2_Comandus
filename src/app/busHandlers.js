@@ -115,6 +115,26 @@ bus.on(busEvents.ON_PAGE_LOAD, () => {
 	});
 });
 
+bus.on(busEvents.FREELANCER_GET, (id) => {
+	FreelancerService.GetFreelancerById(id)
+		.then(() => {
+			bus.emit(busEvents.FREELANCER_UPDATED);
+		})
+		.catch((error) => {
+			bus.emit(busEvents.FREELANCER_UPDATED, error);
+		});
+});
+
+bus.on(busEvents.FREELANCERS_GET, () => {
+	FreelancerService.GetAllFreelancers()
+		.then(() => {
+			bus.emit(busEvents.FREELANCERS_UPDATED);
+		})
+		.catch((error) => {
+			bus.emit(busEvents.FREELANCERS_UPDATED, error);
+		});
+});
+
 bus.on('account-get', () => {
 	const response = AccountService.GetAccount();
 	bus.emit('account-get-response', response);

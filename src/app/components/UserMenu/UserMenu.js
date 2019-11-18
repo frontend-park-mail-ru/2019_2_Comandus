@@ -1,6 +1,6 @@
 import Component from '@frame/Component';
 import template from './UserMenu.handlebars';
-import {defaultAvatarUrl} from '@modules/utils';
+import { defaultAvatarUrl } from '@modules/utils';
 import config from '../../config';
 import './UserMenu.scss';
 import AuthService from '@services/AuthService';
@@ -8,11 +8,11 @@ import bus from '@frame/bus';
 import Dropdown from '@components/navigation/Dropdown';
 import store from '@modules/store';
 import AccountService from '@services/AccountService';
-import {busEvents} from '@app/constants';
-import {router} from '@index';
+import { busEvents } from '@app/constants';
+import { router } from '@index';
 
 export class UserMenu extends Component {
-	constructor({...props}) {
+	constructor({ ...props }) {
 		super(props);
 
 		const user = store.get(['user']);
@@ -35,7 +35,7 @@ export class UserMenu extends Component {
 			? defaultAvatarUrl(
 				this.data.user.firstName,
 				this.data.user.secondName,
-			)
+			  )
 			: '';
 		const alt = '';
 		this._dropdown = new Dropdown({
@@ -53,8 +53,8 @@ export class UserMenu extends Component {
 					active: this.data.isClient,
 					id: 'switchToClient',
 				},
-				{url: config.urls.settings, text: 'Настройки'},
-				{url: '#', text: 'Выйти', id: 'logout'},
+				{ url: config.urls.settings, text: 'Настройки' },
+				{ url: '#', text: 'Выйти', id: 'logout' },
 			],
 			contentRight: true,
 			toggleClassname: 'nav__item',

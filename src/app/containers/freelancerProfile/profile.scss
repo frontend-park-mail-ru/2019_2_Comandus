@@ -89,6 +89,9 @@
 		& > *:not(:first-child) {
 			margin-top: 10px;
 		}
+		& button {
+			width: 100%;
+		}
 	}
 
 	&__availability {
