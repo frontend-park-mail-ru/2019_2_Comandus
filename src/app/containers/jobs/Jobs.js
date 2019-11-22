@@ -1,12 +1,13 @@
 import Component from '@frame/Component';
 import template from './Jobs.handlebars';
+import contentTemplate from './content.handlebars';
 import './Jobs.scss';
 import { busEvents, jobs, levels } from './../../constants';
 import JobItem from '@components/dataDisplay/JobItem';
 import Item from '@components/surfaces/Item';
 import bus from '@frame/bus';
 import store from '@modules/store';
-import CardTitle from '@components/dataDisplay/CardTitle';
+import PageWithTitle from '@components/PageWithTitle';
 
 export default class Jobs extends Component {
 	constructor(props) {
@@ -25,7 +26,16 @@ export default class Jobs extends Component {
 	}
 
 	render() {
+		const page = new PageWithTitle({
+			title: 'Работа',
+			children: [contentTemplate(this.data)],
+		}).render();
+
+		this.data = {
+			page,
+		};
 		this.html = template(this.data);
+
 		this.attachToParent();
 
 		return this.html;

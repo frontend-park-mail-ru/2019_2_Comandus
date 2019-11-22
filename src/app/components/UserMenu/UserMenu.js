@@ -31,12 +31,13 @@ export class UserMenu extends Component {
 	}
 
 	render() {
-		const avatar = this.data.user
-			? defaultAvatarUrl(
-				this.data.user.firstName[0],
-				this.data.user.secondName[0],
-			  )
-			: defaultAvatarUrl('F', 'W');
+		let avatar = '';
+		if (this.data.user) {
+			avatar = defaultAvatarUrl(
+				this.data.user.firstName,
+				this.data.user.secondName,
+			);
+		}
 		const alt = '';
 		this._dropdown = new Dropdown({
 			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,

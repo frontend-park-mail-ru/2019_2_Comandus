@@ -22,15 +22,14 @@ import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import { Avatar } from '@components/Avatar/Avatar';
-import store from '@modules/store';
-import AccountService from '@services/AccountService';
 import bus from '@frame/bus';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
+import store from '@modules/store';
 
 export class Profile extends Component {
 	constructor(props) {
 		super(props);
-
-		const user = store.get(['user']);
 
 		const profilePortfolios = [
 			{
@@ -56,13 +55,14 @@ export class Profile extends Component {
 		];
 
 		const freelancerObj = {
-			avatarUrl: defaultAvatarUrl('F', 'W'),
+			avatarUrl: defaultAvatarUrl('F', 'W', 200),
 			firstName: 'Александр',
 			lastName: 'Косенков',
 			city: 'Москва, Россия',
 			rating: '100',
 			tagline: 'Frontend разработчик',
-			description: 'Some description',
+			description:
+				"I've been administering Microsoft and Citrix server infrastructures for the last 9 years, and have in-depth experience with design, deployment, repair and support of all Citrix, VMWare and many Microsoft technologies. My experiences range from server administration roles, specialized application support, desktop support, administrator to advanced virtualization implementations jobs combined with programming skills .",
 			hourCost: '7000',
 			monthCost: '40000',
 			selectCount: '44',
@@ -84,7 +84,9 @@ export class Profile extends Component {
 
 		this.data = {
 			...freelancerObj,
-			user,
+			profilePortfolios,
+			profileHistory: jobs,
+			freelancer: {},
 		};
 
 		this.data.profileHistory = this.data.profileHistory
@@ -104,7 +106,19 @@ export class Profile extends Component {
 				return item.render();
 			});
 
-		bus.on(busEvents.USER_UPDATED, this.userUpdated);
+		bus.on(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
+	}
+
+	preRender() {
+		bus.emit(busEvents.FREELANCER_GET, this.props.params.freelancerId);
+
+		const loggedIn = AuthService.isLoggedIn();
+		const isClient = AccountService.isClient();
+
+		this.data = {
+			loggedIn,
+			isClient,
+		};
 	}
 
 	render() {
@@ -211,14 +225,27 @@ export class Profile extends Component {
 		this._avatar.postRender();
 	}
 
-	userUpdated = () => {
-		const user = store.get(['user']);
-		const isClient = AccountService.isClient();
+	freelancerUpdated = (err) => {
+		if (err) {
+			return;
+		}
+
+		const freelancer = store.get(['freelancer']);
 
 		this.data = {
-			user,
-			isClient,
+			freelancer: freelancer,
+			...freelancer,
 		};
+
+		if (freelancer) {
+			this.data = {
+				avatarUrl: defaultAvatarUrl(
+					freelancer.firstName,
+					freelancer.secondName,
+					200,
+				),
+			};
+		}
 
 		this.stateChanged();
 	};

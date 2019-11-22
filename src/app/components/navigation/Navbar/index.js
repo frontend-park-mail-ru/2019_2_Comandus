@@ -10,6 +10,7 @@ import AuthService from '@services/AuthService';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
 import config from '@app/config';
+import { router } from '../../../../index';
 
 export default class Navbar extends Component {
 	constructor({ ...props }) {
@@ -38,7 +39,7 @@ export default class Navbar extends Component {
 
 		if (this.data.loggedIn) {
 			profileItems.push({
-				url: `/freelancers/${this.data.user.id}`,
+				url: `/freelancers/${this.data.user.freelancerId}`,
 				text: 'Профиль',
 			});
 			if (!this.data.isClient) {
@@ -84,6 +85,9 @@ export default class Navbar extends Component {
 			const bar = document.getElementById(this.id);
 			removeClass('navbar__nav_responsive', bar);
 		});
+
+		this.searchInput = this.el.querySelector('#navbar-search-form');
+		this.searchInput.addEventListener('submit', this.onSearchSubmit);
 	}
 
 	toggle = () => {
@@ -103,5 +107,10 @@ export default class Navbar extends Component {
 		};
 
 		this.stateChanged();
+	};
+
+	onSearchSubmit = (event) => {
+		event.preventDefault();
+		router.push(`/search`, `?q=${event.target.elements[0].value}`);
 	};
 }
