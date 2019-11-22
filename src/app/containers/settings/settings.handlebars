@@ -5,7 +5,7 @@
 				{{#each tabs}}
 					{{#if show}}
 					<li class="sidebar-navigate__item {{#if_eq link ../currentTab.link }}sidebar-navigate__item_active{{/if_eq}} ">
-						<a href="?tab={{ link }}" target="_self" role="menuitem">
+						<a class="navigate-item__link" href="?tab={{ link }}" target="_self" role="menuitem">
 							{{ title }}
 						</a>
 					</li>
