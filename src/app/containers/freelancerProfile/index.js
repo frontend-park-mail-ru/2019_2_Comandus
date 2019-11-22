@@ -56,12 +56,7 @@ export class Profile extends Component {
 		];
 
 		const freelancerObj = {
-			avatarUrl: this.data.user
-				? defaultAvatarUrl(
-					this.data.user.firstName[0],
-					this.data.user.secondName[0],
-				  )
-				: defaultAvatarUrl('F', 'W'),
+			avatarUrl: defaultAvatarUrl('F', 'W'),
 			firstName: 'Александр',
 			lastName: 'Косенков',
 			city: 'Москва, Россия',

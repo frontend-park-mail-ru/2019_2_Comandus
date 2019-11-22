@@ -23,7 +23,6 @@
 		"no-tabs": 0,
 		"no-underscore-dangle": 0,
 		"no-prototype-builtins": 0,
-		"no-mixed-spaces-and-tabs": 0,
 		"class-methods-use-this": 0,
 		"no-unused-vars": 0,
 		"no-empty-function": 0,
