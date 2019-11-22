@@ -6,6 +6,9 @@ import { Router } from '@modules/router';
 import routes from '@app/routes';
 import '@app/busHandlers';
 import AccountService from '@services/AccountService'; // !Нужно обязательно импортировать модуль чтобы подключить обработчики событий для bus
+import initLogTrack from '@modules/log';
+
+initLogTrack();
 
 AccountService.LoadUserFromLocalStorage();
 
