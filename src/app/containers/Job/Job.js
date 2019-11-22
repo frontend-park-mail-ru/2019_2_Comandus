@@ -30,12 +30,11 @@ export default class Job extends Component {
 		this.data = {
 			job: {},
 		};
-
-		bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
-		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
 	preRender() {
+		bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 		bus.emit(busEvents.JOB_GET, this.props.params.jobId);
 
 		const loggedIn = AuthService.isLoggedIn();
@@ -164,6 +163,8 @@ export default class Job extends Component {
 	};
 
 	userUpdated = () => {
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+
 		const loggedIn = AuthService.isLoggedIn();
 		const isClient = AccountService.isClient();
 

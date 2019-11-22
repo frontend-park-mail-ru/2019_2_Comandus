@@ -24,6 +24,7 @@ export class Router {
 		this.root = root;
 		this.outletName = outletName;
 		this.outlet = null;
+		this.lastComponent = null;
 	}
 
 	registerRoute(path, Component, props) {
@@ -141,6 +142,13 @@ export class Router {
 
 		this.outlet.dataset.view = component.constructor.name;
 		Frame.renderComponent(component);
+
+		// TODO: Поправить багло!
+		// if (this.lastComponent) {
+		// 	this.lastComponent.onDestroy();
+		// }
+		//
+		// this.lastComponent = component;
 
 		this.routes[routeIndex] = {
 			...route,

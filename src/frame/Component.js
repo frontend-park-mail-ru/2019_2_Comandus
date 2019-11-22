@@ -63,4 +63,6 @@ export default class Component {
 	attachToParent() {
 		this._parent.innerHTML = this.html;
 	}
+
+	onDestroy() {}
 }

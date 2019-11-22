@@ -6,7 +6,6 @@ import { Company } from '@components/Company/Company';
 import { ChangePassword } from '@components/ChangePassword/ChangePassword';
 import config from '../../config';
 import { FreelancerSettings } from '@components/FreelancerSettings/FreelancerSettings';
-import CardTitle from '@components/dataDisplay/CardTitle';
 import './settings.scss';
 import AccountService from '@services/AccountService';
 import bus from '@frame/bus';
@@ -43,7 +42,9 @@ export class Settings extends Component {
 				show: false,
 			},
 		];
+	}
 
+	preRender() {
 		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
@@ -119,4 +120,9 @@ export class Settings extends Component {
 
 		this.stateChanged();
 	};
+
+	onDestroy() {
+		console.log('onDestroy');
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+	}
 }

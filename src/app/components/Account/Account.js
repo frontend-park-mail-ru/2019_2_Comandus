@@ -95,7 +95,6 @@ export class Account extends Component {
 
 	postRender() {
 		super.postRender();
-		console.log('Account postrender');
 		this._avatar.postRender();
 
 		const form = this._el.querySelector('#mainSettingsForm');
