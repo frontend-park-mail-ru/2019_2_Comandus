@@ -1,31 +1,30 @@
-<div class="tp-container" id="{{props.id}}">
-	<div class="tp-row tp-row_content_left tp-underline">
-		<h2>
-			Основное
-		</h2>
-	</div>
+<div class="tp-container card" id="{{_id}}">
 	<div class="tp-row tp-row_content_left">
 		<div class="tp-col-6 tp-col_padding_0">
-			<div class="tp-container tp-container-align-center">
-				<div id="{{data.children.myAccountAvatar}}"></div>
+			<div class="account-settings__avatar">
+				{{{ profileAvatar }}}
 			</div>
 			<form
-					class="tp-form"
-					id="mainSettingsForm"
-					method="post"
-					autocomplete="off"
+				class="tp-form"
+				id="mainSettingsForm"
+				method="post"
+				autocomplete="off"
 			>
-				{{{ data.secondNameField }}}
-				{{{ data.firstNameField }}}
-				{{{ data.emailField }}}
-				{{{ data.submitBtn }}}
+				{{{ secondNameField }}}
+				{{{ firstNameField }}}
+				{{{ emailField }}}
+				{{{ submitBtn }}}
 
 			</form>
 		</div>
-	</div>
-	<div class="tp-row tp-row_content_left">
-		<a href="#" target="_self">
-			Вы можете удалить свой аккаунт
-		</a>
+		<div class="tp-col-6 tp-col_padding_0">
+			<div class="account-settings__delete tp-container">
+				<div class="account-delete__btn tp-row tp-row_content_right">
+					<a href="#" target="_self">
+						Вы можете удалить свой аккаунт
+					</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

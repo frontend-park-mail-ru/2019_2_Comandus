@@ -27,7 +27,9 @@ export default class Component {
 	 * Подписывамся на DOM-события и вызываем методы postRender()
 	 * всех используемых дочерних компонентов.
 	 */
-	postRender() {}
+	postRender() {
+		this._el = document.getElementById(this._id);
+	}
 
 	get data() {
 		return this._data;
@@ -38,9 +40,10 @@ export default class Component {
 	}
 
 	stateChanged() {
+		const el = document.getElementById(this._id);
 		this.html = this.render();
-		if (this.el) {
-			this.el.replaceWith(htmlToElement(this.html));
+		if (el) {
+			el.replaceWith(htmlToElement(this.html));
 		}
 		this.postRender();
 	}
@@ -60,4 +63,6 @@ export default class Component {
 	attachToParent() {
 		this._parent.innerHTML = this.html;
 	}
+
+	onDestroy() {}
 }

@@ -17,6 +17,7 @@ import {
 	levelsRadio,
 	jobTypes,
 } from '@app/constants';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {

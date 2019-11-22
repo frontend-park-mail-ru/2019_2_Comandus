@@ -9,6 +9,7 @@ import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
+import config from '@app/config';
 import { router } from '../../../../index';
 
 export default class Navbar extends Component {
@@ -24,15 +25,6 @@ export default class Navbar extends Component {
 			{ url: '/jobs/?type=vacancy', text: 'Вакансии' },
 		];
 
-		if (this.data.loggedIn && !this.data.isClient) {
-			jobItems.push({ url: '/saved', text: 'Закладки' });
-			jobItems.push({ url: '/proposals', text: 'Отклики' });
-			jobItems.push({
-				url: `/freelancers/${this.data.user.freelancerId}`,
-				text: 'Профиль',
-			});
-		}
-
 		this._dropdown = new Dropdown({
 			text: 'Работа',
 			items: jobItems,
@@ -43,9 +35,32 @@ export default class Navbar extends Component {
 			...this.props,
 		});
 
+		const profileItems = [];
+
+		if (this.data.loggedIn) {
+			profileItems.push({
+				url: `/freelancers/${this.data.user.freelancerId}`,
+				text: 'Профиль',
+			});
+			if (!this.data.isClient) {
+				profileItems.push({ url: '/saved', text: 'Закладки' });
+				profileItems.push({ url: '/proposals', text: 'Отклики' });
+				profileItems.push({ url: '/messages', text: 'Сообщения' });
+			}
+			profileItems.push({ url: config.urls.settings, text: 'Настройки' });
+		}
+
+		this._profileDropdown = new Dropdown({
+			text: 'Профиль: ' + (this.data.isClient ? 'Заказчик' : 'Фрилансер'),
+			items: profileItems,
+			hover: true,
+			toggleClassname: 'nav__item',
+		});
+
 		this.data = {
 			_dropdown: this._dropdown.render(),
 			userMenu: this._userMenu.render(),
+			profileDropdown: this._profileDropdown.render(),
 		};
 		this.html = template({
 			...this.props,
@@ -57,6 +72,7 @@ export default class Navbar extends Component {
 
 	postRender() {
 		this._dropdown.postRender();
+		this._profileDropdown.postRender();
 		this._userMenu.postRender();
 
 		this.toggler = document.querySelector('.navbar__toggler');

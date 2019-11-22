@@ -30,11 +30,9 @@
 					Фрилансеры
 				</a>
 			</li>
-			<li class="nav__item">
-				<a href="/messages" target="_self" role="menuitem" class="nav__link">
-					Сообщения
-				</a>
-			</li>
+			{{#if loggedIn}}
+				{{{profileDropdown}}}
+			{{/if}}
 		</ul>
 		{{{userMenu}}}
 	</div>

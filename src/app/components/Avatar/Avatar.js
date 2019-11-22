@@ -1,150 +1,126 @@
 import Component from '@frame/Component';
 import template from './Avatar.handlebars';
-import { htmlToElement } from '@modules/utils';
-import './Avatar.css';
+import './Avatar.scss';
+import { defaultAvatarUrl } from '@modules/utils';
+import fileUploadModal from '@components/modalViews/fileUploadModal';
+import Modal from '@components/Modal/Modal';
+import Button from '@components/inputs/Button/Button';
+import store from '@modules/store';
 import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
 import config from '@app/config';
 
 export class Avatar extends Component {
-	_modal;
-	_avatar;
-	_fileSelect;
-	_uploadBtn;
-
 	constructor({
-		parent = document.body,
-		imgUrl = `${config.baseAPIUrl}${'/account/download-avatar' +
-			'?'}${new Date().getTime()}`,
+		imgUrl = defaultAvatarUrl('F', 'W', 200),
 		imgAlt = 'user avatar',
 		imgWidth = 120,
 		imgHeight = 120,
+		changing = false,
 		...props
 	}) {
 		super(props);
-		this.props = {
-			...props,
+
+		const avatarId = document.location.pathname.split('/').pop();
+		const isSettings = avatarId === 'settings';
+
+		const user = store.get(['user']);
+
+		this.data = {
 			imgUrl,
 			imgAlt,
 			imgWidth,
 			imgHeight,
+			changing,
+			user,
+			avatarId,
+			isSettings,
 		};
-		this._parent = parent;
+
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
 	render() {
-		const html = template({
-			data: this.data,
-			props: this.props,
-		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
+		let avatarUrl = defaultAvatarUrl('F', 'W');
+		if (this.data.changing) {
+			if (this.data.user) {
+				// console.log('test id: '+ this.data.user.id);
+				if (
+					!this.data.isSettings &&
+					!(this.data.user.id == this.data.avatarId)
+				) {
+					this.data.changing = false;
+				} else {
+					avatarUrl = defaultAvatarUrl(
+						this.data.user.firstName[0],
+						this.data.user.secondName[0],
+					);
+				}
+			}
 		}
-		this._el = newElement;
+		if (this.data.changing) {
+			this._avatarUpload = new fileUploadModal({
+				description:
+					'Вы можете загрузить изображение в формате JPG, GIF или PNG',
+			});
+
+			this._avatarChangeModal = new Modal({
+				title: 'Загрузка новой фотографии',
+				children: [this._avatarUpload.render()],
+			});
+
+			const onClickModal = () => {
+				console.log('i was been pressed');
+				this._avatarChangeModal.show();
+			};
+
+			this._changeBtn = new Button({
+				type: 'button',
+				noFit: true,
+				text: 'Изменить',
+				className: 'avatar-block__change-link btn_secondary',
+				onClick: onClickModal.bind(this),
+			});
+
+			this.data = {
+				changeBtn: this._changeBtn.render(),
+				avatarChangeModal: this._avatarChangeModal.render(),
+			};
+		}
+
+		this.html = template({
+			...this.props,
+			...this.data,
+			imgUrl: avatarUrl,
+		});
+
+		return this.html;
 	}
 
 	postRender() {
-		this._fileSelect = this._el.querySelector('#upload-avatar-select');
-		const fileElem = this._el.querySelector('#upload-avatar-input');
-		const imgThumb = this._el.querySelector('#avatar-thumb');
-		const changeBtn = this._el.querySelector('#change-btn');
-		this._modal = this._el.querySelector('#myModal');
-		const closeSpan = this._el.querySelectorAll('.close')[0];
-		this._uploadBtn = this._el.querySelector('#upload-avatar');
-		this._avatar = this._el.querySelector('#avatar');
+		if (!this.data.changing) {
+			return;
+		}
 
-		let avatarFile = null;
-
-		changeBtn.onclick = (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			this._modal.style.display = 'block';
-			imgThumb.innerHTML = '';
-		};
-
-		closeSpan.onclick = () => {
-			this._modal.style.display = 'none';
-			this._fileSelect.textContent = 'Выбрать файл';
-			this._fileSelect.classList.add('tp-button-primary');
-			this._uploadBtn.style.display = 'none';
-		};
-
-		window.onclick = (event) => {
-			if (event.target === this._modal) {
-				this._modal.style.display = 'none';
-				this._fileSelect.textContent = 'Выбрать файл';
-				this._fileSelect.classList.add('tp-button-primary');
-				this._uploadBtn.style.display = 'none';
-			}
-		};
-
-		this._fileSelect.addEventListener(
-			'click',
-			(e) => {
-				if (fileElem) {
-					fileElem.click();
-				}
-				e.preventDefault();
-			},
-			false,
+		this._el = document.getElementById(this._id);
+		this._avatarUpload.postRender();
+		this._changeBtn.postRender();
+		this._avatarChangeModal.postRender();
+		this._avatarUpload.addOnUpload(
+			this._avatarChangeModal.close.bind(this._avatarChangeModal),
 		);
-
-		fileElem.addEventListener(
-			'change',
-			(e) => {
-				const { files } = e.target;
-				if (files.length) {
-					const file = files[0];
-					avatarFile = file;
-					imgThumb.innerHTML = '';
-
-					const img = document.createElement('img');
-					img.src = window.URL.createObjectURL(file);
-					img.height = 120;
-					img.onload = function() {
-						window.URL.revokeObjectURL(this.src);
-					};
-					imgThumb.appendChild(img);
-					this._fileSelect.textContent = 'Выбрать другой файл';
-					this._fileSelect.classList.remove('tp-button-primary');
-					this._uploadBtn.style.display = 'inline-block';
-				}
-			},
-			false,
+		this._avatarUpload.addElementToChange(
+			this.el.querySelector('#avatar-img'),
 		);
-
-		this._uploadBtn.addEventListener('click', (event) => {
-			if (avatarFile) {
-				const formData = new FormData();
-				formData.append('file', avatarFile);
-
-				bus.on(
-					'account-avatar-upload-response',
-					this.onUploadAvatarResponse,
-				);
-				bus.emit('account-avatar-upload', formData);
-			}
-		});
 	}
 
-	onUploadAvatarResponse = (response) => {
-		bus.off('account-avatar-upload-response', this.onUploadAvatarResponse);
+	userUpdated = () => {
+		const user = store.get(['user']);
+		this.data = {
+			user,
+		};
 
-		response
-			.then((res) => {
-				this._avatar.src = `${
-					config.baseAPIUrl
-				}${'/account/download-avatar' + '?'}${new Date().getTime()}`;
-
-				this._modal.style.display = 'none';
-				this._fileSelect.textContent = 'Выбрать файл';
-				this._fileSelect.classList.add('tp-button-primary');
-				this._uploadBtn.style.display = 'none';
-			})
-			.catch((error) => {
-				console.dir(error);
-			});
+		this.stateChanged();
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
 	};
 }

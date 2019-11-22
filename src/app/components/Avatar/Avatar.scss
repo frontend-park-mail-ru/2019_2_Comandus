@@ -1,0 +1,27 @@
+@import '~@assets/scss/global';
+
+.change-btn {
+	display: block;
+	text-align: center;
+}
+
+.avatar-block {
+	&__image-wrapper {
+		display: flex;
+		margin-right: 10px;
+	}
+	&__image {
+		margin: 12px 12px;
+		border-radius: 50%;
+		box-shadow: 1px 1px 3px 2px $secondary-color;
+	}
+	&__change-link {
+
+	}
+	&__change-link-wrapper {
+		display: flex;
+		margin: 0 22px 0 12px;
+		flex-direction: column;
+		align-items: stretch;
+	}
+}

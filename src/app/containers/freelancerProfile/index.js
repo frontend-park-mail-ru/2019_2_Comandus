@@ -21,6 +21,7 @@ import CardBoard from '@components/dataDisplay/CardBoard';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import { Avatar } from '@components/Avatar/Avatar';
 import bus from '@frame/bus';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
@@ -54,7 +55,7 @@ export class Profile extends Component {
 		];
 
 		const freelancerObj = {
-			avatarUrl: defaultAvatarUrl('А', 'К', 200),
+			avatarUrl: defaultAvatarUrl('F', 'W', 200),
 			firstName: 'Александр',
 			lastName: 'Косенков',
 			city: 'Москва, Россия',
@@ -131,6 +132,11 @@ export class Profile extends Component {
 			[],
 		);
 
+		this._avatar = new Avatar({
+			imgUrl: this.data.avatarUrl,
+			changing: true,
+		});
+
 		this._hourCost = new FeatureComponent({
 			title: 'Стоимость часа работы',
 			data: this.data.hourCost + ' ₽',
@@ -150,11 +156,13 @@ export class Profile extends Component {
 
 		this._projectSuggestBtn = new Button({
 			type: 'button',
+			noFit: true,
 			text: 'Предложить проект',
 		});
 		this._saveBtn = new Button({
 			type: 'button',
 			text: 'Добавить в избранное',
+			noFit: true,
 			className: 'btn_secondary',
 		});
 
@@ -169,6 +177,7 @@ export class Profile extends Component {
 		});
 
 		this.data = {
+			profileAvatar: this._avatar.render(),
 			profileInfoFeatures: new FeaturesList({
 				children: [
 					this._hourCost.render(),
@@ -210,6 +219,10 @@ export class Profile extends Component {
 		this.attachToParent();
 
 		return this.html;
+	}
+
+	postRender() {
+		this._avatar.postRender();
 	}
 
 	freelancerUpdated = (err) => {
