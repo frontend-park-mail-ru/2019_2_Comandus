@@ -27,13 +27,13 @@ export default class fileUploadModal extends Component {
 			id: 'upload-avatar-select',
 			text: 'Выбрать файл',
 			className: 'btn_primary',
-			onClick: this.selectBtnHandler.bind(this),
+			onClick: this.selectBtnHandler,
 		});
 		this._uploadBtn = new Button({
 			id: 'upload-avatar',
 			text: 'Сохранить',
 			className: 'btn_primary',
-			onClick: this.uploadBtnHandler.bind(this),
+			onClick: this.uploadBtnHandler,
 		});
 
 		this.data = {
@@ -50,13 +50,14 @@ export default class fileUploadModal extends Component {
 	}
 
 	postRender() {
+		super.postRender();
+
 		this._selectBtn.postRender();
 		this._uploadBtn.postRender();
 
-		this._el = document.getElementById(this._id);
-
+		// debugger;
 		if (!this._el) {
-			console.log('this._el for ' + this.is + ' is null');
+			console.log('this._el for ' + this.id + ' is null');
 			return;
 		}
 
@@ -102,6 +103,7 @@ export default class fileUploadModal extends Component {
 		this._elementToChange = elementToChange;
 	}
 
+	// Здесь this останется объектом этого класса! Так как это метод класса
 	selectBtnHandler = (event) => {
 		if (this._fileInput) {
 			this._fileInput.click();

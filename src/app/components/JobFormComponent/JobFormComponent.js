@@ -117,9 +117,6 @@ class JobFormComponent extends Component {
 		});
 
 		this.data = {
-			pageHeader: new CardTitle({
-				title: 'Размещение заказа',
-			}).render(),
 			textField: new FieldGroup({
 				children: [textField.render()],
 				label: 'Название',

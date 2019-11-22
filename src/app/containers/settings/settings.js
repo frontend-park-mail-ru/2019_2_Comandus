@@ -8,45 +8,88 @@ import config from '../../config';
 import { FreelancerSettings } from '@components/FreelancerSettings/FreelancerSettings';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import './settings.scss';
+import AccountService from '@services/AccountService';
+import bus from '@frame/bus';
+import { router } from '../../../index';
+import { busEvents } from '@app/constants';
 
 export class Settings extends Component {
 	constructor({ ...props }) {
 		super(props);
+
+		this._tabs = [
+			{
+				title: 'Аккаунт',
+				link: 'account',
+				component: Account,
+				show: false,
+			},
+			{
+				title: 'Настройки профиля',
+				link: 'freelancer',
+				component: FreelancerSettings,
+				show: false,
+			},
+			{
+				title: 'Настройки компании',
+				link: 'company',
+				component: Company,
+				show: false,
+			},
+			{
+				title: 'Изменение пароля',
+				link: 'password',
+				component: ChangePassword,
+				show: false,
+			},
+		];
+
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
 	render() {
-		this._myAccount = new Account({});
-		this._companySettings = new Company({});
-		this._freelancerSettings = new FreelancerSettings({});
-		this._changePassword = new ChangePassword({});
+		this._tabs = this._tabs.map((tab) => {
+			switch (tab.link) {
+			case 'company':
+				tab.show = this.data.isClient;
+				break;
+			case 'freelancer':
+				tab.show = !this.data.isClient;
+				break;
+			default:
+				tab.show = true;
+			}
+			return tab;
+		});
+
+		// Обращаться к GET параметрам надо в render
+		const currentLink = this.props.params.tab || 'account';
+		this._currentTab = this._tabs.find((tab) => {
+			return tab.link === currentLink;
+		});
+		if (
+			!this._currentTab ||
+			(this.data.isClient && this._currentTab.link === 'freelancer') ||
+			(!this.data.isClient && this._currentTab.link === 'company')
+		) {
+			this._currentTab = this._tabs.find((tab) => {
+				return tab.link === 'account';
+			});
+		}
+
+		this._currentTabSettings = new this._currentTab.component({});
 
 		this.data = {
 			...this.data,
-			pageHeader: new CardTitle({
-				title: 'Настройки',
-			}).render(),
 			isClientMode:
 				getCookie(config.cookieAccountModeName) ===
 				config.accountTypes.client,
 			isFreelancerMode:
 				getCookie(config.cookieAccountModeName) ===
 				config.accountTypes.freelancer,
-			myAccount: this._myAccount.render(),
-			companySettings: this._companySettings.render(),
-			freelancerSettings: this._freelancerSettings.render(),
-			changePassword: this._changePassword.render(),
-			myAccountHeader: new CardTitle({
-				title: 'Основное',
-			}).render(),
-			companySettingsHeader: new CardTitle({
-				title: 'О компании',
-			}).render(),
-			freelancerSettingsHeader: new CardTitle({
-				title: 'Дополнительно',
-			}).render(),
-			changePasswordHeader: new CardTitle({
-				title: 'Изменение пароля',
-			}).render(),
+			settingsComponent: this._currentTabSettings.render(),
+			tabs: this._tabs,
+			currentTab: this._currentTab,
 		};
 
 		this.html = template(this.data);
@@ -57,10 +100,23 @@ export class Settings extends Component {
 
 	postRender() {
 		super.postRender();
-
-		this._myAccount.postRender();
-		this._companySettings.postRender();
-		this._freelancerSettings.postRender();
-		this._changePassword.postRender();
+		this._currentTabSettings.postRender();
 	}
+
+	userUpdated = () => {
+		const isClient = AccountService.isClient();
+
+		this.data = {
+			isClient,
+		};
+
+		if (
+			(!isClient && this.props.params.tab === 'company') ||
+			(isClient && this.props.params.tab === 'freelancer')
+		) {
+			router.push(config.urls.settings);
+		}
+
+		this.stateChanged();
+	};
 }

@@ -9,6 +9,7 @@ import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import countriesCitiesRow from '@assets/countries.min.json';
 import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
 import { Avatar } from '@components/Avatar/Avatar';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
@@ -105,6 +106,12 @@ export class Company extends Component {
 		});
 
 		this.data = {
+			mainSettingsHeader: new CardTitle({
+				title: 'Сведения о компании',
+			}).render(),
+			contactsSettingsHeader: new CardTitle({
+				title: 'Контакты компании',
+			}).render(),
 			companyLogo: this._companyLogo.render(),
 			citySelect: this._citySelect.render(),
 			siteField: new FieldGroup({

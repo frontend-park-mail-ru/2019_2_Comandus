@@ -9,13 +9,11 @@
 
 	<div class="navbar__collapse">
 		<ul class="navbar__nav" role="menubar">
-			{{#if isClient}}
-			{{else}}
 			<li class="nav__item">
 				{{!--				<a href="/jobs?type=project" target="_self" role="menuitem" class="nav__link">--}}
 				{{!--					icon--}}
 				{{!--				</a>--}}
-				<form method="GET" role="search" action="/search">
+				<form method="GET" role="search">
 					<div>
 						<span class="navbar__search-input">
 							<input type="text" placeholder="Поиск работ">
@@ -24,7 +22,6 @@
 					</div>
 				</form>
 			</li>
-			{{/if}}
 		</ul>
 		<ul class="navbar__nav navbar__nav_right" role="menubar">
 			{{{_dropdown}}}

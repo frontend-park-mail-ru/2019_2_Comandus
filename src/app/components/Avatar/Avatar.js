@@ -8,6 +8,7 @@ import Button from '@components/inputs/Button/Button';
 import store from '@modules/store';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
+import config from '@app/config';
 
 export class Avatar extends Component {
 	constructor({
@@ -97,18 +98,20 @@ export class Avatar extends Component {
 	}
 
 	postRender() {
-		if (this.data.changing) {
-			this._el = document.getElementById(this._id);
-			this._avatarUpload.postRender();
-			this._changeBtn.postRender();
-			this._avatarChangeModal.postRender();
-			this._avatarUpload.addOnUpload(
-				this._avatarChangeModal.close.bind(this._avatarChangeModal),
-			);
-			this._avatarUpload.addElementToChange(
-				this.el.querySelector('#avatar-img'),
-			);
+		if (!this.data.changing) {
+			return;
 		}
+
+		this._el = document.getElementById(this._id);
+		this._avatarUpload.postRender();
+		this._changeBtn.postRender();
+		this._avatarChangeModal.postRender();
+		this._avatarUpload.addOnUpload(
+			this._avatarChangeModal.close.bind(this._avatarChangeModal),
+		);
+		this._avatarUpload.addElementToChange(
+			this.el.querySelector('#avatar-img'),
+		);
 	}
 
 	userUpdated = () => {
@@ -118,5 +121,6 @@ export class Avatar extends Component {
 		};
 
 		this.stateChanged();
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
 	};
 }

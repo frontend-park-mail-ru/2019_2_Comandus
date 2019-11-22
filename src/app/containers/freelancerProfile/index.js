@@ -176,9 +176,6 @@ export class Profile extends Component {
 					this._selected.render(),
 				],
 			}).render(),
-			pageHeader: new CardTitle({
-				title: 'Профиль',
-			}).render(),
 			historyCardHeader: new CardTitle({
 				children: [this._sortSelect.render()],
 				title: 'История работ и отзывы',

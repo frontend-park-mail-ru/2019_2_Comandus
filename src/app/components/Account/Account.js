@@ -95,7 +95,7 @@ export class Account extends Component {
 
 	postRender() {
 		super.postRender();
-
+		console.log('Account postrender');
 		this._avatar.postRender();
 
 		const form = this._el.querySelector('#mainSettingsForm');
@@ -126,6 +126,7 @@ export class Account extends Component {
 				};
 				this.stateChanged();
 			});
+		bus.off('account-get-response', this.onAccountReceived);
 	}
 
 	onAccountPutResponse = (response) => {

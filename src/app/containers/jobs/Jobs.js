@@ -25,11 +25,6 @@ export default class Jobs extends Component {
 	}
 
 	render() {
-		this.data = {
-			pageHeader: new CardTitle({
-				title: 'Работа',
-			}).render(),
-		};
 		this.html = template(this.data);
 		this.attachToParent();
 

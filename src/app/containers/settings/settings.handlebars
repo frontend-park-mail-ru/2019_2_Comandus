@@ -1,61 +1,23 @@
 <div class="tp-container tp-centered-container ">
-	<div class="tp-row tp-row_content_left">
-		<div class="tp-col-12 tp-col_padding_0">
-			<div class="card card_page-header">
-				{{{ pageHeader }}}
-			</div>
-		</div>
-	</div>
 	<div class="tp-row">
 		<div class="tp-col-3 tp-col_padding_0 settings-sidebar">
 			<ul class="settings-sidebar__navigate" role="menubar">
-				<li class="sidebar-navigate__item">
-					<a href="#" target="_self" role="menuitem">
-						Основное
-					</a>
-				</li>
-				<li class="sidebar-navigate__item">
-					<a href="#" target="_self" role="menuitem">
-						Дополнительно
-					</a>
-				</li>
-				<li class="sidebar-navigate__item sidebar-navigate__item_active">
-					<a href="#" target="_self" role="menuitem">
-						О компании
-					</a>
-				</li>
-				<li class="sidebar-navigate__item">
-					<a href="#" target="_self" role="menuitem">
-						Изменение пароля
-					</a>
-				</li>
+				{{#each tabs}}
+					{{#if show}}
+					<li class="sidebar-navigate__item {{#if_eq link ../currentTab.link }}sidebar-navigate__item_active{{/if_eq}} ">
+						<a href="?tab={{ link }}" target="_self" role="menuitem">
+							{{ title }}
+						</a>
+					</li>
+					{{/if}}
+				{{/each}}
 			</ul>
 		</div>
 		<div class="tp-col-9">
-			<div class="settings-account card">
-				{{{ myAccountHeader }}}
-				{{{ myAccount }}}
+			<div class="settings-account">
+				{{{ settingsComponent }}}
 			</div>
-			{{#if data.isClientMode}}
-			<div class="settings-company card">
-				{{{ companySettingsHeader }}}
-				{{{ companySettings }}}
-			</div>
-			{{else}}
-			<div class="settings-freelancer">
-<!--				{{{ freelancerSettingsHeader }}}-->
-				{{{ freelancerSettings }}}
-			</div>
-			<div class="settings-company card">
-				{{{ companySettingsHeader }}}
-				{{{ companySettings }}}
-			</div>
-			{{/if}}
 {{!--				<div id="{{data.children.notificationSettingsComponent}}"></div>--}}
-			<div class="settings-password card">
-				{{{ changePasswordHeader }}}
-				{{{ changePassword }}}
-			</div>
 {{!--				<div id="{{data.children.authHistoryComponent}}"></div>--}}
 {{!--				<div id="{{data.children.securityQuestionComponent}}"></div>--}}
 		</div>
