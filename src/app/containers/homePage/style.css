@@ -33,25 +33,25 @@ h1.tp-main-text {
 
 @keyframes likehrline-rotation-even {
 	0% {
-		transform: rotate(15deg)
+		transform: rotate(15deg);
 	}
 	50% {
-		transform: rotate(-15deg)
+		transform: rotate(-15deg);
 	}
 	to {
-		transform: rotate(15deg)
+		transform: rotate(15deg);
 	}
 }
 
 @keyframes likehrline-rotation-odd {
 	0% {
-		transform: rotate(-15deg)
+		transform: rotate(-15deg);
 	}
 	50% {
-		transform: rotate(15deg)
+		transform: rotate(15deg);
 	}
 	to {
-		transform: rotate(-15deg)
+		transform: rotate(-15deg);
 	}
 }
 
@@ -59,7 +59,7 @@ h1.tp-main-text {
 	height: 50px;
 	line-height: 50px;
 	font-size: 0;
-	text-align: center
+	text-align: center;
 }
 
 .like-hr .like-hr__line {
@@ -67,17 +67,17 @@ h1.tp-main-text {
 	height: 2px;
 	width: 50px;
 	background-color: #1f7ce7;
-	margin: 0 -1px
+	margin: 0 -1px;
 }
 
 .like-hr .like-hr__line:nth-child(2n) {
 	transform: rotate(15deg);
-	animation: 3s likehrline-rotation-even infinite
+	animation: 3s likehrline-rotation-even infinite;
 }
 
 .like-hr .like-hr__line:nth-child(odd) {
 	transform: rotate(-15deg);
-	animation: 3s likehrline-rotation-odd infinite
+	animation: 3s likehrline-rotation-odd infinite;
 }
 
 .block__title {
@@ -106,7 +106,6 @@ h1.tp-main-text {
 	grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
 }
 
-
 .from-freelancers-text {
 	text-align: end;
 	font-size: 4em;
@@ -121,10 +120,11 @@ h1.tp-main-text {
 
 .how-it-works {
 	height: 300px;
-	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.15);
 	border-radius: 4px;
 	padding: 10px;
 	text-align: center;
+	margin-top: 20px;
 }
 
 @media (max-width: 1024px) {
