@@ -3,3 +3,151 @@ h1.tp-main-text {
 	text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 	margin-top: 20%;
 }
+
+.block {
+	position: relative;
+	padding: 0 20px;
+}
+
+.block:before {
+	content: ' ';
+	display: table;
+}
+
+.block-1 {
+	background-color: #2b323a;
+	min-height: 100vh;
+	z-index: 0;
+	color: #ffffff;
+	padding-top: 18%;
+}
+
+.block__pulticles {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+@keyframes likehrline-rotation-even {
+	0% {
+		transform: rotate(15deg)
+	}
+	50% {
+		transform: rotate(-15deg)
+	}
+	to {
+		transform: rotate(15deg)
+	}
+}
+
+@keyframes likehrline-rotation-odd {
+	0% {
+		transform: rotate(-15deg)
+	}
+	50% {
+		transform: rotate(15deg)
+	}
+	to {
+		transform: rotate(-15deg)
+	}
+}
+
+.like-hr {
+	height: 50px;
+	line-height: 50px;
+	font-size: 0;
+	text-align: center
+}
+
+.like-hr .like-hr__line {
+	display: inline-block;
+	height: 2px;
+	width: 50px;
+	background-color: #1f7ce7;
+	margin: 0 -1px
+}
+
+.like-hr .like-hr__line:nth-child(2n) {
+	transform: rotate(15deg);
+	animation: 3s likehrline-rotation-even infinite
+}
+
+.like-hr .like-hr__line:nth-child(odd) {
+	transform: rotate(-15deg);
+	animation: 3s likehrline-rotation-odd infinite
+}
+
+.block__title {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.block__hr {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.main-title {
+	font-size: 4.9em;
+}
+
+.thumb-up-img {
+	height: 20em;
+	padding-left: 60px;
+}
+
+.from-freelancers {
+	padding-top: 40px;
+	display: grid;
+	grid-column-gap: 40px;
+	grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+}
+
+
+.from-freelancers-text {
+	text-align: end;
+	font-size: 4em;
+}
+
+.how-it-works-wrap {
+	display: grid;
+	grid-column-gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	padding: 40px 20px;
+}
+
+.how-it-works {
+	height: 300px;
+	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, .15);
+	border-radius: 4px;
+	padding: 10px;
+	text-align: center;
+}
+
+@media (max-width: 1024px) {
+	.from-freelancers-text {
+		font-size: 3em;
+	}
+
+	.from-freelancers {
+		grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.from-freelancers-text {
+		text-align: center;
+		font-size: 2em;
+	}
+
+	.thumb-up-img-wrap {
+		text-align: center;
+	}
+
+	.thumb-up-img {
+		padding: 0;
+	}
+}

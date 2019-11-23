@@ -1,43 +1,91 @@
-<div id="tp-main-page-photo">
-{{!--	<div class="shining-wrap">--}}
-{{!--		<p class="shining">Shining Text Animation Effects</p>--}}
-{{!--	</div>--}}
-	<div class="tp-shadow">
-
-
-		<div class="tp-row tp-row-centered tp-h-100">
-			<div class="tp-container">
-				<h1 class="tp-main-text">
-					ДОСТУПНЫЙ ФРИЛАНС ДЛЯ КАЖДОГО
-				</h1>
-				<div class="tp-row tp-row-space-around">
-					<a class="tp-main-screen-buttons" href="/signup?type=freelancer">
-						Найти фрилансера
-					</a>
-					<a class="tp-main-screen-buttons" href="/signup?type=client">
-						Стать фрилансером
-					</a>
-				</div>
-{{!--				<div>--}}
-{{!--					<div class="chasing-container">--}}
-{{!--						<svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">--}}
-{{!--							<circle cx="170" cy="170" r="160" stroke="#E2007C"/>--}}
-{{!--							<circle cx="170" cy="170" r="135" stroke="#404041"/>--}}
-{{!--							<circle cx="170" cy="170" r="110" stroke="#E2007C"/>--}}
-{{!--							<circle cx="170" cy="170" r="85" stroke="#404041"/>--}}
-{{!--						</svg>--}}
-{{!--					</div>--}}
-{{!--				</div>--}}
+{{!--<div id="tp-main-page-photo">--}}
+<div id={{_id}} class="main-page">
+	<section class="block block-1">
+		<canvas class="block__pulticles" id="block__pulticles"></canvas>
+		<div>
+			<h1 class="block__title main-title">Биржа фриланса</h1>
+			<h2 class="block__title">Поиск надежных фрилансеров для удаленной работы</h2>
+		</div>
+	</section>
+	<section class="block">
+		<div class="from-freelancers">
+			<div>
+				<h2 class="block__title from-freelancers-text">Для фриланса</h2>
+				<h2 class="block__title from-freelancers-text">от фрилансеров</h2>
+			</div>
+			<div class="thumb-up-img-wrap">
+				<img class="thumb-up-img" src="./../../../assets/img/P1.png" alt=""/>
 			</div>
 		</div>
-{{!--		<div class="">--}}
-{{!--			<h1>Pulse Animation</h1>--}}
-{{!--			<svg class="pulse" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">--}}
-{{!--				<circle id="Oval" cx="512" cy="512" r="512"></circle>--}}
-{{!--				<circle id="Oval" cx="512" cy="512" r="512"></circle>--}}
-{{!--				<circle id="Oval" cx="512" cy="512" r="512"></circle>--}}
-{{!--			</svg>--}}
-{{!--		</div>--}}
-	</div>
+		<div class="like-hr block__hr">
+			<div class="like-hr__line"></div>
+			<div class="like-hr__line"></div>
+			<div class="like-hr__line"></div>
+			<div class="like-hr__line"></div>
+		</div>
+	</section>
+	<section class="block">
+		<div class="tp-container tp-centered-container">
+			<h2 class="block__title">Как это работает?</h2>
+			<div class="how-it-works-wrap">
+				<div class="how-it-works">
+					<h3>Разместите задание</h3>
+				</div>
+				<div class="how-it-works">
+					<h3>Фрилансеры предложат свои услуги</h3>
+				</div>
+				<div class="how-it-works">
+					<h3>Выберите лучшего исполнителя по отзывам или цене</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	{{!--	<div class="shining-wrap">--}}
+	{{!--		<p class="shining">Shining Text Animation Effects</p>--}}
+	{{!--	</div>--}}
+	{{!--	<div class="tp-shadow">--}}
+
+
+
+	{{!--		<div class="tp-row tp-row-centered tp-h-100">--}}
+	{{!--			<div class="tp-container">--}}
+	{{!--				<h1 class="tp-main-text">--}}
+	{{!--					ДОСТУПНЫЙ ФРИЛАНС ДЛЯ КАЖДОГО--}}
+	{{!--				</h1>--}}
+	{{!--				<div class="tp-row tp-row-space-around">--}}
+	{{!--					<a class="tp-main-screen-buttons" href="/signup?type=freelancer">--}}
+	{{!--						Найти фрилансера--}}
+	{{!--					</a>--}}
+	{{!--					<a class="tp-main-screen-buttons" href="/signup?type=client">--}}
+	{{!--						Стать фрилансером--}}
+	{{!--					</a>--}}
+	{{!--				</div>--}}
+
+	{{!--				<div>--}}
+	{{!--					<div class="chasing-container">--}}
+	{{!--						<svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">--}}
+	{{!--							<circle cx="170" cy="170" r="160" stroke="#E2007C"/>--}}
+	{{!--							<circle cx="170" cy="170" r="135" stroke="#404041"/>--}}
+	{{!--							<circle cx="170" cy="170" r="110" stroke="#E2007C"/>--}}
+	{{!--							<circle cx="170" cy="170" r="85" stroke="#404041"/>--}}
+	{{!--						</svg>--}}
+	{{!--					</div>--}}
+	{{!--				</div>--}}
+
+	{{!--			</div>--}}
+	{{!--		</div>--}}
+
+	{{!--		<div class="">--}}
+	{{!--			<h1>Pulse Animation</h1>--}}
+	{{!--			<svg class="pulse" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">--}}
+	{{!--				<circle id="Oval" cx="512" cy="512" r="512"></circle>--}}
+	{{!--				<circle id="Oval" cx="512" cy="512" r="512"></circle>--}}
+	{{!--				<circle id="Oval" cx="512" cy="512" r="512"></circle>--}}
+	{{!--			</svg>--}}
+	{{!--		</div>--}}
+	{{!--	</div>--}}
 
 </div>
