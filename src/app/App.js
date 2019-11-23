@@ -5,6 +5,7 @@ import Footer from '@components/Footer/Footer';
 import './App.scss';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
+import SupportChat from '@components/SupportChat';
 
 class AppComponent extends Component {
 	constructor({ ...props }) {
@@ -16,10 +17,13 @@ class AppComponent extends Component {
 			...this.props,
 		});
 
+		this._supportChat = new SupportChat();
+
 		const footer = new Footer();
 
 		this.data = {
 			header: this._header.render(),
+			supportChat: this._supportChat.render(),
 			footer: footer.render(),
 		};
 
@@ -31,6 +35,7 @@ class AppComponent extends Component {
 
 	postRender() {
 		this._header.postRender();
+		this._supportChat.postRender();
 
 		bus.emit(busEvents.ON_PAGE_LOAD);
 	}
