@@ -33,6 +33,7 @@
 		margin-bottom: 10px;
 		background-color: $white;
 		transition: all 200ms ease;
+		overflow: hidden;
 		&_display {
 			opacity: 1;
 			//height: auto;
