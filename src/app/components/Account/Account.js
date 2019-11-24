@@ -13,14 +13,9 @@ export class Account extends Component {
 		super(props);
 
 		this.data = {
-			// ...this._data,
+			user: props.user,
 			loaded: false,
 		};
-
-		this.onAccountReceived = this.onAccountReceived.bind(this);
-
-		bus.on('account-get-response', this.onAccountReceived);
-		bus.emit('account-get');
 
 		this.helper = null;
 	}
@@ -97,7 +92,7 @@ export class Account extends Component {
 		super.postRender();
 		this._avatar.postRender();
 
-		const form = this._el.querySelector('#mainSettingsForm');
+		const form = this.el.querySelector('#mainSettingsForm');
 		enableValidationAndSubmit(form, (helper) => {
 			helper.event.preventDefault();
 
@@ -106,26 +101,6 @@ export class Account extends Component {
 			bus.on('account-put-response', this.onAccountPutResponse);
 			bus.emit('account-put', helper.formToJSON());
 		});
-	}
-
-	onAccountReceived(response) {
-		response
-			.then((res) => {
-				this.data = {
-					user: { ...res },
-				};
-			})
-			.catch((error) => {
-				console.error(error);
-			})
-			.finally(() => {
-				this.data = {
-					...this.data,
-					loaded: true,
-				};
-				this.stateChanged();
-			});
-		bus.off('account-get-response', this.onAccountReceived);
 	}
 
 	onAccountPutResponse = (response) => {
@@ -142,4 +117,8 @@ export class Account extends Component {
 				this.helper.setResponseText(text);
 			});
 	};
+
+	onDestroy() {
+		bus.off('account-put-response', this.onAccountPutResponse);
+	}
 }

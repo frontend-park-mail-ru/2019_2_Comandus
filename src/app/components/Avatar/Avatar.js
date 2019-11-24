@@ -8,7 +8,6 @@ import Button from '@components/inputs/Button/Button';
 import store from '@modules/store';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
-import config from '@app/config';
 
 export class Avatar extends Component {
 	constructor({
@@ -79,7 +78,7 @@ export class Avatar extends Component {
 				noFit: true,
 				text: 'Изменить',
 				className: 'avatar-block__change-link btn_secondary',
-				onClick: onClickModal.bind(this),
+				onClick: onClickModal,
 			});
 
 			this.data = {
@@ -102,7 +101,6 @@ export class Avatar extends Component {
 			return;
 		}
 
-		this._el = document.getElementById(this._id);
 		this._avatarUpload.postRender();
 		this._changeBtn.postRender();
 		this._avatarChangeModal.postRender();
@@ -115,12 +113,17 @@ export class Avatar extends Component {
 	}
 
 	userUpdated = () => {
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+
 		const user = store.get(['user']);
 		this.data = {
 			user,
 		};
 
 		this.stateChanged();
-		bus.off(busEvents.USER_UPDATED, this.userUpdated);
 	};
+
+	onDestroy() {
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+	}
 }

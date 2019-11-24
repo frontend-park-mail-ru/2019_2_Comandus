@@ -20,31 +20,54 @@ export class Settings extends Component {
 			{
 				title: 'Аккаунт',
 				link: 'account',
-				component: Account,
+				Component: Account,
+				props: {},
 				show: false,
 			},
 			{
 				title: 'Настройки профиля',
 				link: 'freelancer',
-				component: FreelancerSettings,
+				Component: FreelancerSettings,
+				props: {},
 				show: false,
 			},
 			{
 				title: 'Настройки компании',
 				link: 'company',
-				component: Company,
+				Component: Company,
+				props: {},
 				show: false,
 			},
 			{
 				title: 'Изменение пароля',
 				link: 'password',
-				component: ChangePassword,
+				Component: ChangePassword,
+				props: {},
 				show: false,
 			},
 		];
+
+		this._getAccountBlock = false;
 	}
 
 	preRender() {
+		// Ходим на бэк только если еще не получали юзера ранее
+		if (!this.data.user) {
+			bus.on('account-get-response', this.onAccountReceived);
+			// preRender может вызваться несколько раз, если быстро
+			// переключать меню. Проверка на то, что процесс получения
+			// пользователя уже идет
+			if (!this._getAccountBlock) {
+				bus.emit('account-get');
+				this._getAccountBlock = true;
+			}
+		} else {
+			// Перед каждым рендером надо обновлять информацию о роли
+			const isClient = AccountService.isClient();
+			this.data = {
+				isClient,
+			};
+		}
 		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
@@ -78,7 +101,16 @@ export class Settings extends Component {
 			});
 		}
 
-		this._currentTabSettings = new this._currentTab.component({});
+		// if (this._currentTab.component) {
+		// 	this._currentTabSettings = this._currentTab.component;
+		// } else {
+		// 	this._currentTabSettings = new this._currentTab.Component({});
+		// 	this._currentTab.component = this._currentTabSettings;
+		// }
+
+		this._currentTabSettings = new this._currentTab.Component(
+			this._currentTab.props,
+		);
 
 		this.data = {
 			...this.data,
@@ -117,12 +149,37 @@ export class Settings extends Component {
 		) {
 			router.push(config.urls.settings);
 		}
-
 		this.stateChanged();
 	};
 
+	onAccountReceived = (response) => {
+		bus.off('account-get-response', this.onAccountReceived);
+		response
+			.then((res) => {
+				this.data = {
+					user: { ...res },
+				};
+				// Обновление props компонента Account
+				this._tabs.find((tab) => {
+					return tab.link === 'account';
+				}).props.user = this.data.user;
+			})
+			.catch((error) => {
+				console.error(error);
+			})
+			.finally(() => {
+				this.data = {
+					...this.data,
+					loaded: true,
+				};
+				this._getAccountBlock = false;
+
+				this.stateChanged();
+			});
+	};
+
 	onDestroy() {
-		console.log('onDestroy');
+		bus.off('account-get-response', this.onAccountReceived);
 		bus.off(busEvents.USER_UPDATED, this.userUpdated);
 	}
 }

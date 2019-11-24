@@ -41,11 +41,14 @@ export default class Component {
 
 	stateChanged() {
 		const el = document.getElementById(this._id);
-		this.html = this.render();
+		// this.html = this.render();
 		if (el) {
-			el.replaceWith(htmlToElement(this.html));
+			el.replaceWith(htmlToElement(this.render()));
+			this.postRender();
+		} else {
+			// console.log("element " + this._id + " was destroyed!");
+			this.onDestroy();
 		}
-		this.postRender();
 	}
 
 	setProps(newProps) {
