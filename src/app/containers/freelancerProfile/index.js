@@ -15,7 +15,7 @@ import FeaturesList from '@components/dataDisplay/FeaturesList';
 import JobItem from '@components/dataDisplay/JobItem';
 import Item from '@components/surfaces/Item';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import Paginator from '@components/Paginator';
+import Paginator from '@components/navigation/Paginator';
 import PortfolioCard from '@components/dataDisplay/PortfolioCard';
 import CardBoard from '@components/dataDisplay/CardBoard';
 import Button from '@components/inputs/Button/Button';

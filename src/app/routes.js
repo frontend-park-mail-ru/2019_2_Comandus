@@ -3,7 +3,6 @@ import HomeComponent from '@containers/homePage/homePage';
 import SignUpComponent from '@containers/signupPage/signupPage';
 import LoginComponent from '@containers/loginPage/loginPage';
 import { Settings } from '@containers/settings/settings';
-import ClientSettingsComponent from '@components/ClientSettingsComponent/ClientSettingsComponent';
 import JobFormComponent from '@components/JobFormComponent/JobFormComponent';
 import { Profile } from '@containers/freelancerProfile';
 import { getCookie } from '@modules/utils';
@@ -22,7 +21,6 @@ const routes = [
 	{ path: '/signup', Component: offlineHOC(SignUpComponent) },
 	{ path: '/login', Component: offlineHOC(LoginComponent) },
 	{ path: '/settings', Component: offlineHOC(Settings), props: {} },
-	{ path: '/settings-template', Component: ClientSettingsComponent },
 	// {
 	// 	path: '/new-project',
 	// 	Component: JobFormComponent,

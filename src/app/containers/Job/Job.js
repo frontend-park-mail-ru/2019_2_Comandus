@@ -1,27 +1,16 @@
 import Component from '@frame/Component';
 import template from './Job.handlebars';
 import './Job.scss';
-import {
-	jobTypes,
-	levels,
-	dueTimes,
-	busEvents,
-	specialitiesRow,
-} from '@app/constants';
+import { jobTypes, levels, busEvents, specialitiesRow } from '@app/constants';
 import Button from '@components/inputs/Button/Button';
-import TextField from '@components/inputs/TextField/TextField';
-import { Select } from '@components/inputs/Select/Select';
-import { toSelectElement } from '@modules/utils';
-import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import FeaturesList from '@components/dataDisplay/FeaturesList';
 import store from '@modules/store';
 import bus from '@frame/bus';
 import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
-import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
-import { router } from '../../../index';
-import config from '@app/config';
+import Modal from '@components/Modal/Modal';
+import SendProposalForm from '@components/SendProposalForm';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -47,37 +36,24 @@ export default class Job extends Component {
 	}
 
 	render() {
+		this.sendProposalForm = new SendProposalForm({
+			jobId: this.props.params.jobId,
+			onCancel: this.closeModal,
+		});
+		this.sendProposalFormModal = new Modal({
+			title: 'Ответ фрилансера',
+			children: [this.sendProposalForm.render()],
+		});
+
 		this._submitProposal = new Button({
 			type: 'submit',
 			text: 'Ответить на проект',
+			onClick: this.onOpenModal,
 		});
 		this._save = new Button({
 			type: 'button',
 			text: 'В закладки',
 			className: 'btn_secondary',
-		});
-		this._cancel = new Button({
-			type: 'button',
-			text: 'Отмена',
-			className: 'btn_secondary',
-		});
-		this.budgetField = new TextField({
-			required: true,
-			type: 'number',
-			label: 'Предлагаемый бюджет, ₽',
-			placeholder: '',
-			classes: 'width-auto',
-		});
-		this.proposalField = new TextField({
-			required: true,
-			type: 'textarea',
-			label: 'Ваш ответ по проекту',
-			placeholder: '',
-		});
-		this._timeSelect = new Select({
-			items: dueTimes.map(toSelectElement),
-			attributes: 'required',
-			className: 'width-auto',
 		});
 
 		this._jobType = new FeatureComponent({
@@ -96,19 +72,6 @@ export default class Job extends Component {
 		this.data = {
 			submitProposal: this._submitProposal.render(),
 			saveBtn: this._save.render(),
-			cancelBtn: this._cancel.render(),
-			budgetField: new FieldGroup({
-				children: [this.budgetField.render()],
-				label: this.budgetField.data.label,
-			}).render(),
-			proposalField: new FieldGroup({
-				children: [this.proposalField.render()],
-				label: this.proposalField.data.label,
-			}).render(),
-			timeSelect: new FieldGroup({
-				children: [this._timeSelect.render()],
-				label: 'Сколько времени займет этот проект',
-			}).render(),
 			jobFeatures: new FeaturesList({
 				children: [
 					this._jobType.render(),
@@ -117,6 +80,7 @@ export default class Job extends Component {
 				],
 				className: 'job-details__inner-item',
 			}).render(),
+			sendProposalFormModal: this.sendProposalFormModal.render(),
 		};
 
 		this.html = template(this.data);
@@ -126,23 +90,9 @@ export default class Job extends Component {
 	}
 
 	postRender() {
-		const form = this.el.querySelector('#addProposal');
-		if (form) {
-			enableValidationAndSubmit(form, (helper) => {
-				helper.event.preventDefault();
-
-				this.helper = helper;
-
-				bus.on(
-					busEvents.PROPOSAL_CREATE_RESPONSE,
-					this.onProposalsResponse,
-				);
-				bus.emit(busEvents.PROPOSAL_CREATE, {
-					jobId: this.props.params.jobId,
-					formData: helper.formToJSON(),
-				});
-			});
-		}
+		this._submitProposal.postRender();
+		this.sendProposalFormModal.postRender();
+		this.sendProposalForm.postRender();
 	}
 
 	jobUpdated = () => {
@@ -177,18 +127,11 @@ export default class Job extends Component {
 		this.stateChanged();
 	};
 
-	onProposalsResponse = (data) => {
-		bus.off(busEvents.PROPOSAL_CREATE_RESPONSE, this.onProposalsResponse);
-		const { error, response } = data;
-		if (error) {
-			let text = error.message;
-			if (error.data && error.data.error) {
-				text = error.data.error;
-			}
-			this.helper.setResponseText(text);
-			return;
-		}
+	onOpenModal = () => {
+		this.sendProposalFormModal.show();
+	};
 
-		router.push(config.urls.proposals);
+	closeModal = () => {
+		this.sendProposalFormModal.close();
 	};
 }

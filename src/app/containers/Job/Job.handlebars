@@ -55,28 +55,6 @@
 			</div>
 		</div>
 
-		{{#loggedIn}}
-			{{#isClient}}
-			{{else}}
-				<div class="tp-row tp-row-centered">
-					<div class="tp-col-6 card card_no-padding">
-						<form class="job-details" method="post" id="addProposal" autocomplete="off">
-							<h2 class="job-details__inner-item job-details_title">Ответ фрилансера</h2>
-							<div class="job-details__inner-item">
-								{{{budgetField}}}
-								{{{timeSelect}}}
-								{{{proposalField}}}
-							</div>
-							<div class="job-details__inner-item">
-								<div class="buttons-group">
-									{{{submitProposal}}}
-									{{{cancelBtn}}}
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			{{/isClient}}
-		{{/loggedIn}}
+		{{{sendProposalFormModal}}}
 	</div>
 </div>
