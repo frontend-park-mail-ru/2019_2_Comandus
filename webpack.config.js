@@ -90,6 +90,7 @@ module.exports = {
 		contentBase: path.join(__dirname, 'src'),
 		compress: true,
 		port: 9000,
+		host: '0.0.0.0',
 		hot: true,
 		historyApiFallback: true,
 		// historyApiFallback: {
