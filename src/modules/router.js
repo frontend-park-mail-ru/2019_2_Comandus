@@ -143,12 +143,11 @@ export class Router {
 		this.outlet.dataset.view = component.constructor.name;
 		Frame.renderComponent(component);
 
-		// TODO: Поправить багло!
-		// if (this.lastComponent) {
-		// 	this.lastComponent.onDestroy();
-		// }
-		//
-		// this.lastComponent = component;
+		if (this.lastComponent && this.lastComponent !== component) {
+			this.lastComponent.onDestroy();
+		}
+
+		this.lastComponent = component;
 
 		this.routes[routeIndex] = {
 			...route,

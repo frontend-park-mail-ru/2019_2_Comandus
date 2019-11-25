@@ -2,25 +2,35 @@
 	<div class="tp-row">
 		<div class="tp-col-9 tp-col_padding_0">
 			<div class="profile-info card">
-				<div class="tp-row tp-row_content_stretch">
+				<div class="profile-info__main tp-row tp-row_content_stretch">
 					<div class="profile-info__avatar">
 						{{{ profileAvatar }}}
 					</div>
 					<div class="profile-info__main-info">
 						<span class="main-info__name">
-							{{ firstName }} {{ lastName }}
+							{{ firstName }} {{ secondName }}
 						</span>
-						<span class="main-info__region">
+						<span class="main-info__region main-info__region_desktop">
 							<span class="profile-region__city">{{ city }}</span>
 							 - <span class="profile-region__time">2:43</span>
 							, <small class="profile-region__description">местное время</small>
 						</span>
+						<div class="main-info__rating main-info__rating_mobile">
+							<small>Рейтинг: </small>
+							<strong>{{ rating }}</strong>
+						</div>
 					</div>
-					<div class="profile-info__rating">
+					<div class="main-info__rating main-info__rating_desktop">
 						<strong>{{ rating }}</strong>
 						<small>Рейтинг</small>
 					</div>
 				</div>
+
+				<span class="main-info__region main-info__region_mobile">
+					<span class="profile-region__city">{{ city }}</span>
+					 - <span class="profile-region__time">2:43</span>
+					, <small class="profile-region__description">местное время</small>
+				</span>
 
 				<div class="profile-info__description">
 					<h2 class="profile-description__title">
@@ -32,6 +42,21 @@
 				</div>
 				<div class="profile-info__features">
 					{{{ profileInfoFeatures }}}
+				</div>
+			</div>
+
+			<div class="profile-sidebar profile-sidebar_mobile">
+				{{#isClient}}
+					<div class="profile-sidebar__buttons">
+						{{{ projectSuggestBtn }}}
+						{{{ saveBtn }}}
+					</div>
+				{{/isClient}}
+				<div class="profile-sidebar__profile-link">
+					{{{ profileLinkField }}}
+					<a class="profile-link__copy" href="#">
+						Копиоровать ссылку
+					</a>
 				</div>
 			</div>
 
@@ -64,11 +89,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="tp-col-3 profile-sidebar">
-			<div class="profile-sidebar__buttons">
-				{{{ projectSuggestBtn }}}
-				{{{ saveBtn }}}
-			</div>
+		<div class="tp-col-3 profile-sidebar profile-sidebar_desktop">
+			{{#isClient}}
+				<div class="profile-sidebar__buttons">
+					{{{ projectSuggestBtn }}}
+					{{{ saveBtn }}}
+				</div>
+			{{/isClient}}
 			<div class="profile-sidebar__profile-link">
 				{{{ profileLinkField }}}
 				<a class="profile-link__copy" href="#">

@@ -4,11 +4,14 @@
 			<div class="tp-col-9">
 				<div class="search-page card card_no-padding">
 					{{{ searchCardHeader }}}
-					<div class="search-page__input">
+					<form method="get" class="search-page__input">
 						<div class="search-input__input">
 							{{{ searchInput }}}
 						</div>
-					</div>
+						<div class="search-input__submit">
+							{{{searchBtn}}}
+						</div>
+					</form>
 					<div class="search-page__results">
 						<div class="search-results__items">
 							{{#each searchResults}}

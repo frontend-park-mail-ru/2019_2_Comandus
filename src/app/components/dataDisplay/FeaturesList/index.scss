@@ -14,3 +14,14 @@
 		padding-right: 10px;
 	}
 }
+
+@media screen and (max-width: 576px) {
+	.features-list {
+		&__item {
+			padding: 0;
+			&:not(:first-child) {
+				padding-left: 24px;
+			}
+		}
+	}
+}

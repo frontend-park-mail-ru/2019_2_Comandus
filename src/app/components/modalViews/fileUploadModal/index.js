@@ -56,17 +56,15 @@ export default class fileUploadModal extends Component {
 		this._uploadBtn.postRender();
 
 		// debugger;
-		if (!this._el) {
+		if (!this.el) {
 			console.log('this._el for ' + this.id + ' is null');
 			return;
 		}
 
-		this._selectBtnElement = this._el.querySelector(
-			'#upload-avatar-select',
-		);
-		this._fileInput = this._el.querySelector('#upload-avatar-input');
-		this._imgThumb = this._el.querySelector('#avatar-thumb');
-		this._uploadBtnElement = this._el.querySelector('#upload-avatar');
+		this._selectBtnElement = this.el.querySelector('#upload-avatar-select');
+		this._fileInput = this.el.querySelector('#upload-avatar-input');
+		this._imgThumb = this.el.querySelector('#avatar-thumb');
+		this._uploadBtnElement = this.el.querySelector('#upload-avatar');
 
 		this._fileInput.addEventListener(
 			'change',
