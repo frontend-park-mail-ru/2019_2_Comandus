@@ -22,3 +22,16 @@
 	color: #656565;
 	font-size: .9em;
 }
+
+.item:hover .job-item .manage-buttons{
+	visibility: visible;
+}
+.manage-buttons {
+	visibility: hidden;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.manage-btn {
+	margin-left: 20px;
+}

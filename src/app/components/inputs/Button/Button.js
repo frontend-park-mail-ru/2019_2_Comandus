@@ -41,6 +41,8 @@ export default class Button extends Component {
 		} else {
 			this._el = document.getElementById(this._id);
 		}
-		this._el.onclick = this._onCkick;
+		if (this._el) {
+			this._el.onclick = this._onCkick;
+		}
 	}
 }

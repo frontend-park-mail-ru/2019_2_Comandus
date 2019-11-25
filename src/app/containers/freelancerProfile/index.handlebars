@@ -8,7 +8,7 @@
 					</div>
 					<div class="profile-info__main-info">
 						<span class="main-info__name">
-							{{ firstName }} {{ lastName }}
+							{{ firstName }} {{ secondName }}
 						</span>
 						<span class="main-info__region main-info__region_desktop">
 							<span class="profile-region__city">{{ city }}</span>
@@ -46,10 +46,12 @@
 			</div>
 
 			<div class="profile-sidebar profile-sidebar_mobile">
-				<div class="profile-sidebar__buttons">
-					{{{ projectSuggestBtn }}}
-					{{{ saveBtn }}}
-				</div>
+				{{#isClient}}
+					<div class="profile-sidebar__buttons">
+						{{{ projectSuggestBtn }}}
+						{{{ saveBtn }}}
+					</div>
+				{{/isClient}}
 				<div class="profile-sidebar__profile-link">
 					{{{ profileLinkField }}}
 					<a class="profile-link__copy" href="#">
@@ -88,10 +90,12 @@
 			</div>
 		</div>
 		<div class="tp-col-3 profile-sidebar profile-sidebar_desktop">
-			<div class="profile-sidebar__buttons">
-				{{{ projectSuggestBtn }}}
-				{{{ saveBtn }}}
-			</div>
+			{{#isClient}}
+				<div class="profile-sidebar__buttons">
+					{{{ projectSuggestBtn }}}
+					{{{ saveBtn }}}
+				</div>
+			{{/isClient}}
 			<div class="profile-sidebar__profile-link">
 				{{{ profileLinkField }}}
 				<a class="profile-link__copy" href="#">

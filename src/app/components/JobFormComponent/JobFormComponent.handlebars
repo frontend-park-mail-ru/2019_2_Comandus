@@ -1,22 +1,27 @@
 <div class="tp-container tp-centered-container" id="{{_id}}">
 	<div class="tp-row tp-row_content_left">
-		<div class="tp-col-8 card">
-			<h1>{{title}}</h1>
-			<form method="post" id="projectForm" autocomplete="off">
-				{{{_jobTypeRadio}}}
-				{{{textField}}}
-				{{{descriptionField}}}
-				{{{specialitySelect}}}
-				{{{inputTags}}}
-				{{{budgetField}}}
+		<div class="tp-col-8" style="margin-top: 20px">
+			{{#isEdit}}
+				<a href="/jobs/{{jobId}}" style="margin-top: 20px;">Назад к работе</a>
+			{{/isEdit}}
+			<div class="card">
+				<h1>{{title}}</h1>
+				<form method="post" id="projectForm" autocomplete="off">
+					{{{_jobTypeRadio}}}
+					{{{textField}}}
+					{{{descriptionField}}}
+					{{{specialitySelect}}}
+					{{{inputTags}}}
+					{{{budgetField}}}
 
-{{!--				{{#if isVacancy}}--}}
+					{{!--				{{#if isVacancy}}--}}
 					{{{citySelect}}}
-{{!--				{{/if}}--}}
+					{{!--				{{/if}}--}}
 
-				{{{levelRadioGroup}}}
-				{{{submitBtn}}}
-			</form>
+					{{{levelRadioGroup}}}
+					{{{submitBtn}}}
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

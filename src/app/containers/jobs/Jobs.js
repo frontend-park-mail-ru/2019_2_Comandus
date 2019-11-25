@@ -27,7 +27,7 @@ export default class Jobs extends Component {
 
 	render() {
 		const page = new PageWithTitle({
-			title: 'Работа',
+			title: 'Все проекты и вакансии',
 			children: [contentTemplate(this.data)],
 		}).render();
 
