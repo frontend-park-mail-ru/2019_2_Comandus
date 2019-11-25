@@ -51,10 +51,14 @@ export class Avatar extends Component {
 				) {
 					this.data.changing = false;
 				} else {
-					avatarUrl = defaultAvatarUrl(
-						this.data.user.firstName[0],
-						this.data.user.secondName[0],
-					);
+					// avatarUrl = defaultAvatarUrl(
+					// 	this.data.user.firstName[0],
+					// 	this.data.user.secondName[0],
+					// );
+					avatarUrl = `${
+						config.baseAPIUrl
+					}${'/account/download-avatar' +
+						'?'}${new Date().getTime()}`;
 				}
 			}
 		}
@@ -79,7 +83,7 @@ export class Avatar extends Component {
 				noFit: true,
 				text: 'Изменить',
 				className: 'avatar-block__change-link btn_secondary',
-				onClick: onClickModal.bind(this),
+				onClick: onClickModal,
 			});
 
 			this.data = {
@@ -102,25 +106,37 @@ export class Avatar extends Component {
 			return;
 		}
 
-		this._el = document.getElementById(this._id);
+		this._avatarElement = this.el.querySelector('#avatar-img');
+		this._avatarUpload.onerror = () => {
+			if (this.data.user) {
+				this._avatarElement.src = defaultAvatarUrl(
+					this.data.user.firstName[0],
+					this.data.user.secondName[0],
+				);
+			}
+		};
+
 		this._avatarUpload.postRender();
 		this._changeBtn.postRender();
 		this._avatarChangeModal.postRender();
 		this._avatarUpload.addOnUpload(
 			this._avatarChangeModal.close.bind(this._avatarChangeModal),
 		);
-		this._avatarUpload.addElementToChange(
-			this.el.querySelector('#avatar-img'),
-		);
+		this._avatarUpload.addElementToChange(this._avatarElement);
 	}
 
 	userUpdated = () => {
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+
 		const user = store.get(['user']);
 		this.data = {
 			user,
 		};
 
 		this.stateChanged();
-		bus.off(busEvents.USER_UPDATED, this.userUpdated);
 	};
+
+	onDestroy() {
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+	}
 }

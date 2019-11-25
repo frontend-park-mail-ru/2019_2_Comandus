@@ -125,4 +125,8 @@ export class UserMenu extends Component {
 
 		bus.emit(busEvents.CHANGE_USER_TYPE, newRole);
 	};
+
+	onDestroy() {
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+	}
 }
