@@ -73,8 +73,8 @@ bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
 	});
 });
 
-bus.on(busEvents.JOBS_GET, () => {
-	JobService.GetAllJobs()
+bus.on(busEvents.JOBS_GET, (params) => {
+	JobService.GetAllJobs(params)
 		.then(() => {
 			bus.emit(busEvents.JOBS_UPDATED);
 		})
@@ -135,6 +135,42 @@ bus.on(busEvents.FREELANCERS_GET, () => {
 		});
 });
 
+bus.on(busEvents.JOB_PUT, (payload) => {
+	JobService.UpdateJob(payload.jobId, payload.data)
+		.then((response) => {
+			bus.emit(busEvents.JOB_PUT_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.JOB_PUT_RESPONSE, {
+				error,
+			});
+		});
+});
+
+bus.on(busEvents.JOB_DELETE, (id) => {
+	JobService.DeleteJob(id)
+		.then((response) => {
+			bus.emit(busEvents.JOB_DELETE_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.JOB_DELETE_RESPONSE, {
+				error,
+			});
+		});
+});
+
+bus.on(busEvents.SEARCH, (params) => {
+	JobService.SearchJobs(params)
+		.then((response) => {
+			bus.emit(busEvents.SEARCH_RESPONSE, { response });
+		})
+		.catch((error) => {
+			bus.emit(busEvents.SEARCH_RESPONSE, {
+				error,
+			});
+		});
+});
+
 bus.on('account-get', () => {
 	const response = AccountService.GetAccount();
 	bus.emit('account-get-response', response);
@@ -157,7 +193,7 @@ bus.on('change-password', (data) => {
 	bus.emit('change-password-response', response);
 });
 
-bus.on('get-role', () => {
-	const response = AccountService.GetRoles();
-	bus.emit('get-role-response', response);
-});
+// bus.on('get-role', () => {
+// 	const response = AccountService.GetRoles();
+// 	bus.emit('get-role-response', response);
+// });

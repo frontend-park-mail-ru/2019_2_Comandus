@@ -16,7 +16,7 @@
 				<form method="GET" role="search" id="navbar-search-form">
 					<div>
 						<span class="navbar__search-input">
-							<input id='navbar-search' type="text" placeholder="Поиск работ">
+							<input id='navbar-search' type="text" placeholder="Поиск {{#isClient}}фрилансеров{{else}}работ{{/isClient}}">
 							<span></span>
 						</span>
 					</div>
@@ -24,12 +24,21 @@
 			</li>
 		</ul>
 		<ul class="navbar__nav navbar__nav_right" role="menubar">
-			{{{_dropdown}}}
+			{{#isClient}}
+				<li class="nav__item">
+					<a href="/freelancers" target="_self" role="menuitem" class="nav__link">
+						Фрилансеры
+					</a>
+				</li>
+			{{else}}
+				{{{_dropdown}}}
+			{{/isClient}}
 			<li class="nav__item">
-				<a href="/freelancers" target="_self" role="menuitem" class="nav__link">
-					Фрилансеры
+				<a href="/messages" target="_self" role="menuitem" class="nav__link">
+					Сообщения
 				</a>
 			</li>
+
 			{{#if loggedIn}}
 				{{{profileDropdown}}}
 			{{/if}}

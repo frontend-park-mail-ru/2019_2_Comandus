@@ -2,6 +2,7 @@ import Component from '@frame/Component';
 import template from './index.handlebars';
 import './index.scss';
 import Button from '@components/inputs/Button/Button';
+import { defaultAvatarUrl } from '@modules/utils';
 
 export default class FreelancerItem extends Component {
 	constructor({
@@ -9,6 +10,7 @@ export default class FreelancerItem extends Component {
 		overview = '',
 		firstName = '',
 		lastName = '',
+		secondName = '',
 		avatar = '',
 		registrationDate = '',
 		city = '',
@@ -24,8 +26,8 @@ export default class FreelancerItem extends Component {
 			city,
 			country,
 			firstName,
-			lastName,
-			avatar,
+			lastName: secondName,
+			avatar: avatar ? avatar : defaultAvatarUrl(firstName, secondName),
 		};
 	}
 

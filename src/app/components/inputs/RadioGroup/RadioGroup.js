@@ -10,10 +10,15 @@ export default class RadioGroup extends Component {
 		name = 'radio-group',
 		column = false,
 		onClick,
+		value = '',
 		...props
 	}) {
 		super(props);
 
+		items = items.map((i) => {
+			i.checked = i.value == value;
+			return i;
+		});
 		this.data = {
 			items,
 			title,
@@ -21,6 +26,7 @@ export default class RadioGroup extends Component {
 			name,
 			column,
 			onClick,
+			value,
 		};
 	}
 

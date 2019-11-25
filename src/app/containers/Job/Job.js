@@ -96,6 +96,7 @@ export default class Job extends Component {
 	}
 
 	jobUpdated = () => {
+		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
 		const job = store.get(['job']);
 		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
 		job['experienceLevel'] = levels[job['experienceLevelId'] - 1];
@@ -105,8 +106,19 @@ export default class Job extends Component {
 			(el) => el.value === parseInt(job.jobTypeId),
 		).label;
 
+		let isMyJob = false;
+		const user = store.get(['user']);
+		if (
+			AuthService.isLoggedIn() &&
+			AccountService.isClient() &&
+			job.hireManagerId == user.hireManagerId
+		) {
+			isMyJob = true;
+		}
+
 		this.data = {
 			job: job,
+			isMyJob,
 		};
 
 		this.stateChanged();
@@ -117,10 +129,21 @@ export default class Job extends Component {
 
 		const loggedIn = AuthService.isLoggedIn();
 		const isClient = AccountService.isClient();
+		let isMyJob = false;
+		const user = store.get(['user']);
+		if (
+			loggedIn &&
+			isClient &&
+			this.data.job &&
+			this.data.job.hireManagerId == user.hireManagerId
+		) {
+			isMyJob = true;
+		}
 
 		this.data = {
 			loggedIn,
 			isClient,
+			isMyJob,
 		};
 
 		//todo: одновременное userUpdate и router.push вызывают this._parent.innerHtml = 'something'

@@ -15,6 +15,9 @@ import Messages from '@containers/messages';
 import About from '@containers/about';
 import NotFound from '@containers/NotFound';
 import Proposals from '@containers/Proposals';
+import ClientJobs from '@containers/ClientJobs';
+import ClientContracts from '@containers/ClientContracts';
+import Contract from '@containers/Contract';
 
 const routes = [
 	{ path: '/', Component: offlineHOC(HomeComponent) },
@@ -50,6 +53,7 @@ const routes = [
 		path: '/with-children',
 		children: [{ path: '/signup', Component: SignUpComponent }],
 	},
+	{ path: '/jobs/:jobId/edit', Component: offlineHOC(JobFormComponent) },
 	{ path: '/jobs/:jobId', Component: offlineHOC(Job) },
 	{ path: '/jobs', Component: offlineHOC(Jobs) },
 	{ path: '/freelancers', Component: offlineHOC(Freelancers) },
@@ -59,6 +63,9 @@ const routes = [
 	{ path: '/page-not-found', Component: NotFound },
 	{ path: '/proposals', Component: offlineHOC(Proposals) },
 	{ path: '/saved', Component: Search },
+	{ path: '/my-job-postings', Component: ClientJobs },
+	{ path: '/my-contracts/:contractId', Component: Contract },
+	{ path: '/my-contracts', Component: ClientContracts },
 ];
 
 export default routes;
