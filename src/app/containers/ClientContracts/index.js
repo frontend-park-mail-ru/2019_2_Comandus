@@ -11,17 +11,44 @@ import PageWithTitle from '@components/PageWithTitle';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 
+const contracts = [
+	{
+		id: 1,
+		jobId: 1,
+		job: {
+			title: 'Название проекта',
+			clientGrade: 5,
+			clientComment: 'Рекомендую!',
+			freelancerGrade: 4,
+			freelancerComment: 'Приятно было иметь дело',
+			company: {
+				name: '@mailru',
+			},
+			freelancer: {
+				firstName: 'Roman',
+				secondName: 'Romanov',
+			},
+		},
+		paymentAmount: 20300,
+		created: '20.11.2019',
+	},
+];
+
 export default class ClientContracts extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	preRender() {}
+	preRender() {
+		this.data = {
+			contracts,
+		};
+	}
 
 	render() {
 		const page = new PageWithTitle({
 			title: 'Контракты',
-			children: [contentTemplate(this.data)],
+			children: [contentTemplate(...this.data)],
 		}).render();
 
 		this.data = {

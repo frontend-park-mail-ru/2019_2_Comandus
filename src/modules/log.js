@@ -8,18 +8,18 @@ export default function initLogTrack() {
 			get() {
 				return function(...msg) {
 					if (process.env.NODE_ENV !== production) {
-						log(...msg);
+						// log(...msg);
 					}
 				};
 			},
 		});
 
-		if (process.env.NODE_ENV === production) {
-			log(
-				'%cОбнаружил ошибку? Нам важно знать – nozimdev@gmail.com',
-				'background-color: #3E6BB4; color: #fff; font-size: 24px;',
-			);
-		}
+		// if (process.env.NODE_ENV === production) {
+		log(
+			'%cОбнаружил ошибку? Нам важно знать – nozimdev@gmail.com',
+			'background-color: #3E6BB4; color: #fff; font-size: 24px;',
+		);
+		// }
 	} catch (e) {
 		console.log('cannot wrap console');
 	}
