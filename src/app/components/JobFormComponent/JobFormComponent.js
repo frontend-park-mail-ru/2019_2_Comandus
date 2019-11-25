@@ -57,8 +57,8 @@ class JobFormComponent extends Component {
 		this.data = {
 			title,
 			...this.data,
-			isEdit: this.props.params.jobId ? true : false,
-			jobId: this.props.params.jobId,
+			isEdit: this.props.params && this.props.params.jobId ? true : false,
+			jobId: this.props.params && this.props.params.jobId,
 		};
 
 		this.helper = null;
