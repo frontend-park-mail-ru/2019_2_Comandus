@@ -8,6 +8,7 @@ import Button from '@components/inputs/Button/Button';
 import store from '@modules/store';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
+import config from '@app/config';
 
 export class Avatar extends Component {
 	constructor({
@@ -50,10 +51,14 @@ export class Avatar extends Component {
 				) {
 					this.data.changing = false;
 				} else {
-					avatarUrl = defaultAvatarUrl(
-						this.data.user.firstName[0],
-						this.data.user.secondName[0],
-					);
+					// avatarUrl = defaultAvatarUrl(
+					// 	this.data.user.firstName[0],
+					// 	this.data.user.secondName[0],
+					// );
+					avatarUrl = `${
+						config.baseAPIUrl
+					}${'/account/download-avatar' +
+						'?'}${new Date().getTime()}`;
 				}
 			}
 		}
@@ -101,15 +106,23 @@ export class Avatar extends Component {
 			return;
 		}
 
+		this._avatarElement = this.el.querySelector('#avatar-img');
+		this._avatarUpload.onerror = () => {
+			if (this.data.user) {
+				this._avatarElement.src = defaultAvatarUrl(
+					this.data.user.firstName[0],
+					this.data.user.secondName[0],
+				);
+			}
+		};
+
 		this._avatarUpload.postRender();
 		this._changeBtn.postRender();
 		this._avatarChangeModal.postRender();
 		this._avatarUpload.addOnUpload(
 			this._avatarChangeModal.close.bind(this._avatarChangeModal),
 		);
-		this._avatarUpload.addElementToChange(
-			this.el.querySelector('#avatar-img'),
-		);
+		this._avatarUpload.addElementToChange(this._avatarElement);
 	}
 
 	userUpdated = () => {
