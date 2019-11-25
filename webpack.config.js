@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 	entry: {
@@ -31,7 +34,11 @@ module.exports = {
 			// },
 			{
 				test: /\.(s*)css$/,
-				use: ['style-loader', 'css-loader', 'sass-loader']
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					'sass-loader'
+				]
 			},
 			{
 				test: /\.(html)$/,
@@ -61,7 +68,8 @@ module.exports = {
 					precompileOptions: {
 						knownHelpersOnly: false,
 					},
-				},}
+				},
+			}
 		]
 	},
 	resolve: {
@@ -100,8 +108,13 @@ module.exports = {
 		}),
 		new webpack.NamedModulesPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
+		new MiniCssExtractPlugin({
+			filename: '[name].[hash].css',
+		}),
 	],
 	optimization: {
 		runtimeChunk: 'single',
+		minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+		minimize: true
 	},
 };

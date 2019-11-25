@@ -1,0 +1,39 @@
+@import '~@assets/scss/global';
+
+.file-upload-modal {
+	&__content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 1.5em;
+	}
+	&__buttons {
+		margin-bottom: 1.5em;
+	}
+}
+
+.file-modal-content {
+	&__image {
+		margin: 10px 10px 0 10px;
+	}
+	&__description {
+		text-align: center;
+	}
+}
+
+.upload-avatar-modal-content {
+	display: block;
+	text-align: center;
+}
+
+.upload-avatar-modal-content * {
+	margin-bottom: 10px;
+}
+
+#upload-avatar-input {
+	display: none;
+}
+
+#upload-avatar {
+	display: none;
+}

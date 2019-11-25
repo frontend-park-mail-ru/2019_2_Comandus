@@ -1,4 +1,6 @@
 import Frame from '@frame/frame';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
 
 function getParamsFromSearch(search) {
 	const params = {};
@@ -22,6 +24,7 @@ export class Router {
 		this.root = root;
 		this.outletName = outletName;
 		this.outlet = null;
+		this.lastComponent = null;
 	}
 
 	registerRoute(path, Component, props) {
@@ -104,6 +107,22 @@ export class Router {
 			return;
 		}
 
+		if (AuthService.isLoggedIn()) {
+			if (path === '/login' || path === '/signup') {
+				this.push('/');
+				return;
+			}
+
+			if (path === '/') {
+				if (AccountService.isClient()) {
+					this.push('/freelancers');
+					return;
+				}
+				this.push('/jobs');
+				return;
+			}
+		}
+
 		this._pushToHistory(path, search);
 
 		let { Component, component, el, props } = route;
@@ -123,6 +142,12 @@ export class Router {
 
 		this.outlet.dataset.view = component.constructor.name;
 		Frame.renderComponent(component);
+
+		if (this.lastComponent && this.lastComponent !== component) {
+			this.lastComponent.onDestroy();
+		}
+
+		this.lastComponent = component;
 
 		this.routes[routeIndex] = {
 			...route,

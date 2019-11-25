@@ -32,7 +32,7 @@ class AppComponent extends Component {
 	postRender() {
 		this._header.postRender();
 
-		bus.emit(busEvents.ACCOUNT_GET);
+		bus.emit(busEvents.ON_PAGE_LOAD);
 	}
 }
 

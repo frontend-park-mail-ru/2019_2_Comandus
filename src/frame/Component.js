@@ -27,7 +27,9 @@ export default class Component {
 	 * Подписывамся на DOM-события и вызываем методы postRender()
 	 * всех используемых дочерних компонентов.
 	 */
-	postRender() {}
+	postRender() {
+		this._el = document.getElementById(this._id);
+	}
 
 	get data() {
 		return this._data;
@@ -38,11 +40,15 @@ export default class Component {
 	}
 
 	stateChanged() {
-		this.html = this.render();
-		if (this.el) {
-			this.el.replaceWith(htmlToElement(this.html));
+		const el = document.getElementById(this._id);
+		// this.html = this.render();
+		if (el) {
+			el.replaceWith(htmlToElement(this.render()));
+			this.postRender();
+		} else {
+			// console.log("element " + this._id + " was destroyed!");
+			this.onDestroy();
 		}
-		this.postRender();
 	}
 
 	setProps(newProps) {
@@ -60,4 +66,6 @@ export default class Component {
 	attachToParent() {
 		this._parent.innerHTML = this.html;
 	}
+
+	onDestroy() {}
 }

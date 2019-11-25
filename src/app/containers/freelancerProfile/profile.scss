@@ -1,6 +1,10 @@
 @import '~@assets/scss/global';
 
 .profile-info {
+	&__main {
+		flex-wrap: nowrap;
+	}
+
 	&__avatar {
 		display: flex;
 		margin-right: 10px;
@@ -8,12 +12,6 @@
 	&__main-info {
 		display: flex;
 		flex-direction: column;
-	}
-	&__rating {
-		margin-left: auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
 	}
 	&__description {
 		margin-bottom: 10px;
@@ -26,11 +24,65 @@
 .main-info {
 
 	&__name {
+		display: flex;
+		flex-wrap: wrap;
 		font-size: 1.5em;
 		letter-spacing: 0.08em;
 	}
+
 	&__region {
 		margin-top: 5px;
+
+		&_mobile {
+			color: #656565;
+			display: none;
+		}
+		&_desktop {
+			display: flex;
+		}
+	}
+
+	&__rating {
+		margin-left: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		&_mobile {
+			display: none;
+			flex-direction: row;
+			margin: 0;
+		}
+		&_desktop {
+			display: flex;
+		}
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.profile-info {
+		&__main {
+			justify-content: flex-start;
+		}
+	}
+	.main-info {
+		&__region {
+			&_mobile {
+				display: flex;
+			}
+			&_desktop {
+				display: none;
+			}
+		}
+
+		&__rating {
+			&_mobile {
+				display: flex;
+			}
+			&_desktop {
+				display: none;
+			}
+		}
 	}
 }
 
@@ -78,6 +130,9 @@
 }
 
 .profile-sidebar {
+	display: flex;
+	flex-direction: column;
+
 	padding: 20px;
 
 	&__buttons {
@@ -88,6 +143,9 @@
 
 		& > *:not(:first-child) {
 			margin-top: 10px;
+		}
+		& button {
+			width: 100%;
 		}
 	}
 
@@ -107,6 +165,38 @@
 
 	&__languages {
 
+	}
+
+	&_mobile {
+		display: none;
+	}
+
+	&_desktop {
+		display: flex;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.profile-sidebar {
+		padding: 0 20px;
+		&__buttons {
+			flex-direction: row;
+			align-items: center;
+			margin: 0;
+
+			& > *:not(:first-child) {
+				margin: 0 0 0 6px;
+			}
+		}
+
+		&_mobile {
+			display: flex;
+			flex-direction: column;
+		}
+
+		&_desktop {
+			display: none;
+		}
 	}
 }
 

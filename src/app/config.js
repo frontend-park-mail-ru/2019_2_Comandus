@@ -1,8 +1,8 @@
 export default {
-	baseAPIUrl:
-		process.env.NODE_ENV === 'production'
-			? 'https://flruserver.herokuapp.com'
-			: 'http://localhost:8080',
+	baseAPIUrl: 'https://89.208.211.100:8081',
+	// process.env.NODE_ENV === 'production'
+	// 	? 'https://flruserver.herokuapp.com'
+	// 	: 'http://localhost:8080',
 	cookieAccountModeName: 'user_type',
 	urls: {
 		account: '/account',

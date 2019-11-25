@@ -2,6 +2,7 @@ import AjaxModule from '@modules/ajax';
 import config from '../config';
 import store from '@modules/store';
 import AuthService from '@services/AuthService';
+import { CSRF_TOKEN_NAME } from '@app/constants';
 
 export default class AccountService {
 	static GetAccount() {
@@ -11,6 +12,7 @@ export default class AccountService {
 			store.setState({
 				user: res,
 			});
+			AccountService.PutUserToLocalStorage();
 
 			return res;
 		});
@@ -59,5 +61,17 @@ export default class AccountService {
 			.then((res) => {
 				return res;
 			});
+	}
+
+	static LoadUserFromLocalStorage() {
+		const user = localStorage.getItem('user');
+		store.setState({
+			user: JSON.parse(user),
+		});
+	}
+
+	static PutUserToLocalStorage() {
+		const user = store.get(['user']);
+		localStorage.setItem('user', JSON.stringify(user));
 	}
 }

@@ -13,7 +13,6 @@ $button-s-height: 26px;
 	background-color: $primary-color;
 	color: $white;
 	overflow: hidden;
-	width: fit-content;
 	cursor: pointer;
 	margin: 0;
 	outline: none;
@@ -33,6 +32,11 @@ $button-s-height: 26px;
 		&:hover {
 			text-decoration: none;
 		}
+	}
+
+	&_fit {
+		width: fit-content;
+		width: -moz-fit-content;
 	}
 }
 

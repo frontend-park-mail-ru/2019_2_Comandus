@@ -1,0 +1,15 @@
+<div id="{{_id}}" class="modal-window__wrapper {{#if display}}modal-window_display{{else}}modal-window_hide{{/if}} ">
+	<div class="modal-window card">
+		<div class="modal-window__header tp-row tp-row_content_stretch">
+			{{#if title}}
+				<h2 class="modal-header__title">{{ title }}</h2>
+			{{/if}}
+			<span class="modal-header__close-icon">&times;</span>
+		</div>
+		<div class="modal-window__body">
+			{{#each children}}
+				{{{ this }}}
+			{{/each}}
+		</div>
+	</div>
+</div>

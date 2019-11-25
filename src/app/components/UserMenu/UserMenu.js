@@ -31,7 +31,13 @@ export class UserMenu extends Component {
 	}
 
 	render() {
-		const avatar = defaultAvatarUrl('N', 'Y');
+		let avatar = '';
+		if (this.data.user) {
+			avatar = defaultAvatarUrl(
+				this.data.user.firstName,
+				this.data.user.secondName,
+			);
+		}
 		const alt = '';
 		this._dropdown = new Dropdown({
 			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,
@@ -44,11 +50,11 @@ export class UserMenu extends Component {
 				},
 				{
 					url: '#',
-					text: 'Компания: ' + 'company name',
+					text: 'Компания: ' + 'Командус',
 					active: this.data.isClient,
 					id: 'switchToClient',
 				},
-				{ url: config.urls.settings, text: 'Настройки' },
+
 				{ url: '#', text: 'Выйти', id: 'logout' },
 			],
 			contentRight: true,
@@ -119,4 +125,8 @@ export class UserMenu extends Component {
 
 		bus.emit(busEvents.CHANGE_USER_TYPE, newRole);
 	};
+
+	onDestroy() {
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
+	}
 }

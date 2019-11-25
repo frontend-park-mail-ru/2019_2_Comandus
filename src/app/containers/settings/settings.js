@@ -1,56 +1,117 @@
 import Component from '@frame/Component';
 import template from './settings.handlebars';
-import { getCookie, htmlToElement } from '@modules/utils';
+import { getCookie } from '@modules/utils';
 import { Account } from '@components/Account/Account';
 import { Company } from '@components/Company/Company';
-import { NotificationSettings } from '@components/NotificationSettings/NotificationSettings';
 import { ChangePassword } from '@components/ChangePassword/ChangePassword';
-import { AuthHistory } from '@components/AuthHistory/AuthHistory';
-import { SecurityQuestion } from '@components/SecurityQuestion/SecurityQuestion';
 import config from '../../config';
 import { FreelancerSettings } from '@components/FreelancerSettings/FreelancerSettings';
-import Frame from '@frame/frame';
-
-const children = [
-	{
-		id: 'myAccount',
-		component: Account,
-	},
-	{
-		id: 'notificationSettingsComponent',
-		component: NotificationSettings,
-	},
-	{
-		id: 'changePasswordComponent',
-		component: ChangePassword,
-	},
-	{
-		id: 'authHistoryComponent',
-		component: AuthHistory,
-	},
-	{
-		id: 'securityQuestionComponent',
-		component: SecurityQuestion,
-	},
-	{
-		id: 'companyComponent',
-		component: Company,
-	},
-	{
-		id: 'freelancerSettingsComponent',
-		component: FreelancerSettings,
-	},
-];
+import './settings.scss';
+import AccountService from '@services/AccountService';
+import bus from '@frame/bus';
+import { router } from '../../../index';
+import { busEvents } from '@app/constants';
+import store from '@modules/store';
 
 export class Settings extends Component {
 	constructor({ ...props }) {
 		super(props);
-		this._data = {
-			children: {},
-		};
+
+		this._tabs = [
+			{
+				title: 'Аккаунт',
+				link: 'account',
+				Component: Account,
+				props: {},
+				show: false,
+			},
+			{
+				title: 'Настройки профиля',
+				link: 'freelancer',
+				Component: FreelancerSettings,
+				props: {},
+				show: false,
+			},
+			{
+				title: 'Настройки компании',
+				link: 'company',
+				Component: Company,
+				props: {},
+				show: false,
+			},
+			{
+				title: 'Изменение пароля',
+				link: 'password',
+				Component: ChangePassword,
+				props: {},
+				show: false,
+			},
+		];
+
+		this._getAccountBlock = false;
+	}
+
+	preRender() {
+		// Ходим на бэк только если еще не получали юзера ранее
+		if (!this.data.user) {
+			bus.on('account-get-response', this.onAccountReceived);
+			// preRender может вызваться несколько раз, если быстро
+			// переключать меню. Проверка на то, что процесс получения
+			// пользователя уже идет
+			if (!this._getAccountBlock) {
+				bus.emit('account-get');
+				this._getAccountBlock = true;
+			}
+		} else {
+			// Перед каждым рендером надо обновлять информацию о роли
+			const isClient = AccountService.isClient();
+			this.data = {
+				isClient,
+			};
+		}
+		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 	}
 
 	render() {
+		this._tabs = this._tabs.map((tab) => {
+			switch (tab.link) {
+			case 'company':
+				tab.show = this.data.isClient;
+				break;
+			case 'freelancer':
+				tab.show = !this.data.isClient;
+				break;
+			default:
+				tab.show = true;
+			}
+			return tab;
+		});
+
+		// Обращаться к GET параметрам надо в render
+		const currentLink = this.props.params.tab || 'account';
+		this._currentTab = this._tabs.find((tab) => {
+			return tab.link === currentLink;
+		});
+		if (
+			!this._currentTab ||
+			(this.data.isClient && this._currentTab.link === 'freelancer') ||
+			(!this.data.isClient && this._currentTab.link === 'company')
+		) {
+			this._currentTab = this._tabs.find((tab) => {
+				return tab.link === 'account';
+			});
+		}
+
+		// if (this._currentTab.component) {
+		// 	this._currentTabSettings = this._currentTab.component;
+		// } else {
+		// 	this._currentTabSettings = new this._currentTab.Component({});
+		// 	this._currentTab.component = this._currentTabSettings;
+		// }
+		this._currentTabSettings = new this._currentTab.Component(
+			this._currentTab.props,
+		);
+
 		this.data = {
 			...this.data,
 			isClientMode:
@@ -59,30 +120,77 @@ export class Settings extends Component {
 			isFreelancerMode:
 				getCookie(config.cookieAccountModeName) ===
 				config.accountTypes.freelancer,
+			settingsComponent: this._currentTabSettings.render(),
+			tabs: this._tabs,
+			currentTab: this._currentTab,
 		};
 
-		children.forEach((ch) => {
-			const { children } = this.data;
-			children[ch.id] = ch.id;
-		});
+		this.html = template(this.data);
+		this.attachToParent();
 
-		const html = template({
-			data: this.data,
-			props: this.props,
-		});
-		this._el = htmlToElement(html);
+		return this.html;
+	}
 
-		children.forEach((ch) => {
-			const parent = this._el.querySelector(`#${ch.id}`);
-			if (parent) {
-				const component = Frame.createComponent(ch.component, parent, {
-					...this.props,
-					id: ch.id,
-				});
-				Frame.renderComponent(component);
-			}
-		});
+	postRender() {
+		super.postRender();
+		this._currentTabSettings.postRender();
+	}
 
-		this._parent.appendChild(this._el);
+	userUpdated = () => {
+		const user = store.get(['user']);
+		const isClient = AccountService.isClient();
+
+		this.data = {
+			isClient,
+			user,
+		};
+		this._tabs.find((tab) => {
+			return tab.link === 'account';
+		}).props.user = this.data.user;
+
+		if (
+			(!isClient && this.props.params.tab === 'company') ||
+			(isClient && this.props.params.tab === 'freelancer')
+		) {
+			router.push(config.urls.settings);
+		}
+
+		// Если обновили данные из формы - обновлять ничего не надо
+		if (isClient === this.data.isClient) {
+			return;
+		}
+
+		this.stateChanged();
+	};
+
+	onAccountReceived = (response) => {
+		bus.off('account-get-response', this.onAccountReceived);
+		response
+			.then((res) => {
+				this.data = {
+					user: { ...res },
+				};
+				// Обновление props компонента Account
+				this._tabs.find((tab) => {
+					return tab.link === 'account';
+				}).props.user = this.data.user;
+			})
+			.catch((error) => {
+				console.error(error);
+			})
+			.finally(() => {
+				this.data = {
+					...this.data,
+					loaded: true,
+				};
+				this._getAccountBlock = false;
+
+				this.stateChanged();
+			});
+	};
+
+	onDestroy() {
+		bus.off('account-get-response', this.onAccountReceived);
+		bus.off(busEvents.USER_UPDATED, this.userUpdated);
 	}
 }

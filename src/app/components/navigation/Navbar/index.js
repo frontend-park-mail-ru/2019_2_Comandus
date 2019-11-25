@@ -9,6 +9,8 @@ import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
+import config from '@app/config';
+import { router } from '../../../../index';
 
 export default class Navbar extends Component {
 	constructor({ ...props }) {
@@ -23,15 +25,6 @@ export default class Navbar extends Component {
 			{ url: '/jobs/?type=vacancy', text: 'Вакансии' },
 		];
 
-		if (this.data.loggedIn && !this.data.isClient) {
-			jobItems.push({ url: '/saved', text: 'Закладки' });
-			jobItems.push({ url: '/proposals', text: 'Отклики' });
-			jobItems.push({
-				url: `/freelancers/${this.data.user.id}`,
-				text: 'Профиль',
-			});
-		}
-
 		this._dropdown = new Dropdown({
 			text: 'Работа',
 			items: jobItems,
@@ -41,12 +34,30 @@ export default class Navbar extends Component {
 		this._userMenu = new UserMenu({
 			...this.props,
 		});
-		this._othersDropdown = new Dropdown({
-			text: 'др',
-			items: [
-				{ url: '/search', text: 'search' },
-				{ url: '/messages', text: 'messages' },
-			],
+
+		const profileItems = [];
+
+		if (this.data.loggedIn) {
+			profileItems.push({ url: '/my-contracts', text: 'Контракты' });
+			if (this.data.isClient) {
+				profileItems.push({
+					url: '/my-job-postings',
+					text: 'Мои размещения',
+				});
+			} else {
+				profileItems.push({
+					url: `/freelancers/${this.data.user.freelancerId}`,
+					text: 'Профиль',
+				});
+				profileItems.push({ url: '/saved', text: 'Закладки' });
+				profileItems.push({ url: '/proposals', text: 'Отклики' });
+			}
+			profileItems.push({ url: config.urls.settings, text: 'Настройки' });
+		}
+
+		this._profileDropdown = new Dropdown({
+			text: 'Профиль: ' + (this.data.isClient ? 'Заказчик' : 'Фрилансер'),
+			items: profileItems,
 			hover: true,
 			toggleClassname: 'nav__item',
 		});
@@ -54,7 +65,7 @@ export default class Navbar extends Component {
 		this.data = {
 			_dropdown: this._dropdown.render(),
 			userMenu: this._userMenu.render(),
-			_othersDropdown: this._othersDropdown.render(),
+			profileDropdown: this._profileDropdown.render(),
 		};
 		this.html = template({
 			...this.props,
@@ -66,7 +77,7 @@ export default class Navbar extends Component {
 
 	postRender() {
 		this._dropdown.postRender();
-		this._othersDropdown.postRender();
+		this._profileDropdown.postRender();
 		this._userMenu.postRender();
 
 		this.toggler = document.querySelector('.navbar__toggler');
@@ -79,6 +90,9 @@ export default class Navbar extends Component {
 			const bar = document.getElementById(this.id);
 			removeClass('navbar__nav_responsive', bar);
 		});
+
+		this.searchInput = this.el.querySelector('#navbar-search-form');
+		this.searchInput.addEventListener('submit', this.onSearchSubmit);
 	}
 
 	toggle = () => {
@@ -98,5 +112,15 @@ export default class Navbar extends Component {
 		};
 
 		this.stateChanged();
+	};
+
+	onSearchSubmit = (event) => {
+		event.preventDefault();
+		const params = new URLSearchParams();
+		params.append('q', event.target.elements[0].value);
+		const type = AccountService.isClient() ? 'freelancers' : 'jobs';
+		params.append('type', type);
+
+		router.push(`/search`, `?${params.toString()}`);
 	};
 }

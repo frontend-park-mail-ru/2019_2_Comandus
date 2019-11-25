@@ -1,44 +1,31 @@
 import Component from '@frame/Component';
 import template from './Account.handlebars';
-import { htmlToElement } from '@modules/utils';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import { Avatar } from '@components/Avatar/Avatar';
-import Frame from '@frame/frame';
 import bus from '@frame/bus';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import TextField from '@components/inputs/TextField/TextField';
 import Button from '@components/inputs/Button/Button';
-
-const children = [
-	{
-		id: 'myAccountAvatar',
-		component: Avatar,
-	},
-];
+import './account.scss';
 
 export class Account extends Component {
-	constructor({ ...props }) {
+	constructor(props) {
 		super(props);
+
 		this.data = {
-			children: {},
+			user: props.user,
 			loaded: false,
 		};
-
-		this.onAccountReceived = this.onAccountReceived.bind(this);
-
-		bus.on('account-get-response', this.onAccountReceived);
-		bus.emit('account-get');
 
 		this.helper = null;
 	}
 
 	render() {
-		children.forEach((ch) => {
-			const { children } = this.data;
-			children[ch.id] = ch.id;
+		this._avatar = new Avatar({
+			changing: true,
 		});
 
-		const secondNameField = new TextField({
+		this._secondNameField = new TextField({
 			required: true,
 			name: 'secondName',
 			type: 'text',
@@ -50,7 +37,7 @@ export class Account extends Component {
 				'Обычно фамилия так не выглядит. Это Ваша настоящая фамилия?',
 			value: this.data.user ? this.data.user.secondName : '',
 		});
-		const firstNameField = new TextField({
+		this._firstNameField = new TextField({
 			required: true,
 			name: 'firstName',
 			type: 'text',
@@ -61,7 +48,7 @@ export class Account extends Component {
 			title: 'Обычно имя так не выглядит. Это Ваше настоящая имя?',
 			value: this.data.user ? this.data.user.firstName : '',
 		});
-		const emailField = new TextField({
+		this._emailField = new TextField({
 			required: true,
 			name: 'email',
 			type: 'email',
@@ -69,55 +56,43 @@ export class Account extends Component {
 			placeholder: 'Ваш e-mail',
 			value: this.data.user ? this.data.user.email : '',
 		});
-		const submitBtn = new Button({
+		this._submitBtn = new Button({
 			type: 'submit',
 			text: 'Сохранить изменения',
 		});
 
 		this.data = {
 			secondNameField: new FieldGroup({
-				children: [secondNameField.render()],
+				children: [this._secondNameField.render()],
 				label: 'Фамилия',
 			}).render(),
 			firstNameField: new FieldGroup({
-				children: [firstNameField.render()],
+				children: [this._firstNameField.render()],
 				label: 'Имя',
 			}).render(),
 			emailField: new FieldGroup({
-				children: [emailField.render()],
+				children: [this._emailField.render()],
 				label: 'E-mail',
 			}).render(),
 			submitBtn: new FieldGroup({
-				children: [submitBtn.render()],
+				children: [this._submitBtn.render()],
 			}).render(),
+			profileAvatar: this._avatar.render(),
 		};
 
-		const html = template({
-			data: this.data,
-			props: this.props,
+		this.html = template({
+			...this.data,
+			...this.props,
 		});
-		const newElement = htmlToElement(html);
-		if (this._el && this._parent.contains(this._el)) {
-			this._parent.replaceChild(newElement, this._el);
-		} else {
-			this._parent.appendChild(newElement);
-		}
-		this._el = newElement;
 
-		children.forEach((ch) => {
-			const parent = this._el.querySelector(`#${ch.id}`);
-			if (parent) {
-				const component = Frame.createComponent(ch.component, parent, {
-					...this.props,
-					id: ch.id,
-				});
-				Frame.renderComponent(component);
-			}
-		});
+		return this.html;
 	}
 
 	postRender() {
-		const form = this._el.querySelector('#mainSettingsForm');
+		super.postRender();
+		this._avatar.postRender();
+
+		const form = this.el.querySelector('#mainSettingsForm');
 		enableValidationAndSubmit(form, (helper) => {
 			helper.event.preventDefault();
 
@@ -126,30 +101,6 @@ export class Account extends Component {
 			bus.on('account-put-response', this.onAccountPutResponse);
 			bus.emit('account-put', helper.formToJSON());
 		});
-	}
-
-	stateChanged() {
-		this.render();
-		this.postRender();
-	}
-
-	onAccountReceived(response) {
-		response
-			.then((res) => {
-				this.data = {
-					user: { ...res },
-				};
-			})
-			.catch((error) => {
-				console.error(error);
-			})
-			.finally(() => {
-				this.data = {
-					...this.data,
-					loaded: true,
-				};
-				this.stateChanged();
-			});
 	}
 
 	onAccountPutResponse = (response) => {
@@ -166,4 +117,8 @@ export class Account extends Component {
 				this.helper.setResponseText(text);
 			});
 	};
+
+	onDestroy() {
+		bus.off('account-put-response', this.onAccountPutResponse);
+	}
 }

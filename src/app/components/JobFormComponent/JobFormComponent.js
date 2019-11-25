@@ -16,13 +16,32 @@ import {
 	specialities,
 	levelsRadio,
 	jobTypes,
+	busEvents,
+	levels,
+	specialitiesRow,
 } from '@app/constants';
+import CardTitle from '@components/dataDisplay/CardTitle';
+import store from '@modules/store';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
 	cities[i] = countriesCitiesRow[el].map(toSelectElement);
 	return toSelectElement(el, i);
 });
+
+let job = {
+	city: '',
+	country: '',
+	description: '',
+	experienceLevelId: '',
+	jobTypeId: '',
+	paymentAmount: '',
+	specialityId: '',
+	status: '',
+	title: '',
+};
 
 class JobFormComponent extends Component {
 	constructor({ ...props }) {
@@ -35,12 +54,27 @@ class JobFormComponent extends Component {
 
 		let title = 'Новая работа';
 
-		this.data = { title, ...this.data };
+		this.data = {
+			title,
+			...this.data,
+			isEdit: this.props.params && this.props.params.jobId ? true : false,
+			jobId: this.props.params && this.props.params.jobId,
+		};
 
 		this.helper = null;
 	}
 
+	preRender() {
+		console.log(this.props.params.jobId);
+		if (this.props.params.jobId) {
+			bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
+			bus.emit(busEvents.JOB_GET, this.props.params.jobId);
+		}
+	}
+
 	render() {
+		job = { ...job, ...this.data.job };
+
 		const textField = new TextField({
 			required: true,
 			type: 'text',
@@ -55,6 +89,7 @@ class JobFormComponent extends Component {
 				</ul>
 				</div>`,
 			name: 'title',
+			value: job.title,
 		});
 		const descriptionField = new TextField({
 			required: true,
@@ -63,6 +98,7 @@ class JobFormComponent extends Component {
 			placeholder: '',
 			hint: `<ul> <li> Укажите каким должен быть результат работы; требование к результату </li> <li> Каким должен быть фрилансер; требование к исполнителю </li> <li>Важная информация о проекте</li> <li>Сроки выполнения и другие условия</li> </ul>`,
 			name: 'description',
+			value: job.description,
 		});
 		const budgetField = new TextField({
 			required: true,
@@ -70,6 +106,7 @@ class JobFormComponent extends Component {
 			label: 'Бюджет',
 			placeholder: '',
 			name: 'paymentAmount',
+			value: job.paymentAmount,
 		});
 
 		this._citySelect = new DoubleSelect({
@@ -79,6 +116,9 @@ class JobFormComponent extends Component {
 			label2: 'Город',
 			name: 'city',
 			label: 'Нужен исполнитель из...',
+			selectedItem1: job.country,
+			selectedItem2: job.city,
+			value: job.city,
 		});
 		this._specialitySelect = new DoubleSelect({
 			items: categories,
@@ -88,22 +128,29 @@ class JobFormComponent extends Component {
 			name: 'specialityId',
 			label: 'Специализация проекта',
 			required: true,
+			selectedItem1: '',
+			selectedItem2: job.specialityId,
+			value: job.specialityId,
 		});
 		this._levelRadioGroup = new RadioGroup({
 			items: levelsRadio,
 			column: true,
 			required: true,
 			name: 'experienceLevelId',
+			value: job.experienceLevelId,
 		});
 		this._inputTags = new InputTags({
 			name: 'skills',
 			max: 5,
 			duplicate: false,
 			tags: ['Golang', 'Javascript', 'HTML'],
+			value: job.skills,
 		});
 		const submitBtn = new Button({
 			type: 'submit',
-			text: 'Опубликовать проект',
+			text: this.props.params.jobId
+				? 'Сохранить изменения'
+				: 'Опубликовать проект',
 		});
 
 		this._jobTypeRadio = new RadioGroup({
@@ -113,6 +160,7 @@ class JobFormComponent extends Component {
 			onClick: (value) => {
 				console.log(value);
 			},
+			value: job.jobTypeId,
 		});
 
 		this.data = {
@@ -161,8 +209,6 @@ class JobFormComponent extends Component {
 		return this.html;
 	}
 
-	preRender() {}
-
 	postRender() {
 		// if (this.data.isVacancy()) {
 		this._citySelect.postRender();
@@ -178,8 +224,16 @@ class JobFormComponent extends Component {
 
 				this.helper = helper;
 
-				bus.on('job-create-response', this.onCreateJobResponse);
-				bus.emit('job-create', helper.formToJSON());
+				if (this.data.isEdit) {
+					bus.on(busEvents.JOB_PUT_RESPONSE, this.onJobEditResponse);
+					bus.emit(busEvents.JOB_PUT, {
+						jobId: this.data.jobId,
+						data: helper.formToJSON(),
+					});
+				} else {
+					bus.on('job-create-response', this.onCreateJobResponse);
+					bus.emit('job-create', helper.formToJSON());
+				}
 			});
 		}
 	}
@@ -198,6 +252,41 @@ class JobFormComponent extends Component {
 
 		this.props.router.push(`/jobs/${response.id}`);
 	}
+
+	onJobEditResponse = (data) => {
+		bus.off(busEvents.JOB_PUT_RESPONSE, this.onJobEditResponse);
+
+		const { error, response } = data;
+		if (error) {
+			let text = error.message;
+			if (error.data && error.data.error) {
+				text = error.data.error;
+			}
+			this.helper.setResponseText(text);
+			return;
+		}
+
+		this.props.router.push(`/jobs/${this.data.jobId}`);
+	};
+
+	jobUpdated = () => {
+		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
+		const job = store.get(['job']);
+		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
+		job['experienceLevel'] = levels[job['experienceLevelId'] - 1];
+		job['speciality'] = specialitiesRow[job['specialityId']];
+		job['created'] = new Date(job.date).toDateString();
+		job['type'] = jobTypes.find(
+			(el) => el.value === parseInt(job.jobTypeId),
+		).label;
+
+		this.data = {
+			job,
+			title: 'Редактирование работы',
+		};
+
+		this.stateChanged();
+	};
 }
 
 export default JobFormComponent;

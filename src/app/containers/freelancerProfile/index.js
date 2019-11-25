@@ -1,7 +1,13 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './profile.scss';
-import { historySortBy, jobs, levels, availability } from '@app/constants';
+import {
+	historySortBy,
+	jobs,
+	levels,
+	availability,
+	busEvents,
+} from '@app/constants';
 import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
 import { Select } from '@components/inputs/Select/Select';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
@@ -9,12 +15,17 @@ import FeaturesList from '@components/dataDisplay/FeaturesList';
 import JobItem from '@components/dataDisplay/JobItem';
 import Item from '@components/surfaces/Item';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import Paginator from '@components/Paginator';
+import Paginator from '@components/navigation/Paginator';
 import PortfolioCard from '@components/dataDisplay/PortfolioCard';
 import CardBoard from '@components/dataDisplay/CardBoard';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import { Avatar } from '@components/Avatar/Avatar';
+import bus from '@frame/bus';
+import AuthService from '@services/AuthService';
+import AccountService from '@services/AccountService';
+import store from '@modules/store';
 
 export class Profile extends Component {
 	constructor(props) {
@@ -44,13 +55,14 @@ export class Profile extends Component {
 		];
 
 		const freelancerObj = {
-			avatarUrl: defaultAvatarUrl('А', 'К', 200),
+			avatarUrl: defaultAvatarUrl('F', 'W', 200),
 			firstName: 'Александр',
 			lastName: 'Косенков',
 			city: 'Москва, Россия',
 			rating: '100',
 			tagline: 'Frontend разработчик',
-			description: 'Some description',
+			description:
+				"I've been administering Microsoft and Citrix server infrastructures for the last 9 years, and have in-depth experience with design, deployment, repair and support of all Citrix, VMWare and many Microsoft technologies. My experiences range from server administration roles, specialized application support, desktop support, administrator to advanced virtualization implementations jobs combined with programming skills .",
 			hourCost: '7000',
 			monthCost: '40000',
 			selectCount: '44',
@@ -72,6 +84,9 @@ export class Profile extends Component {
 
 		this.data = {
 			...freelancerObj,
+			profilePortfolios,
+			profileHistory: jobs,
+			freelancer: {},
 		};
 
 		this.data.profileHistory = this.data.profileHistory
@@ -90,6 +105,20 @@ export class Profile extends Component {
 				});
 				return item.render();
 			});
+
+		bus.on(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
+	}
+
+	preRender() {
+		bus.emit(busEvents.FREELANCER_GET, this.props.params.freelancerId);
+
+		const loggedIn = AuthService.isLoggedIn();
+		const isClient = AccountService.isClient();
+
+		this.data = {
+			loggedIn,
+			isClient,
+		};
 	}
 
 	render() {
@@ -102,6 +131,11 @@ export class Profile extends Component {
 			},
 			[],
 		);
+
+		this._avatar = new Avatar({
+			imgUrl: this.data.avatarUrl,
+			changing: true,
+		});
 
 		this._hourCost = new FeatureComponent({
 			title: 'Стоимость часа работы',
@@ -122,11 +156,13 @@ export class Profile extends Component {
 
 		this._projectSuggestBtn = new Button({
 			type: 'button',
+			noFit: true,
 			text: 'Предложить проект',
 		});
 		this._saveBtn = new Button({
 			type: 'button',
 			text: 'Добавить в избранное',
+			noFit: true,
 			className: 'btn_secondary',
 		});
 
@@ -141,6 +177,7 @@ export class Profile extends Component {
 		});
 
 		this.data = {
+			profileAvatar: this._avatar.render(),
 			profileInfoFeatures: new FeaturesList({
 				children: [
 					this._hourCost.render(),
@@ -183,4 +220,33 @@ export class Profile extends Component {
 
 		return this.html;
 	}
+
+	postRender() {
+		this._avatar.postRender();
+	}
+
+	freelancerUpdated = (err) => {
+		if (err) {
+			return;
+		}
+
+		const freelancer = store.get(['freelancer']);
+
+		this.data = {
+			freelancer: freelancer,
+			...freelancer,
+		};
+
+		if (freelancer) {
+			this.data = {
+				avatarUrl: defaultAvatarUrl(
+					freelancer.firstName,
+					freelancer.secondName,
+					200,
+				),
+			};
+		}
+
+		this.stateChanged();
+	};
 }
