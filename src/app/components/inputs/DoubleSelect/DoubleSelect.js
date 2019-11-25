@@ -11,9 +11,27 @@ export default class DoubleSelect extends Component {
 		label1 = '',
 		label2 = '',
 		name = '',
+		value = '',
 		...props
 	}) {
 		super(props);
+
+		let secondItems = [];
+
+		Object.keys(items2).forEach((k) => {
+			const index = items2[k].findIndex((i) => {
+				return i.value == value;
+			});
+			if (index !== -1) {
+				secondItems = items2[k];
+				secondItems[index].selected = true;
+				const it = items.find((i) => i.value === k);
+				if (it) {
+					it.selected = true;
+				}
+				return;
+			}
+		});
 
 		this.data = {
 			label,
@@ -29,8 +47,8 @@ export default class DoubleSelect extends Component {
 			label: label1,
 		});
 		this._secondSelect = new Select({
-			items: [],
-			attributes: required ? 'disabled required' : 'disabled',
+			items: secondItems,
+			// attributes: required ? 'disabled required' : 'disabled',
 			onChange: this.onCityChange,
 			label: label2,
 			name: name,

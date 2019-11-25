@@ -1,5 +1,8 @@
 <div id="{{_id}}">
 	<div class="tp-container tp-centered-container">
+		{{#isMyJob}}
+			<a href="/my-job-postings" style="margin-top: 20px;">Назад к размещениям</a>
+		{{/isMyJob}}
 		<div class="tp-row  card card_no-padding">
 			<div class="tp-col-9">
 				<div class="job-details job-details_clear-margins">
@@ -25,7 +28,11 @@
 					<div class="buttons job-details__inner-item">
 						{{#loggedIn}}
 							{{#isClient}}
-								<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
+								{{#isMyJob}}
+									<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
+								{{else}}
+									<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
+								{{/isMyJob}}
 							{{else}}
 								{{{submitProposal}}}
 								{{{saveBtn}}}
@@ -55,28 +62,24 @@
 			</div>
 		</div>
 
-		{{#loggedIn}}
-			{{#isClient}}
-			{{else}}
-				<div class="tp-row tp-row-centered">
-					<div class="tp-col-6 card card_no-padding">
-						<form class="job-details" method="post" id="addProposal" autocomplete="off">
-							<h2 class="job-details__inner-item job-details_title">Ответ фрилансера</h2>
-							<div class="job-details__inner-item">
-								{{{budgetField}}}
-								{{{timeSelect}}}
-								{{{proposalField}}}
-							</div>
-							<div class="job-details__inner-item">
-								<div class="buttons-group">
-									{{{submitProposal}}}
-									{{{cancelBtn}}}
-								</div>
-							</div>
-						</form>
-					</div>
+		{{{sendProposalFormModal}}}
+
+		{{#isMyJob}}
+			<div class="tp-row card card_no-padding">
+				<div class="tp-col-12">
+					{{!--					<div class="job-details ">--}}
+					<h2 class="job-details__inner-item job-details_title">Отклики</h2>
+					{{!--						<div class="job-details__inner-item">--}}
+
+
+					{{!--						</div>--}}
+					{{!--						<div class="job-details__inner-item">--}}
+
+					{{!--						</div>--}}
+					{{!--					</div>--}}
 				</div>
-			{{/isClient}}
-		{{/loggedIn}}
+				{{!--				<div class="tp-col-3"></div>--}}
+			</div>
+		{{/isMyJob}}
 	</div>
 </div>

@@ -38,14 +38,19 @@ export default class Navbar extends Component {
 		const profileItems = [];
 
 		if (this.data.loggedIn) {
-			profileItems.push({
-				url: `/freelancers/${this.data.user.freelancerId}`,
-				text: 'Профиль',
-			});
-			if (!this.data.isClient) {
+			profileItems.push({ url: '/my-contracts', text: 'Контракты' });
+			if (this.data.isClient) {
+				profileItems.push({
+					url: '/my-job-postings',
+					text: 'Мои размещения',
+				});
+			} else {
+				profileItems.push({
+					url: `/freelancers/${this.data.user.freelancerId}`,
+					text: 'Профиль',
+				});
 				profileItems.push({ url: '/saved', text: 'Закладки' });
 				profileItems.push({ url: '/proposals', text: 'Отклики' });
-				profileItems.push({ url: '/messages', text: 'Сообщения' });
 			}
 			profileItems.push({ url: config.urls.settings, text: 'Настройки' });
 		}
@@ -111,6 +116,11 @@ export default class Navbar extends Component {
 
 	onSearchSubmit = (event) => {
 		event.preventDefault();
-		router.push(`/search`, `?q=${event.target.elements[0].value}`);
+		const params = new URLSearchParams();
+		params.append('q', event.target.elements[0].value);
+		const type = AccountService.isClient() ? 'freelancers' : 'jobs';
+		params.append('type', type);
+
+		router.push(`/search`, `?${params.toString()}`);
 	};
 }
