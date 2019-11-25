@@ -68,6 +68,7 @@ export default class ClientJobs extends Component {
 	}
 
 	jobsUpdated = (err) => {
+		bus.off(busEvents.JOBS_UPDATED, this.jobsUpdated);
 		if (!AccountService.isClient()) {
 			return;
 		}
@@ -126,5 +127,10 @@ export default class ClientJobs extends Component {
 	onJobDeleteResponse = () => {
 		bus.off(busEvents.JOB_DELETE_RESPONSE, this.onJobDeleteResponse);
 		this.deleteDialogModal.close();
+		bus.off(busEvents.JOBS_UPDATED, this.jobsUpdated);
+		bus.on(busEvents.JOBS_UPDATED, this.jobsUpdated);
+		bus.emit(busEvents.JOBS_GET, {
+			only: 'my',
+		});
 	};
 }
