@@ -1,4 +1,10 @@
 .account-settings {
+	&__main {
+	}
+
+	&__delete-block {
+	}
+
 	&__avatar {
 		display: flex;
 		flex-direction: column;
@@ -14,5 +20,29 @@
 	&__btn {
 		margin-top: auto;
 		margin-bottom: 10px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.account-settings {
+		&__main {
+			--width: 12;
+		}
+
+		&__delete-block {
+			--width: 12;
+		}
+	}
+
+	.main-settings {
+		&__submit button {
+			width: 100%;
+		}
+	}
+
+	.account-delete {
+		&__btn {
+			justify-content: flex-start;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 import Component from '@frame/Component';
 import template from './FreelancerSettings.handlebars';
+import './FreelancerSettings.scss';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import FreelancerService from '@services/FreelancerService';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';

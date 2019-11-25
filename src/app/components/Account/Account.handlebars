@@ -1,6 +1,6 @@
 <div class="tp-container card" id="{{_id}}">
 	<div class="tp-row tp-row_content_left">
-		<div class="tp-col-6 tp-col_padding_0">
+		<div class="tp-col-6 tp-col_padding_0 account-settings__main">
 			<div class="account-settings__avatar">
 				{{{ profileAvatar }}}
 			</div>
@@ -13,11 +13,13 @@
 				{{{ secondNameField }}}
 				{{{ firstNameField }}}
 				{{{ emailField }}}
-				{{{ submitBtn }}}
+				<div class="main-settings__submit">
+					{{{ submitBtn }}}
+				</div>
 
 			</form>
 		</div>
-		<div class="tp-col-6 tp-col_padding_0">
+		<div class="tp-col-6 tp-col_padding_0 account-settings__delete-block">
 			<div class="account-settings__delete tp-container">
 				<div class="account-delete__btn tp-row tp-row_content_right">
 					<a href="#" target="_self">

@@ -1,7 +1,8 @@
 @import '~@assets/scss/global';
 
 .settings-sidebar {
-	//padding: 5px 20px;
+	padding: 0;
+
 	&__navigate {
 		list-style: none;
 		display: flex;
@@ -12,6 +13,17 @@
 		padding: 0;
 		box-shadow: 0 0 3px 1px rgba(57,73,76,0.35);
 		border-radius: 5px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.settings-sidebar {
+		--width: 12;
+		padding: 0 15px;
+
+		&__navigate {
+			margin: 20px 0 0 0;
+		}
 	}
 }
 
