@@ -11,6 +11,7 @@ import AccountService from '@services/AccountService';
 import bus from '@frame/bus';
 import { router } from '../../../index';
 import { busEvents } from '@app/constants';
+import store from '@modules/store';
 
 export class Settings extends Component {
 	constructor({ ...props }) {
@@ -107,7 +108,6 @@ export class Settings extends Component {
 		// 	this._currentTabSettings = new this._currentTab.Component({});
 		// 	this._currentTab.component = this._currentTabSettings;
 		// }
-
 		this._currentTabSettings = new this._currentTab.Component(
 			this._currentTab.props,
 		);
@@ -137,11 +137,16 @@ export class Settings extends Component {
 	}
 
 	userUpdated = () => {
+		const user = store.get(['user']);
 		const isClient = AccountService.isClient();
 
 		this.data = {
 			isClient,
+			user,
 		};
+		this._tabs.find((tab) => {
+			return tab.link === 'account';
+		}).props.user = this.data.user;
 
 		if (
 			(!isClient && this.props.params.tab === 'company') ||
@@ -149,6 +154,12 @@ export class Settings extends Component {
 		) {
 			router.push(config.urls.settings);
 		}
+
+		// Если обновили данные из формы - обновлять ничего не надо
+		if (isClient === this.data.isClient) {
+			return;
+		}
+
 		this.stateChanged();
 	};
 
