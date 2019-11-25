@@ -1,35 +1,84 @@
 @import "~@assets/scss/global";
 
-.freelancer-item__row {
-	display: flex;
+.freelancer-item {
+	&__row {
+		display: flex;
 
+	}
+
+	&__col-full {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__avatar-wrapper {
+		padding-right: 10px;
+		padding-bottom: 10px;
+		display: inline-block;
+	}
+
+	&__avatar {
+		@include small-avatar;
+	}
+
+	&__name {
+		padding: 0;
+		display: block;
+		color: $primary-color;
+	}
+
+	&__small {
+		color: #656565;
+		font-size: .9em;
+	}
+
+	&__description {
+		padding-bottom: 10px;
+	}
+
+	&__block-info {
+		padding: 0 0 10px 0;
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		list-style: none;
+		margin: 0;
+
+	}
+
+	&__block-info-item {
+		position: relative;
+		//width: 33%;
+		padding-right: 20px;
+	}
+
+	&__offer {
+		&_mobile {
+			display: none;
+		}
+		&_desktop {
+			display: flex;
+		}
+	}
 }
 
-.freelancer-item__col-full {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-}
+@media screen and (max-width: 576px) {
+	.freelancer-item {
+		&__offer {
+			&_mobile {
+				margin-top: 10px;
+				display: flex;
 
-.freelancer-item__avatar-wrapper {
-	padding-right: 10px;
-	padding-bottom: 10px;
-	display: inline-block;
-}
-
-.freelancer-item__avatar {
-	@include small-avatar;
-}
-
-.freelancer-item__name {
-	padding: 0;
-	display: block;
-	color: $primary-color;
-}
-
-.freelancer-item__small {
-	color: #656565;
-	font-size: .9em;
+				& button {
+					width: 100%;
+				}
+			}
+			&_desktop {
+				display: none;
+			}
+		}
+	}
 }
 
 .freelancer-item-skills {
@@ -38,43 +87,23 @@
 	padding: 0;
 	margin: 0;
 	list-style: none;
-}
 
-.freelancer-item-skills__item {
-	position: relative;
-	padding-right: 5px;
-	display: inline;
+	&__item {
+		position: relative;
+		padding-right: 5px;
+		display: inline;
 
-	&:not(:last-child)::after {
-		content: '';
-		height: 6px;
-		width: 6px;
-		background-color: rgba(#656565, 0.5);
-		border-radius: 50%;
-		display: inline-block;
-		margin-right: 5px;
-		margin-left: 5px;
-		vertical-align: middle;
+		&:not(:last-child)::after {
+			content: '';
+			height: 6px;
+			width: 6px;
+			background-color: rgba(#656565, 0.5);
+			border-radius: 50%;
+			display: inline-block;
+			margin-right: 5px;
+			margin-left: 5px;
+			vertical-align: middle;
+		}
 	}
-}
-
-.freelancer-item__description {
-	padding-bottom: 10px;
-}
-
-.freelancer-item__block-info {
-	padding: 0 0 10px 0;
-	display: flex;
-	flex-wrap: wrap;
-	width: 100%;
-	list-style: none;
-	margin: 0;
-
-}
-
-.freelancer-item__block-info-item {
-	position: relative;
-	//width: 33%;
-	padding-right: 20px;
 }
 
