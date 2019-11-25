@@ -26,3 +26,11 @@ legend {
 	margin-top: 10px;
 	width: 100%;
 }
+
+@media screen and (max-width: 768px) {
+	.job-form {
+		&__submit button {
+			width: 100%;
+		}
+	}
+}
