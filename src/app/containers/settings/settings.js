@@ -140,10 +140,6 @@ export class Settings extends Component {
 		const user = store.get(['user']);
 		const isClient = AccountService.isClient();
 
-		this.data = {
-			isClient,
-			user,
-		};
 		this._tabs.find((tab) => {
 			return tab.link === 'account';
 		}).props.user = this.data.user;
@@ -159,6 +155,11 @@ export class Settings extends Component {
 		if (isClient === this.data.isClient) {
 			return;
 		}
+
+		this.data = {
+			isClient,
+			user,
+		};
 
 		this.stateChanged();
 	};

@@ -1,5 +1,6 @@
 import Component from '@frame/Component';
 import template from './ChangePassword.handlebars';
+import './ChangePassword.scss';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';
 import Button from '@components/inputs/Button/Button';

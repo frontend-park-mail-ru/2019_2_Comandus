@@ -1,6 +1,6 @@
 <div id="{{_id}}" class="tp-container tp-centered-container ">
 	<div class="tp-row">
-		<div class="tp-col-3 tp-col_padding_0 settings-sidebar">
+		<div class="tp-col-3 settings-sidebar">
 			<ul class="settings-sidebar__navigate" role="menubar">
 				{{#each tabs}}
 					{{#if show}}
@@ -13,6 +13,7 @@
 				{{/each}}
 			</ul>
 		</div>
+
 		<div class="tp-col-9">
 			<div class="settings-account">
 				{{{ settingsComponent }}}

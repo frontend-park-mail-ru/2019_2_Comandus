@@ -1,0 +1,39 @@
+.send-proposal-form {
+	&__buttons {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+
+		& button {
+			&:not(:first-child) {
+				margin-left: 10px;
+			}
+		}
+	}
+
+	&__buttons-wrapper {
+		margin: 0;
+		padding: 10px 0;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.send-proposal-form {
+		&__buttons {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		&__buttons-wrapper {
+
+		}
+
+		& button {
+			margin: 0;
+			width: 100%;
+			&:not(:first-child) {
+				margin: 10px 0 0 0;
+			}
+		}
+	}
+}
