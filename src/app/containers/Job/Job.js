@@ -11,6 +11,9 @@ import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
 import Modal from '@components/Modal/Modal';
 import SendProposalForm from '@components/SendProposalForm';
+import ProposalItem from '@components/dataDisplay/ProposalItem';
+import ProposalService from '@services/ProposalService';
+import { formatDate } from '@modules/utils';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -25,6 +28,10 @@ export default class Job extends Component {
 		bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
 		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 		bus.emit(busEvents.JOB_GET, this.props.params.jobId);
+
+		ProposalService.GetProposalsByJobId(this.props.params.jobId).then(
+			this.onProposalsGet,
+		);
 
 		const loggedIn = AuthService.isLoggedIn();
 		const isClient = AccountService.isClient();
@@ -156,5 +163,28 @@ export default class Job extends Component {
 
 	closeModal = () => {
 		this.sendProposalFormModal.close();
+	};
+
+	onProposalsGet = ({ response, error }) => {
+		if (error) {
+			return;
+		}
+
+		console.log(response);
+
+		response = response.map((r) => {
+			r.Response.date = formatDate(r.Response.date);
+			return r;
+		});
+
+		this.data = {
+			proposals: response,
+		};
+
+		this.stateChanged();
+	};
+
+	renderProposalItem = (proposal) => {
+		return new ProposalItem(proposal).render();
 	};
 }

@@ -69,6 +69,18 @@
 				<div class="tp-col-12">
 					{{!--					<div class="job-details ">--}}
 					<h2 class="job-details__inner-item job-details_title">Отклики</h2>
+					<div class="job-details__inner-item job-proposals">
+						{{#each proposals}}
+							<div class="job-proposal">
+								<a class="link" href="/proposals/{{Response.id}}">{{firstName}} {{lastName}}</a>
+{{!--								<div>Это кавер леттер...</div>--}}
+{{!--								<div>--}}
+{{!--									<span></span>--}}
+{{!--								</div>--}}
+								<div>{{Response.date}}</div>
+							</div>
+						{{/each}}
+					</div>
 					{{!--						<div class="job-details__inner-item">--}}
 
 

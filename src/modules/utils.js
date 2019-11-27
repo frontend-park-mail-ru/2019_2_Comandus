@@ -113,3 +113,20 @@ function randomHexColor() {
 export function deepCopy(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
+
+export function formatDate(dateString) {
+	const d = new Date(dateString);
+	let m = d.getMonth() + 1;
+	m = formatDateNum(m);
+	const day = formatDateNum(d.getDate());
+
+	return `${day}.${m}.${d.getFullYear()}`;
+}
+
+function formatDateNum(num) {
+	if (num > 0 && num < 9) {
+		return '0' + num;
+	}
+
+	return num;
+}

@@ -1,9 +1,15 @@
 @import "~@assets/scss/global";
 
 .proposal-item {
-	padding: 20px 20px 10px;
+	display: flex;
+	justify-content: space-between;
+	padding-top: 20px;
 }
 
 .proposal-item__title {
 	padding: 0;
+}
+
+.proposal-item__date {
+	color: $light-text-color;
 }

@@ -3,14 +3,50 @@
 		<div class="tp-row">
 			<div class="tp-col-12">
 				<div class="page-header">
-					Мои отклики
+					Мои отклики и предложения
 				</div>
-				<div class="card card_no-padding">
-					{{#each proposals}}
-						<div>
-							{{{this}}}
+				<div class="tabs">
+					<ul class="nav tabs__nav">
+						<li class="tabs__nav_element active">Текущие</li>
+						<li class="tabs__nav_element">Архив</li>
+					</ul>
+					<div class="tabs__content">
+						<div class="tp-container card">
+							{{{ sentToMeTitle }}}
+							<div class="tp-container">
+
+{{!--								{{#each proposals}}--}}
+{{!--									<div>--}}
+{{!--										{{{this}}}--}}
+{{!--									</div>--}}
+{{!--								{{/each}}--}}
+							</div>
 						</div>
-					{{/each}}
+
+						<div class="tp-container card">
+							{{{ activeTitle }}}
+							<div class="tp-container">
+{{!--								{{#each proposals}}--}}
+{{!--									<div>--}}
+{{!--										{{{this}}}--}}
+{{!--									</div>--}}
+{{!--								{{/each}}--}}
+							</div>
+						</div>
+
+
+						<div class="tp-container card">
+							{{{ myProposalTitle }}}
+							<div class="tp-container">
+								{{#each proposals}}
+									<div>
+										{{{this}}}
+									</div>
+								{{/each}}
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>
