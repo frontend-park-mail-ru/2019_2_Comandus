@@ -23,6 +23,7 @@ export default {
 		csrfToken: '/token',
 		setUserType: '/setusertype',
 		proposals: '/proposals',
+		searchJobs: '/search/jobs',
 	},
 	accountTypes: {
 		client: 'client',

@@ -1,5 +1,5 @@
 import template from './JobFormComponent.handlebars';
-import './style.css';
+import './style.scss';
 import Component from '@frame/Component';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';

@@ -57,6 +57,11 @@ export default class Job extends Component {
 			text: 'Ответить на проект',
 			onClick: this.onOpenModal,
 		});
+		this._submitProposalMobile = new Button({
+			type: 'submit',
+			text: 'Ответить на проект',
+			onClick: this.onOpenModal,
+		});
 		this._save = new Button({
 			type: 'button',
 			text: 'В закладки',
@@ -78,6 +83,7 @@ export default class Job extends Component {
 
 		this.data = {
 			submitProposal: this._submitProposal.render(),
+			submitProposalMobile: this._submitProposalMobile.render(),
 			saveBtn: this._save.render(),
 			jobFeatures: new FeaturesList({
 				children: [
@@ -98,6 +104,7 @@ export default class Job extends Component {
 
 	postRender() {
 		this._submitProposal.postRender();
+		this._submitProposalMobile.postRender();
 		this.sendProposalFormModal.postRender();
 		this.sendProposalForm.postRender();
 	}

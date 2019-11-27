@@ -23,44 +23,80 @@
 					</div>
 				</div>
 			</div>
-			<div class="tp-col-3">
-				<div class="job-details-sidebar">
-					<div class="buttons job-details__inner-item">
-						{{#loggedIn}}
-							{{#isClient}}
-								{{#isMyJob}}
-									<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
-								{{else}}
-									<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
-								{{/isMyJob}}
+			<div class="tp-col-3 tp-col_padding_0 job-details-sidebar job-details-sidebar_desktop">
+				<div class="buttons job-details__inner-item buttons_desktop">
+					{{#loggedIn}}
+						{{#isClient}}
+							{{#isMyJob}}
+								<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
 							{{else}}
-								{{{submitProposal}}}
-								{{{saveBtn}}}
-							{{/isClient}}
+								<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
+							{{/isMyJob}}
 						{{else}}
-							<a href="/login" class="btn btn_primary btn-m">Войти</a>
-						{{/loggedIn}}
-					</div>
-					<div class="job-details__inner-item">
-						<strong>О заказчике</strong>
-						<ul class="about-client">
-							<li>
-								<strong>{{job.hireManagerId}}</strong>
-								<small>{{job.hireManagerId}}</small>
-							</li>
-							<li>
-								<strong></strong>
-								<small>Отзывы фрилансеров</small>
-							</li>
-							<li>
-								<strong></strong>
-								<small>Зарегистрирован</small>
-							</li>
-						</ul>
-					</div>
+							{{{submitProposal}}}
+							{{{saveBtn}}}
+						{{/isClient}}
+					{{else}}
+						<a href="/login" class="btn btn_primary btn-m">Войти</a>
+					{{/loggedIn}}
+				</div>
+				<div class="job-details__inner-item">
+					<strong>О заказчике</strong>
+					<ul class="about-client">
+						<li>
+							<strong>{{job.hireManagerId}}</strong>
+							<small>{{job.hireManagerId}}</small>
+						</li>
+						<li>
+							<strong></strong>
+							<small>Отзывы фрилансеров</small>
+						</li>
+						<li>
+							<strong></strong>
+							<small>Зарегистрирован</small>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="job-details-sidebar job-details-sidebar_mobile">
+				<div></div>
+				<div class="job-details__inner-item">
+					<strong>О заказчике</strong>
+					<ul class="about-client">
+						<li>
+							<strong>{{job.hireManagerId}}</strong>
+							<small>{{job.hireManagerId}}</small>
+						</li>
+						<li>
+							<strong></strong>
+							<small>Отзывы фрилансеров</small>
+						</li>
+						<li>
+							<strong></strong>
+							<small>Зарегистрирован</small>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
+
+		<div class="buttons job-details__inner-item buttons_mobile">
+			{{#loggedIn}}
+				{{#isClient}}
+					{{#isMyJob}}
+						<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
+					{{else}}
+						<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
+					{{/isMyJob}}
+				{{else}}
+					{{{submitProposalMobile}}}
+					{{{saveBtn}}}
+				{{/isClient}}
+			{{else}}
+				<a href="/login" class="btn btn_primary btn-m">Войти</a>
+			{{/loggedIn}}
+		</div>
+
 
 		{{{sendProposalFormModal}}}
 
