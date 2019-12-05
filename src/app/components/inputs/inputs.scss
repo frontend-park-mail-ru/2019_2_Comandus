@@ -25,6 +25,7 @@
 	background: var(--white);
 	transition: background 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
 	text-align: left;
+	resize: vertical;
 
 	&:hover{
 		box-shadow: 0 0 0 1px #636363;

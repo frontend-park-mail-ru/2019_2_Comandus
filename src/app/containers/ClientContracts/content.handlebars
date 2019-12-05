@@ -1,5 +1,55 @@
-<div>
-	{{#each contracts}}
-
-	{{/each}}
+<div class="tp-row tp-row_content_left">
+	<div class="tp-col-12 ">
+		{{#isClient}}
+			<div class="tp-container card card_no-padding">
+				{{{ pendingOffersTitle }}}
+				<div class="tp-container">
+					{{#each contracts}}
+						{{{this}}}
+					{{/each}}
+				</div>
+			</div>
+			<div class="tp-container card card_no-padding">
+				{{{ activeContractsTitle }}}
+				<div class="tp-container">
+					{{#each contracts}}
+						{{{this}}}
+					{{/each}}
+				</div>
+			</div>
+			<div class="tp-container card card_no-padding">
+				{{{ closedContractsTitle }}}
+				<div class="tp-container">
+					{{#each contracts}}
+						{{{this}}}
+					{{/each}}
+				</div>
+			</div>
+		{{else}}
+			<div class="tp-container card card_no-padding">
+				{{{ offersTitle }}}
+				<div class="tp-container">
+					{{#each contracts}}
+						{{{this}}}
+					{{/each}}
+				</div>
+			</div>
+			<div class="tp-container card card_no-padding">
+				{{{ activeContractsTitle }}}
+				<div class="tp-container">
+					{{#each contracts}}
+						{{{this}}}
+					{{/each}}
+				</div>
+			</div>
+			<div class="tp-container card card_no-padding">
+				{{{ closedContractsTitle }}}
+				<div class="tp-container">
+					{{#each contracts}}
+						{{{this}}}
+					{{/each}}
+				</div>
+			</div>
+		{{/isClient}}
+	</div>
 </div>

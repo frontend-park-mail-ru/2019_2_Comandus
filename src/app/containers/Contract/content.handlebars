@@ -1,1 +1,126 @@
-<div></div>
+<div class="tp-row tp-row_content_left">
+	<div class="tp-col-9">
+		<div class="card">
+			<div class="job-details__inner-item">
+				<div class="job-item__title">
+					Условия
+				</div>
+				<div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Бюджет
+						</div>
+						<div>200000 ₽</div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Срок
+						</div>
+						<div>от 1 до 3 месяцев</div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Дата создания контракта
+						</div>
+						<div>20.11.2019</div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Предложение сделано компанией:
+						</div>
+						<div><a class="link">Мэйлру</a></div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Предложение сделано фрилансеру:
+						</div>
+						<div>
+							<a class="link">Nozim Y.</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="job-details__inner-item">
+				<div class="job-item__title">
+					Описание работы
+				</div>
+				<div>
+					Описание работы из объявления...
+				</div>
+			</div>
+			<div class="job-details__inner-item buttons-group">
+				{{#isClient}}
+					<button class="btn btn_primary">Завершить сотрудничество</button>
+				{{else}}
+					<button class="btn btn_primary">Принять предложение</button>
+					<button class="btn btn_secondary">Отказать</button>
+					<button class="btn btn_primary">Уведомить о выполненной работе</button>
+				{{/isClient}}
+			</div>
+		</div>
+		<div class="tp-container card">
+			{{{ feedbackTitle }}}
+			<div class="tp-container">
+				<div class="job-details__inner-item">
+					<div class="job-item__title">
+						Отзыв клиента
+					</div>
+					<div>
+						Оценка:
+						Сообщение: <textarea></textarea>
+						<div>
+							<button>Отпрвить</button>
+						</div>
+					</div>
+				</div>
+				<div class="job-details__inner-item">
+					<div class="job-item__title">
+						Отзыв Фрилансера
+					</div>
+					<div>
+						Оценка:
+						Сообщение: <textarea></textarea>
+						<div>
+							<button>Отпрвить</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tp-container card">
+			{{{ messagesTitle }}}
+			<div class="tp-container">
+				<div class="job-details__inner-item">
+					<textarea></textarea>
+					<div>
+						<button>Отпрвить</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tp-col-3">
+		<div class="card card_no-padding">
+			<div class="contract-status__raw contract-status__raw_active">
+				<i class="status-icon">ic</i>
+				<div class="status-title">Создание заказа</div>
+			</div>
+			<div class="contract-status__raw">
+				<div class="status-title">Согласование условий</div>
+			</div>
+			<div class="contract-status__raw">
+				<div class="status-title">Выполнение работы</div>
+				<p class="status-description">Процесс выполнения задания в заказе ло получения Заказчиком иотгового
+					результата работы.</p>
+			</div>
+			<div class="contract-status__raw">
+				<div class="status-title">Завершение заказа</div>
+				<p class="status-description">Получение Заказчиком результата работы, закрытие заказа с отзывом о
+					сотрудничестве.</p>
+			</div>
+		</div>
+		<div class="card">
+			<a class="link">Посмотреть объявление</a>
+		</div>
+	</div>
+</div>

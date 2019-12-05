@@ -3,15 +3,30 @@ import template from './index.handlebars';
 import contentTemplate from './content.handlebars';
 import './index.scss';
 import PageWithTitle from '@components/PageWithTitle';
+import CardTitle from '@components/dataDisplay/CardTitle';
+import AccountService from '@services/AccountService';
 
 export default class Contract extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	preRender() {}
+	preRender() {
+		const isClient = AccountService.isClient();
+		this.data = {
+			isClient,
+		};
+	}
 
 	render() {
+		this.data = {
+			messagesTitle: new CardTitle({
+				title: 'Сообщения',
+			}).render(),
+			feedbackTitle: new CardTitle({
+				title: 'Отзывы',
+			}).render(),
+		};
 		const page = new PageWithTitle({
 			title: 'Контракт',
 			children: [contentTemplate(this.data)],

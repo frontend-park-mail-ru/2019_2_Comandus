@@ -1,20 +1,16 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './index.scss';
+import Item from '@components/surfaces/Item';
 
 export default class ContractItem extends Component {
 	constructor({
 		id = null,
 		title = '',
-		description = '',
+		fullname = '',
 		created = '',
 		paymentAmount = 0,
-		experienceLevel = '',
-		skills = [],
-		proposals = 0,
-		country = '',
 		children = [],
-		manage = false,
 		...props
 	}) {
 		super(props);
@@ -22,15 +18,10 @@ export default class ContractItem extends Component {
 		this.data = {
 			id,
 			title,
-			description,
 			created,
 			paymentAmount,
-			experienceLevel,
-			skills,
-			proposals,
-			country,
+			fullname,
 			children,
-			manage,
 		};
 	}
 
@@ -39,6 +30,10 @@ export default class ContractItem extends Component {
 			...this.props,
 			...this.data,
 		});
+
+		this.html = new Item({
+			children: [this.html],
+		}).render();
 
 		return this.html;
 	}

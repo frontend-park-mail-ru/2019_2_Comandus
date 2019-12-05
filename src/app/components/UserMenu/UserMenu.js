@@ -40,7 +40,7 @@ export class UserMenu extends Component {
 		}
 		const alt = '';
 		this._dropdown = new Dropdown({
-			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,
+			text: `<div class="badge-wrap"><span class="badge">+1</span><img class="user-menu__avatar" src="${avatar}" alt="${alt}"/></div>`,
 			items: [
 				{
 					url: '#',

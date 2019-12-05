@@ -68,9 +68,13 @@ export default class Job extends Component {
 			className: 'btn_secondary',
 		});
 
+		const type = jobTypes.find(
+			(j) => j.value == this.data.job['jobTypeId'],
+		);
+
 		this._jobType = new FeatureComponent({
 			title: 'Тип работы',
-			data: this.data.job['jobTypeId'],
+			data: type ? type.label : '',
 		});
 		this._jobBudget = new FeatureComponent({
 			title: 'Бюджет',
@@ -115,7 +119,7 @@ export default class Job extends Component {
 		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
 		job['experienceLevel'] = levels[job['experienceLevelId'] - 1];
 		job['speciality'] = specialitiesRow[job['specialityId']];
-		job['created'] = new Date(job.date).toDateString();
+		job['created'] = formatDate(job.date); //new Date(job.date).toDateString();
 		job['type'] = jobTypes.find(
 			(el) => el.value === parseInt(job.jobTypeId),
 		).label;
@@ -173,7 +177,7 @@ export default class Job extends Component {
 	};
 
 	onProposalsGet = ({ response, error }) => {
-		if (error) {
+		if (error || !response) {
 			return;
 		}
 
