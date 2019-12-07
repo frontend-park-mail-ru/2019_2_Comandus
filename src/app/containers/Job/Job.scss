@@ -115,4 +115,15 @@
 
 .job-details__description {
 	overflow-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+.job-proposal {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.job-proposals {
+	padding-top: 0;
 }

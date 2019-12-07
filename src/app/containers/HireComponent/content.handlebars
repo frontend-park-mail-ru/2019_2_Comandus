@@ -1,0 +1,35 @@
+<div class="tp-row tp-row_content_left">
+	<div class="tp-col-8 ">
+{{!--		<div class="hire-component">--}}
+			<div class="tp-container card">
+				<div class="tp-container">
+					<div class="job-details__inner-item">
+						Контракт к работе:
+						<div>
+							<a href="/jobs/id" class="link job-item__title">Название работы</a>
+							<div>
+								<input type="checkbox" id="close-job"/>
+								<label for="close-job">Закрыть публикацию о работе, если фрилансер примет это предложение
+									работы</label>
+							</div>
+						</div>
+					</div>
+					<div class="job-details__inner-item">
+						{{{budgetField}}}
+						{{{timeSelect}}}
+					</div>
+					<div class="buttons-group job-details__inner-item proposal__action-buttons">
+						{{{submitOffer}}}
+						{{{cancelBtn}}}
+					</div>
+				</div>
+			</div>
+
+			{{#each children}}
+				{{{this}}}
+			{{/each}}
+		</div>
+{{!--	</div>--}}
+
+	{{{afterSubmitInfoModal}}}
+</div>

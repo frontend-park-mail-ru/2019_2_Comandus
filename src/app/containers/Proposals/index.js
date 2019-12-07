@@ -5,6 +5,7 @@ import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
 import store from '@modules/store';
 import ProposalItem from '@components/dataDisplay/ProposalItem';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 export default class Proposals extends Component {
 	constructor({ children = [], ...props }) {
@@ -22,6 +23,17 @@ export default class Proposals extends Component {
 	}
 
 	render() {
+		this.data = {
+			sentToMeTitle: new CardTitle({
+				title: 'Предложенные мне',
+			}).render(),
+			activeTitle: new CardTitle({
+				title: 'Активные отлики (в процессе обсуждения)',
+			}).render(),
+			myProposalTitle: new CardTitle({
+				title: 'Мои отклики (без ответа клиента)',
+			}).render(),
+		};
 		this.html = template({
 			...this.props,
 			...this.data,

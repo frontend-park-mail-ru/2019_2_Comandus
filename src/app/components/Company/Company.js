@@ -10,6 +10,7 @@ import countriesCitiesRow from '@assets/countries.min.json';
 import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
 import { Avatar } from '@components/Avatar/Avatar';
 import CardTitle from '@components/dataDisplay/CardTitle';
+import store from '@modules/store';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
@@ -159,11 +160,18 @@ export class Company extends Component {
 	}
 
 	preRender() {
+		const user = store.get(['user']);
+
 		this._data = {
 			...this._data,
 			loaded: false,
 		};
-		CompanyService.GetCompanyById(0)
+
+		if (!user) {
+			return;
+		}
+
+		CompanyService.GetCompanyById(user.companyId)
 			.then((response) => {
 				this.data = {
 					company: { ...response },
@@ -201,7 +209,7 @@ export class Company extends Component {
 	updateCompany = (helper) => {
 		helper.event.preventDefault();
 
-		CompanyService.UpdateCompany(0, helper.formToJSON())
+		CompanyService.UpdateCompany(helper.formToJSON())
 			.then((response) => {
 				helper.setResponseText('Изменения сохранены.', true);
 			})

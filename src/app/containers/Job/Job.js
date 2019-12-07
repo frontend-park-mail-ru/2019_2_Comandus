@@ -11,6 +11,9 @@ import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
 import Modal from '@components/Modal/Modal';
 import SendProposalForm from '@components/SendProposalForm';
+import ProposalItem from '@components/dataDisplay/ProposalItem';
+import ProposalService from '@services/ProposalService';
+import { formatDate } from '@modules/utils';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -25,6 +28,10 @@ export default class Job extends Component {
 		bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
 		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 		bus.emit(busEvents.JOB_GET, this.props.params.jobId);
+
+		ProposalService.GetProposalsByJobId(this.props.params.jobId).then(
+			this.onProposalsGet,
+		);
 
 		const loggedIn = AuthService.isLoggedIn();
 		const isClient = AccountService.isClient();
@@ -61,9 +68,13 @@ export default class Job extends Component {
 			className: 'btn_secondary',
 		});
 
+		const type = jobTypes.find(
+			(j) => j.value == this.data.job['jobTypeId'],
+		);
+
 		this._jobType = new FeatureComponent({
 			title: 'Тип работы',
-			data: this.data.job['jobTypeId'],
+			data: type ? type.label : '',
 		});
 		this._jobBudget = new FeatureComponent({
 			title: 'Бюджет',
@@ -108,7 +119,7 @@ export default class Job extends Component {
 		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
 		job['experienceLevel'] = levels[job['experienceLevelId'] - 1];
 		job['speciality'] = specialitiesRow[job['specialityId']];
-		job['created'] = new Date(job.date).toDateString();
+		job['created'] = formatDate(job.date); //new Date(job.date).toDateString();
 		job['type'] = jobTypes.find(
 			(el) => el.value === parseInt(job.jobTypeId),
 		).label;
@@ -163,5 +174,28 @@ export default class Job extends Component {
 
 	closeModal = () => {
 		this.sendProposalFormModal.close();
+	};
+
+	onProposalsGet = ({ response, error }) => {
+		if (error || !response) {
+			return;
+		}
+
+		console.log(response);
+
+		response = response.map((r) => {
+			r.Response.date = formatDate(r.Response.date);
+			return r;
+		});
+
+		this.data = {
+			proposals: response,
+		};
+
+		this.stateChanged();
+	};
+
+	renderProposalItem = (proposal) => {
+		return new ProposalItem(proposal).render();
 	};
 }

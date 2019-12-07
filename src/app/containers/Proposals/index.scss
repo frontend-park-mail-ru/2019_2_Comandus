@@ -1,0 +1,25 @@
+@import "~@assets/scss/global";
+
+.tabs__nav {
+	border-bottom: 1px solid #A0A0A0;
+	font-weight: 500;
+	display: flex;
+	padding: 0 20px;
+}
+
+.nav {
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+}
+
+.tabs__nav_element {
+	padding: 9px 20px 5px;
+	margin: 0;
+}
+
+.tabs__nav_element.active, .tabs__nav_element:hover {
+	border-bottom: 4px solid $primary-color;
+	color: $primary-color;
+	cursor: pointer;
+}

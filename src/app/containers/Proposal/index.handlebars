@@ -1,0 +1,81 @@
+<div id="{{_id}}">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row">
+			<div class="tp-col-12">
+				<div class="page-header">
+					Отклик
+				</div>
+				<div class="tp-container card">
+					{{{ aboutProposalTitle }}}
+					<div class="tp-container">
+						<div class="job-details__inner-item">
+							<a href="/jobs/id" class="link job-item__title">Название работы</a>
+							{{{jobFeatures}}}
+						</div>
+						{{#isClient}}
+							<div class="job-details__inner-item proposal__freelancer-block">
+								{{{freelancerAvatar}}}
+								<div>
+									<a href="/freelancers/id" class="link job-item__title">Имя Фамилия</a>
+									<span>Tagline-Фронтенд-разработчик</span>
+								</div>
+							</div>
+						{{/isClient}}
+						<div class="job-details__inner-item">
+							<div class="job-item__title">
+								Предложенные фрилансером условия
+							</div>
+							<div>
+								<div class="proposal-details">
+									<div class="proposal-details__key">
+										Бюджет
+									</div>
+									<div>200000 ₽</div>
+								</div>
+								<div class="proposal-details">
+									<div class="proposal-details__key">
+										Срок
+									</div>
+									<div>от 1 до 3 месяцев</div>
+								</div>
+								<div class="proposal-details">
+									<div class="proposal-details__key">
+										Сообщение
+									</div>
+									<div>
+										Добрый день! Это мой кавер леттер!
+										Я отлично подойду для данной работы!
+										Возьмите меня!
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="buttons-group job-details__inner-item proposal__action-buttons">
+							{{#isClient}}
+								{{{makeCandidateProposal}}}
+								{{{rejectProposal}}}
+{{!--								{{{makeOffer}}}--}}
+								<a href="/contracts/new">Предложить контракт</a>
+							{{else}}
+								{{{withdrawProposal}}}
+								{{{archiveProposal}}}
+							{{/isClient}}
+						</div>
+					</div>
+				</div>
+
+				<div class="tp-container card">
+					{{{ messagesTitle }}}
+					<div class="tp-container">
+						<div class="job-details__inner-item">
+							<textarea></textarea>
+							<div>
+								<button>Отпрвить</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

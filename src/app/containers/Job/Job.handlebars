@@ -14,7 +14,7 @@
 						</div>
 						<small>{{job.created}}</small>
 					</div>
-					<div class="job-details__inner-item job-details__description">{{job.description}}</div>
+					<div class="job-details__inner-item job-details__description">{{{job.description}}}</div>
 					{{{ jobFeatures }}}
 					<div class="job-details__inner-item job-item__tags">
 						{{#each job.skills}}
@@ -105,6 +105,24 @@
 				<div class="tp-col-12">
 					{{!--					<div class="job-details ">--}}
 					<h2 class="job-details__inner-item job-details_title">Отклики</h2>
+					<div class="job-details__inner-item job-proposals">
+						{{#proposals.length}}
+						{{else}}
+							<div class="job-proposal">
+								Здесь будут отклики к данной работе
+							</div>
+						{{/proposals.length}}
+						{{#each proposals}}
+							<div class="job-proposal">
+								<a class="link" href="/proposals/{{Response.id}}">Отклик №{{Response.id}} от фрилансера {{firstName}} {{lastName}}</a>
+{{!--								<div>Это кавер леттер...</div>--}}
+{{!--								<div>--}}
+{{!--									<span></span>--}}
+{{!--								</div>--}}
+								<div>{{Response.date}}</div>
+							</div>
+						{{/each}}
+					</div>
 					{{!--						<div class="job-details__inner-item">--}}
 
 
