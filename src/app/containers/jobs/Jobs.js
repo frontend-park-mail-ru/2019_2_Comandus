@@ -8,6 +8,7 @@ import Item from '@components/surfaces/Item';
 import bus from '@frame/bus';
 import store from '@modules/store';
 import PageWithTitle from '@components/PageWithTitle';
+import { formatDate } from '@modules/utils';
 
 export default class Jobs extends Component {
 	constructor(props) {
@@ -60,7 +61,10 @@ export default class Jobs extends Component {
 		return jobs.map((job) => {
 			const jobItem = new JobItem({
 				...job,
+				created: formatDate(job.date),
+				experienceLevel: levels[job['experienceLevelId'] - 1],
 			});
+			console.log(job);
 			const item = new Item({
 				children: [jobItem.render()],
 			});

@@ -34,7 +34,7 @@ export default class Search extends Component {
 			name: 'q',
 			type: 'text',
 			label: 'Поиск',
-			placeholder: 'Поиск работ',
+			placeholder: 'Поиск работы',
 			value: this.data.q,
 		});
 		this.searchBtn = new Button({

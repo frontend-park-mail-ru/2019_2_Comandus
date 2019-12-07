@@ -48,18 +48,18 @@ export default class Job extends Component {
 			onCancel: this.closeModal,
 		});
 		this.sendProposalFormModal = new Modal({
-			title: 'Ответ фрилансера',
+			title: 'Ваш отклик',
 			children: [this.sendProposalForm.render()],
 		});
 
 		this._submitProposal = new Button({
 			type: 'submit',
-			text: 'Ответить на проект',
+			text: 'Отликнуться',
 			onClick: this.onOpenModal,
 		});
 		this._submitProposalMobile = new Button({
 			type: 'submit',
-			text: 'Ответить на проект',
+			text: 'Отликнуться',
 			onClick: this.onOpenModal,
 		});
 		this._save = new Button({
