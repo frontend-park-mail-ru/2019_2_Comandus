@@ -13,6 +13,7 @@ import '../inputs/FieldGroup/FieldGroup.scss';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import countriesCitiesRow from './../../../assets/countries.min.json';
 import { toSelectElement } from '@modules/utils';
+import store from '@modules/store';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
@@ -38,6 +39,36 @@ const experienceLevels = [
 export class FreelancerSettings extends Component {
 	constructor(props) {
 		super(props);
+
+		const { freelancerId } = props;
+
+		this.data = {
+			freelancerId,
+		};
+	}
+
+	preRender() {
+		if (!this.data.freelancerId) {
+			return;
+		}
+
+		FreelancerService.GetFreelancerById(this.data.freelancerId)
+			.then((response) => {
+				const freelancer = store.get(['freelancer']);
+				this.data = {
+					freelancer,
+				};
+			})
+			.catch((error) => {
+				console.error(error);
+			})
+			.finally(() => {
+				this.data = {
+					...this.data,
+					loaded: true,
+				};
+				this.stateChanged();
+			});
 	}
 
 	render() {
@@ -156,30 +187,6 @@ export class FreelancerSettings extends Component {
 		});
 
 		return this.html;
-	}
-
-	preRender() {
-		this._data = {
-			...this._data,
-			loaded: false,
-		};
-		FreelancerService.GetFreelancerById(0)
-			.then((response) => {
-				this.data = {
-					user: { ...response },
-					...this.data,
-				};
-			})
-			.catch((error) => {
-				console.error(error);
-			})
-			.finally(() => {
-				this.data = {
-					...this.data,
-					loaded: true,
-				};
-				this.stateChanged();
-			});
 	}
 
 	postRender() {
