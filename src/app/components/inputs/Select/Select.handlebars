@@ -1,13 +1,39 @@
-<div id="{{data._id}}">
+<div id="{{_id}}">
 	{{#if props.label}}
-		<label for="{{data._id}}-input" class="label">{{props.label}}</label>
+		<label for="{{_id}}-input" class="label">{{props.label}}</label>
 	{{/if}}
-	<select id="{{data._id}}-input" name="{{props.name}}" class="select {{props.className}}" {{props.attributes}}>
-		<option disabled value="" selected>Выберите</option>
+	<div class="select-custom__relative-wrapper">
+		<div id="{{_id}}-input" class="select-custom {{ props.className }}
+			{{#props.disabled}}select-custom_disabled{{/props.disabled}}">
+			<div class="select-custom__header">
+				<div class="select-header__label">
+					{{ selectedLabel }}
+				</div>
+				<div class="selectem-icon select-header__icon"></div>
+			</div>
+			<div class="select-custom__dropdown">
+				{{#props.filterable}}
+					<input class="select-dropdown__filter" autofocus type="text" autocomplete="off" placeholder="Поиск">
+				{{/props.filterable}}
+				<ul class="select-dropdown__items">
+					{{#each props.items}}
+						<li class="select-items__list-item" data-val="{{ value }}">
+							<span class="select-items__item-label">
+								{{ label }}
+							</span>
+						</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<select id="{{_id}}-select-input" name="{{props.name}}" class="select-custom__default"
+		{{#props.required}}required{{/props.required}} {{#props.disabled}}disabled{{/props.disabled}}>
+		<option disabled value="" selected></option>
 		{{#each props.items}}
 			<option value="{{value}}"
-					{{#selected}} selected="selected" {{/selected}}
-					{{#disabled}} disabled {{/disabled}}
+				{{#selected}} selected {{/selected}}
+				{{#disabled}} disabled {{/disabled}}
 			>{{label}}</option>
 		{{/each}}
 	</select>

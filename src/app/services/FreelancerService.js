@@ -7,12 +7,16 @@ export default class FreelancerService {
 	static GetFreelancerById(id) {
 		return AjaxModule.get(`${config.urls.freelancers}/${id}`, {
 			headers: AuthService.getCsrfHeader(),
-		}).then((freelancer) => {
-			console.log('GetFreelancerById', freelancer);
-			store.setState({
-				freelancer: freelancer,
+		})
+			.then((freelancer) => {
+				console.log('GetFreelancerById', freelancer);
+				store.setState({
+					freelancer: freelancer,
+				});
+			})
+			.catch((error) => {
+				console.error('GetFreelancerById: ', error);
 			});
-		});
 	}
 
 	static UpdateFreelancer(id, data) {

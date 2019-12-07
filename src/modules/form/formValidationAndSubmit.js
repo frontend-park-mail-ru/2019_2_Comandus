@@ -341,11 +341,21 @@ function onBlur(event) {
 	removeError(event.target);
 }
 
+function onChange(event) {
+	if (
+		event.target.type === 'select-one' ||
+		event.target.type === 'select-multiple'
+	) {
+		onBlur(event);
+	}
+}
+
 export function enableValidationAndSubmit(formElement, onSubmit) {
 	formElement.setAttribute('novalidate', true);
 	formElement.setAttribute('novalidate', true);
 	formElement.classList.add('validate');
 	formElement.addEventListener('blur', onBlur, true);
+	formElement.addEventListener('change', onChange);
 
 	const responseText = document.createElement('div');
 	responseText.className = classes.responseText;

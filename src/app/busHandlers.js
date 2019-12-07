@@ -112,6 +112,10 @@ bus.on(busEvents.PROPOSAL_CREATE, (data) => {
 
 bus.on(busEvents.ON_PAGE_LOAD, () => {
 	AuthService.FetchCsrfToken().then((response) => {
+		if (response === 'Unauthorized') {
+			return;
+		}
+
 		bus.emit(busEvents.ACCOUNT_GET);
 	});
 });

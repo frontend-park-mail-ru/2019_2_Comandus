@@ -7,6 +7,8 @@ import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import TextField from '@components/inputs/TextField/TextField';
 import Button from '@components/inputs/Button/Button';
 import './account.scss';
+import { defaultAvatarUrl } from '@modules/utils';
+import config from '../../config';
 
 export class Account extends Component {
 	constructor(props) {
@@ -21,8 +23,20 @@ export class Account extends Component {
 	}
 
 	render() {
+		let avatarDefault = '';
+		if (this.data.user) {
+			avatarDefault = defaultAvatarUrl(
+				this.data.user.firstName,
+				this.data.user.secondName,
+				200,
+			);
+		}
+
 		this._avatar = new Avatar({
 			changing: true,
+			imgUrl: `${config.baseAPIUrl}${'/account/download-avatar' +
+				'?'}${new Date().getTime()}`,
+			imgDefault: avatarDefault,
 		});
 
 		this._secondNameField = new TextField({
