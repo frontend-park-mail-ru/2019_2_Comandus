@@ -25,7 +25,7 @@ export default class SendProposalForm extends Component {
 	render() {
 		this._submitProposal = new Button({
 			type: 'submit',
-			text: 'Ответить на проект',
+			text: 'Отликнуться',
 		});
 		this._cancel = new Button({
 			type: 'button',
