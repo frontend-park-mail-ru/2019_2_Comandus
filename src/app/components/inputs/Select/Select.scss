@@ -27,6 +27,8 @@
 .select-custom {
 	@include input;
 
+	resize: none;
+
 	position: absolute;
 
 	padding: 0;
