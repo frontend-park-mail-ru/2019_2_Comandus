@@ -36,7 +36,7 @@ const experienceLevels = [
 ];
 
 export class FreelancerSettings extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor(props) {
 		super(props);
 	}
 
@@ -47,7 +47,10 @@ export class FreelancerSettings extends Component {
 			items2: cities,
 			label2: 'Город',
 			name: 'city',
+			required: true,
+			filterable: true,
 		});
+
 		const submitBtn = new Button({
 			type: 'submit',
 			text: 'Сохранить изменения',

@@ -7,10 +7,12 @@ export default class DoubleSelect extends Component {
 		items = [],
 		items2 = {},
 		required = false,
+		filterable = false,
 		label = '',
 		label1 = '',
 		label2 = '',
 		name = '',
+		// name2 = '',
 		value = '',
 		...props
 	}) {
@@ -18,20 +20,26 @@ export default class DoubleSelect extends Component {
 
 		let secondItems = [];
 
-		Object.keys(items2).forEach((k) => {
-			const index = items2[k].findIndex((i) => {
-				return i.value == value;
-			});
-			if (index !== -1) {
-				secondItems = items2[k];
-				secondItems[index].selected = true;
-				const it = items.find((i) => i.value === k);
-				if (it) {
-					it.selected = true;
+		this._selected1 = '';
+		this._selected2 = value;
+
+		if (this._selected2) {
+			Object.keys(items2).forEach((key1) => {
+				const index = items2[key1].findIndex((item) => {
+					return item.value == value;
+				});
+				if (index !== -1) {
+					secondItems = items2[key1];
+					// secondItems[index].selected = true;
+					const it = items.find((item) => item.value == key1);
+					if (it) {
+						it.selected = true;
+
+						this._selected1 = it.value;
+					}
 				}
-				return;
-			}
-		});
+			});
+		}
 
 		this.data = {
 			label,
@@ -42,14 +50,20 @@ export default class DoubleSelect extends Component {
 
 		this._firstSelect = new Select({
 			items: items,
-			onChange: this.onCountryChange,
-			attributes: required ? 'required' : '',
+			onChange: this.onFirstSelectChange,
+			selected: this._selected1,
+			filterable: filterable,
+			required: required,
 			label: label1,
+			// name: name1,
 		});
 		this._secondSelect = new Select({
 			items: secondItems,
 			// attributes: required ? 'disabled required' : 'disabled',
-			onChange: this.onCityChange,
+			disabled: !this._selected2,
+			onChange: this.onSecondSelectChange,
+			filterable: filterable,
+			selected: this._selected2,
 			label: label2,
 			name: name,
 		});
@@ -61,20 +75,29 @@ export default class DoubleSelect extends Component {
 			two: true,
 			...this.data,
 		}).render();
+
 		return this.html;
 	}
 
 	postRender() {
 		this._firstSelect.postRender();
+		this._secondSelect.postRender();
 	}
 
-	onCountryChange = (val) => {
+	onFirstSelectChange = (val) => {
 		this._secondSelect.setProps({
 			items: this.data.items2[val],
-			attributes: this.data.required ? 'required' : '',
+			selected: '',
+			required: this.data.required,
+			disabled: false,
 		});
 		this._secondSelect.stateChanged();
 	};
 
-	onCityChange = (val) => {};
+	onSecondSelectChange = (val) => {};
+
+	onDestroy() {
+		this._firstSelect.onDestroy();
+		this._secondSelect.onDestroy();
+	}
 }

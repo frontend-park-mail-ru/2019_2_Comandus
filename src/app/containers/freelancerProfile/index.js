@@ -26,6 +26,7 @@ import bus from '@frame/bus';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 import store from '@modules/store';
+import config from '@app/config';
 
 export class Profile extends Component {
 	constructor(props) {
@@ -132,6 +133,22 @@ export class Profile extends Component {
 			[],
 		);
 
+		let avatarDefault = '';
+		if (this.data.user) {
+			avatarDefault = defaultAvatarUrl(
+				this.data.user.firstName,
+				this.data.user.secondName,
+				200,
+			);
+		}
+
+		this._avatar = new Avatar({
+			changing: true,
+			imgUrl: `${config.baseAPIUrl}${'/account/download-avatar' +
+				'?'}${new Date().getTime()}`,
+			imgDefault: avatarDefault,
+		});
+
 		this._avatar = new Avatar({
 			imgUrl: this.data.avatarUrl,
 			changing: true,
@@ -223,6 +240,7 @@ export class Profile extends Component {
 
 	postRender() {
 		this._avatar.postRender();
+		this._sortSelect.postRender();
 	}
 
 	freelancerUpdated = (err) => {

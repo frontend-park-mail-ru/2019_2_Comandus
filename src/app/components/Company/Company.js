@@ -33,7 +33,10 @@ export class Company extends Component {
 			items2: cities,
 			label2: 'Город',
 			name: 'city',
+			required: true,
+			filterable: true,
 		});
+
 		const submitBtn = new Button({
 			type: 'submit',
 			text: 'Сохранить изменения',

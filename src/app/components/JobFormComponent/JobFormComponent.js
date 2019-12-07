@@ -26,8 +26,12 @@ import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 
 const cities = {};
+// let cityIndex = 0;
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
 	cities[i] = countriesCitiesRow[el].map(toSelectElement);
+	// cities[i] = countriesCitiesRow[el].map((el) => {
+	// 	return toSelectElement(el, cityIndex++);
+	// });
 	return toSelectElement(el, i);
 });
 
@@ -112,14 +116,18 @@ class JobFormComponent extends Component {
 		this._citySelect = new DoubleSelect({
 			items: countriesCities,
 			label1: 'Страна',
+			// name1: 'country',
 			items2: cities,
 			label2: 'Город',
 			name: 'city',
 			label: 'Нужен исполнитель из...',
+			required: true,
+			filterable: true,
 			selectedItem1: job.country,
 			selectedItem2: job.city,
 			value: job.city,
 		});
+
 		this._specialitySelect = new DoubleSelect({
 			items: categories,
 			label1: 'Категория',
@@ -128,10 +136,12 @@ class JobFormComponent extends Component {
 			name: 'specialityId',
 			label: 'Специализация проекта',
 			required: true,
+			filterable: true,
 			selectedItem1: '',
 			selectedItem2: job.specialityId,
 			value: job.specialityId,
 		});
+
 		this._levelRadioGroup = new RadioGroup({
 			items: levelsRadio,
 			column: true,
@@ -139,6 +149,7 @@ class JobFormComponent extends Component {
 			name: 'experienceLevelId',
 			value: job.experienceLevelId,
 		});
+
 		this._inputTags = new InputTags({
 			name: 'skills',
 			max: 5,
@@ -146,6 +157,7 @@ class JobFormComponent extends Component {
 			tags: ['Golang', 'Javascript', 'HTML'],
 			value: job.skills,
 		});
+
 		const submitBtn = new Button({
 			type: 'submit',
 			text: this.props.params.jobId
@@ -168,17 +180,22 @@ class JobFormComponent extends Component {
 				children: [textField.render()],
 				label: 'Название',
 			}).render(),
+
 			descriptionField: new FieldGroup({
 				children: [descriptionField.render()],
 				label: 'Описание проекта',
 			}).render(),
+
 			budgetField: new FieldGroup({
 				children: [budgetField.render()],
 				label: 'Бюджет (руб)',
 				two: true,
 			}).render(),
+
 			citySelect: this._citySelect.render(),
+
 			specialitySelect: this._specialitySelect.render(),
+
 			levelRadioGroup: new FieldGroup({
 				children: [
 					'<div> Выберите требуемый уровень фрилансера для выполнения вашего проекта. </div>',
@@ -186,6 +203,7 @@ class JobFormComponent extends Component {
 				],
 				label: 'Уровень фрилансера',
 			}).render(),
+
 			inputTags: new FieldGroup({
 				children: [
 					'<div>Какие навыки и опыт более важны для вас?</div>',
@@ -193,9 +211,11 @@ class JobFormComponent extends Component {
 				],
 				label: 'Требуемые навыки и компетенции',
 			}).render(),
+
 			submitBtn: new FieldGroup({
 				children: [submitBtn.render()],
 			}).render(),
+
 			_jobTypeRadio: new FieldGroup({
 				children: [this._jobTypeRadio.render()],
 				label: 'Тип работы',
@@ -287,6 +307,10 @@ class JobFormComponent extends Component {
 
 		this.stateChanged();
 	};
+
+	onDestroy() {
+		this._specialitySelect.onDestroy();
+	}
 }
 
 export default JobFormComponent;

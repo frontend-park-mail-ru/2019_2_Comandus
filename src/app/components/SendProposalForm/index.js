@@ -50,9 +50,9 @@ export default class SendProposalForm extends Component {
 		});
 		this._timeSelect = new Select({
 			items: dueTimes.map(toSelectElement),
-			attributes: 'required',
-			className: 'width-auto',
+			// className: 'width-auto',
 			name: 'timeEstimation',
+			required: true,
 		});
 
 		this.data = {
@@ -82,6 +82,8 @@ export default class SendProposalForm extends Component {
 
 	postRender() {
 		this._cancel.postRender();
+
+		this._timeSelect.postRender();
 
 		const form = this.el.querySelector('#addProposal');
 		if (form) {
