@@ -89,13 +89,6 @@ export class Select extends Component {
 				const value = item.getAttribute('data-val');
 				const label = item.querySelector('.select-items__item-label');
 
-				const errorMessage = this.el.querySelector(
-					'#error-for-' + this.id + '-select-input',
-				);
-				if (errorMessage) {
-					errorMessage.remove();
-				}
-
 				this._selectedValue = value;
 				this._selectedLabel = label;
 
@@ -109,6 +102,10 @@ export class Select extends Component {
 					label.innerText;
 
 				this.customSelectElem.classList.remove('select-custom_active');
+
+				defaultSelect.dispatchEvent(
+					new Event('change', { bubbles: true }),
+				);
 			});
 		});
 
