@@ -16,6 +16,7 @@
 
 	&__icon {
 		background: url("/assets/icons/arrow-up.svg") no-repeat center;
+		transform: rotate(180deg);
 
 		width: 20px;
 		height: 20px;
@@ -85,7 +86,7 @@
 		}
 
 		& .select-header__icon {
-			transform: rotate(180deg);
+			transform: rotate(360deg);
 		}
 
 		& .select-custom__dropdown {
