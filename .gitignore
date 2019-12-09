@@ -13,3 +13,6 @@ dist/
 
 todo.md
 archive
+/archive/
+/dist/
+/node_modules/
