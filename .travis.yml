@@ -14,4 +14,4 @@ before_install:
 
 branches:
     only:
-        - dev
+        - develop
