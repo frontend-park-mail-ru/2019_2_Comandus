@@ -7,7 +7,7 @@ script:
 - ssh-keyscan -H 89.208.211.100 >> ~/.ssh/known_hosts
 - chmod 600 $HOME/.ssh/2019-2-Comandus-OINib2To.pem
 - ssh-add $HOME/.ssh/2019-2-Comandus-OINib2To.pem
-- scp -r ./dist ubuntu@89.208.211.100:/home/ubuntu/2019_2_Comandus/dist
+- scp -r ./dist ubuntu@89.208.211.100:/home/ubuntu/FRONT_Comandus
 before_install:
 - openssl aes-256-cbc -K $encrypted_f68a917995b0_key -iv $encrypted_f68a917995b0_iv
   -in 2019-2-Comandus-OINib2To.pem.enc -out $HOME/.ssh/2019-2-Comandus-OINib2To.pem -d
