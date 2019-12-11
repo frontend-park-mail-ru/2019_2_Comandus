@@ -9,6 +9,7 @@
 		"start:build": "node server.js",
 		"build": "NODE_ENV=production webpack --mode=production && cp -a public/media dist/ && cp -a src/assets dist/ && npm run sw",
 		"deploy": "now -A mynow.json --prod",
+		"deploy:dev": "now -A mynow-dev.json --prod",
 		"deploy:local": "now dev -A mynow.json",
 		"prettier": "prettier --config .prettierrc --write '{src,__{tests,mocks}__}/app/**/*.{js,html,css}'",
 		"prettier:public": "prettier --config .prettierrc --write '{public,__{tests,mocks}__}/**/*.{js,html,css}'",
@@ -20,7 +21,8 @@
 		"test": "jest --watchAll",
 		"stylelint": "stylelint 'public/**/*.{css,scss}' 'src/**/*.{css,scss}' --syntax scss",
 		"stylelint:fix": "stylelint 'public/**/*.{css,scss}' 'src/**/*.{css,scss}' --syntax scss --fix",
-		"sw": "cp src/sw.js dist/ && cp src/readDist.js dist/ && node dist/readDist.js"
+		"sw": "cp src/sw.js dist/ && cp src/readDist.js dist/ && node dist/readDist.js",
+		"tachka": "scp -i ~/Documents/Technopark/2019-2-Comandus-OINib2To.pem -r ./dist ubuntu@89.208.211.100:/home/ubuntu/2019_2_Comandus/dist"
 	},
 	"repository": {
 		"type": "git",
@@ -54,6 +56,7 @@
 		"lint-staged": "^9.2.5",
 		"mini-css-extract-plugin": "^0.8.0",
 		"node-sass": "^4.12.0",
+		"now": "^16.6.3",
 		"optimize-css-assets-webpack-plugin": "^5.0.3",
 		"prettier": "1.18.2",
 		"sass": "^1.23.7",

@@ -3,15 +3,18 @@ node_js:
 - 10
 script:
 - npm run build
+- if [ "$TRAVIS_BRANCH" = "develop"]; then npm run deploy:dev -- --token=$NOW_TOKEN; fi
+- if [ "$TRAVIS_BRANCH" = "master"]; then npm run deploy -- --token=$NOW_TOKEN; fi
 - eval "$(ssh-agent -s)"
 - ssh-keyscan -H 89.208.211.100 >> ~/.ssh/known_hosts
 - chmod 600 $HOME/.ssh/2019-2-Comandus-OINib2To.pem
 - ssh-add $HOME/.ssh/2019-2-Comandus-OINib2To.pem
-- ssh -i $HOME/.ssh/2019-2-Comandus-OINib2To.pem ubuntu@89.208.211.100 "rm -rf FRONT_Comandus/"
-- travis_wait 20 scp -r ./dist ubuntu@89.208.211.100:/home/ubuntu/FRONT_Comandus
+- if [ "$TRAVIS_BRANCH" = "master"]; then ssh -i $HOME/.ssh/2019-2-Comandus-OINib2To.pem ubuntu@89.208.211.100 "rm -rf FRONT_Comandus/"; fi
+- if [ "$TRAVIS_BRANCH" = "master"]; then travis_wait 20 scp -r ./dist ubuntu@89.208.211.100:/home/ubuntu/FRONT_Comandus; fi
 before_install:
 - openssl aes-256-cbc -K $encrypted_82ca6721a7b1_key -iv $encrypted_82ca6721a7b1_iv
   -in 2019-2-Comandus-OINib2To.pem.enc -out $HOME/.ssh/2019-2-Comandus-OINib2To.pem -d
 branches:
   only:
   - develop
+  - master
