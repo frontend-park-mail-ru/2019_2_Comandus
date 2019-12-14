@@ -6,6 +6,7 @@ import PageWithTitle from '@components/PageWithTitle';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
 import ContractItem from '@components/dataDisplay/ContractItem';
+import { formatMoney } from '@modules/utils';
 
 const contracts = [
 	{
@@ -105,7 +106,7 @@ export default class ClientContracts extends Component {
 	renderItems = (contracts = []) => {
 		return contracts.map((contract) => {
 			let fullname = contract.job.company.name;
-			if (!this.data.isClient) {
+			if (this.data.isClient) {
 				fullname =
 					contract.job.freelancer.firstName +
 					' ' +
@@ -116,7 +117,7 @@ export default class ClientContracts extends Component {
 				title: contract.job.title,
 				fullname,
 				created: contract.created,
-				paymentAmount: contract.paymentAmount,
+				paymentAmount: formatMoney(contract.paymentAmount),
 			});
 
 			return item.render();

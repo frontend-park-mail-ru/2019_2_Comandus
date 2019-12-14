@@ -11,6 +11,9 @@ import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
 import { Avatar } from '@components/Avatar/Avatar';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import store from '@modules/store';
+import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
+import UtilService from '@services/UtilService';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
@@ -21,6 +24,11 @@ const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
 export class Company extends Component {
 	constructor({ ...props }) {
 		super(props);
+
+		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
 	}
 
 	render() {
@@ -29,10 +37,11 @@ export class Company extends Component {
 		});
 
 		this._citySelect = new DoubleSelect({
-			items: countriesCities,
+			items: this.data.countryList,
 			label1: 'Страна',
-			items2: cities,
+			getItems2: UtilService.getCityListByCountry,
 			label2: 'Город',
+			nameFirst: 'country',
 			name: 'city',
 			required: true,
 			filterable: true,
@@ -78,15 +87,15 @@ export class Company extends Component {
 			placeholder: 'Описание компании',
 		});
 
-		const ownerField = new TextField({
-			required: false,
-			readonly: true,
-			name: 'companyOwner',
-			type: 'text',
-			label: 'Владелец',
-			placeholder: 'Владелец',
-			value: 'Хлоя Прайс',
-		});
+		// const ownerField = new TextField({
+		// 	required: false,
+		// 	readonly: true,
+		// 	name: 'companyOwner',
+		// 	type: 'text',
+		// 	label: 'Владелец',
+		// 	placeholder: 'Владелец',
+		// 	value: 'Хлоя Прайс',
+		// });
 
 		const addressField = new TextField({
 			required: false,
@@ -122,10 +131,10 @@ export class Company extends Component {
 				children: [siteField.render()],
 				label: 'Сайт компании',
 			}).render(),
-			ownerField: new FieldGroup({
-				children: [ownerField.render()],
-				label: 'Владелец',
-			}).render(),
+			// ownerField: new FieldGroup({
+			// 	children: [ownerField.render()],
+			// 	label: 'Владелец',
+			// }).render(),
 			titleField: new FieldGroup({
 				children: [titleField.render()],
 				label: 'Название',
@@ -220,5 +229,13 @@ export class Company extends Component {
 				}
 				helper.setResponseText(text);
 			});
+	};
+
+	utilsLoaded = () => {
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
+
+		this.stateChanged();
 	};
 }

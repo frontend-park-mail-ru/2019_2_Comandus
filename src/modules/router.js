@@ -10,6 +10,19 @@ function getParamsFromSearch(search) {
 	return params;
 }
 
+const restrictedUrls = [
+	'/new-job',
+	'/messages',
+	'/my-job-postings',
+	'/settings',
+	'/my-contracts',
+	'/my-contracts/:contractId',
+	'/saved',
+	'/proposals',
+	'/proposals/:proposalId',
+	'/contracts/new',
+	'/jobs/:jobId/edit',
+];
 /**
  * место для вставки роутов (switch)
  * ссылки
@@ -119,6 +132,11 @@ export class Router {
 					return;
 				}
 				this.push('/jobs');
+				return;
+			}
+		} else {
+			if (restrictedUrls.includes(route.path)) {
+				this.push('/');
 				return;
 			}
 		}

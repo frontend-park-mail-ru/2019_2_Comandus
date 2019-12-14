@@ -1,8 +1,9 @@
 .send-proposal-form {
+	width: 600px;
 	&__buttons {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: space-between;
 
 		& button {
 			&:not(:first-child) {
@@ -19,6 +20,7 @@
 
 @media screen and (max-width: 600px) {
 	.send-proposal-form {
+		width: auto;
 		&__buttons {
 			flex-direction: column;
 			align-items: stretch;

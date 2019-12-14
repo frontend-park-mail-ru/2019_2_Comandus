@@ -130,3 +130,18 @@ function formatDateNum(num) {
 
 	return num;
 }
+
+export function formatMoney(amount) {
+	if (!amount) {
+		return;
+	}
+
+	const formatter = new Intl.NumberFormat('ru-RU', {
+		style: 'currency',
+		currency: 'RUB',
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 0,
+	});
+
+	return formatter.format(amount);
+}

@@ -40,6 +40,8 @@ export default class SendProposalForm extends Component {
 			placeholder: '',
 			classes: 'width-auto',
 			name: 'PaymentAmount',
+			min: 1,
+			max: 1000000,
 		});
 		this.proposalField = new TextField({
 			required: true,
@@ -53,6 +55,7 @@ export default class SendProposalForm extends Component {
 			// className: 'width-auto',
 			name: 'timeEstimation',
 			required: true,
+			className: 'width-auto',
 		});
 
 		this.data = {

@@ -24,7 +24,6 @@ class SignUpComponent extends Component {
 		super(props);
 
 		this.helper = null;
-		this.onSignupResponse = this.onSignupResponse.bind(this);
 	}
 
 	render() {
@@ -115,7 +114,7 @@ class SignUpComponent extends Component {
 		});
 	}
 
-	onSignupResponse(data) {
+	onSignupResponse = (data) => {
 		bus.off(busEvents.SIGNUP_RESPONSE, this.onSignupResponse);
 		const { response, error } = data;
 		if (error) {
@@ -128,6 +127,6 @@ class SignUpComponent extends Component {
 		}
 
 		this.props.router.push('/settings');
-	}
+	};
 }
 export default SignUpComponent;

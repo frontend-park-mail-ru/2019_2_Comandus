@@ -8,7 +8,7 @@ import Item from '@components/surfaces/Item';
 import bus from '@frame/bus';
 import store from '@modules/store';
 import PageWithTitle from '@components/PageWithTitle';
-import { formatDate } from '@modules/utils';
+import { formatDate, formatMoney } from '@modules/utils';
 
 export default class Jobs extends Component {
 	constructor(props) {
@@ -63,6 +63,7 @@ export default class Jobs extends Component {
 				...job,
 				created: formatDate(job.date),
 				experienceLevel: levels[job['experienceLevelId'] - 1],
+				paymentAmount: formatMoney(job['paymentAmount']),
 			});
 			console.log(job);
 			const item = new Item({

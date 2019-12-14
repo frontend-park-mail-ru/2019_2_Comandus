@@ -41,7 +41,7 @@ export class Select extends Component {
 		this._selectedValue = this.props.selected;
 		let selectedItem = null;
 
-		if (this._selectedValue) {
+		if (this._selectedValue !== undefined && this._selectedValue !== '') {
 			selectedItem = this.props.items.find((item) => {
 				return item.value == this._selectedValue;
 			});

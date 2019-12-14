@@ -13,7 +13,7 @@ import Modal from '@components/Modal/Modal';
 import SendProposalForm from '@components/SendProposalForm';
 import ProposalItem from '@components/dataDisplay/ProposalItem';
 import ProposalService from '@services/ProposalService';
-import { formatDate } from '@modules/utils';
+import { formatDate, formatMoney } from '@modules/utils';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -78,7 +78,7 @@ export default class Job extends Component {
 		});
 		this._jobBudget = new FeatureComponent({
 			title: 'Бюджет',
-			data: this.data.job['paymentAmount'] + ' ₽',
+			data: formatMoney(this.data.job['paymentAmount']),
 		});
 		this._jobLevel = new FeatureComponent({
 			title: 'Уровень фрилансера',

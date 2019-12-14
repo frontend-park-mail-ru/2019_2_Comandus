@@ -57,12 +57,12 @@ export default class Modal extends Component {
 		this.data.display = true;
 		this.postRender();
 	}
-	close() {
+	close = () => {
 		if (this._el.classList.contains('modal-window_display')) {
 			this._el.classList.remove('modal-window_display');
 		}
 		this._el.classList.add('modal-window_hide');
 		this.data.display = false;
 		this.postRender();
-	}
+	};
 }

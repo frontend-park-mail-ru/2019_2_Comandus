@@ -31,6 +31,8 @@ export default class Hire extends Component {
 			placeholder: '',
 			name: 'paymentAmount',
 			value: 0,
+			min: 1,
+			max: 1000000,
 		});
 		this._submitOffer = new Button({
 			type: 'submit',
@@ -103,6 +105,7 @@ export default class Hire extends Component {
 		this.afterSubmitInfoModal.postRender();
 		this._submitOffer.postRender();
 		this.afterSubmitAlert.postRender();
+		this._timeSelect.postRender();
 	}
 
 	closeInfoAlert = () => {

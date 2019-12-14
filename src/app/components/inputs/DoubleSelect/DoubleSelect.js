@@ -12,41 +12,29 @@ export default class DoubleSelect extends Component {
 		label1 = '',
 		label2 = '',
 		name = '',
+		nameFirst = '',
 		// name2 = '',
-		value = '',
+		// value = '',
+		selectedItem1 = '',
+		selectedItem2 = '',
+		getItems2 = () => {},
 		...props
 	}) {
 		super(props);
-
-		let secondItems = [];
-
-		this._selected1 = '';
-		this._selected2 = value;
-
-		if (this._selected2) {
-			Object.keys(items2).forEach((key1) => {
-				const index = items2[key1].findIndex((item) => {
-					return item.value == value;
-				});
-				if (index !== -1) {
-					secondItems = items2[key1];
-					// secondItems[index].selected = true;
-					const it = items.find((item) => item.value == key1);
-					if (it) {
-						it.selected = true;
-
-						this._selected1 = it.value;
-					}
-				}
-			});
-		}
 
 		this.data = {
 			label,
 			items,
 			items2,
 			required,
+			getItems2,
 		};
+
+		this._selected1 = selectedItem1;
+		this._selected2 = selectedItem2;
+		const secondItems = this.setSelectValues(items, items2);
+
+		console.log(this._selected1);
 
 		this._firstSelect = new Select({
 			items: items,
@@ -55,7 +43,7 @@ export default class DoubleSelect extends Component {
 			filterable: filterable,
 			required: required,
 			label: label1,
-			// name: name1,
+			name: nameFirst,
 		});
 		this._secondSelect = new Select({
 			items: secondItems,
@@ -80,18 +68,22 @@ export default class DoubleSelect extends Component {
 	}
 
 	postRender() {
+		this.onFirstSelectChange(this._selected1, this._selected2);
 		this._firstSelect.postRender();
 		this._secondSelect.postRender();
 	}
 
-	onFirstSelectChange = (val) => {
-		this._secondSelect.setProps({
-			items: this.data.items2[val],
-			selected: '',
-			required: this.data.required,
-			disabled: false,
+	onFirstSelectChange = (val, selected = '') => {
+		this.data.getItems2(val).then((items) => {
+			this._secondSelect.setProps({
+				// items: this.data.items2[val],
+				items,
+				selected,
+				required: this.data.required,
+				disabled: false,
+			});
+			this._secondSelect.stateChanged();
 		});
-		this._secondSelect.stateChanged();
 	};
 
 	onSecondSelectChange = (val) => {};
@@ -100,4 +92,28 @@ export default class DoubleSelect extends Component {
 		this._firstSelect.onDestroy();
 		this._secondSelect.onDestroy();
 	}
+
+	setSelectValues = (items, items2) => {
+		let secondItems = [];
+
+		if (this._selected2) {
+			Object.keys(items2).forEach((key1) => {
+				const index = items2[key1].findIndex((item) => {
+					return item.value == this._selected2;
+				});
+				if (index !== -1) {
+					secondItems = items2[key1];
+					// secondItems[index].selected = true;
+					const it = items.find((item) => item.value == key1);
+					if (it) {
+						it.selected = true;
+
+						this._selected1 = it.value;
+					}
+				}
+			});
+		}
+
+		return secondItems;
+	};
 }

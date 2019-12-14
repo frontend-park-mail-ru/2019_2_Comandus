@@ -5,6 +5,7 @@ import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 import FreelancerService from '@services/FreelancerService';
 import ProposalService from '@services/ProposalService';
+import UtilService from '@services/UtilService';
 
 const handlers = [
 	{
@@ -111,13 +112,20 @@ bus.on(busEvents.PROPOSAL_CREATE, (data) => {
 });
 
 bus.on(busEvents.ON_PAGE_LOAD, () => {
-	AuthService.FetchCsrfToken().then((response) => {
-		if (response === 'Unauthorized') {
-			return;
-		}
+	AuthService.FetchCsrfToken()
+		.then((response) => {
+			if (response === 'Unauthorized') {
+				return;
+			}
 
-		bus.emit(busEvents.ACCOUNT_GET);
-	});
+			bus.emit(busEvents.ACCOUNT_GET);
+		})
+		.then(() => {
+			return UtilService.GetCountryList();
+		})
+		.then(() => {
+			bus.emit(busEvents.UTILS_LOADED);
+		});
 });
 
 bus.on(busEvents.FREELANCER_GET, (id) => {

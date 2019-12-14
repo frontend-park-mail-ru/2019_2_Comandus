@@ -69,7 +69,6 @@ const routes = [
 	{ path: '/my-job-postings', Component: ClientJobs },
 	{ path: '/my-contracts/:contractId', Component: Contract },
 	{ path: '/my-contracts', Component: ClientContracts },
-	{ path: '/my-contracts', Component: ClientContracts },
 	{ path: '/contracts/new', Component: Hire },
 ];
 

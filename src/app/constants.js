@@ -91,6 +91,7 @@ export const busEvents = {
 	JOB_DELETE_RESPONSE: 'JOB_DELETE_RESPONSE',
 	SEARCH: 'SEARCH',
 	SEARCH_RESPONSE: 'SEARCH_RESPONSE',
+	UTILS_LOADED: 'UTILS_LOADED',
 };
 
 export const CSRF_TOKEN_NAME = 'csrf-token';

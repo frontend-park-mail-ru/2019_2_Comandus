@@ -133,11 +133,16 @@ h1.tp-main-text {
 
 .main-page-btn {
 	border: 1px solid #FFFFFF;
-	padding: 10px;
+	border-radius: 5px;
+	padding: 20px;
+	margin-top: 40px;
+	transition: all ease 0.3s;
+	display: inline-block;
 
 	&:hover {
 		background-color: #FFFFFF;
 		color: #2b323a;
+		text-decoration: none;
 	}
 }
 

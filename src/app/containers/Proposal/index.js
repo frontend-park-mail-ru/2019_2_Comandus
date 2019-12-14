@@ -7,7 +7,7 @@ import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import FeaturesList from '@components/dataDisplay/FeaturesList';
 import Button from '@components/inputs/Button/Button';
 import { Avatar } from '@components/Avatar/Avatar';
-import { defaultAvatarUrl } from '@modules/utils';
+import { defaultAvatarUrl, formatMoney } from '@modules/utils';
 
 export default class Proposal extends Component {
 	constructor({ children = [], ...props }) {
@@ -62,7 +62,7 @@ export default class Proposal extends Component {
 		});
 		this._jobBudget = new FeatureComponent({
 			title: 'Бюджет',
-			data: '200000 ₽',
+			data: formatMoney(20000),
 		});
 		this._jobLevel = new FeatureComponent({
 			title: 'Уровень фрилансера',
@@ -89,6 +89,7 @@ export default class Proposal extends Component {
 			makeCandidateProposal: this.makeCandidateProposal.render(),
 			makeOffer: this.makeOffer.render(),
 			freelancerAvatar: this.freelancerAvatar.render(),
+			paymentAmount: formatMoney(20000),
 		};
 
 		this.html = template({

@@ -42,7 +42,7 @@ export default class Navbar extends Component {
 			if (this.data.isClient) {
 				profileItems.push({
 					url: '/my-job-postings',
-					text: 'Мои объявления',
+					text: 'Мои заказы',
 				});
 			} else {
 				profileItems.push({

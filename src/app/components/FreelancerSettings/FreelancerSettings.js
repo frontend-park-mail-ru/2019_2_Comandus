@@ -14,6 +14,9 @@ import CardTitle from '@components/dataDisplay/CardTitle';
 import countriesCitiesRow from './../../../assets/countries.min.json';
 import { toSelectElement } from '@modules/utils';
 import store from '@modules/store';
+import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
+import UtilService from '@services/UtilService';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
@@ -48,6 +51,11 @@ export class FreelancerSettings extends Component {
 	}
 
 	preRender() {
+		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
+
 		if (!this.data.freelancerId) {
 			return;
 		}
@@ -73,10 +81,11 @@ export class FreelancerSettings extends Component {
 
 	render() {
 		this._citySelect = new DoubleSelect({
-			items: countriesCities,
+			items: this.data.countryList,
+			getItems2: UtilService.getCityListByCountry,
 			label1: 'Страна',
-			items2: cities,
 			label2: 'Город',
+			nameFirst: 'country',
 			name: 'city',
 			required: true,
 			filterable: true,
@@ -215,5 +224,13 @@ export class FreelancerSettings extends Component {
 				}
 				helper.setResponseText(text);
 			});
+	};
+
+	utilsLoaded = () => {
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
+
+		this.stateChanged();
 	};
 }

@@ -214,6 +214,7 @@ export class Profile extends Component {
 			}).render(),
 			skillsCardHeader: new CardTitle({
 				title: 'Навыки',
+				children: [`<i class="fas fa-pen"></i>`],
 			}).render(),
 			portfolioPaginator: new Paginator({
 				currentPage: 2,

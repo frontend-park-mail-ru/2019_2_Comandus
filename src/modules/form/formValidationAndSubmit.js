@@ -110,11 +110,6 @@ function hasError(field) {
 		return config.messageBadInput;
 	}
 
-	// If a number value doesn't match the step interval
-	if (validity.stepMismatch) {
-		return config.messageStepMismatch;
-	}
-
 	if (validity.rangeOverflow) {
 		return config.messageRangeOverflow(field.getAttribute(attributes.max));
 	}
@@ -130,6 +125,12 @@ function hasError(field) {
 		}
 
 		return config.messagePatternMismatch;
+	}
+
+	// If a number value doesn't match the step interval
+	if (validity.stepMismatch) {
+		// return config.messageStepMismatch;
+		return;
 	}
 
 	return config.messageGeneric;
@@ -305,6 +306,9 @@ function onFormSubmitValidate(event, onSubmitCallback) {
 	let error;
 	let hasErrors;
 	for (let i = 0; i < fields.length; i++) {
+		if (hasErrors) {
+			break;
+		}
 		removeError(fields[i]);
 		error = hasError(fields[i]);
 		if (error) {

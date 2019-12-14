@@ -1,6 +1,14 @@
 # 2019_2_Comandus
 
-### http://fwork.live
+### https://fwork.live
+
+1. Ветка **master**  на **production**: https://fwork.live
+1. Ветка **master**  на **now.sh**: https://comandus.now.sh
+2. Ветка **develop** на **now.sh**: https://comandus-dev.now.sh
+
+Все самое новое и свежее на ветке develop.
+
+Деплой осуществляется автоматически (CI/CD) на Travis после каждого git push.
 
 ### How to Run | Build
 
@@ -12,7 +20,7 @@
 **Production Mode**
 
 - `npm build`
-- `npm run start-build`  
+- node.js server `npm run start-build`  
 
 Before Contributing please read the [Commit Message Guide](docs/contributing.md).
 

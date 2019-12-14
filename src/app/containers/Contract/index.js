@@ -5,6 +5,7 @@ import './index.scss';
 import PageWithTitle from '@components/PageWithTitle';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
+import { formatMoney } from '@modules/utils';
 
 export default class Contract extends Component {
 	constructor(props) {
@@ -26,6 +27,7 @@ export default class Contract extends Component {
 			feedbackTitle: new CardTitle({
 				title: 'Отзывы',
 			}).render(),
+			paymentAmount: formatMoney(20000),
 		};
 		const page = new PageWithTitle({
 			title: 'Контракт',
