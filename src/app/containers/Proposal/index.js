@@ -8,6 +8,8 @@ import FeaturesList from '@components/dataDisplay/FeaturesList';
 import Button from '@components/inputs/Button/Button';
 import { Avatar } from '@components/Avatar/Avatar';
 import { defaultAvatarUrl, formatMoney } from '@modules/utils';
+import AuthService from '@services/AuthService';
+import ProposalService from '@services/ProposalService';
 
 export default class Proposal extends Component {
 	constructor({ children = [], ...props }) {
@@ -19,9 +21,16 @@ export default class Proposal extends Component {
 	}
 
 	preRender() {
+		const loggedIn = AuthService.isLoggedIn();
 		const isClient = AccountService.isClient();
+
+		ProposalService.GetProposalById(this.props.params.proposalId).then(
+			this.onProposalGetResponse,
+		);
+
 		this.data = {
 			isClient,
+			loggedIn,
 			aboutProposalTitle: new CardTitle({
 				title: 'Детали',
 			}).render(),
@@ -37,19 +46,23 @@ export default class Proposal extends Component {
 			type: 'submit',
 			text: 'Архивировать',
 			className: 'btn_secondary',
+			onClick: this.onArchiveProposal,
 		});
 		this.withdrawProposal = new Button({
 			type: 'submit',
 			text: 'Отменить отклик',
+			onClick: this.onCancelProposal,
 		});
 		this.rejectProposal = new Button({
 			type: 'submit',
 			text: 'Отклонить',
 			className: 'btn_secondary',
+			onClick: this.onRejectProposal,
 		});
 		this.makeCandidateProposal = new Button({
 			type: 'submit',
 			text: 'Сделать кандидатом',
+			onClick: this.onMakeCandidate,
 		});
 		this.makeOffer = new Button({
 			type: 'submit',
@@ -101,4 +114,53 @@ export default class Proposal extends Component {
 
 		return this.html;
 	}
+
+	postRender() {
+		this.archiveProposal.postRender();
+		this.rejectProposal.postRender();
+		this.withdrawProposal.postRender();
+		this.makeCandidateProposal.postRender();
+		// this.makeOffer.postRender();
+	}
+
+	onProposalGetResponse = (proposal) => {
+		console.log(proposal);
+
+		this.data = {
+			proposal: {},
+		};
+
+		this.stateChanged();
+	};
+
+	onArchiveProposal = () => {
+		console.log('onArchiveProposal');
+	};
+
+	onCancelProposal = () => {
+		console.log('onCancelProposal');
+		ProposalService.CancelProposal(this.props.params.proposalId).then(
+			(res) => {
+				console.log(res);
+			},
+		);
+	};
+
+	onMakeCandidate = () => {
+		console.log('onMakeCandidate');
+		ProposalService.MakeCandidate(this.props.params.proposalId).then(
+			(res) => {
+				console.log(res);
+			},
+		);
+	};
+
+	onRejectProposal = () => {
+		console.log('onRejectProposal');
+		ProposalService.RejectProposal(this.props.params.proposalId).then(
+			(res) => {
+				console.log(res);
+			},
+		);
+	};
 }

@@ -35,4 +35,38 @@ export default class ProposalService {
 			error,
 		};
 	}
+
+	static GetProposalById(proposalId) {
+		return AjaxModule.get(`${config.urls.proposals}/${proposalId}`);
+	}
+
+	static MakeCandidate(proposalId) {
+		return AjaxModule.put(
+			`/proposals/${proposalId}/accept`,
+			{},
+			{
+				headers: AuthService.getCsrfHeader(),
+			},
+		);
+	}
+
+	static CancelProposal(proposalId) {
+		return AjaxModule.put(
+			`/proposals/${proposalId}/cancel`,
+			{},
+			{
+				headers: AuthService.getCsrfHeader(),
+			},
+		);
+	}
+
+	static RejectProposal(proposalId) {
+		return AjaxModule.put(
+			`/proposals/${proposalId}/deny`,
+			{},
+			{
+				headers: AuthService.getCsrfHeader(),
+			},
+		);
+	}
 }

@@ -65,7 +65,7 @@ export class UserMenu extends Component {
 				},
 				{
 					url: '#',
-					text: 'Компания: ' + 'Командус',
+					text: 'Компания',
 					active: this.data.isClient,
 					id: 'switchToClient',
 				},

@@ -178,6 +178,9 @@ export default class Job extends Component {
 
 	onProposalsGet = ({ response, error }) => {
 		if (error || !response) {
+			this.data = {
+				proposals: null,
+			};
 			return;
 		}
 

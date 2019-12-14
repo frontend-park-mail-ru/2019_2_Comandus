@@ -26,11 +26,11 @@
 						<div class="tp-container card">
 							{{{ activeTitle }}}
 							<div class="tp-container">
-{{!--								{{#each proposals}}--}}
-{{!--									<div>--}}
-{{!--										{{{this}}}--}}
-{{!--									</div>--}}
-{{!--								{{/each}}--}}
+								{{#each activeProposals}}
+									<div>
+										{{{this}}}
+									</div>
+								{{/each}}
 							</div>
 						</div>
 
@@ -38,7 +38,18 @@
 						<div class="tp-container card">
 							{{{ myProposalTitle }}}
 							<div class="tp-container">
-								{{#each proposals}}
+								{{#each sentProposals}}
+									<div>
+										{{{this}}}
+									</div>
+								{{/each}}
+							</div>
+						</div>
+
+						<div class="tp-container card">
+							{{{ closedProposalTitle }}}
+							<div class="tp-container">
+								{{#each closedProposals}}
 									<div>
 										{{{this}}}
 									</div>

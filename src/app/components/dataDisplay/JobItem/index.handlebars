@@ -3,6 +3,11 @@
 	{{#manage}}
 		<div class="manage-buttons">
 			<a href="/jobs/{{id}}/edit">Редактировать</a>
+			{{#published}}
+				<button class="close-job-action manage-btn" data-id="{{id}}">Снять с публикации</button>
+			{{else}}
+				<button class="publish-job-action manage-btn" data-id="{{id}}">Опубликовать</button>
+			{{/published}}
 			<button class="delete-job-action manage-btn" data-id="{{id}}">Удалить</button>
 		</div>
 	{{else}}

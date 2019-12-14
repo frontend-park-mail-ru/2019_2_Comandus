@@ -7,6 +7,7 @@ import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
 import ContractItem from '@components/dataDisplay/ContractItem';
 import { formatMoney } from '@modules/utils';
+import ContractService from '@services/ContractService';
 
 const contracts = [
 	{
@@ -58,14 +59,17 @@ export default class ClientContracts extends Component {
 
 	preRender() {
 		const isClient = AccountService.isClient();
+
 		this.data = {
 			isClient,
 		};
+
+		ContractService.GetContracts().then(this.onGetContractsResponse);
 	}
 
 	render() {
 		this.data = {
-			contracts: this.renderItems(contracts),
+			contracts: this.renderItems(this.data.contracts),
 			pendingOffersTitle: new CardTitle({
 				title: 'Отправленные предложения (ожидается ответ фрилансера)',
 			}).render(),
@@ -122,5 +126,15 @@ export default class ClientContracts extends Component {
 
 			return item.render();
 		});
+	};
+
+	onGetContractsResponse = (contracts) => {
+		console.log(contracts);
+
+		this.data = {
+			contracts: contracts,
+		};
+
+		this.stateChanged();
 	};
 }
