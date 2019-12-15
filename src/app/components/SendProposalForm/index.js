@@ -39,7 +39,7 @@ export default class SendProposalForm extends Component {
 			label: 'Предлагаемый бюджет, ₽',
 			placeholder: '',
 			classes: 'width-auto',
-			name: 'PaymentAmount',
+			name: 'paymentAmount',
 			min: 1,
 			max: 1000000,
 		});
@@ -95,13 +95,17 @@ export default class SendProposalForm extends Component {
 
 				this.helper = helper;
 
+				const formData = helper.formToJSON();
+				formData.timeEstimation = parseInt(formData.timeEstimation);
+
+				// console.log(formData);
 				bus.on(
 					busEvents.PROPOSAL_CREATE_RESPONSE,
 					this.onProposalsResponse,
 				);
 				bus.emit(busEvents.PROPOSAL_CREATE, {
 					jobId: this.data.jobId,
-					formData: helper.formToJSON(),
+					formData: formData,
 				});
 			});
 		}

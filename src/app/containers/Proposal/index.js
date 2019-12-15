@@ -7,9 +7,19 @@ import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import FeaturesList from '@components/dataDisplay/FeaturesList';
 import Button from '@components/inputs/Button/Button';
 import { Avatar } from '@components/Avatar/Avatar';
-import { defaultAvatarUrl, formatMoney } from '@modules/utils';
+import {
+	defaultAvatarUrl,
+	formatMoney,
+	getExperienceLevelName,
+	getJoTypeName,
+	getTimeEstimationName,
+	isProposalClosed,
+} from '@modules/utils';
 import AuthService from '@services/AuthService';
 import ProposalService from '@services/ProposalService';
+import { proposalStatuses } from '@app/constants';
+import PageWithTitle from '@components/PageWithTitle';
+import contentTemplate from './content.handlebars';
 
 export default class Proposal extends Component {
 	constructor({ children = [], ...props }) {
@@ -17,6 +27,14 @@ export default class Proposal extends Component {
 
 		this.data = {
 			children,
+			job: {},
+			proposal: {},
+			freelancer: {},
+			isCandidate: false,
+			actionCancelEnabled: false,
+			actionMakeCandidateEnabled: false,
+			actionRejectEnabled: false,
+			actionNewContractEnabled: false,
 		};
 	}
 
@@ -69,20 +87,24 @@ export default class Proposal extends Component {
 			text: 'Предложить контракт',
 		});
 
+		const type = getJoTypeName(this.data.job['jobTypeId']);
+
 		this._jobType = new FeatureComponent({
 			title: 'Тип работы',
-			data: 'Проект',
+			data: type ? type.label : '',
 		});
 		this._jobBudget = new FeatureComponent({
 			title: 'Бюджет',
-			data: formatMoney(20000),
+			data: formatMoney(this.data.job['paymentAmount']),
 		});
 		this._jobLevel = new FeatureComponent({
 			title: 'Уровень фрилансера',
-			data: 'Эксперт',
+			data: this.data.job['experienceLevel'],
 		});
+
 		this.freelancerAvatar = new Avatar({
-			imgUrl: defaultAvatarUrl('C', 'L', 150),
+			imgUrl: this.data.freelancer.avatar,
+			// defaultAvatarUrl('C', 'L', 150),
 			imgWidth: 65,
 			imgHeight: 65,
 		});
@@ -103,6 +125,20 @@ export default class Proposal extends Component {
 			makeOffer: this.makeOffer.render(),
 			freelancerAvatar: this.freelancerAvatar.render(),
 			paymentAmount: formatMoney(20000),
+		};
+
+		const page = new PageWithTitle({
+			title: 'Отклик',
+			children: [
+				contentTemplate({
+					...this.props,
+					...this.data,
+				}),
+			],
+		}).render();
+
+		this.data = {
+			page,
 		};
 
 		this.html = template({
@@ -127,7 +163,35 @@ export default class Proposal extends Component {
 		console.log(proposal);
 
 		this.data = {
-			proposal: {},
+			freelancer: {
+				...proposal.Freelancer,
+				...proposal.Freelancer.freelancer,
+			},
+			proposal: {
+				...proposal.Response,
+				timeEstimation: getTimeEstimationName(
+					proposal.Response.timeEstimation,
+				),
+				paymentAmount: formatMoney(proposal.Response.paymentAmount),
+			},
+			job: {
+				...proposal.Job,
+				experienceLevel: getExperienceLevelName(
+					proposal.Job['experienceLevelId'],
+				),
+			},
+			isCandidate:
+				proposal.Response.statusManager === proposalStatuses.ACCEPTED,
+			actionCancelEnabled: !isProposalClosed(proposal.Response),
+			actionMakeCandidateEnabled:
+				!isProposalClosed(proposal.Response) &&
+				proposal.Response.statusManager === proposalStatuses.REVIEW,
+			actionRejectEnabled:
+				!isProposalClosed(proposal.Response) &&
+				proposal.Response.statusManager === proposalStatuses.REVIEW,
+			actionNewContractEnabled:
+				!isProposalClosed(proposal.Response) &&
+				proposal.Response.statusManager === proposalStatuses.ACCEPTED,
 		};
 
 		this.stateChanged();
@@ -142,6 +206,9 @@ export default class Proposal extends Component {
 		ProposalService.CancelProposal(this.props.params.proposalId).then(
 			(res) => {
 				console.log(res);
+				ProposalService.GetProposalById(
+					this.props.params.proposalId,
+				).then(this.onProposalGetResponse);
 			},
 		);
 	};
@@ -151,6 +218,9 @@ export default class Proposal extends Component {
 		ProposalService.MakeCandidate(this.props.params.proposalId).then(
 			(res) => {
 				console.log(res);
+				ProposalService.GetProposalById(
+					this.props.params.proposalId,
+				).then(this.onProposalGetResponse);
 			},
 		);
 	};
@@ -160,6 +230,9 @@ export default class Proposal extends Component {
 		ProposalService.RejectProposal(this.props.params.proposalId).then(
 			(res) => {
 				console.log(res);
+				ProposalService.GetProposalById(
+					this.props.params.proposalId,
+				).then(this.onProposalGetResponse);
 			},
 		);
 	};

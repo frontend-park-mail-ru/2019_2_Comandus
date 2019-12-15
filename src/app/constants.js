@@ -195,6 +195,21 @@ export const levelsRadio = [
 	},
 ];
 
+export const levelsRadioShort = [
+	{
+		value: '1',
+		label: 'Начинающий',
+	},
+	{
+		value: '2',
+		label: 'Продвинутый',
+	},
+	{
+		value: '3',
+		label: 'Эксперт',
+	},
+];
+
 export const jobTypes = [
 	{
 		value: 0,
@@ -217,4 +232,21 @@ export const historySortBy = [
 export const availability = {
 	0: 'Занят',
 	1: 'Свободен',
+};
+
+export const proposalStatuses = {
+	CANCEL: 'CANCEL',
+	DENIED: 'DENIED',
+	ACCEPTED: 'ACCEPTED',
+	SENT: 'SENT',
+	REVIEW: 'REVIEW',
+	SENT_CONTRACT: 'SENT_CONTRACT',
+};
+
+export const statusesContract = {
+	ACTIVE: 'active',
+	EXPECTED: 'expected',
+	NOT_READY: 'NotReady',
+	READY: 'Ready',
+	CLOSED: 'closed',
 };

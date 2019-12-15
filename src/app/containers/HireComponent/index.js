@@ -71,7 +71,7 @@ export default class Hire extends Component {
 			approve: this.closeInfoAlert,
 		});
 		this.afterSubmitInfoModal = new Modal({
-			title: 'Предлжение было отправлено!',
+			title: 'Предложение было отправлено!',
 			children: [this.afterSubmitAlert.render()],
 		});
 		this._timeSelect = new Select({
@@ -138,7 +138,7 @@ export default class Hire extends Component {
 				this.helper = helper;
 
 				console.log(helper.formToJSON());
-				// this.onCreateContractResponse();
+				this.onCreateContractResponse();
 				ContractService.CreateContract(
 					this.props.params.proposalId,
 					helper.formToJSON(),

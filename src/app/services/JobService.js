@@ -58,4 +58,16 @@ export default class JobService {
 			headers: AuthService.getCsrfHeader(),
 		});
 	}
+
+	static GetSearchSuggest(params) {
+		const queryParams = new URLSearchParams(params).toString();
+		// if (params.type === 'freelancers') {
+		// 	return AjaxModule.get(`/search/freelancers?${queryParams}`, {
+		// 		headers: AuthService.getCsrfHeader(),
+		// 	});
+		// }
+		return AjaxModule.get(`/suggest?${queryParams}`, {
+			headers: AuthService.getCsrfHeader(),
+		});
+	}
 }

@@ -33,7 +33,7 @@
 
 	padding: 0;
 	overflow: hidden;
-	z-index: 10;
+	//z-index: 1;
 
 	&__relative-wrapper {
 		position: relative;
@@ -79,6 +79,7 @@
 
 	&_active {
 		box-shadow: 0 0 0 0 #FFFFFF, 0 0 0 2px var(--primary-color);
+		z-index: 1;
 
 		&:hover {
 			box-shadow: 0 0 0 0 #FFFFFF, 0 0 0 2px var(--primary-color);
@@ -89,7 +90,7 @@
 		}
 
 		& .select-custom__dropdown {
-			z-index: 20;
+			//z-index: 1;
 			opacity: 1;
 			max-height: 340px;
 		}

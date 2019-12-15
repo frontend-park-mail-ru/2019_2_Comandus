@@ -2,11 +2,11 @@ import Component from '@frame/Component';
 import template from './index.handlebars';
 import './index.scss';
 import bus from '@frame/bus';
-import { busEvents } from '@app/constants';
+import { busEvents, proposalStatuses } from '@app/constants';
 import store from '@modules/store';
 import ProposalItem from '@components/dataDisplay/ProposalItem';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import { formatDate } from '@modules/utils';
+import { formatDate, isProposalActive, isProposalClosed } from '@modules/utils';
 
 export default class Proposals extends Component {
 	constructor({ children = [], ...props }) {
@@ -52,27 +52,16 @@ export default class Proposals extends Component {
 		const proposals = store.get(['proposals']);
 
 		const activeProposals = proposals.filter((el) => {
-			return (
-				el.Response.statusFreelancer === 'SENT' &&
-				el.Response.statusManager === 'ACCEPTED'
-			);
-			// return true;
+			return isProposalActive(el.Response);
 		});
 		const closedProposals = proposals.filter((el) => {
-			return (
-				el.Response.statusFreelancer === 'CANCEL' ||
-				el.Response.statusFreelancer === 'DENIED' ||
-				el.Response.statusManager === 'DENIED' ||
-				el.Response.statusFreelancer === 'ACCEPTED'
-			);
-			// return true;
+			return isProposalClosed(el.Response);
 		});
 		const sentProposals = proposals.filter((el) => {
 			return (
-				el.Response.statusFreelancer === 'SENT' &&
-				el.Response.statusManager === 'REVIEW'
+				el.Response.statusFreelancer === proposalStatuses.SENT &&
+				el.Response.statusManager === proposalStatuses.REVIEW
 			);
-			// return true;
 		});
 
 		this.data = {
