@@ -6,6 +6,10 @@ import FreelancerItem from '@components/dataDisplay/FreelancerItem';
 import Item from '@components/surfaces/Item';
 import { defaultAvatarUrl } from '@modules/utils';
 import PageWithTitle from '@components/PageWithTitle';
+import FreelancerService from '@services/FreelancerService';
+import { busEvents, specialitiesRow } from '@app/constants';
+import bus from '@frame/bus';
+import store from '@modules/store';
 
 const freelancers = [
 	{
@@ -63,33 +67,18 @@ const freelancers = [
 export default class Freelancers extends Component {
 	constructor(props) {
 		super(props);
-
-		// const freelancersHtml = freelancers.map((f) => {
-		// 	const freelancerItem = new FreelancerItem({
-		// 		...f,
-		// 	});
-		//
-		// 	const item = new Item({
-		// 		children: [freelancerItem.render()],
-		// 	});
-		//
-		// 	return item.render();
-		// });
-		//
-		// this.data = {
-		// 	freelancers: freelancersHtml,
-		// };
-
-		this.mapFreelancers(freelancers);
 	}
 
-	preRender() {}
+	preRender() {
+		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+	}
 
 	render() {
 		const page = new PageWithTitle({
 			title: 'Фрилансеры',
 			children: [contentTemplate(this.data)],
 		}).render();
+
 		this.data = {
 			page,
 		};
@@ -102,8 +91,23 @@ export default class Freelancers extends Component {
 
 	mapFreelancers = (freelancers) => {
 		const freelancersHtml = freelancers.map((f) => {
-			const freelancerItem = new FreelancerItem({
+			const freelancerData = {
 				...f,
+				...f.freelancer,
+			};
+
+			freelancerData.speciality =
+				specialitiesRow[freelancerData.specialityId];
+			freelancerData.country = this.data.countryList.find((el) => {
+				return el.ID === freelancerData.country;
+			}).Name;
+			freelancerData.city =
+				typeof freelancerData.city === 'number'
+					? null
+					: freelancerData.city;
+
+			const freelancerItem = new FreelancerItem({
+				...freelancerData,
 			});
 
 			const item = new Item({
@@ -118,5 +122,18 @@ export default class Freelancers extends Component {
 		};
 	};
 
-	freelancersUpdated = () => {};
+	onGetFreelancersResponse = (freelancers) => {
+		this.mapFreelancers(freelancers);
+		this.stateChanged();
+	};
+
+	utilsLoaded = () => {
+		this.data = {
+			countryList: store.get(['countryList']),
+		};
+
+		FreelancerService.GetAllFreelancers().then(
+			this.onGetFreelancersResponse,
+		);
+	};
 }
