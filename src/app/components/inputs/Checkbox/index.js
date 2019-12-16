@@ -16,6 +16,8 @@ export default class Checkbox extends Component {
 		this.data = {
 			label,
 			checked,
+			value,
+			name,
 		};
 	}
 

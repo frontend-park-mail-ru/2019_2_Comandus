@@ -71,6 +71,14 @@ export default class Freelancers extends Component {
 
 	preRender() {
 		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+
+		this.data = {
+			countryList: store.get(['countryList']),
+		};
+
+		FreelancerService.GetAllFreelancers().then(
+			this.onGetFreelancersResponse,
+		);
 	}
 
 	render() {
@@ -98,9 +106,13 @@ export default class Freelancers extends Component {
 
 			freelancerData.speciality =
 				specialitiesRow[freelancerData.specialityId];
-			freelancerData.country = this.data.countryList.find((el) => {
-				return el.ID === freelancerData.country;
-			}).Name;
+			if (this.data.countryList) {
+				freelancerData.country = this.data.countryList.find((el) => {
+					return el.ID === freelancerData.country;
+				}).Name;
+			} else {
+				freelancerData.country = null;
+			}
 			freelancerData.city =
 				typeof freelancerData.city === 'number'
 					? null
@@ -112,6 +124,7 @@ export default class Freelancers extends Component {
 
 			const item = new Item({
 				children: [freelancerItem.render()],
+				link: `/freelancers/${freelancerData.id}`,
 			});
 
 			return item.render();
