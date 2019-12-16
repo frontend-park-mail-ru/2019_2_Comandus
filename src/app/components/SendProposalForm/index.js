@@ -98,7 +98,6 @@ export default class SendProposalForm extends Component {
 				const formData = helper.formToJSON();
 				formData.timeEstimation = parseInt(formData.timeEstimation);
 
-				// console.log(formData);
 				bus.on(
 					busEvents.PROPOSAL_CREATE_RESPONSE,
 					this.onProposalsResponse,

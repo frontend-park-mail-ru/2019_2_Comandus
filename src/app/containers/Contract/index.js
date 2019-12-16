@@ -150,7 +150,6 @@ export default class Contract extends Component {
 
 				const formData = helper.formToJSON();
 				formData.grade = parseInt(formData.grade);
-				console.log(formData);
 
 				ContractService.LeaveFeedback(
 					this.props.params.contractId,
@@ -161,8 +160,6 @@ export default class Contract extends Component {
 	}
 
 	onGetContractResponse = (contract) => {
-		console.log(contract);
-
 		this.data = {
 			contract: {
 				...contract.Contract,
@@ -209,7 +206,6 @@ export default class Contract extends Component {
 	};
 
 	onCloseContract = () => {
-		console.log('onCloseContract');
 		ContractService.CloseContract(this.props.params.contractId).then(() => {
 			ContractService.GetContractById(this.props.params.contractId).then(
 				this.onGetContractResponse,
@@ -218,7 +214,6 @@ export default class Contract extends Component {
 	};
 
 	onAcceptContract = () => {
-		console.log('onAcceptContract');
 		ContractService.AcceptContract(this.props.params.contractId).then(
 			() => {
 				ContractService.GetContractById(
@@ -229,7 +224,6 @@ export default class Contract extends Component {
 	};
 
 	onRejectContract = () => {
-		console.log('onRejectContract');
 		ContractService.DenyContract(this.props.params.contractId).then(() => {
 			ContractService.GetContractById(this.props.params.contractId).then(
 				this.onGetContractResponse,
@@ -238,7 +232,6 @@ export default class Contract extends Component {
 	};
 
 	onMarkContractAsDone = () => {
-		console.log('onMarkContractAsDone');
 		ContractService.MarkReadyContract(this.props.params.contractId).then(
 			() => {
 				ContractService.GetContractById(

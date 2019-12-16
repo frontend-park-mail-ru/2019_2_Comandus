@@ -36,8 +36,6 @@ export default class DoubleSelect extends Component {
 		this._selected2 = selectedItem2;
 		const secondItems = this.setSelectValues(items, items2);
 
-		console.log(this._selected1);
-
 		this._firstSelect = new Select({
 			items: items,
 			onChange: this.onFirstSelectChange,

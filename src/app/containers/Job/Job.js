@@ -195,8 +195,6 @@ export default class Job extends Component {
 			return;
 		}
 
-		console.log(response);
-
 		response = response.filter((proposal) => {
 			return (
 				proposal.Response.statusFreelancer === proposalStatuses.SENT &&

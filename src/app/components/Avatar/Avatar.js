@@ -56,7 +56,6 @@ export class Avatar extends Component {
 			});
 
 			const onClickModal = () => {
-				console.log('i was been pressed');
 				this._avatarChangeModal.show();
 			};
 
