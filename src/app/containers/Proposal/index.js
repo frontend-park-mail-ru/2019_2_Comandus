@@ -20,6 +20,7 @@ import ProposalService from '@services/ProposalService';
 import { proposalStatuses } from '@app/constants';
 import PageWithTitle from '@components/PageWithTitle';
 import contentTemplate from './content.handlebars';
+import ClientChat from '@components/ClientChat';
 
 export default class Proposal extends Component {
 	constructor({ children = [], ...props }) {
@@ -108,6 +109,8 @@ export default class Proposal extends Component {
 			imgHeight: 65,
 		});
 
+		this._chat = new ClientChat({});
+
 		this.data = {
 			jobFeatures: new FeaturesList({
 				children: [
@@ -124,6 +127,7 @@ export default class Proposal extends Component {
 			makeOffer: this.makeOffer.render(),
 			freelancerAvatar: this.freelancerAvatar.render(),
 			paymentAmount: formatMoney(20000),
+			chat: this._chat.render(),
 		};
 
 		const page = new PageWithTitle({
@@ -156,6 +160,7 @@ export default class Proposal extends Component {
 		this.withdrawProposal.postRender();
 		this.makeCandidateProposal.postRender();
 		// this.makeOffer.postRender();
+		this._chat.postRender();
 	}
 
 	onProposalGetResponse = (proposal) => {
