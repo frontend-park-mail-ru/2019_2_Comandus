@@ -85,8 +85,6 @@ export default class ClientJobs extends Component {
 			loading: false,
 		};
 
-		console.log(this.data, err);
-
 		this.stateChanged();
 	};
 
@@ -142,7 +140,5 @@ export default class ClientJobs extends Component {
 		});
 	};
 
-	togglePublish = () => {
-		console.log(this.data.jobIdForTogglePublish);
-	};
+	togglePublish = () => {};
 }

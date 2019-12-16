@@ -8,8 +8,6 @@ class Bus {
 		this.listeners[event] = this.listeners[event] || [];
 		if (!this.listeners[event].includes(callback)) {
 			this.listeners[event].push(callback);
-		} else {
-			// console.log("bus on: this callback is registered yet!");
 		}
 		return this;
 	}

@@ -41,7 +41,6 @@ class JobFormComponent extends Component {
 		};
 
 		this.helper = null;
-		console.log('constructor');
 
 		this.jobUpdated = this.jobUpdated.bind(this);
 		this.preRender = this.preRender.bind(this);
@@ -65,8 +64,6 @@ class JobFormComponent extends Component {
 			job: {},
 		};
 
-		console.log('this.props.params.jobId', this.props.params.jobId);
-
 		if (this.props.params.jobId) {
 			bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
 			bus.emit(busEvents.JOB_GET, this.props.params.jobId);
@@ -76,17 +73,10 @@ class JobFormComponent extends Component {
 		this.data = {
 			countryList: UtilService.MapCountriesToSelectList(),
 		};
-
-		console.log('prerender job', this.data.job);
-		console.log('prerender data', this.data);
-		console.log('prerender');
 	}
 
 	render() {
 		let job = { ...jobInit, ...this.data.job };
-
-		console.log('render this.data.job', this.data.job);
-		console.log('render this.data', this.data);
 
 		const textField = new TextField({
 			required: true,
@@ -181,9 +171,7 @@ class JobFormComponent extends Component {
 			items: jobTypes,
 			required: true,
 			name: 'jobTypeId',
-			onClick: (value) => {
-				console.log(value);
-			},
+			onClick: (value) => {},
 			value: job.jobTypeId,
 		});
 
@@ -238,8 +226,6 @@ class JobFormComponent extends Component {
 
 		this.attachToParent();
 
-		console.log('render');
-
 		return this.html;
 	}
 
@@ -273,10 +259,6 @@ class JobFormComponent extends Component {
 				}
 			});
 		}
-
-		console.log('postrender job', this.data.job);
-		console.log('postrender data', this.data);
-		console.log('postrender');
 	}
 
 	onCreateJobResponse = (data) => {
@@ -326,17 +308,10 @@ class JobFormComponent extends Component {
 			title: 'Редактирование работы',
 		};
 
-		console.log('jobUpdated job', job);
-		console.log('jobUpdated data.job', this.data.job);
-		console.log('jobUpdated data', this.data);
-		console.log('jobUpdated');
-
 		this.stateChanged();
 	}
 
 	onDestroy() {
-		console.log('onDestroy');
-
 		this._specialitySelect.onDestroy();
 	}
 
@@ -345,7 +320,6 @@ class JobFormComponent extends Component {
 			countryList: UtilService.MapCountriesToSelectList(),
 		};
 
-		console.log('utilsLoaded');
 		this.stateChanged();
 	};
 }

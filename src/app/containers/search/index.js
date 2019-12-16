@@ -140,9 +140,7 @@ export default class Search extends Component {
 		this._jobTypeRadio = new RadioGroup({
 			items: jobTypesSearch,
 			name: 'jobTypeId',
-			onClick: (value) => {
-				console.log(value);
-			},
+			onClick: (value) => {},
 			value:
 				this.data.filter.jobTypeId !== undefined
 					? this.data.filter.jobTypeId
@@ -322,7 +320,6 @@ export default class Search extends Component {
 
 		response = response ? response : [];
 
-		console.log('search response', response);
 		if (this.props.params.type === 'freelancers') {
 			response = this.mapFreelancers(response);
 			response = this.renderFreelancers(response);

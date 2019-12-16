@@ -50,7 +50,6 @@ export default class Component {
 			this.postRender();
 			router.listenClasses();
 		} else {
-			// console.log("element " + this._id + " was destroyed!");
 			this.onDestroy();
 		}
 	}

@@ -159,8 +159,6 @@ export default class Proposal extends Component {
 	}
 
 	onProposalGetResponse = (proposal) => {
-		console.log(proposal);
-
 		this.data = {
 			freelancer: {
 				...proposal.Freelancer,
@@ -196,15 +194,11 @@ export default class Proposal extends Component {
 		this.stateChanged();
 	};
 
-	onArchiveProposal = () => {
-		console.log('onArchiveProposal');
-	};
+	onArchiveProposal = () => {};
 
 	onCancelProposal = () => {
-		console.log('onCancelProposal');
 		ProposalService.CancelProposal(this.props.params.proposalId).then(
 			(res) => {
-				console.log(res);
 				ProposalService.GetProposalById(
 					this.props.params.proposalId,
 				).then(this.onProposalGetResponse);
@@ -213,10 +207,8 @@ export default class Proposal extends Component {
 	};
 
 	onMakeCandidate = () => {
-		console.log('onMakeCandidate');
 		ProposalService.MakeCandidate(this.props.params.proposalId).then(
 			(res) => {
-				console.log(res);
 				ProposalService.GetProposalById(
 					this.props.params.proposalId,
 				).then(this.onProposalGetResponse);
@@ -225,10 +217,8 @@ export default class Proposal extends Component {
 	};
 
 	onRejectProposal = () => {
-		console.log('onRejectProposal');
 		ProposalService.RejectProposal(this.props.params.proposalId).then(
 			(res) => {
-				console.log(res);
 				ProposalService.GetProposalById(
 					this.props.params.proposalId,
 				).then(this.onProposalGetResponse);

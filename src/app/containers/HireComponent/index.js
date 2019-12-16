@@ -137,7 +137,6 @@ export default class Hire extends Component {
 
 				this.helper = helper;
 
-				console.log(helper.formToJSON());
 				this.onCreateContractResponse();
 				ContractService.CreateContract(
 					this.props.params.proposalId,
@@ -157,8 +156,6 @@ export default class Hire extends Component {
 	};
 
 	onProposalGetResponse = (proposal) => {
-		console.log(proposal);
-
 		this.data = {
 			proposal: {},
 		};
@@ -171,7 +168,6 @@ export default class Hire extends Component {
 	};
 
 	onCreateContractResponse = (res) => {
-		console.log(res);
 		this.openAlert();
 	};
 }

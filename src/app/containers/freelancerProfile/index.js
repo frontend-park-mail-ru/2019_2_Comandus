@@ -253,6 +253,16 @@ export class Profile extends Component {
 		if (this.data.historyEnabled) {
 			this._sortSelect.postRender();
 		}
+
+		//TODO: COPY link to clipboard
+		// this._copyLinkBtn = this.el.querySelector('.profile-link__copy');
+		// this._copyLinkBtn.addEventListener('click', (event) => {
+		// 	event.stopPropagation();
+		// 	event.preventDefault();
+		// 	this._profileLinkField.el.select();
+		// 	this._profileLinkField.el.setSelectionRange(0, 99999);
+		// 	document.execCommand("copy");
+		// });
 	}
 
 	freelancerUpdated = (err) => {
