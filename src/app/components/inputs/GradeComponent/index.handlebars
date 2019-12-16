@@ -4,7 +4,7 @@
 			<input type="radio" {{#if changing}} name="{{../name}}" {{else}} name="{{../_id}}-{{../name}}" {{/if}}  id="{{../_id}}-{{this}}" value="{{this}}" ontouchstart="ontouchstart" {{#if_eq this
 																									  ../grade}}
 				   checked {{/if_eq}} {{#if ../changing}}  {{else}} disabled {{/if}} {{#../required}}required{{/../required}} />
-			<label class="fa fa-star" for="{{../_id}}-{{this}}"></label>
+			<label class="fa fa-star stars-label-{{../size}}" for="{{../_id}}-{{this}}"></label>
 		{{/each}}
 
 		<input type="radio" name="stars" id="star-reset"/>

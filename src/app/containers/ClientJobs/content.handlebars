@@ -1,9 +1,16 @@
 <div class="tp-row tp-row_content_left">
 	<div class="tp-col-8 ">
 		<div class="card card_no-padding">
-			{{#each jobs}}
-				{{{this}}}
-			{{/each}}
+			{{#if jobs.length}}
+				{{#each jobs}}
+					{{{this}}}
+				{{/each}}
+			{{else}}
+				<div class="no-items">
+					Вы не разместили заказ
+				</div>
+			{{/if}}
+
 		</div>
 		{{#loading}}
 			<div>Загрузка...</div>

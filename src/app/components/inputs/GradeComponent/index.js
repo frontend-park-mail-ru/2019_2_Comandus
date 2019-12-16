@@ -7,7 +7,7 @@ export default class GradeComponent extends Component {
 		name = 'rate-stars',
 		changing = false,
 		grade = 0,
-		size = 's', // s m
+		size = 'm', // s m
 		required = false,
 		...props
 	}) {
