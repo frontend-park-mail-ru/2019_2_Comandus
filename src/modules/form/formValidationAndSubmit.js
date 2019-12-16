@@ -110,11 +110,6 @@ function hasError(field) {
 		return config.messageBadInput;
 	}
 
-	// If a number value doesn't match the step interval
-	if (validity.stepMismatch) {
-		return config.messageStepMismatch;
-	}
-
 	if (validity.rangeOverflow) {
 		return config.messageRangeOverflow(field.getAttribute(attributes.max));
 	}
@@ -130,6 +125,12 @@ function hasError(field) {
 		}
 
 		return config.messagePatternMismatch;
+	}
+
+	// If a number value doesn't match the step interval
+	if (validity.stepMismatch) {
+		// return config.messageStepMismatch;
+		return;
 	}
 
 	return config.messageGeneric;
@@ -227,7 +228,7 @@ function removeError(field) {
 	message.style.visibility = 'hidden';
 }
 
-class FormHelper {
+export class FormHelper {
 	constructor(submitEvent) {
 		this._event = submitEvent;
 		this.responseTextElement = null;
@@ -305,6 +306,9 @@ function onFormSubmitValidate(event, onSubmitCallback) {
 	let error;
 	let hasErrors;
 	for (let i = 0; i < fields.length; i++) {
+		if (hasErrors) {
+			break;
+		}
 		removeError(fields[i]);
 		error = hasError(fields[i]);
 		if (error) {
@@ -341,11 +345,26 @@ function onBlur(event) {
 	removeError(event.target);
 }
 
-export function enableValidationAndSubmit(formElement, onSubmit) {
+function onChange(event) {
+	if (
+		event.target.type === 'select-one' ||
+		event.target.type === 'select-multiple'
+	) {
+		onBlur(event);
+	}
+}
+
+export function enableValidationAndSubmit(
+	formElement,
+	onSubmit,
+	onChangeCallback,
+) {
 	formElement.setAttribute('novalidate', true);
 	formElement.setAttribute('novalidate', true);
 	formElement.classList.add('validate');
 	formElement.addEventListener('blur', onBlur, true);
+	formElement.addEventListener('change', onChange);
+	formElement.addEventListener('change', onChangeCallback);
 
 	const responseText = document.createElement('div');
 	responseText.className = classes.responseText;

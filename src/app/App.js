@@ -33,6 +33,7 @@ class AppComponent extends Component {
 		this._header.postRender();
 
 		bus.emit(busEvents.ON_PAGE_LOAD);
+		bus.on(busEvents.UTILS_LOADED, () => {});
 	}
 }
 

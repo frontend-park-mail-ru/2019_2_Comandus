@@ -20,6 +20,8 @@ export default class TextField extends Component {
 		pattern = null,
 		title = null,
 		attributes = '',
+		onKeydown = () => {},
+		onInput = () => {},
 		...props
 	} = {}) {
 		super(props);
@@ -41,10 +43,17 @@ export default class TextField extends Component {
 			attributes,
 			pattern,
 			title,
+			onKeydown,
+			onInput,
 		};
 	}
 
 	render() {
 		return template({ ...this.props, ...this.data });
+	}
+
+	postRender() {
+		this.el.addEventListener('input', this.data.onInput);
+		this.el.addEventListener('keydown', this.data.onKeydown);
 	}
 }

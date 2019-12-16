@@ -12,8 +12,6 @@ class LoginComponent extends Component {
 	constructor({ ...props }) {
 		super(props);
 
-		this.onLoginResponse = this.onLoginResponse.bind(this);
-
 		this.helper = null;
 	}
 
@@ -71,7 +69,7 @@ class LoginComponent extends Component {
 		});
 	}
 
-	onLoginResponse(data) {
+	onLoginResponse = (data) => {
 		bus.off(busEvents.LOGIN_RESPONSE, this.onLoginResponse);
 
 		const { response, error } = data;
@@ -85,7 +83,7 @@ class LoginComponent extends Component {
 		}
 
 		this.props.router.push('/settings');
-	}
+	};
 }
 
 export default LoginComponent;

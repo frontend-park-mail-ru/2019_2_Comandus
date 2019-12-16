@@ -54,31 +54,35 @@
 				{{/isClient}}
 				<div class="profile-sidebar__profile-link">
 					{{{ profileLinkField }}}
-					<a class="profile-link__copy" href="#">
-						Копиоровать ссылку
-					</a>
+					<button class="profile-link__copy">
+						Копировать ссылку
+					</button>
 				</div>
 			</div>
 
-			<div class="profile-history card">
-
-				{{{ historyCardHeader }}}
-				<div class="profile-history__items">
-					{{#each profileHistory}}
-						{{{ this }}}
-					{{/each}}
+			{{#historyEnabled}}
+				<div class="profile-history card">
+					{{{ historyCardHeader }}}
+					<div class="profile-history__items">
+{{!--											{{#each profileHistory}}--}}
+{{!--												{{{ this }}}--}}
+{{!--											{{/each}}--}}
+{{!--						{{historyHtmlArray}}--}}
+						{{#each historyHtmlArray}}
+							{{{ this }}}
+						{{/each}}
+					</div>
+{{!--					<div class="profile-history__footer">--}}
+{{!--						{{{ portfolioCardFooter }}}--}}
+{{!--					</div>--}}
 				</div>
-				<div class="profile-history__footer">
-					{{{ portfolioCardFooter }}}
-				</div>
-			</div>
+			{{/historyEnabled}}
 
-
-			<div class="profile-portfolio card">
-				{{{ portfolioCardHeader }}}
-				{{{ portfolioCardGroup }}}
-				{{{ portfolioPaginator }}}
-			</div>
+{{!--			<div class="profile-portfolio card">--}}
+{{!--				{{{ portfolioCardHeader }}}--}}
+{{!--				{{{ portfolioCardGroup }}}--}}
+{{!--				{{{ portfolioPaginator }}}--}}
+{{!--			</div>--}}
 
 			<div class="profile-skills card">
 				{{{ skillsCardHeader }}}
@@ -98,9 +102,9 @@
 			{{/isClient}}
 			<div class="profile-sidebar__profile-link">
 				{{{ profileLinkField }}}
-				<a class="profile-link__copy" href="#">
-					Копиоровать ссылку
-				</a>
+				<button class="profile-link__copy">
+					Копировать ссылку
+				</button>
 			</div>
 {{!--			<div class="profile-sidebar__languages">--}}
 {{!--				<span class="sidebar-languages__title">--}}

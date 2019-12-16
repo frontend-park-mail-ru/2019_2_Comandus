@@ -1,5 +1,6 @@
 import Component from '@frame/Component';
 import template from './FreelancerSettings.handlebars';
+import './FreelancerSettings.scss';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import FreelancerService from '@services/FreelancerService';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
@@ -12,6 +13,10 @@ import '../inputs/FieldGroup/FieldGroup.scss';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import countriesCitiesRow from './../../../assets/countries.min.json';
 import { toSelectElement } from '@modules/utils';
+import store from '@modules/store';
+import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
+import UtilService from '@services/UtilService';
 
 const cities = {};
 const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
@@ -35,18 +40,57 @@ const experienceLevels = [
 ];
 
 export class FreelancerSettings extends Component {
-	constructor({ parent = document.body, ...props }) {
+	constructor(props) {
 		super(props);
+
+		const { freelancerId } = props;
+
+		this.data = {
+			freelancerId,
+		};
+	}
+
+	preRender() {
+		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
+
+		if (!this.data.freelancerId) {
+			return;
+		}
+
+		FreelancerService.GetFreelancerById(this.data.freelancerId)
+			.then((response) => {
+				const freelancer = store.get(['freelancer']);
+				this.data = {
+					freelancer,
+				};
+			})
+			.catch((error) => {
+				console.error(error);
+			})
+			.finally(() => {
+				this.data = {
+					...this.data,
+					loaded: true,
+				};
+				this.stateChanged();
+			});
 	}
 
 	render() {
 		this._citySelect = new DoubleSelect({
-			items: countriesCities,
+			items: this.data.countryList,
+			getItems2: UtilService.getCityListByCountry,
 			label1: 'Страна',
-			items2: cities,
 			label2: 'Город',
+			nameFirst: 'country',
 			name: 'city',
+			required: true,
+			filterable: true,
 		});
+
 		const submitBtn = new Button({
 			type: 'submit',
 			text: 'Сохранить изменения',
@@ -154,30 +198,6 @@ export class FreelancerSettings extends Component {
 		return this.html;
 	}
 
-	preRender() {
-		this._data = {
-			...this._data,
-			loaded: false,
-		};
-		FreelancerService.GetFreelancerById(0)
-			.then((response) => {
-				this.data = {
-					user: { ...response },
-					...this.data,
-				};
-			})
-			.catch((error) => {
-				console.error(error);
-			})
-			.finally(() => {
-				this.data = {
-					...this.data,
-					loaded: true,
-				};
-				this.stateChanged();
-			});
-	}
-
 	postRender() {
 		super.postRender();
 
@@ -204,5 +224,13 @@ export class FreelancerSettings extends Component {
 				}
 				helper.setResponseText(text);
 			});
+	};
+
+	utilsLoaded = () => {
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
+
+		this.stateChanged();
 	};
 }

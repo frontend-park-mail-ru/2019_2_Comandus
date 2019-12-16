@@ -35,7 +35,6 @@ export default class Button extends Component {
 	}
 
 	postRender() {
-		// console.log("test id: " + this.data.id + " | _id: " + this._id);
 		if (this.data.id) {
 			this._el = document.getElementById(this.data.id);
 		} else {

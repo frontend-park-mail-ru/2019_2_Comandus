@@ -42,14 +42,14 @@ export default class Navbar extends Component {
 			if (this.data.isClient) {
 				profileItems.push({
 					url: '/my-job-postings',
-					text: 'Мои размещения',
+					text: 'Мои заказы',
 				});
 			} else {
 				profileItems.push({
 					url: `/freelancers/${this.data.user.freelancerId}`,
 					text: 'Профиль',
 				});
-				profileItems.push({ url: '/saved', text: 'Закладки' });
+				// profileItems.push({ url: '/saved', text: 'Закладки' });
 				profileItems.push({ url: '/proposals', text: 'Отклики' });
 			}
 			profileItems.push({ url: config.urls.settings, text: 'Настройки' });
@@ -120,6 +120,8 @@ export default class Navbar extends Component {
 		params.append('q', event.target.elements[0].value);
 		const type = AccountService.isClient() ? 'freelancers' : 'jobs';
 		params.append('type', type);
+
+		event.target.elements[0].value = '';
 
 		router.push(`/search`, `?${params.toString()}`);
 	};

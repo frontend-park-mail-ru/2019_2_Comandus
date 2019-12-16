@@ -1,1 +1,160 @@
-<div></div>
+<div class="tp-row tp-row_content_left">
+	<div class="tp-col-9">
+		<div class="card">
+			<div class="job-details__inner-item">
+				<div class="job-item__title">
+					Условия
+				</div>
+				<div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Бюджет
+						</div>
+						<div>{{contract.paymentAmount}}</div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Срок
+						</div>
+						<div>от 1 до 3 месяцев</div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Дата создания контракта
+						</div>
+						<div>20.11.2019</div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Предложение сделано компанией:
+						</div>
+						<div><a class="link">Мэйлру</a></div>
+					</div>
+					<div class="proposal-details">
+						<div class="proposal-details__key">
+							Предложение сделано фрилансеру:
+						</div>
+						<div>
+							<a class="link">Nozim Y.</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="job-details__inner-item">
+				<div class="job-item__title">
+					Описание работы
+				</div>
+				<div>
+					Описание работы из объявления...
+				</div>
+			</div>
+			<div class="job-details__inner-item buttons-group">
+				{{#if isClient}}
+					{{#closeContractEnabled}}
+						{{{closeContract}}}
+					{{/closeContractEnabled}}
+				{{else}}
+					{{#acceptContractEnabled}}
+						{{{acceptContract}}}
+						{{{rejectContract}}}
+					{{/acceptContractEnabled}}
+					{{#markContractAsDoneEnabled}}
+						{{{markContractAsDone}}}
+					{{/markContractAsDoneEnabled}}
+				{{/if}}
+			</div>
+		</div>
+		{{#feedbackEnabled}}
+			<div class="tp-container card">
+				{{{ feedbackTitle }}}
+				<div class="tp-container">
+					<div class="job-details__inner-item">
+						<div class="job-item__title">
+							{{#if firstGrade}}
+								<div>Отзыв
+									{{#if isClient}}
+										фрилансера
+									{{else}}
+										клиента
+									{{/if}}
+								</div>
+								<div class="proposal-details__key">
+									Оценка
+								</div>
+								<div>{{{firstGradeStars}}}</div>
+								<div class="proposal-details__key">
+									Сообщение
+								</div>
+								<div>{{firstMessage}}</div>
+							{{else}}
+								<div>{{#if isClient}}
+									Фрилансер
+								{{else}}
+									Клиент
+								{{/if}}
+									пока не оставил отзыв
+								</div>
+							{{/if}}
+						</div>
+					</div>
+					<div class="job-details__inner-item">
+						<div class="job-item__title">
+							<div>Ваш отзыв</div>
+							{{#if secondGrade}}
+								<div class="proposal-details__key">
+									Оценка
+								</div>
+								<div>{{{secondGradeStars}}}</div>
+								<div class="proposal-details__key">
+									Сообщение
+								</div>
+								<div>{{secondMessage}}</div>
+							{{else}}
+								<form method="post" id="submitFeedback" autocomplete="off">
+									{{{gradeField}}}
+									{{{feedBackMessageField}}}
+									{{{submitFeedbackBtn}}}
+								</form>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/feedbackEnabled}}
+		<div class="tp-container card">
+			{{{ messagesTitle }}}
+			<div class="tp-container">
+				<div class="job-details__inner-item">
+					<textarea></textarea>
+					<div>
+						<button>Отправить</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tp-col-3">
+		<div class="card card_no-padding">
+			<div class="contract-status__raw contract-status__raw_active">
+				<i class="status-icon fas fa-check"></i>
+				<div class="status-title">Создание заказа</div>
+			</div>
+			<div class="contract-status__raw">
+				<div class="status-title">Согласование условий</div>
+			</div>
+			<div class="contract-status__raw">
+				<div class="status-title">Выполнение работы</div>
+				<p class="status-description">Процесс выполнения задания в заказе ло получения Заказчиком иотгового
+					результата работы.</p>
+			</div>
+			<div class="contract-status__raw">
+				<div class="status-title">Завершение заказа</div>
+				<p class="status-description">Получение Заказчиком результата работы, закрытие заказа с отзывом о
+					сотрудничестве.</p>
+			</div>
+		</div>
+		<div class="card">
+			<a class="link">Посмотреть объявление</a>
+		</div>
+	</div>
+</div>

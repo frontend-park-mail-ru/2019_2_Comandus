@@ -4,9 +4,11 @@
 	border-bottom: 1px solid #E0E0E0;
 	padding: 20px 30px;
 	user-select: none;
+	cursor: pointer;
 
 	&:hover {
-		background-color: $secondary-color;
+		//background-color: $secondary-color;
+		background-color: #f6fbff;
 	}
 }
 

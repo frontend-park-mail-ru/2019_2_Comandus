@@ -1,0 +1,35 @@
+@import "~@assets/scss/global";
+
+.contract-status__raw {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-right: 15px;
+	padding-left: 50px;
+	position: relative;
+	&:not(:first-child) {
+		border-top: 1px solid #E0E0E0;
+	}
+}
+
+.contract-status__raw_active {
+	box-shadow: inset 4px 0 0 0 $success-color;
+	color: $success-color;
+}
+
+.status-description {
+	padding: 0;
+	font-size: $font-size-s;
+	color: $light-text-color;
+	margin-top: 10px;
+}
+
+.status-title {
+	text-transform: uppercase;
+	font-size: $font-size-s;
+}
+
+.status-icon {
+	POSITION: absolute;
+	left: 18px;
+	top: 33%;
+}

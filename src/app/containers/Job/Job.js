@@ -1,7 +1,13 @@
 import Component from '@frame/Component';
 import template from './Job.handlebars';
 import './Job.scss';
-import { jobTypes, levels, busEvents, specialitiesRow } from '@app/constants';
+import {
+	jobTypes,
+	levels,
+	busEvents,
+	specialitiesRow,
+	proposalStatuses,
+} from '@app/constants';
 import Button from '@components/inputs/Button/Button';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import FeaturesList from '@components/dataDisplay/FeaturesList';
@@ -11,6 +17,14 @@ import AccountService from '@services/AccountService';
 import AuthService from '@services/AuthService';
 import Modal from '@components/Modal/Modal';
 import SendProposalForm from '@components/SendProposalForm';
+import ProposalItem from '@components/dataDisplay/ProposalItem';
+import ProposalService from '@services/ProposalService';
+import {
+	formatDate,
+	formatMoney,
+	getExperienceLevelName,
+	getJoTypeName,
+} from '@modules/utils';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -25,6 +39,10 @@ export default class Job extends Component {
 		bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
 		bus.on(busEvents.USER_UPDATED, this.userUpdated);
 		bus.emit(busEvents.JOB_GET, this.props.params.jobId);
+
+		ProposalService.GetProposalsByJobId(this.props.params.jobId).then(
+			this.onProposalsGet,
+		);
 
 		const loggedIn = AuthService.isLoggedIn();
 		const isClient = AccountService.isClient();
@@ -41,13 +59,18 @@ export default class Job extends Component {
 			onCancel: this.closeModal,
 		});
 		this.sendProposalFormModal = new Modal({
-			title: 'Ответ фрилансера',
+			title: 'Ваш отклик',
 			children: [this.sendProposalForm.render()],
 		});
 
 		this._submitProposal = new Button({
 			type: 'submit',
-			text: 'Ответить на проект',
+			text: 'Отликнуться',
+			onClick: this.onOpenModal,
+		});
+		this._submitProposalMobile = new Button({
+			type: 'submit',
+			text: 'Отликнуться',
 			onClick: this.onOpenModal,
 		});
 		this._save = new Button({
@@ -56,13 +79,15 @@ export default class Job extends Component {
 			className: 'btn_secondary',
 		});
 
+		const type = getJoTypeName(this.data.job['jobTypeId']);
+
 		this._jobType = new FeatureComponent({
 			title: 'Тип работы',
-			data: this.data.job['jobTypeId'],
+			data: type ? type.label : '',
 		});
 		this._jobBudget = new FeatureComponent({
 			title: 'Бюджет',
-			data: this.data.job['paymentAmount'] + ' ₽',
+			data: formatMoney(this.data.job['paymentAmount']),
 		});
 		this._jobLevel = new FeatureComponent({
 			title: 'Уровень фрилансера',
@@ -71,6 +96,7 @@ export default class Job extends Component {
 
 		this.data = {
 			submitProposal: this._submitProposal.render(),
+			submitProposalMobile: this._submitProposalMobile.render(),
 			saveBtn: this._save.render(),
 			jobFeatures: new FeaturesList({
 				children: [
@@ -91,6 +117,7 @@ export default class Job extends Component {
 
 	postRender() {
 		this._submitProposal.postRender();
+		this._submitProposalMobile.postRender();
 		this.sendProposalFormModal.postRender();
 		this.sendProposalForm.postRender();
 	}
@@ -99,9 +126,11 @@ export default class Job extends Component {
 		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
 		const job = store.get(['job']);
 		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
-		job['experienceLevel'] = levels[job['experienceLevelId'] - 1];
+		job['experienceLevel'] = getExperienceLevelName(
+			job['experienceLevelId'],
+		);
 		job['speciality'] = specialitiesRow[job['specialityId']];
-		job['created'] = new Date(job.date).toDateString();
+		job['created'] = formatDate(job.date); //new Date(job.date).toDateString();
 		job['type'] = jobTypes.find(
 			(el) => el.value === parseInt(job.jobTypeId),
 		).label;
@@ -156,5 +185,36 @@ export default class Job extends Component {
 
 	closeModal = () => {
 		this.sendProposalFormModal.close();
+	};
+
+	onProposalsGet = ({ response, error }) => {
+		if (error || !response) {
+			this.data = {
+				proposals: null,
+			};
+			return;
+		}
+
+		response = response.filter((proposal) => {
+			return (
+				proposal.Response.statusFreelancer === proposalStatuses.SENT &&
+				proposal.Response.statusManager !== proposalStatuses.DENIED
+			);
+		});
+
+		response = response.map((r) => {
+			r.Response.date = formatDate(r.Response.date);
+			return r;
+		});
+
+		this.data = {
+			proposals: response.length ? response : null,
+		};
+
+		this.stateChanged();
+	};
+
+	renderProposalItem = (proposal) => {
+		return new ProposalItem(proposal).render();
 	};
 }

@@ -1,0 +1,9 @@
+{{!--<div id="{{_id}}" class="checkbox-component">--}}
+{{!--	<input type="checkbox" name="{{name}}" value="{{value}}" id="{{_id}}-input">--}}
+{{!--	<label for="{{_id}}-input">{{label}}</label>--}}
+{{!--	--}}
+{{!--</div>--}}
+<label id="{{_id}}" class="checkbox-component">{{label}}
+	<input type="checkbox" {{#checked}}checked{{/checked}} name="{{name}}" value="{{value}}">
+	<span class="checkmark"></span>
+</label>

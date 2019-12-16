@@ -1,17 +1,155 @@
 @import "~@assets/scss/global";
 @import "../inputs";
 
-.select {
-	@include input
-}
-
-.select[disabled] {
-	background: var(--background-light);
-	&:hover{
-		box-shadow: 0 0 0 1px #c5c5c5;
-	}
-}
 
 .label {
 	@include label;
+}
+
+.select-header {
+	&__label {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		text-align: left;
+	}
+
+	&__icon {
+		background: url("/assets/icons/arrow-up.svg") no-repeat center;
+
+		width: 20px;
+		height: 20px;
+		opacity: 0.3;
+		transition: 0.2s ease;
+	}
+}
+
+.select-custom {
+	@include input;
+
+	resize: none;
+
+	position: absolute;
+
+	padding: 0;
+	overflow: hidden;
+	//z-index: 1;
+
+	&__relative-wrapper {
+		position: relative;
+		height: 44px;
+		min-width: 200px;
+	}
+
+	&__header {
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		overflow: hidden;
+		margin: 0;
+		padding: 10px 16px;
+	}
+
+	&__dropdown {
+		opacity: 0;
+		max-height: 0;
+		border-width: 0 1px 1px;
+		overflow: hidden;
+
+		transition: all 0.3s ease;
+	}
+
+	&__value {
+		display: none;
+	}
+
+	&__default {
+		display: none;
+	}
+
+	&_disabled {
+		background: var(--background-light);
+		color: $light-text-color;
+		&:hover{
+			box-shadow: 0 0 0 1px #c5c5c5;
+		}
+	}
+
+	&_active {
+		box-shadow: 0 0 0 0 #FFFFFF, 0 0 0 2px var(--primary-color);
+		z-index: 1;
+
+		&:hover {
+			box-shadow: 0 0 0 0 #FFFFFF, 0 0 0 2px var(--primary-color);
+		}
+
+		& .select-header__icon {
+			transform: rotate(180deg);
+		}
+
+		& .select-custom__dropdown {
+			//z-index: 1;
+			opacity: 1;
+			max-height: 340px;
+		}
+
+		& .select-dropdown {
+			&__items {
+				max-height: 280px;
+			}
+		}
+	}
+}
+
+.select-items {
+	&__list-item {
+		width: 100%;
+		border-width: 1px 0 0;
+		display: block;
+		cursor: pointer;
+
+		&:hover {
+			background-color: #f5f5f5;
+		}
+	}
+
+	&__item-label {
+		display: block;
+		vertical-align: middle;
+		padding: 5px 16px;
+	}
+}
+
+.select-dropdown {
+	&__filter {
+		background-color: #f5f5f5;
+		padding: 10px 16px;
+		width: 100%;
+		margin: 0;
+		border: none;
+		border-top: 1px solid #dfdfdf;
+		border-bottom: 1px solid #dfdfdf;
+		transition: all 0.1s ease;
+
+		&:focus {
+			outline: 0;
+		}
+	}
+
+	&__items {
+		background-color: #fff;
+		border-collapse: collapse;
+		list-style: none;
+		display: block;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+
+		max-height: 0;
+		overflow: auto;
+
+		transition: all 0.3s ease;
+	}
 }

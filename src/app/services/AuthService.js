@@ -47,14 +47,26 @@ export default class AuthService {
 	}
 
 	static FetchCsrfToken() {
-		return AjaxModule.get(config.urls.csrfToken).then((res) => {
-			localStorage.setItem(CSRF_TOKEN_NAME, res[CSRF_TOKEN_NAME]);
-			store.setState({
-				[CSRF_TOKEN_NAME]: res[CSRF_TOKEN_NAME],
-			});
+		return AjaxModule.get(config.urls.csrfToken)
+			.then((res) => {
+				localStorage.setItem(CSRF_TOKEN_NAME, res[CSRF_TOKEN_NAME]);
+				store.setState({
+					[CSRF_TOKEN_NAME]: res[CSRF_TOKEN_NAME],
+				});
 
-			return res[CSRF_TOKEN_NAME];
-		});
+				return res[CSRF_TOKEN_NAME];
+			})
+			.catch((error) => {
+				// Если user в local storage больше невалидный
+				if (error.message === 'Unauthorized') {
+					store.setState({
+						user: null,
+					});
+					AccountService.PutUserToLocalStorage();
+				}
+
+				return error.message;
+			});
 	}
 
 	static GetCsrfToken() {

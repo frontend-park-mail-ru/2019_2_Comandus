@@ -8,6 +8,8 @@ import Item from '@components/surfaces/Item';
 import bus from '@frame/bus';
 import store from '@modules/store';
 import PageWithTitle from '@components/PageWithTitle';
+import { formatDate, formatMoney } from '@modules/utils';
+import UtilService from '@services/UtilService';
 
 export default class Jobs extends Component {
 	constructor(props) {
@@ -23,6 +25,9 @@ export default class Jobs extends Component {
 
 	preRender() {
 		bus.emit(busEvents.JOBS_GET);
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
 	}
 
 	render() {
@@ -51,18 +56,26 @@ export default class Jobs extends Component {
 			loading: false,
 		};
 
-		console.log(this.data, err);
-
 		this.stateChanged();
 	};
 
 	renderJobs = (jobs) => {
 		return jobs.map((job) => {
+			if (this.data.countryList) {
+				const country = this.data.countryList.find((el) => {
+					return el.value === job.country;
+				});
+				job.country = country ? country.label : '';
+			}
 			const jobItem = new JobItem({
 				...job,
+				created: formatDate(job.date),
+				experienceLevel: levels[job['experienceLevelId'] - 1],
+				paymentAmount: formatMoney(job['paymentAmount']),
 			});
 			const item = new Item({
 				children: [jobItem.render()],
+				link: `/jobs/${job.id}`,
 			});
 
 			return item.render();

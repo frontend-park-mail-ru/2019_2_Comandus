@@ -1,3 +1,5 @@
+import { dueTimes, jobTypes, levels, proposalStatuses } from '@app/constants';
+
 /**
  * @param {String} html representing a single element
  * @return {Node}
@@ -112,4 +114,65 @@ function randomHexColor() {
 
 export function deepCopy(obj) {
 	return JSON.parse(JSON.stringify(obj));
+}
+
+export function formatDate(dateString) {
+	const d = new Date(dateString);
+	let m = d.getMonth() + 1;
+	m = formatDateNum(m);
+	const day = formatDateNum(d.getDate());
+
+	return `${day}.${m}.${d.getFullYear()}`;
+}
+
+function formatDateNum(num) {
+	if (num > 0 && num < 9) {
+		return '0' + num;
+	}
+
+	return num;
+}
+
+export function formatMoney(amount) {
+	if (!amount) {
+		return;
+	}
+
+	const formatter = new Intl.NumberFormat('ru-RU', {
+		style: 'currency',
+		currency: 'RUB',
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 0,
+	});
+
+	return formatter.format(amount);
+}
+
+export function getJoTypeName(jobTypeId) {
+	return jobTypes.find((j) => j.value == jobTypeId);
+}
+
+export function getExperienceLevelName(experienceLevelId) {
+	return levels[experienceLevelId - 1];
+}
+
+export function getTimeEstimationName(id) {
+	return dueTimes[id];
+}
+
+export function isProposalClosed(proposal) {
+	return (
+		proposal.statusFreelancer === proposalStatuses.CANCEL ||
+		proposal.statusFreelancer === proposalStatuses.DENIED ||
+		proposal.statusFreelancer === proposalStatuses.ACCEPTED ||
+		proposal.statusManager === proposalStatuses.DENIED
+	);
+}
+
+export function isProposalActive(proposal) {
+	return (
+		proposal.statusFreelancer === proposalStatuses.SENT &&
+		(proposal.statusManager === proposalStatuses.ACCEPTED ||
+			proposal.statusManager === proposalStatuses.SENT_CONTRACT)
+	);
 }

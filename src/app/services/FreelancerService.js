@@ -5,38 +5,27 @@ import AuthService from '@services/AuthService';
 
 export default class FreelancerService {
 	static GetFreelancerById(id) {
-		return AjaxModule.get(`${config.urls.freelancers}/${id}`, {
+		return AjaxModule.get(`/freelancer/${id}`, {
 			headers: AuthService.getCsrfHeader(),
-		}).then((freelancer) => {
-			console.log('GetFreelancerById', freelancer);
-			store.setState({
-				freelancer: freelancer,
+		})
+			.then((freelancer) => {
+				store.setState({
+					freelancer: freelancer,
+				});
+			})
+			.catch((error) => {
+				console.error('GetFreelancerById: ', error);
 			});
-		});
 	}
 
 	static UpdateFreelancer(id, data) {
-		return AjaxModule.put(`/freelancers/${id}`, data);
-	}
-
-	static GetProposals() {
-		return AjaxModule.get(config.urls.proposals).then((proposals) => {
-			store.setState({
-				proposals,
-			});
-
-			return proposals;
-		});
-	}
-
-	static CreateProposal(data) {
-		return AjaxModule.post(`/jobs/proposal/${data.jobId}`, data.formData, {
+		return AjaxModule.put(`/freelancers/${id}`, data, {
 			headers: AuthService.getCsrfHeader(),
 		});
 	}
 
 	static GetAllFreelancers() {
-		return AjaxModule.get(config.urls.freelancers, {
+		return AjaxModule.get(`${config.urls.freelancers}/1`, {
 			headers: AuthService.getCsrfHeader(),
 		}).then((freelancers) => {
 			store.setState({
@@ -44,6 +33,12 @@ export default class FreelancerService {
 			});
 
 			return freelancers;
+		});
+	}
+
+	static GetWorkHistory(freelancerId) {
+		return AjaxModule.get(`/contracts/archive/${freelancerId}`, {
+			headers: AuthService.getCsrfHeader(),
 		});
 	}
 }

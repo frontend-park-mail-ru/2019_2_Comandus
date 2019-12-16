@@ -58,4 +58,11 @@ export default class JobService {
 			headers: AuthService.getCsrfHeader(),
 		});
 	}
+
+	static GetSearchSuggest(params) {
+		const queryParams = new URLSearchParams(params).toString();
+		return AjaxModule.get(`/suggest?${queryParams}`, {
+			headers: AuthService.getCsrfHeader(),
+		});
+	}
 }

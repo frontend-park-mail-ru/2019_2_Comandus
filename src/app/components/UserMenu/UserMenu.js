@@ -10,6 +10,7 @@ import store from '@modules/store';
 import AccountService from '@services/AccountService';
 import { busEvents } from '@app/constants';
 import { router } from '@index';
+import { Avatar } from '@components/Avatar/Avatar';
 
 export class UserMenu extends Component {
 	constructor({ ...props }) {
@@ -36,11 +37,25 @@ export class UserMenu extends Component {
 			avatar = defaultAvatarUrl(
 				this.data.user.firstName,
 				this.data.user.secondName,
+				200,
 			);
 		}
+
 		const alt = '';
+
+		this._avatar = new Avatar({
+			changing: false,
+			imgUrl: `${config.baseAPIUrl}${'/account/download-avatar' +
+				'?'}${new Date().getTime()}`,
+			imgDefault: avatar,
+			classes: 'user-menu__avatar',
+		});
+
 		this._dropdown = new Dropdown({
-			text: `<img class="user-menu__avatar" src="${avatar}" alt="${alt}"/>`,
+			text:
+				`<div class="badge-wrap"><span class="badge">+1</span>` +
+				this._avatar.render() +
+				`</div>`,
 			items: [
 				{
 					url: '#',
@@ -50,7 +65,7 @@ export class UserMenu extends Component {
 				},
 				{
 					url: '#',
-					text: 'Компания: ' + 'Командус',
+					text: 'Компания',
 					active: this.data.isClient,
 					id: 'switchToClient',
 				},

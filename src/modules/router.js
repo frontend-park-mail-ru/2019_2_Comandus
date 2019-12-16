@@ -10,6 +10,19 @@ function getParamsFromSearch(search) {
 	return params;
 }
 
+const restrictedUrls = [
+	'/new-job',
+	'/messages',
+	'/my-job-postings',
+	'/settings',
+	'/my-contracts',
+	'/my-contracts/:contractId',
+	'/saved',
+	'/proposals',
+	'/proposals/:proposalId',
+	'/contracts/new',
+	'/jobs/:jobId/edit',
+];
 /**
  * место для вставки роутов (switch)
  * ссылки
@@ -64,14 +77,15 @@ export class Router {
 			this.push(currentPath, window.location.search);
 		});
 
-		const routerLinks = document.getElementsByClassName('router-link');
-		Array.from(routerLinks).forEach((element) => {
-			element.addEventListener('click', (event) => {
-				event.preventDefault();
-				const { currentTarget } = event;
-				this.push(currentTarget.pathname, currentTarget.search);
-			});
-		});
+		// const routerLinks = document.getElementsByClassName('router-link');
+		// Array.from(routerLinks).forEach((element) => {
+		// 	element.addEventListener('click', (event) => {
+		// 		event.preventDefault();
+		// 		const { currentTarget } = event;
+		// 		this.push(currentTarget.pathname, currentTarget.search);
+		// 	});
+		// });
+		this.listenClasses();
 
 		const currentPath = window.location.pathname;
 
@@ -119,6 +133,11 @@ export class Router {
 					return;
 				}
 				this.push('/jobs');
+				return;
+			}
+		} else {
+			if (restrictedUrls.includes(route.path)) {
+				this.push('/');
 				return;
 			}
 		}
@@ -184,5 +203,21 @@ export class Router {
 		route.props = { ...route.props, params };
 
 		return routeMatch;
+	}
+
+	listenClasses() {
+		const routerLinks = document.getElementsByClassName('router-link');
+		Array.from(routerLinks).forEach((element) => {
+			element.addEventListener('click', (event) => {
+				event.preventDefault();
+				const { currentTarget } = event;
+				const pathname = currentTarget.pathname
+					? currentTarget.pathname
+					: currentTarget.dataset.href;
+				if (pathname) {
+					this.push(pathname, currentTarget.search);
+				}
+			});
+		});
 	}
 }

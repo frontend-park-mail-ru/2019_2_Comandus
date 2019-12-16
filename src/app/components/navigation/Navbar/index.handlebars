@@ -1,10 +1,10 @@
 <nav id="{{_id}}" class="navbar">
 	<div class="navbar__header">
 		<a href="javascript:void(0);" class="navbar__toggler">
-			<i class="fa fa-bars">menu icon</i>
+			<i class="fa fa-bars"></i>
 		</a>
-		<a class="navbar__brand" href="/">FWork</a>
-		<div class="navbar__header-search">search icon</div>
+		<a class="navbar__brand" href="/">FWORK</a>
+		<div class="navbar__header-search"><i class="navbar__toggler fa fa-search"></i></div>
 	</div>
 
 	<div class="navbar__collapse">
@@ -16,7 +16,7 @@
 				<form method="GET" role="search" id="navbar-search-form">
 					<div>
 						<span class="navbar__search-input">
-							<input id='navbar-search' type="text" placeholder="Поиск {{#isClient}}фрилансеров{{else}}работ{{/isClient}}">
+							<input id='navbar-search' type="text" placeholder="Поиск {{#isClient}}фрилансера{{else}}работы{{/isClient}}">
 							<span></span>
 						</span>
 					</div>
@@ -33,12 +33,13 @@
 			{{else}}
 				{{{_dropdown}}}
 			{{/isClient}}
-			<li class="nav__item">
-				<a href="/messages" target="_self" role="menuitem" class="nav__link">
-					Сообщения
-				</a>
-			</li>
-
+			{{#loggedIn}}
+{{!--				<li class="nav__item">--}}
+{{!--					<a href="/messages" target="_self" role="menuitem" class="nav__link">--}}
+{{!--						Сообщения--}}
+{{!--					</a>--}}
+{{!--				</li>--}}
+			{{/loggedIn}}
 			{{#if loggedIn}}
 				{{{profileDropdown}}}
 			{{/if}}

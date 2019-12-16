@@ -1,5 +1,5 @@
 import template from './JobFormComponent.handlebars';
-import './style.css';
+import './style.scss';
 import Component from '@frame/Component';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';
@@ -9,8 +9,6 @@ import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import InputTags from '@components/inputs/InputTags/InputTags';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import Button from '@components/inputs/Button/Button';
-import countriesCitiesRow from './../../../assets/countries.min.json';
-import { toSelectElement } from '@modules/utils';
 import {
 	categories,
 	specialities,
@@ -20,18 +18,10 @@ import {
 	levels,
 	specialitiesRow,
 } from '@app/constants';
-import CardTitle from '@components/dataDisplay/CardTitle';
 import store from '@modules/store';
-import AuthService from '@services/AuthService';
-import AccountService from '@services/AccountService';
+import UtilService from '@services/UtilService';
 
-const cities = {};
-const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
-	cities[i] = countriesCitiesRow[el].map(toSelectElement);
-	return toSelectElement(el, i);
-});
-
-let job = {
+const jobInit = {
 	city: '',
 	country: '',
 	description: '',
@@ -50,8 +40,17 @@ class JobFormComponent extends Component {
 			props,
 		};
 
-		this.onCreateJobResponse = this.onCreateJobResponse.bind(this);
+		this.helper = null;
 
+		this.jobUpdated = this.jobUpdated.bind(this);
+		this.preRender = this.preRender.bind(this);
+		this.render = this.render.bind(this);
+		this.postRender = this.postRender.bind(this);
+		this.stateChanged = this.stateChanged.bind(this);
+		this.attachToParent = this.attachToParent.bind(this);
+	}
+
+	preRender() {
 		let title = 'Новая работа';
 
 		this.data = {
@@ -61,31 +60,35 @@ class JobFormComponent extends Component {
 			jobId: this.props.params && this.props.params.jobId,
 		};
 
-		this.helper = null;
-	}
+		this.data = {
+			job: {},
+		};
 
-	preRender() {
-		console.log(this.props.params.jobId);
 		if (this.props.params.jobId) {
 			bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
 			bus.emit(busEvents.JOB_GET, this.props.params.jobId);
 		}
+
+		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
+		};
 	}
 
 	render() {
-		job = { ...job, ...this.data.job };
+		let job = { ...jobInit, ...this.data.job };
 
 		const textField = new TextField({
 			required: true,
 			type: 'text',
 			label: 'Название',
 			placeholder: '',
-			hint: `<div> Напишите название вашего проекта. Название должно привлечь внимание и отразить суть проекта. </div> 
-				<div> Несколько хороших примеров: 
+			hint: `<div> Напишите название вашего проекта. Название должно привлечь внимание и отразить суть проекта. </div>
+				<div> Несколько хороших примеров:
 				<ul>
-				<li> Нужен разрабтчик для создания адаптивной темы для WordPress </li> 
-				<li>Нужен дизайн нового логотипа компании</li> 
-				<li>Ищем специалиста по по 3D моделированию</li> 
+				<li> Нужен разрабтчик для создания адаптивной темы для WordPress </li>
+				<li>Нужен дизайн нового логотипа компании</li>
+				<li>Ищем специалиста по по 3D моделированию</li>
 				</ul>
 				</div>`,
 			name: 'title',
@@ -106,20 +109,27 @@ class JobFormComponent extends Component {
 			label: 'Бюджет',
 			placeholder: '',
 			name: 'paymentAmount',
+			pattern: 'd{1,7}',
+			min: 1,
+			max: 1000000,
 			value: job.paymentAmount,
 		});
 
 		this._citySelect = new DoubleSelect({
-			items: countriesCities,
+			items: this.data.countryList,
 			label1: 'Страна',
-			items2: cities,
+			items2: {},
 			label2: 'Город',
 			name: 'city',
+			nameFirst: 'country',
 			label: 'Нужен исполнитель из...',
+			required: true,
+			filterable: true,
 			selectedItem1: job.country,
 			selectedItem2: job.city,
-			value: job.city,
+			getItems2: UtilService.getCityListByCountry,
 		});
+
 		this._specialitySelect = new DoubleSelect({
 			items: categories,
 			label1: 'Категория',
@@ -128,10 +138,12 @@ class JobFormComponent extends Component {
 			name: 'specialityId',
 			label: 'Специализация проекта',
 			required: true,
+			filterable: true,
 			selectedItem1: '',
 			selectedItem2: job.specialityId,
-			value: job.specialityId,
+			getItems2: UtilService.getSpecialitiesByCategory,
 		});
+
 		this._levelRadioGroup = new RadioGroup({
 			items: levelsRadio,
 			column: true,
@@ -139,27 +151,27 @@ class JobFormComponent extends Component {
 			name: 'experienceLevelId',
 			value: job.experienceLevelId,
 		});
+
 		this._inputTags = new InputTags({
 			name: 'skills',
 			max: 5,
 			duplicate: false,
-			tags: ['Golang', 'Javascript', 'HTML'],
+			tags: [],
 			value: job.skills,
 		});
+
 		const submitBtn = new Button({
 			type: 'submit',
 			text: this.props.params.jobId
 				? 'Сохранить изменения'
-				: 'Опубликовать проект',
+				: 'Опубликовать',
 		});
 
 		this._jobTypeRadio = new RadioGroup({
 			items: jobTypes,
 			required: true,
 			name: 'jobTypeId',
-			onClick: (value) => {
-				console.log(value);
-			},
+			onClick: (value) => {},
 			value: job.jobTypeId,
 		});
 
@@ -168,17 +180,22 @@ class JobFormComponent extends Component {
 				children: [textField.render()],
 				label: 'Название',
 			}).render(),
+
 			descriptionField: new FieldGroup({
 				children: [descriptionField.render()],
 				label: 'Описание проекта',
 			}).render(),
+
 			budgetField: new FieldGroup({
 				children: [budgetField.render()],
 				label: 'Бюджет (руб)',
 				two: true,
 			}).render(),
+
 			citySelect: this._citySelect.render(),
+
 			specialitySelect: this._specialitySelect.render(),
+
 			levelRadioGroup: new FieldGroup({
 				children: [
 					'<div> Выберите требуемый уровень фрилансера для выполнения вашего проекта. </div>',
@@ -186,6 +203,7 @@ class JobFormComponent extends Component {
 				],
 				label: 'Уровень фрилансера',
 			}).render(),
+
 			inputTags: new FieldGroup({
 				children: [
 					'<div>Какие навыки и опыт более важны для вас?</div>',
@@ -193,9 +211,11 @@ class JobFormComponent extends Component {
 				],
 				label: 'Требуемые навыки и компетенции',
 			}).render(),
+
 			submitBtn: new FieldGroup({
 				children: [submitBtn.render()],
 			}).render(),
+
 			_jobTypeRadio: new FieldGroup({
 				children: [this._jobTypeRadio.render()],
 				label: 'Тип работы',
@@ -223,22 +243,25 @@ class JobFormComponent extends Component {
 				helper.event.preventDefault();
 
 				this.helper = helper;
+				const data = helper.formToJSON();
+				data.city = parseInt(data.city);
+				data.country = parseInt(data.country);
 
 				if (this.data.isEdit) {
 					bus.on(busEvents.JOB_PUT_RESPONSE, this.onJobEditResponse);
 					bus.emit(busEvents.JOB_PUT, {
 						jobId: this.data.jobId,
-						data: helper.formToJSON(),
+						data: data,
 					});
 				} else {
 					bus.on('job-create-response', this.onCreateJobResponse);
-					bus.emit('job-create', helper.formToJSON());
+					bus.emit('job-create', data);
 				}
 			});
 		}
 	}
 
-	onCreateJobResponse(data) {
+	onCreateJobResponse = (data) => {
 		bus.off('job-create-response', this.onCreateJobResponse);
 		const { error, response } = data;
 		if (error) {
@@ -251,7 +274,7 @@ class JobFormComponent extends Component {
 		}
 
 		this.props.router.push(`/jobs/${response.id}`);
-	}
+	};
 
 	onJobEditResponse = (data) => {
 		bus.off(busEvents.JOB_PUT_RESPONSE, this.onJobEditResponse);
@@ -269,7 +292,7 @@ class JobFormComponent extends Component {
 		this.props.router.push(`/jobs/${this.data.jobId}`);
 	};
 
-	jobUpdated = () => {
+	jobUpdated() {
 		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
 		const job = store.get(['job']);
 		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
@@ -281,8 +304,20 @@ class JobFormComponent extends Component {
 		).label;
 
 		this.data = {
-			job,
+			job: { ...job },
 			title: 'Редактирование работы',
+		};
+
+		this.stateChanged();
+	}
+
+	onDestroy() {
+		this._specialitySelect.onDestroy();
+	}
+
+	utilsLoaded = () => {
+		this.data = {
+			countryList: UtilService.MapCountriesToSelectList(),
 		};
 
 		this.stateChanged();

@@ -2,37 +2,13 @@ import Component from '@frame/Component';
 import template from './index.handlebars';
 import contentTemplate from './content.handlebars';
 import './index.scss';
-import { busEvents, jobs, levels } from './../../constants';
-import JobItem from '@components/dataDisplay/JobItem';
-import Item from '@components/surfaces/Item';
-import bus from '@frame/bus';
-import store from '@modules/store';
 import PageWithTitle from '@components/PageWithTitle';
-import AuthService from '@services/AuthService';
+import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
-
-const contracts = [
-	{
-		id: 1,
-		jobId: 1,
-		job: {
-			title: 'Название проекта',
-			clientGrade: 5,
-			clientComment: 'Рекомендую!',
-			freelancerGrade: 4,
-			freelancerComment: 'Приятно было иметь дело',
-			company: {
-				name: '@mailru',
-			},
-			freelancer: {
-				firstName: 'Roman',
-				secondName: 'Romanov',
-			},
-		},
-		paymentAmount: 20300,
-		created: '20.11.2019',
-	},
-];
+import ContractItem from '@components/dataDisplay/ContractItem';
+import { formatDate, formatMoney } from '@modules/utils';
+import ContractService from '@services/ContractService';
+import { statusesContract } from '@app/constants';
 
 export default class ClientContracts extends Component {
 	constructor(props) {
@@ -40,15 +16,41 @@ export default class ClientContracts extends Component {
 	}
 
 	preRender() {
+		const isClient = AccountService.isClient();
+
 		this.data = {
-			contracts,
+			isClient,
 		};
+
+		ContractService.GetContracts().then(this.onGetContractsResponse);
 	}
 
 	render() {
+		this.data = {
+			pendingContracts: this.data.pendingContracts,
+			activeContracts: this.data.activeContracts,
+			closedContracts: this.data.closedContracts,
+			pendingOffersTitle: new CardTitle({
+				title: 'Отправленные предложения (ожидается ответ фрилансера)',
+			}).render(),
+			activeContractsTitle: new CardTitle({
+				title: 'Активные',
+			}).render(),
+			closedContractsTitle: new CardTitle({
+				title: 'Закрытые',
+			}).render(),
+			offersTitle: new CardTitle({
+				title: 'Предложения',
+			}).render(),
+		};
+
 		const page = new PageWithTitle({
 			title: 'Контракты',
-			children: [contentTemplate(...this.data)],
+			children: [
+				contentTemplate({
+					...this.data,
+				}),
+			],
 		}).render();
 
 		this.data = {
@@ -64,4 +66,50 @@ export default class ClientContracts extends Component {
 
 		return this.html;
 	}
+
+	renderItems = (contracts = []) => {
+		if (!contracts) {
+			return [];
+		}
+
+		return contracts.map((contract) => {
+			let fullname = contract.Company.CompanyName
+				? contract.Company.CompanyName
+				: '';
+			if (this.data.isClient) {
+				fullname = `${contract.Freelancer.FirstName} ${contract.Freelancer.SecondName}`;
+			}
+			const item = new ContractItem({
+				id: contract.Contract.id,
+				title: contract.Job.Title,
+				fullname,
+				created: formatDate(contract.Contract.startTime),
+				paymentAmount: formatMoney(contract.Contract.paymentAmount),
+			});
+
+			return item.render();
+		});
+	};
+
+	onGetContractsResponse = (contracts) => {
+		const pendingContracts = contracts.filter((el) => {
+			return el.Contract.status === statusesContract.EXPECTED;
+		});
+
+		const activeContracts = contracts.filter((el) => {
+			return el.Contract.status === statusesContract.ACTIVE;
+		});
+
+		const closedContracts = contracts.filter((el) => {
+			return el.Contract.status === statusesContract.CLOSED;
+		});
+
+		this.data = {
+			pendingContracts: this.renderItems(pendingContracts),
+			activeContracts: this.renderItems(activeContracts),
+			closedContracts: this.renderItems(closedContracts),
+		};
+
+		this.stateChanged();
+	};
 }

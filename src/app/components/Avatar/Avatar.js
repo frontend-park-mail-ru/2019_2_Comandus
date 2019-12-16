@@ -8,15 +8,16 @@ import Button from '@components/inputs/Button/Button';
 import store from '@modules/store';
 import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
-import config from '@app/config';
 
 export class Avatar extends Component {
 	constructor({
 		imgUrl = defaultAvatarUrl('F', 'W', 200),
+		imgDefault = defaultAvatarUrl('F', 'W', 200),
 		imgAlt = 'user avatar',
 		imgWidth = 120,
 		imgHeight = 120,
 		changing = false,
+		classes = 'avatar-block__image',
 		...props
 	}) {
 		super(props);
@@ -28,10 +29,12 @@ export class Avatar extends Component {
 
 		this.data = {
 			imgUrl,
+			imgDefault,
 			imgAlt,
 			imgWidth,
 			imgHeight,
 			changing,
+			classes,
 			user,
 			avatarId,
 			isSettings,
@@ -41,27 +44,6 @@ export class Avatar extends Component {
 	}
 
 	render() {
-		let avatarUrl = defaultAvatarUrl('F', 'W');
-		if (this.data.changing) {
-			if (this.data.user) {
-				// console.log('test id: '+ this.data.user.id);
-				if (
-					!this.data.isSettings &&
-					!(this.data.user.id == this.data.avatarId)
-				) {
-					this.data.changing = false;
-				} else {
-					// avatarUrl = defaultAvatarUrl(
-					// 	this.data.user.firstName[0],
-					// 	this.data.user.secondName[0],
-					// );
-					avatarUrl = `${
-						config.baseAPIUrl
-					}${'/account/download-avatar' +
-						'?'}${new Date().getTime()}`;
-				}
-			}
-		}
 		if (this.data.changing) {
 			this._avatarUpload = new fileUploadModal({
 				description:
@@ -74,7 +56,6 @@ export class Avatar extends Component {
 			});
 
 			const onClickModal = () => {
-				console.log('i was been pressed');
 				this._avatarChangeModal.show();
 			};
 
@@ -95,7 +76,6 @@ export class Avatar extends Component {
 		this.html = template({
 			...this.props,
 			...this.data,
-			imgUrl: avatarUrl,
 		});
 
 		return this.html;
@@ -107,12 +87,9 @@ export class Avatar extends Component {
 		}
 
 		this._avatarElement = this.el.querySelector('#avatar-img');
-		this._avatarUpload.onerror = () => {
+		this._avatarElement.onerror = () => {
 			if (this.data.user) {
-				this._avatarElement.src = defaultAvatarUrl(
-					this.data.user.firstName[0],
-					this.data.user.secondName[0],
-				);
+				this._avatarElement.src = this.data.imgDefault;
 			}
 		};
 

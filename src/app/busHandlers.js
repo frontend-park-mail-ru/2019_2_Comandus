@@ -4,6 +4,8 @@ import { busEvents } from '@app/constants';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 import FreelancerService from '@services/FreelancerService';
+import ProposalService from '@services/ProposalService';
+import UtilService from '@services/UtilService';
 
 const handlers = [
 	{
@@ -94,13 +96,13 @@ bus.on(busEvents.JOB_GET, (jobId) => {
 });
 
 bus.on(busEvents.PROPOSALS_GET, () => {
-	FreelancerService.GetProposals().then(() => {
+	ProposalService.GetProposals().then(() => {
 		bus.emit(busEvents.PROPOSALS_UPDATED);
 	});
 });
 
 bus.on(busEvents.PROPOSAL_CREATE, (data) => {
-	FreelancerService.CreateProposal(data)
+	ProposalService.CreateProposal(data)
 		.then((response) => {
 			bus.emit(busEvents.PROPOSAL_CREATE_RESPONSE, { response });
 		})
@@ -110,9 +112,20 @@ bus.on(busEvents.PROPOSAL_CREATE, (data) => {
 });
 
 bus.on(busEvents.ON_PAGE_LOAD, () => {
-	AuthService.FetchCsrfToken().then((response) => {
-		bus.emit(busEvents.ACCOUNT_GET);
-	});
+	AuthService.FetchCsrfToken()
+		.then((response) => {
+			if (response === 'Unauthorized') {
+				return;
+			}
+
+			bus.emit(busEvents.ACCOUNT_GET);
+		})
+		.then(() => {
+			return UtilService.GetCountryList();
+		})
+		.then(() => {
+			bus.emit(busEvents.UTILS_LOADED);
+		});
 });
 
 bus.on(busEvents.FREELANCER_GET, (id) => {

@@ -18,6 +18,8 @@ import Proposals from '@containers/Proposals';
 import ClientJobs from '@containers/ClientJobs';
 import ClientContracts from '@containers/ClientContracts';
 import Contract from '@containers/Contract';
+import Proposal from '@containers/Proposal';
+import Hire from '@containers/HireComponent';
 
 const routes = [
 	{ path: '/', Component: offlineHOC(HomeComponent) },
@@ -36,24 +38,26 @@ const routes = [
 	// },
 	{
 		path: '/new-job',
-		Component: offlineHOC(JobFormComponent),
+		// Component: offlineHOC(JobFormComponent),
+		Component: JobFormComponent,
 	},
 	{
 		path: '/freelancers/:freelancerId',
 		Component: offlineHOC(Profile),
 		props: {
-			currentAccountRole:
-				getCookie(config.cookieAccountModeName) ===
-				config.accountTypes.client
-					? config.accountTypes.client
-					: config.accountTypes.freelancer,
+			// currentAccountRole:
+			// 	getCookie(config.cookieAccountModeName) ===
+			// 	config.accountTypes.client
+			// 		? config.accountTypes.client
+			// 		: config.accountTypes.freelancer,
 		},
 	},
 	{
 		path: '/with-children',
 		children: [{ path: '/signup', Component: SignUpComponent }],
 	},
-	{ path: '/jobs/:jobId/edit', Component: offlineHOC(JobFormComponent) },
+	// { path: '/jobs/:jobId/edit', Component: offlineHOC(JobFormComponent) },
+	{ path: '/jobs/:jobId/edit', Component: JobFormComponent },
 	{ path: '/jobs/:jobId', Component: offlineHOC(Job) },
 	{ path: '/jobs', Component: offlineHOC(Jobs) },
 	{ path: '/freelancers', Component: offlineHOC(Freelancers) },
@@ -61,6 +65,8 @@ const routes = [
 	{ path: '/messages', Component: offlineHOC(Messages) },
 	{ path: '/about', Component: offlineHOC(About) },
 	{ path: '/page-not-found', Component: NotFound },
+	{ path: '/proposals/:proposalId/new-contract', Component: Hire },
+	{ path: '/proposals/:proposalId', Component: offlineHOC(Proposal) },
 	{ path: '/proposals', Component: offlineHOC(Proposals) },
 	{ path: '/saved', Component: Search },
 	{ path: '/my-job-postings', Component: ClientJobs },

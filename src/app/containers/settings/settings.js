@@ -112,6 +112,8 @@ export class Settings extends Component {
 			this._currentTab.props,
 		);
 
+		this._currentTabSettings.preRender();
+
 		this.data = {
 			...this.data,
 			isClientMode:
@@ -140,10 +142,6 @@ export class Settings extends Component {
 		const user = store.get(['user']);
 		const isClient = AccountService.isClient();
 
-		this.data = {
-			isClient,
-			user,
-		};
 		this._tabs.find((tab) => {
 			return tab.link === 'account';
 		}).props.user = this.data.user;
@@ -160,6 +158,11 @@ export class Settings extends Component {
 			return;
 		}
 
+		this.data = {
+			isClient,
+			user,
+		};
+
 		this.stateChanged();
 	};
 
@@ -174,6 +177,10 @@ export class Settings extends Component {
 				this._tabs.find((tab) => {
 					return tab.link === 'account';
 				}).props.user = this.data.user;
+
+				this._tabs.find((tab) => {
+					return tab.link === 'freelancer';
+				}).props.freelancerId = this.data.user.freelancerId;
 			})
 			.catch((error) => {
 				console.error(error);

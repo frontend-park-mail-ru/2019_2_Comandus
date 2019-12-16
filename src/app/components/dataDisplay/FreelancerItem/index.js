@@ -15,6 +15,7 @@ export default class FreelancerItem extends Component {
 		registrationDate = '',
 		city = '',
 		country = 0,
+		speciality = '',
 		...props
 	}) {
 		super(props);
@@ -28,6 +29,11 @@ export default class FreelancerItem extends Component {
 			firstName,
 			lastName: secondName,
 			avatar: avatar ? avatar : defaultAvatarUrl(firstName, secondName),
+			imgOnError: `this.onerror=null;this.src='${defaultAvatarUrl(
+				firstName,
+				secondName,
+			)}';`,
+			speciality,
 		};
 	}
 

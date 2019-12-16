@@ -1,4 +1,5 @@
 import { htmlToElement, uniqueId } from '@modules/utils';
+import { router } from '../index';
 
 export default class Component {
 	constructor({ parent, ...props } = {}) {
@@ -40,13 +41,15 @@ export default class Component {
 	}
 
 	stateChanged() {
-		const el = document.getElementById(this._id);
+		// const el = document.getElementById(this._id);
 		// this.html = this.render();
-		if (el) {
-			el.replaceWith(htmlToElement(this.render()));
+		if (this.el) {
+			this.html = this.render();
+			// el.replaceWith(htmlToElement(this.render()));
+			this.el.replaceWith(htmlToElement(this.html));
 			this.postRender();
+			router.listenClasses();
 		} else {
-			// console.log("element " + this._id + " was destroyed!");
 			this.onDestroy();
 		}
 	}
@@ -65,6 +68,7 @@ export default class Component {
 
 	attachToParent() {
 		this._parent.innerHTML = this.html;
+		router.listenClasses();
 	}
 
 	onDestroy() {}

@@ -1,0 +1,18 @@
+{
+	"version": 2,
+	"name": "comandus-dev",
+	"alias": ["comandus-dev"],
+	"builds": [
+		{
+			"src": "package.json",
+			"use": "@now/static-build",
+			"config": {
+				"distDir": "dist"
+			}
+		}
+	],
+	"routes": [
+		{ "handle": "filesystem" },
+		{ "src": "/(.*)", "dest": "/index.html" }
+	]
+}

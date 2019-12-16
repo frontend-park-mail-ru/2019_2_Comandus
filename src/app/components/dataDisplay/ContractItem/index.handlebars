@@ -1,7 +1,14 @@
 <div id="{{_id}}" class="job-item">
-	<a class="job-item__title" href="/jobs/{{id}}">{{job.title}}</a>
-	<div class="manage-buttons">
+	<div class="contract-item__raw">
+		<a class="job-item__title" href="/my-contracts/{{id}}">{{title}}</a>
+		{{paymentAmount}}
+	</div>
+	<div class="job-item__small contract-item__raw">
+		<span>{{fullname}}</span>
+		<span>{{created}}</span>
+	</div>
+{{!--	<div class="manage-buttons">--}}
 {{!--		<a href="/jobs/{{id}}/edit">Редактировать</a>--}}
 {{!--		<button class="delete-job-action manage-btn" data-id="{{id}}">Удалить</button>--}}
-	</div>
+{{!--	</div>--}}
 </div>

@@ -26,7 +26,15 @@
 }
 
 .job-details-sidebar {
-	margin: 0 -15px;
+	margin: 0;
+
+	&_mobile {
+		display: none;
+	}
+	&_desktop {
+		display: flex;
+		flex-direction: column;
+	}
 }
 
 .job-details__category {
@@ -35,14 +43,52 @@
 }
 
 .buttons {
-	display: flex;
 	flex-wrap: nowrap;
 	flex-direction: column;
+
+	&_mobile {
+		display: none;
+	}
+	&_desktop {
+		display: flex;
+	}
 }
 
 .buttons button, .buttons a {
-	margin-bottom: 10px;
 	width: 100%;
+
+	&:not(:last-child) {
+		margin-bottom: 10px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.job-details-sidebar {
+		&_mobile {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+		}
+		&_desktop {
+			display: none;
+		}
+	}
+
+	.buttons {
+		&_mobile {
+			display: flex;
+			border: none;
+		}
+		&_desktop {
+			display: none;
+		}
+	}
+
+	.job-details {
+		&__inner-item.buttons {
+			padding: 0 0 20px 0;
+		}
+	}
 }
 
 .about-client {
@@ -69,4 +115,15 @@
 
 .job-details__description {
 	overflow-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+.job-proposal {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.job-proposals {
+	padding-top: 0;
 }

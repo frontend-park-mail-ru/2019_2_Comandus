@@ -1,8 +1,10 @@
 export default {
-	baseAPIUrl: 'https://89.208.211.100:8081',
-	// process.env.NODE_ENV === 'production'
-	// 	? 'https://flruserver.herokuapp.com'
-	// 	: 'http://localhost:8080',
+	// baseAPIUrl: 'http://89.208.211.100:8080',
+	// baseAPIUrl: 'https://api.fwork.live',
+	baseAPIUrl:
+		process.env.NODE_ENV === 'production'
+			? 'https://api.fwork.live'
+			: 'http://89.208.211.100:8080',
 	cookieAccountModeName: 'user_type',
 	urls: {
 		account: '/account',
@@ -23,6 +25,9 @@ export default {
 		csrfToken: '/token',
 		setUserType: '/setusertype',
 		proposals: '/proposals',
+		searchJobs: '/search/jobs',
+		countryList: '/country-list',
+		contracts: '/contracts',
 	},
 	accountTypes: {
 		client: 'client',
