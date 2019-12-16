@@ -1,3 +1,5 @@
+import { dueTimes, jobTypes, levels, proposalStatuses } from '@app/constants';
+
 /**
  * @param {String} html representing a single element
  * @return {Node}
@@ -144,4 +146,33 @@ export function formatMoney(amount) {
 	});
 
 	return formatter.format(amount);
+}
+
+export function getJoTypeName(jobTypeId) {
+	return jobTypes.find((j) => j.value == jobTypeId);
+}
+
+export function getExperienceLevelName(experienceLevelId) {
+	return levels[experienceLevelId - 1];
+}
+
+export function getTimeEstimationName(id) {
+	return dueTimes[id];
+}
+
+export function isProposalClosed(proposal) {
+	return (
+		proposal.statusFreelancer === proposalStatuses.CANCEL ||
+		proposal.statusFreelancer === proposalStatuses.DENIED ||
+		proposal.statusFreelancer === proposalStatuses.ACCEPTED ||
+		proposal.statusManager === proposalStatuses.DENIED
+	);
+}
+
+export function isProposalActive(proposal) {
+	return (
+		proposal.statusFreelancer === proposalStatuses.SENT &&
+		(proposal.statusManager === proposalStatuses.ACCEPTED ||
+			proposal.statusManager === proposalStatuses.SENT_CONTRACT)
+	);
 }

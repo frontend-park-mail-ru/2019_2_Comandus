@@ -10,9 +10,9 @@ export const offlineHOC = (WrappedComponent) => {
 	noSignal.style.width = '10em';
 
 	WrappedComponent.prototype.render = function() {
-		render = render.bind(this);
 		if (navigator.onLine) {
-			return render();
+			const newRender = render.bind(this);
+			return newRender();
 		}
 
 		this.html = template({

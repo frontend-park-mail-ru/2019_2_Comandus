@@ -27,6 +27,7 @@ export default {
 		proposals: '/proposals',
 		searchJobs: '/search/jobs',
 		countryList: '/country-list',
+		contracts: '/contracts',
 	},
 	accountTypes: {
 		client: 'client',

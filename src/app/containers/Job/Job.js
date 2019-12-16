@@ -1,7 +1,13 @@
 import Component from '@frame/Component';
 import template from './Job.handlebars';
 import './Job.scss';
-import { jobTypes, levels, busEvents, specialitiesRow } from '@app/constants';
+import {
+	jobTypes,
+	levels,
+	busEvents,
+	specialitiesRow,
+	proposalStatuses,
+} from '@app/constants';
 import Button from '@components/inputs/Button/Button';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import FeaturesList from '@components/dataDisplay/FeaturesList';
@@ -13,7 +19,12 @@ import Modal from '@components/Modal/Modal';
 import SendProposalForm from '@components/SendProposalForm';
 import ProposalItem from '@components/dataDisplay/ProposalItem';
 import ProposalService from '@services/ProposalService';
-import { formatDate, formatMoney } from '@modules/utils';
+import {
+	formatDate,
+	formatMoney,
+	getExperienceLevelName,
+	getJoTypeName,
+} from '@modules/utils';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -68,9 +79,7 @@ export default class Job extends Component {
 			className: 'btn_secondary',
 		});
 
-		const type = jobTypes.find(
-			(j) => j.value == this.data.job['jobTypeId'],
-		);
+		const type = getJoTypeName(this.data.job['jobTypeId']);
 
 		this._jobType = new FeatureComponent({
 			title: 'Тип работы',
@@ -117,7 +126,9 @@ export default class Job extends Component {
 		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
 		const job = store.get(['job']);
 		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
-		job['experienceLevel'] = levels[job['experienceLevelId'] - 1];
+		job['experienceLevel'] = getExperienceLevelName(
+			job['experienceLevelId'],
+		);
 		job['speciality'] = specialitiesRow[job['specialityId']];
 		job['created'] = formatDate(job.date); //new Date(job.date).toDateString();
 		job['type'] = jobTypes.find(
@@ -178,10 +189,20 @@ export default class Job extends Component {
 
 	onProposalsGet = ({ response, error }) => {
 		if (error || !response) {
+			this.data = {
+				proposals: null,
+			};
 			return;
 		}
 
 		console.log(response);
+
+		response = response.filter((proposal) => {
+			return (
+				proposal.Response.statusFreelancer === proposalStatuses.SENT &&
+				proposal.Response.statusManager !== proposalStatuses.DENIED
+			);
+		});
 
 		response = response.map((r) => {
 			r.Response.date = formatDate(r.Response.date);
@@ -189,7 +210,7 @@ export default class Job extends Component {
 		});
 
 		this.data = {
-			proposals: response,
+			proposals: response.length ? response : null,
 		};
 
 		this.stateChanged();
