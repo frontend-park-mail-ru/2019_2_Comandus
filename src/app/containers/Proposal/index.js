@@ -53,8 +53,7 @@ export default class Proposal extends Component {
 				title: 'Детали',
 			}).render(),
 			messagesTitle: new CardTitle({
-				title:
-					'Сообщения (блок появяется после того, как фрилансер стал кандидатом на работу)',
+				title: 'Сообщения',
 			}).render(),
 		};
 	}
