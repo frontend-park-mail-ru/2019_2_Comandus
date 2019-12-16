@@ -210,11 +210,48 @@ export const levelsRadioShort = [
 	},
 ];
 
+export const levelsRadioDasha = [
+	{
+		value: '111',
+		label: 'Все',
+	},
+	{
+		value: '100',
+		label: 'Начинающий',
+	},
+	{
+		value: '010',
+		label: 'Продвинутый',
+	},
+	{
+		value: '001',
+		label: 'Эксперт',
+	},
+];
+
 export const jobTypes = [
 	{
 		value: 0,
 		label: 'Проект',
 		checked: true,
+	},
+	{
+		value: 1,
+		label: 'Вакансия',
+		checked: false,
+	},
+];
+
+export const jobTypesSearch = [
+	{
+		value: -1,
+		label: 'Все',
+		checked: true,
+	},
+	{
+		value: 0,
+		label: 'Проект',
+		checked: false,
 	},
 	{
 		value: 1,

@@ -76,6 +76,10 @@ export default class DoubleSelect extends Component {
 	}
 
 	onFirstSelectChange = (val, selected = '') => {
+		if (!val) {
+			return;
+		}
+
 		this.data.getItems2(val).then((items) => {
 			this._secondSelect.setProps({
 				// items: this.data.items2[val],

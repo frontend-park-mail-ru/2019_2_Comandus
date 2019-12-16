@@ -77,14 +77,15 @@ export class Router {
 			this.push(currentPath, window.location.search);
 		});
 
-		const routerLinks = document.getElementsByClassName('router-link');
-		Array.from(routerLinks).forEach((element) => {
-			element.addEventListener('click', (event) => {
-				event.preventDefault();
-				const { currentTarget } = event;
-				this.push(currentTarget.pathname, currentTarget.search);
-			});
-		});
+		// const routerLinks = document.getElementsByClassName('router-link');
+		// Array.from(routerLinks).forEach((element) => {
+		// 	element.addEventListener('click', (event) => {
+		// 		event.preventDefault();
+		// 		const { currentTarget } = event;
+		// 		this.push(currentTarget.pathname, currentTarget.search);
+		// 	});
+		// });
+		this.listenClasses();
 
 		const currentPath = window.location.pathname;
 
@@ -202,5 +203,21 @@ export class Router {
 		route.props = { ...route.props, params };
 
 		return routeMatch;
+	}
+
+	listenClasses() {
+		const routerLinks = document.getElementsByClassName('router-link');
+		Array.from(routerLinks).forEach((element) => {
+			element.addEventListener('click', (event) => {
+				event.preventDefault();
+				const { currentTarget } = event;
+				const pathname = currentTarget.pathname
+					? currentTarget.pathname
+					: currentTarget.dataset.href;
+				if (pathname) {
+					this.push(pathname, currentTarget.search);
+				}
+			});
+		});
 	}
 }

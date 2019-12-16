@@ -121,6 +121,8 @@ export default class Navbar extends Component {
 		const type = AccountService.isClient() ? 'freelancers' : 'jobs';
 		params.append('type', type);
 
+		event.target.elements[0].value = '';
+
 		router.push(`/search`, `?${params.toString()}`);
 	};
 }

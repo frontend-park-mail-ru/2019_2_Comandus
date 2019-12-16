@@ -15,6 +15,8 @@ export default class ContractService {
 	}
 
 	static CreateContract(proposalId, formData) {
+		formData.timeEstimation = parseInt(formData.timeEstimation);
+
 		return AjaxModule.post(`/proposals/${proposalId}/contract`, formData, {
 			headers: AuthService.getCsrfHeader(),
 		});

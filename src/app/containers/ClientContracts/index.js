@@ -10,49 +10,6 @@ import { formatDate, formatMoney } from '@modules/utils';
 import ContractService from '@services/ContractService';
 import { statusesContract } from '@app/constants';
 
-// const contracts = [
-// 	{
-// 		id: 1,
-// 		jobId: 1,
-// 		job: {
-// 			title: 'Название проекта',
-// 			clientGrade: 5,
-// 			clientComment: 'Рекомендую!',
-// 			freelancerGrade: 4,
-// 			freelancerComment: 'Приятно было иметь дело',
-// 			company: {
-// 				name: '@mailru',
-// 			},
-// 			freelancer: {
-// 				firstName: 'Roman',
-// 				secondName: 'Romanov',
-// 			},
-// 		},
-// 		paymentAmount: 20300,
-// 		created: '20.11.2019',
-// 	},
-// 	{
-// 		id: 1,
-// 		jobId: 1,
-// 		job: {
-// 			title: 'Название проекта',
-// 			clientGrade: 5,
-// 			clientComment: 'Рекомендую!',
-// 			freelancerGrade: 4,
-// 			freelancerComment: 'Приятно было иметь дело',
-// 			company: {
-// 				name: '@mailru',
-// 			},
-// 			freelancer: {
-// 				firstName: 'Roman',
-// 				secondName: 'Romanov',
-// 			},
-// 		},
-// 		paymentAmount: 20300,
-// 		created: '20.11.2019',
-// 	},
-// ];
-
 export default class ClientContracts extends Component {
 	constructor(props) {
 		super(props);
@@ -118,10 +75,11 @@ export default class ClientContracts extends Component {
 		console.log(contracts);
 
 		return contracts.map((contract) => {
-			let fullname = 'Бэкенд!!! тут должен быть название компании! Где?';
+			let fullname = contract.Company.CompanyName
+				? contract.Company.CompanyName
+				: '';
 			if (this.data.isClient) {
-				fullname =
-					'Бэкенд!!! тут должны быть фамилия и имя фрилансера! Где?';
+				fullname = `${contract.Freelancer.FirstName} ${contract.Freelancer.SecondName}`;
 			}
 			const item = new ContractItem({
 				id: contract.Contract.id,

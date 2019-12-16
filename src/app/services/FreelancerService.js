@@ -24,7 +24,7 @@ export default class FreelancerService {
 	}
 
 	static GetAllFreelancers() {
-		return AjaxModule.get(config.urls.freelancers, {
+		return AjaxModule.get(`${config.urls.freelancers}/1`, {
 			headers: AuthService.getCsrfHeader(),
 		}).then((freelancers) => {
 			store.setState({

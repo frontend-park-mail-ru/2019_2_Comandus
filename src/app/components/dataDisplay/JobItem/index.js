@@ -15,6 +15,7 @@ export default class JobItem extends Component {
 		country = '',
 		children = [],
 		manage = false,
+		type = '',
 		...props
 	}) {
 		super(props);
@@ -31,6 +32,7 @@ export default class JobItem extends Component {
 			country,
 			children,
 			manage,
+			type,
 		};
 	}
 
