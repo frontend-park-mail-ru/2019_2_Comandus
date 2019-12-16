@@ -18,6 +18,7 @@ export default class DoubleSelect extends Component {
 		selectedItem1 = '',
 		selectedItem2 = '',
 		getItems2 = () => {},
+		twoColumn = true,
 		...props
 	}) {
 		super(props);
@@ -28,6 +29,7 @@ export default class DoubleSelect extends Component {
 			items2,
 			required,
 			getItems2,
+			twoColumn,
 		};
 
 		this._selected1 = selectedItem1;
@@ -60,7 +62,7 @@ export default class DoubleSelect extends Component {
 	render() {
 		this.html = new FieldGroup({
 			children: [this._firstSelect.render(), this._secondSelect.render()],
-			two: true,
+			two: this.data.twoColumn,
 			...this.data,
 		}).render();
 
@@ -74,6 +76,10 @@ export default class DoubleSelect extends Component {
 	}
 
 	onFirstSelectChange = (val, selected = '') => {
+		if (!val) {
+			return;
+		}
+
 		this.data.getItems2(val).then((items) => {
 			this._secondSelect.setProps({
 				// items: this.data.items2[val],

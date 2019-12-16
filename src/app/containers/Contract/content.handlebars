@@ -10,7 +10,7 @@
 						<div class="proposal-details__key">
 							Бюджет
 						</div>
-						<div>{{paymentAmount}}</div>
+						<div>{{contract.paymentAmount}}</div>
 					</div>
 					<div class="proposal-details">
 						<div class="proposal-details__key">
@@ -49,44 +49,78 @@
 				</div>
 			</div>
 			<div class="job-details__inner-item buttons-group">
-				{{#isClient}}
-					<button class="btn btn_primary">Завершить сотрудничество</button>
+				{{#if isClient}}
+					{{#closeContractEnabled}}
+						{{{closeContract}}}
+					{{/closeContractEnabled}}
 				{{else}}
-					<button class="btn btn_primary">Принять предложение</button>
-					<button class="btn btn_secondary">Отказать</button>
-					<button class="btn btn_primary">Уведомить о выполненной работе</button>
-				{{/isClient}}
+					{{#acceptContractEnabled}}
+						{{{acceptContract}}}
+						{{{rejectContract}}}
+					{{/acceptContractEnabled}}
+					{{#markContractAsDoneEnabled}}
+						{{{markContractAsDone}}}
+					{{/markContractAsDoneEnabled}}
+				{{/if}}
 			</div>
 		</div>
-		<div class="tp-container card">
-			{{{ feedbackTitle }}}
-			<div class="tp-container">
-				<div class="job-details__inner-item">
-					<div class="job-item__title">
-						Отзыв клиента
+		{{#feedbackEnabled}}
+			<div class="tp-container card">
+				{{{ feedbackTitle }}}
+				<div class="tp-container">
+					<div class="job-details__inner-item">
+						<div class="job-item__title">
+							{{#if firstGrade}}
+								<div>Отзыв
+									{{#if isClient}}
+										фрилансера
+									{{else}}
+										клиента
+									{{/if}}
+								</div>
+								<div class="proposal-details__key">
+									Оценка
+								</div>
+								<div>{{{firstGradeStars}}}</div>
+								<div class="proposal-details__key">
+									Сообщение
+								</div>
+								<div>{{firstMessage}}</div>
+							{{else}}
+								<div>{{#if isClient}}
+									Фрилансер
+								{{else}}
+									Клиент
+								{{/if}}
+									пока не оставил отзыв
+								</div>
+							{{/if}}
+						</div>
 					</div>
-					<div>
-						Оценка:
-						Сообщение: <textarea></textarea>
-						<div>
-							<button>Отправить</button>
+					<div class="job-details__inner-item">
+						<div class="job-item__title">
+							<div>Ваш отзыв</div>
+							{{#if secondGrade}}
+								<div class="proposal-details__key">
+									Оценка
+								</div>
+								<div>{{{secondGradeStars}}}</div>
+								<div class="proposal-details__key">
+									Сообщение
+								</div>
+								<div>{{secondMessage}}</div>
+							{{else}}
+								<form method="post" id="submitFeedback" autocomplete="off">
+									{{{gradeField}}}
+									{{{feedBackMessageField}}}
+									{{{submitFeedbackBtn}}}
+								</form>
+							{{/if}}
 						</div>
 					</div>
 				</div>
-				<div class="job-details__inner-item">
-					<div class="job-item__title">
-						Отзыв Фрилансера
-					</div>
-					<div>
-						Оценка:
-						Сообщение: <textarea></textarea>
-						<div>
-							<button>Отправить</button>
-						</div>
-					</div>
-				</div>
 			</div>
-		</div>
+		{{/feedbackEnabled}}
 		<div class="tp-container card">
 			{{{ messagesTitle }}}
 			<div class="tp-container">
@@ -102,7 +136,7 @@
 	<div class="tp-col-3">
 		<div class="card card_no-padding">
 			<div class="contract-status__raw contract-status__raw_active">
-				<i class="status-icon">ic</i>
+				<i class="status-icon fas fa-check"></i>
 				<div class="status-title">Создание заказа</div>
 			</div>
 			<div class="contract-status__raw">

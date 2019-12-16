@@ -15,12 +15,6 @@ import bus from '@frame/bus';
 import { busEvents } from '@app/constants';
 import UtilService from '@services/UtilService';
 
-const cities = {};
-const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
-	cities[i] = countriesCitiesRow[el].map(toSelectElement);
-	return toSelectElement(el, i);
-});
-
 export class Company extends Component {
 	constructor({ ...props }) {
 		super(props);
@@ -218,7 +212,11 @@ export class Company extends Component {
 	updateCompany = (helper) => {
 		helper.event.preventDefault();
 
-		CompanyService.UpdateCompany(helper.formToJSON())
+		const formData = helper.formToJSON();
+		formData.city = parseInt(formData.city);
+		formData.country = parseInt(formData.country);
+
+		CompanyService.UpdateCompany(formData)
 			.then((response) => {
 				helper.setResponseText('Изменения сохранены.', true);
 			})

@@ -2,25 +2,24 @@ import Component from '@frame/Component';
 import template from './index.handlebars';
 import './index.scss';
 
-export default class ProposalItem extends Component {
+export default class GradeComponent extends Component {
 	constructor({
-		id = null,
-		date = '',
-		statusManager = '',
-		statusFreelancer = '',
-		paymentAmount = 0,
-		jobTitle = '',
+		name = 'rate-stars',
+		changing = false,
+		grade = 0,
+		size = 'm', // s m
+		required = false,
 		...props
 	}) {
 		super(props);
 
 		this.data = {
-			id,
-			date,
-			statusManager,
-			statusFreelancer,
-			paymentAmount,
-			jobTitle,
+			changing,
+			grade,
+			size,
+			name,
+			required,
+			range5: [5, 4, 3, 2, 1],
 		};
 	}
 

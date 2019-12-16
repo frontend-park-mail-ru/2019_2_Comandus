@@ -27,6 +27,8 @@ import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 import store from '@modules/store';
 import config from '@app/config';
+import FreelancerService from '@services/FreelancerService';
+import HistoryItem from '@components/dataDisplay/HistoryItem';
 
 export class Profile extends Component {
 	constructor(props) {
@@ -86,33 +88,33 @@ export class Profile extends Component {
 		this.data = {
 			...freelancerObj,
 			profilePortfolios,
-			profileHistory: jobs,
+			// profileHistory: jobs,
 			freelancer: {},
+			historyHtmlArray: [],
+			historyEnabled: false,
 		};
 
-		this.data.profileHistory = this.data.profileHistory
-			.map((job) => {
-				const el = { ...job };
-				el['experienceLevel'] = levels[el['experienceLevelId']];
-				el['skills'] = el['skills'].split(',');
-				return el;
-			})
-			.map((job) => {
-				const jobItem = new JobItem({
-					...job,
-				});
-				const item = new Item({
-					children: [jobItem.render()],
-				});
-				return item.render();
-			});
-
-		bus.on(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
+		// this.data.profileHistory = this.data.profileHistory
+		// 	.map((job) => {
+		// 		const el = { ...job };
+		// 		el['experienceLevel'] = levels[el['experienceLevelId']];
+		// 		el['skills'] = el['skills'].split(',');
+		// 		return el;
+		// 	})
+		// 	.map((job) => {
+		// 		const jobItem = new JobItem({
+		// 			...job,
+		// 		});
+		// 		const item = new Item({
+		// 			children: [jobItem.render()],
+		// 		});
+		// 		return item.render();
+		// 	});
 	}
 
 	preRender() {
+		bus.on(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
 		bus.emit(busEvents.FREELANCER_GET, this.props.params.freelancerId);
-
 		const loggedIn = AuthService.isLoggedIn();
 		const isClient = AccountService.isClient();
 
@@ -120,6 +122,10 @@ export class Profile extends Component {
 			loggedIn,
 			isClient,
 		};
+
+		FreelancerService.GetWorkHistory(this.props.params.freelancerId).then(
+			this.onHistoryResponse,
+		);
 	}
 
 	render() {
@@ -197,8 +203,8 @@ export class Profile extends Component {
 			profileAvatar: this._avatar.render(),
 			profileInfoFeatures: new FeaturesList({
 				children: [
-					this._hourCost.render(),
-					this._monthCost.render(),
+					// this._hourCost.render(),
+					// this._monthCost.render(),
 					this._selected.render(),
 				],
 			}).render(),
@@ -233,7 +239,10 @@ export class Profile extends Component {
 			}).render(),
 		};
 
-		this.html = template(this.data);
+		this.html = template({
+			...this.data,
+			...this.props,
+		});
 		this.attachToParent();
 
 		return this.html;
@@ -241,10 +250,13 @@ export class Profile extends Component {
 
 	postRender() {
 		this._avatar.postRender();
-		this._sortSelect.postRender();
+		if (this.data.historyEnabled) {
+			this._sortSelect.postRender();
+		}
 	}
 
 	freelancerUpdated = (err) => {
+		bus.off(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
 		if (err) {
 			return;
 		}
@@ -265,6 +277,21 @@ export class Profile extends Component {
 				),
 			};
 		}
+
+		this.stateChanged();
+	};
+
+	onHistoryResponse = (history) => {
+		if (!history) {
+			return;
+		}
+
+		this.data = {
+			historyHtmlArray: history.map((el) => {
+				return new HistoryItem(el).render();
+			}),
+			historyEnabled: true,
+		};
 
 		this.stateChanged();
 	};

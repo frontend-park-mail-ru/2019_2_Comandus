@@ -195,11 +195,63 @@ export const levelsRadio = [
 	},
 ];
 
+export const levelsRadioShort = [
+	{
+		value: '1',
+		label: 'Начинающий',
+	},
+	{
+		value: '2',
+		label: 'Продвинутый',
+	},
+	{
+		value: '3',
+		label: 'Эксперт',
+	},
+];
+
+export const levelsRadioDasha = [
+	{
+		value: '111',
+		label: 'Все',
+	},
+	{
+		value: '100',
+		label: 'Начинающий',
+	},
+	{
+		value: '010',
+		label: 'Продвинутый',
+	},
+	{
+		value: '001',
+		label: 'Эксперт',
+	},
+];
+
 export const jobTypes = [
 	{
 		value: 0,
 		label: 'Проект',
 		checked: true,
+	},
+	{
+		value: 1,
+		label: 'Вакансия',
+		checked: false,
+	},
+];
+
+export const jobTypesSearch = [
+	{
+		value: -1,
+		label: 'Все',
+		checked: true,
+	},
+	{
+		value: 0,
+		label: 'Проект',
+		checked: false,
 	},
 	{
 		value: 1,
@@ -217,4 +269,21 @@ export const historySortBy = [
 export const availability = {
 	0: 'Занят',
 	1: 'Свободен',
+};
+
+export const proposalStatuses = {
+	CANCEL: 'CANCEL',
+	DENIED: 'DENIED',
+	ACCEPTED: 'ACCEPTED',
+	SENT: 'SENT',
+	REVIEW: 'REVIEW',
+	SENT_CONTRACT: 'SENT_CONTRACT',
+};
+
+export const statusesContract = {
+	ACTIVE: 'active',
+	EXPECTED: 'expected',
+	NOT_READY: 'NotReady',
+	READY: 'Ready',
+	CLOSED: 'closed',
 };

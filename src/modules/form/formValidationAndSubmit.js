@@ -228,7 +228,7 @@ function removeError(field) {
 	message.style.visibility = 'hidden';
 }
 
-class FormHelper {
+export class FormHelper {
 	constructor(submitEvent) {
 		this._event = submitEvent;
 		this.responseTextElement = null;
@@ -354,12 +354,17 @@ function onChange(event) {
 	}
 }
 
-export function enableValidationAndSubmit(formElement, onSubmit) {
+export function enableValidationAndSubmit(
+	formElement,
+	onSubmit,
+	onChangeCallback,
+) {
 	formElement.setAttribute('novalidate', true);
 	formElement.setAttribute('novalidate', true);
 	formElement.classList.add('validate');
 	formElement.addEventListener('blur', onBlur, true);
 	formElement.addEventListener('change', onChange);
+	formElement.addEventListener('change', onChangeCallback);
 
 	const responseText = document.createElement('div');
 	responseText.className = classes.responseText;

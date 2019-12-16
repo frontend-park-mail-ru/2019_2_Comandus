@@ -113,6 +113,14 @@ export default class ClientJobs extends Component {
 			};
 			this.deleteDialogModal.show();
 		}
+
+		if (hasClass('publish-job-action', target)) {
+			const id = target.dataset.id;
+			this.data = {
+				jobIdForTogglePublish: id,
+			};
+			this.togglePublish();
+		}
 	};
 
 	cancelDelete = () => {
@@ -132,5 +140,9 @@ export default class ClientJobs extends Component {
 		bus.emit(busEvents.JOBS_GET, {
 			only: 'my',
 		});
+	};
+
+	togglePublish = () => {
+		console.log(this.data.jobIdForTogglePublish);
 	};
 }

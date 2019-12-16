@@ -3,11 +3,12 @@ import template from './index.handlebars';
 import Component from '@frame/Component';
 
 export default class Item extends Component {
-	constructor({ children = [], ...props }) {
+	constructor({ children = [], link = '', ...props }) {
 		super(props);
 
 		this.data = {
 			children,
+			link,
 		};
 	}
 
