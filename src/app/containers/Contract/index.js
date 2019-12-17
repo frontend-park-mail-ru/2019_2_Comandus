@@ -184,7 +184,8 @@ export default class Contract extends Component {
 			},
 			closeContractEnabled:
 				contract.Contract.statusFreelancerWork ===
-				statusesContract.READY,
+					statusesContract.READY &&
+				contract.Contract.status !== statusesContract.CLOSED,
 			acceptContractEnabled:
 				contract.Contract.status === statusesContract.EXPECTED,
 			markContractAsDoneEnabled:
@@ -247,12 +248,8 @@ export default class Contract extends Component {
 	};
 
 	onLeaveFeedbackResponse = (res) => {
-		ContractService.MarkReadyContract(this.props.params.contractId).then(
-			() => {
-				ContractService.GetContractById(
-					this.props.params.contractId,
-				).then(this.onGetContractResponse);
-			},
+		ContractService.GetContractById(this.props.params.contractId).then(
+			this.onGetContractResponse,
 		);
 	};
 }

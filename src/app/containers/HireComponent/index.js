@@ -77,6 +77,7 @@ export default class Hire extends Component {
 		this._timeSelect = new Select({
 			items: dueTimes.map(toSelectElement),
 			attributes: 'required',
+			required: true,
 			className: 'width-auto',
 			name: 'timeEstimation',
 		});
@@ -136,11 +137,13 @@ export default class Hire extends Component {
 				helper.event.preventDefault();
 
 				this.helper = helper;
+				const formData = helper.formToJSON();
+				formData.paymentAmount = parseInt(formData.paymentAmount);
 
 				this.onCreateContractResponse();
 				ContractService.CreateContract(
 					this.props.params.proposalId,
-					helper.formToJSON(),
+					formData,
 				).then(this.onCreateContractResponse);
 			});
 		}
