@@ -34,7 +34,7 @@ class SignUpComponent extends Component {
 			placeholder: 'Введите Ваше имя',
 			name: 'firstName',
 			pattern: '^[А-Яа-яA-Za-z]{2,}$',
-			title: 'Обычно имя так не выглядет. Это Ваше действительное имя?',
+			title: 'Обычно имя так не выглядит. Это Ваше действительное имя?',
 		});
 		const secondNameField = new TextField({
 			required: true,
@@ -44,7 +44,7 @@ class SignUpComponent extends Component {
 			name: 'secondName',
 			pattern: '^[А-Яа-яA-Za-z]{2,}$',
 			title:
-				'Обычно фамилия так не выглядет. Это Ваша действительная фамилия?',
+				'Обычно фамилия так не выглядит. Это Ваша действительная фамилия?',
 		});
 		const emailField = new TextField({
 			required: true,
