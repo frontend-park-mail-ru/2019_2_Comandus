@@ -8,9 +8,10 @@ export default class FreelancerService {
 		return AjaxModule.get(`/freelancer/${id}`, {
 			headers: AuthService.getCsrfHeader(),
 		})
-			.then((freelancer) => {
+			.then((response) => {
+				console.log('GetFreelancerById', response.freelancer);
 				store.setState({
-					freelancer: freelancer,
+					freelancer: response.freelancer,
 				});
 			})
 			.catch((error) => {
@@ -19,7 +20,7 @@ export default class FreelancerService {
 	}
 
 	static UpdateFreelancer(id, data) {
-		return AjaxModule.put(`/freelancers/${id}`, data, {
+		return AjaxModule.put(`/freelancer`, data, {
 			headers: AuthService.getCsrfHeader(),
 		});
 	}

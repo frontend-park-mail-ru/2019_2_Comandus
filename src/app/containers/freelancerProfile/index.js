@@ -29,6 +29,9 @@ import store from '@modules/store';
 import config from '@app/config';
 import FreelancerService from '@services/FreelancerService';
 import HistoryItem from '@components/dataDisplay/HistoryItem';
+import IconButton from '@components/inputs/IconButton/IconButton';
+import InputTags from '@components/inputs/InputTags/InputTags';
+import Modal from '@components/Modal/Modal';
 
 export class Profile extends Component {
 	constructor(props) {
@@ -182,6 +185,7 @@ export class Profile extends Component {
 			noFit: true,
 			text: 'Предложить проект',
 		});
+
 		this._saveBtn = new Button({
 			type: 'button',
 			text: 'Добавить в избранное',
@@ -199,8 +203,44 @@ export class Profile extends Component {
 			value: window.location,
 		});
 
+		this._inputTags = new InputTags({
+			name: 'skills',
+			max: 5,
+			duplicate: false,
+			tags: [],
+		});
+
+		this._inputTagsComponent = new FieldGroup({
+			children: [
+				'<div>Какими навыками Вы обладаете?</div>',
+				this._inputTags.render(),
+			],
+			label: 'Ваши навыки',
+		});
+
+		const submitBtn = new Button({
+			type: 'submit',
+			text: 'Сохранить',
+			noFit: true,
+		});
+
+		this._skillsChangeModal = new Modal({
+			title: 'Обновление навыков',
+			children: [this._inputTagsComponent.render(), submitBtn.render()],
+		});
+
+		const onClickSkillsModal = () => {
+			this._skillsChangeModal.show();
+		};
+
+		this._editSkillsButton = new IconButton({
+			className: 'fas fa-pen',
+			onClick: onClickSkillsModal,
+		});
+
 		this.data = {
 			profileAvatar: this._avatar.render(),
+
 			profileInfoFeatures: new FeaturesList({
 				children: [
 					// this._hourCost.render(),
@@ -208,31 +248,41 @@ export class Profile extends Component {
 					this._selected.render(),
 				],
 			}).render(),
+
 			historyCardHeader: new CardTitle({
 				children: [this._sortSelect.render()],
 				title: 'История работ и отзывы',
 			}).render(),
+
 			portfolioCardHeader: new CardTitle({
 				title: 'Портфолио',
 			}).render(),
+
 			portfolioCardFooter: new Item({
 				children: ['<a href="#" target="_self">Посмотреть еще</a>'],
 			}).render(),
+
 			skillsCardHeader: new CardTitle({
 				title: 'Навыки',
-				children: [`<i class="fas fa-pen"></i>`],
+				children: [this._editSkillsButton.render()],
 			}).render(),
+
+			skillsChangeModal: this._skillsChangeModal.render(),
+
 			portfolioPaginator: new Paginator({
 				currentPage: 2,
 				countOfPages: 6,
 				maxDisplayingPages: 4,
 			}).render(),
+
 			portfolioCardGroup: new CardBoard({
 				children: this._portfolioCards,
 				columns: 2,
 			}).render(),
 			projectSuggestBtn: this._projectSuggestBtn.render(),
+
 			saveBtn: this._saveBtn.render(),
+
 			profileLinkField: new FieldGroup({
 				children: [this._profileLinkField.render()],
 				label: 'Ссылка на профиль',
@@ -263,6 +313,10 @@ export class Profile extends Component {
 		// 	this._profileLinkField.el.setSelectionRange(0, 99999);
 		// 	document.execCommand("copy");
 		// });
+
+		// this._editSkillsButton.postRender();
+		// this._skillsChangeModal.postRender();
+		// this._inputTags.postRender();
 	}
 
 	freelancerUpdated = (err) => {
