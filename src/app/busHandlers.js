@@ -115,6 +115,7 @@ bus.on(busEvents.ON_PAGE_LOAD, () => {
 	AuthService.FetchCsrfToken()
 		.then((response) => {
 			if (response === 'Unauthorized') {
+				bus.emit(busEvents.USER_UPDATED);
 				return;
 			}
 

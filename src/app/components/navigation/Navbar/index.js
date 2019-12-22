@@ -123,6 +123,8 @@ export default class Navbar extends Component {
 
 		event.target.elements[0].value = '';
 
+		this.toggle();
+
 		router.push(`/search`, `?${params.toString()}`);
 	};
 }

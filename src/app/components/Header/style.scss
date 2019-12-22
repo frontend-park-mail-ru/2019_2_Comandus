@@ -1,0 +1,12 @@
+.header {
+	box-shadow: 0 10px 16px -6px rgba(0, 0, 0, 0.08);
+	background-color: #ffffff;
+}
+
+.header_dark {
+	background-color: #2b323a;
+	box-shadow: none;
+	& .nav__item {
+		color: #fff;
+	}
+}

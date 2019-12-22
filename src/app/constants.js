@@ -92,6 +92,7 @@ export const busEvents = {
 	SEARCH: 'SEARCH',
 	SEARCH_RESPONSE: 'SEARCH_RESPONSE',
 	UTILS_LOADED: 'UTILS_LOADED',
+	ROUTE_CHANGED: 'ROUTE_CHANGED',
 };
 
 export const CSRF_TOKEN_NAME = 'csrf-token';

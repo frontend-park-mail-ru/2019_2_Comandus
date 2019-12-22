@@ -19,7 +19,12 @@ h1.tp-main-text {
 	min-height: 100vh;
 	z-index: 0;
 	color: #ffffff;
-	padding-top: 18%;
+	//padding-top: 18%;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
 .block__pulticles {
@@ -116,15 +121,19 @@ h1.tp-main-text {
 	grid-column-gap: 20px;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	padding: 40px 20px;
+	width: 100%;
+	margin-top: 100px;
 }
 
 .how-it-works {
-	height: 300px;
+	//height: 300px;
 	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.15);
 	border-radius: 4px;
 	padding: 10px;
 	text-align: center;
 	margin-top: 20px;
+	background-color: rgba(#ffffff, 0.05);
+	position: relative;
 }
 
 .how-it-works-title {
@@ -144,6 +153,14 @@ h1.tp-main-text {
 		color: #2b323a;
 		text-decoration: none;
 	}
+}
+
+.how-it-works__number {
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+	font-size: 2em;
+	opacity: 0.5;
 }
 
 @media (max-width: 1024px) {
