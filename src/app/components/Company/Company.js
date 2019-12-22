@@ -75,8 +75,6 @@ export class Company extends Component {
 			countryId = currentCountry.value;
 		}
 
-		console.log('check id:', countryId);
-
 		let cityId = -1;
 		if (countryId !== -1) {
 			UtilService.getCityListByCountry(countryId).then((cities) => {
@@ -84,7 +82,6 @@ export class Company extends Component {
 					return city.label === companyObj.city;
 				});
 
-				console.log('CHEEEECK', currentCity);
 				let cityId = -1;
 				if (currentCity) {
 					cityId = currentCity.value;
@@ -144,13 +141,13 @@ export class Company extends Component {
 
 		const headerField = new TextField({
 			required: true,
-			name: 'tagLine',
+			name: 'tagline',
 			type: 'text',
 			label: 'Заголовок описания',
 			placeholder: 'Проект',
 			minlength: '5',
 			maxlength: '60',
-			value: companyObj.tagLine || '',
+			value: companyObj.tagline || '',
 		});
 
 		const descriptionField = new TextField({
