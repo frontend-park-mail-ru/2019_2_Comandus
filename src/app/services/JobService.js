@@ -61,11 +61,6 @@ export default class JobService {
 
 	static GetSearchSuggest(params) {
 		const queryParams = new URLSearchParams(params).toString();
-		// if (params.type === 'freelancers') {
-		// 	return AjaxModule.get(`/search/freelancers?${queryParams}`, {
-		// 		headers: AuthService.getCsrfHeader(),
-		// 	});
-		// }
 		return AjaxModule.get(`/suggest?${queryParams}`, {
 			headers: AuthService.getCsrfHeader(),
 		});

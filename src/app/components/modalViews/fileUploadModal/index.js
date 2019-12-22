@@ -56,7 +56,6 @@ export default class fileUploadModal extends Component {
 		this._uploadBtn.postRender();
 
 		if (!this.el) {
-			console.log('this._el for ' + this.id + ' is null');
 			return;
 		}
 

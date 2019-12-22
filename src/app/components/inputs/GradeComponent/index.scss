@@ -27,15 +27,24 @@ input, label {
 		display: inline-block;
 		float: right;
 		position: relative;
-		width: 40px;
-		height: 40px;
-		font-size: 30px;
 		padding: 2px;
 		cursor: pointer;
 		color: $outline;
 		transition: color 0.1s ease-out;
 		z-index: 10;
 	}
+}
+
+.stars-label-m {
+	width: 40px;
+	height: 40px;
+	font-size: 30px;
+}
+
+.stars-label-s {
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
 }
 
 @keyframes wobble {

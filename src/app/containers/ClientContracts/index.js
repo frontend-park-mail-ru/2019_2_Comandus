@@ -72,8 +72,6 @@ export default class ClientContracts extends Component {
 			return [];
 		}
 
-		console.log(contracts);
-
 		return contracts.map((contract) => {
 			let fullname = contract.Company.CompanyName
 				? contract.Company.CompanyName
@@ -94,8 +92,6 @@ export default class ClientContracts extends Component {
 	};
 
 	onGetContractsResponse = (contracts) => {
-		console.log(contracts);
-
 		const pendingContracts = contracts.filter((el) => {
 			return el.Contract.status === statusesContract.EXPECTED;
 		});

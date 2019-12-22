@@ -3,7 +3,7 @@ export default {
 	// baseAPIUrl: 'https://api.fwork.live',
 	baseAPIUrl:
 		process.env.NODE_ENV === 'production'
-			? 'https://api.fwork.live'
+			? 'https://fwork.live/api/'
 			: 'http://89.208.211.100:8080',
 	cookieAccountModeName: 'user_type',
 	urls: {

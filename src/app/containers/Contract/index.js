@@ -14,6 +14,7 @@ import GradeComponent from '@components/inputs/GradeComponent';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
 import bus from '@frame/bus';
 import { busEvents, statusesContract } from '@app/constants';
+import ClientChat from '@components/ClientChat';
 
 export default class Contract extends Component {
 	constructor(props) {
@@ -92,6 +93,8 @@ export default class Contract extends Component {
 			grade: this.data.secondGrade,
 		});
 
+		this._chat = new ClientChat({});
+
 		this.data = {
 			messagesTitle: new CardTitle({
 				title: 'Сообщения',
@@ -115,6 +118,7 @@ export default class Contract extends Component {
 			}).render(),
 			firstGradeStars: this.firstGradeStars.render(),
 			secondGradeStars: this.secondGradeStars.render(),
+			chat: this._chat.render(),
 		};
 		const page = new PageWithTitle({
 			title: 'Контракт',
@@ -140,6 +144,7 @@ export default class Contract extends Component {
 		this.acceptContract.postRender();
 		this.rejectContract.postRender();
 		this.markContractAsDone.postRender();
+		this._chat.postRender();
 
 		const form = this.el.querySelector('#submitFeedback');
 		if (form) {
@@ -150,7 +155,6 @@ export default class Contract extends Component {
 
 				const formData = helper.formToJSON();
 				formData.grade = parseInt(formData.grade);
-				console.log(formData);
 
 				ContractService.LeaveFeedback(
 					this.props.params.contractId,
@@ -161,8 +165,6 @@ export default class Contract extends Component {
 	}
 
 	onGetContractResponse = (contract) => {
-		console.log(contract);
-
 		this.data = {
 			contract: {
 				...contract.Contract,
@@ -182,7 +184,8 @@ export default class Contract extends Component {
 			},
 			closeContractEnabled:
 				contract.Contract.statusFreelancerWork ===
-				statusesContract.READY,
+					statusesContract.READY &&
+				contract.Contract.status !== statusesContract.CLOSED,
 			acceptContractEnabled:
 				contract.Contract.status === statusesContract.EXPECTED,
 			markContractAsDoneEnabled:
@@ -209,7 +212,6 @@ export default class Contract extends Component {
 	};
 
 	onCloseContract = () => {
-		console.log('onCloseContract');
 		ContractService.CloseContract(this.props.params.contractId).then(() => {
 			ContractService.GetContractById(this.props.params.contractId).then(
 				this.onGetContractResponse,
@@ -218,7 +220,6 @@ export default class Contract extends Component {
 	};
 
 	onAcceptContract = () => {
-		console.log('onAcceptContract');
 		ContractService.AcceptContract(this.props.params.contractId).then(
 			() => {
 				ContractService.GetContractById(
@@ -229,7 +230,6 @@ export default class Contract extends Component {
 	};
 
 	onRejectContract = () => {
-		console.log('onRejectContract');
 		ContractService.DenyContract(this.props.params.contractId).then(() => {
 			ContractService.GetContractById(this.props.params.contractId).then(
 				this.onGetContractResponse,
@@ -238,7 +238,6 @@ export default class Contract extends Component {
 	};
 
 	onMarkContractAsDone = () => {
-		console.log('onMarkContractAsDone');
 		ContractService.MarkReadyContract(this.props.params.contractId).then(
 			() => {
 				ContractService.GetContractById(
@@ -249,12 +248,8 @@ export default class Contract extends Component {
 	};
 
 	onLeaveFeedbackResponse = (res) => {
-		ContractService.MarkReadyContract(this.props.params.contractId).then(
-			() => {
-				ContractService.GetContractById(
-					this.props.params.contractId,
-				).then(this.onGetContractResponse);
-			},
+		ContractService.GetContractById(this.props.params.contractId).then(
+			this.onGetContractResponse,
 		);
 	};
 }

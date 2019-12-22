@@ -45,11 +45,11 @@ const routes = [
 		path: '/freelancers/:freelancerId',
 		Component: offlineHOC(Profile),
 		props: {
-			currentAccountRole:
-				getCookie(config.cookieAccountModeName) ===
-				config.accountTypes.client
-					? config.accountTypes.client
-					: config.accountTypes.freelancer,
+			// currentAccountRole:
+			// 	getCookie(config.cookieAccountModeName) ===
+			// 	config.accountTypes.client
+			// 		? config.accountTypes.client
+			// 		: config.accountTypes.freelancer,
 		},
 	},
 	{

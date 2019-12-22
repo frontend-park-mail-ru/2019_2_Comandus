@@ -56,8 +56,6 @@ export default class Jobs extends Component {
 			loading: false,
 		};
 
-		console.log(this.data, err);
-
 		this.stateChanged();
 	};
 
@@ -75,7 +73,6 @@ export default class Jobs extends Component {
 				experienceLevel: levels[job['experienceLevelId'] - 1],
 				paymentAmount: formatMoney(job['paymentAmount']),
 			});
-			console.log(job);
 			const item = new Item({
 				children: [jobItem.render()],
 				link: `/jobs/${job.id}`,

@@ -49,7 +49,7 @@ export default class Navbar extends Component {
 					url: `/freelancers/${this.data.user.freelancerId}`,
 					text: 'Профиль',
 				});
-				profileItems.push({ url: '/saved', text: 'Закладки' });
+				// profileItems.push({ url: '/saved', text: 'Закладки' });
 				profileItems.push({ url: '/proposals', text: 'Отклики' });
 			}
 			profileItems.push({ url: config.urls.settings, text: 'Настройки' });
