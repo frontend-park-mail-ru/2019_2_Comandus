@@ -127,7 +127,7 @@ export class FreelancerSettings extends Component {
 			nameFirst: 'country',
 			name: 'city',
 			selectedItem2: cityId !== -1 ? cityId : '',
-			required: true,
+			// required: true,
 			filterable: true,
 		});
 
@@ -141,7 +141,7 @@ export class FreelancerSettings extends Component {
 			name: 'address',
 			type: 'text',
 			label: 'Адрес',
-			placeholder: 'Бауманская 7',
+			placeholder: 'Например: Бауманская 7',
 			minlength: '5',
 			maxlength: '40',
 			value: freelancerObj.address || '',
@@ -155,7 +155,7 @@ export class FreelancerSettings extends Component {
 			pattern: '\\+[0-9]{11,12}',
 			title:
 				'Неправильный формат номера телефона. Пример: +7 900 90 90 900',
-			placeholder: '+78005553535',
+			placeholder: '+7 999 999 99 99',
 			value: freelancerObj.phone || '',
 		});
 
@@ -180,6 +180,23 @@ export class FreelancerSettings extends Component {
 			selectedItem1: '',
 			selectedItem2: freelancerObj.specialityId || '',
 			getItems2: UtilService.getSpecialitiesByCategory,
+		});
+
+		const taglineField = new TextField({
+			required: true,
+			type: 'text',
+			label: 'Заголовок',
+			placeholder: '',
+			name: 'tagline',
+			value: freelancerObj.tagline || '',
+		});
+		const descriptionField = new TextField({
+			required: true,
+			type: 'textarea',
+			label: 'Описание',
+			placeholder: '',
+			name: 'overview',
+			value: freelancerObj.overview || '',
 		});
 
 		// const skillTags = [
@@ -244,8 +261,21 @@ export class FreelancerSettings extends Component {
 			}).render(),
 
 			specializationSettingsHeader: new CardTitle({
-				children: ['<a class="" href="#" target="_self">Изменить</a>'],
 				title: 'Выбор специализации и категорий услуг',
+			}).render(),
+
+			overviewHeader: new CardTitle({
+				title: 'Описание',
+			}).render(),
+
+			taglineField: new FieldGroup({
+				children: [taglineField.render()],
+				label: 'Заголовок',
+			}).render(),
+
+			descriptionField: new FieldGroup({
+				children: [descriptionField.render()],
+				label: 'Описание',
 			}).render(),
 
 			specialitySelect: this._specialitySelect.render(),
@@ -289,11 +319,11 @@ export class FreelancerSettings extends Component {
 		if (data.city) {
 			data.city = parseInt(data.city);
 			data.country = parseInt(data.country);
-		} else if (data.experienceLevelId) {
-			data.experienceLevelId = parseInt(data.experienceLevelId);
 		}
 
-		console.log('check what i send: ', data);
+		if (data.experienceLevelId) {
+			data.experienceLevelId = parseInt(data.experienceLevelId);
+		}
 
 		FreelancerService.UpdateFreelancer(this.data.freelancerId, data)
 			.then((res) => {

@@ -3,6 +3,7 @@ import config from '../config';
 import store from '@modules/store';
 import AccountService from '@services/AccountService';
 import { CSRF_TOKEN_NAME } from '@app/constants';
+import { router } from '../../index';
 
 export default class AuthService {
 	static Login(data) {
@@ -39,6 +40,7 @@ export default class AuthService {
 				user: null,
 			});
 			AccountService.PutUserToLocalStorage();
+			router.push('/');
 		});
 	}
 
