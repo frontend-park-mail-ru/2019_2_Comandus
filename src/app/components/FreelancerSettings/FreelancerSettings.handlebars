@@ -44,13 +44,18 @@
 
 	<div class="specialization-settings card">
 		{{{ specializationSettingsHeader }}}
-			{{#each skills}}
-				<label class="field-group__label">{{section}}</label>
-				<div class="tp-row tp-row_content_left">
-					{{#each categories}}
-						{{{ this }}}
-					{{/each}}
+		<div class="tp-container">
+			<form
+				class="tp-form"
+				id="specialityForm"
+				method="post"
+				autocomplete="off"
+			>
+				{{{ specialitySelect }}}
+				<div class="contact-setting__submit">
+					{{{ submitBtn }}}
 				</div>
-			{{/each}}
+			</form>
+		</div>
 	</div>
 </div>

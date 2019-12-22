@@ -97,6 +97,26 @@ export default class DoubleSelect extends Component {
 		this._secondSelect.onDestroy();
 	}
 
+	setSelectedValues = (value, value2, items2 = []) => {
+		this._firstSelect.setProps({
+			selected: value,
+			required: this.data.required,
+		});
+		this._firstSelect.stateChanged();
+
+		if (items2) {
+			this._secondSelect.setProps({
+				items: items2,
+			});
+		}
+		this._secondSelect.setProps({
+			selected: value2,
+			required: this.data.required,
+			disabled: false,
+		});
+		this._secondSelect.stateChanged();
+	};
+
 	setSelectValues = (items, items2) => {
 		let secondItems = [];
 
