@@ -69,6 +69,7 @@ export class Account extends Component {
 			label: 'E-mail',
 			placeholder: 'Ваш e-mail',
 			value: this.data.user ? this.data.user.email : '',
+			attributes: 'disabled',
 		});
 		this._submitBtn = new Button({
 			type: 'submit',
