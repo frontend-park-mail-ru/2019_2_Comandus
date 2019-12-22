@@ -58,14 +58,12 @@ export default class AuthService {
 			})
 			.catch((error) => {
 				// Если user в local storage больше невалидный
-				if (error.message === 'Unauthorized') {
-					store.setState({
-						user: null,
-					});
-					AccountService.PutUserToLocalStorage();
-				}
+				store.setState({
+					user: null,
+				});
+				AccountService.PutUserToLocalStorage();
 
-				return error.message;
+				return 'Unauthorized';
 			});
 	}
 
