@@ -8,6 +8,7 @@ import {
 	levels,
 	levelsRadioDasha,
 	specialities,
+	specialitiesRow,
 } from '@app/constants';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import TextField from '@components/inputs/TextField/TextField';
@@ -36,12 +37,6 @@ const proposalCountRanges = {
 		min: 0,
 		max: 10,
 	},
-	// '5-10': {
-	// 	min: 5, max: 10
-	// },
-	// '10-20': {
-	// 	min: 10, max: 20
-	// },
 	'10-1000': {
 		min: 10,
 		max: 1000,
@@ -79,6 +74,7 @@ export default class Search extends Component {
 
 		this.data = {
 			q: this.props.params.q,
+			searchType: this.props.params.type,
 			countryList: UtilService.MapCountriesToSelectList(),
 			filter: this.props.params,
 			proposalCount: proposalCount,
@@ -259,50 +255,52 @@ export default class Search extends Component {
 		});
 
 		const filterForm = this.el.querySelector('#searchFilter');
-		enableValidationAndSubmit(filterForm, null, (event) => {
-			const { target } = event;
+		if (filterForm) {
+			enableValidationAndSubmit(filterForm, null, (event) => {
+				const { target } = event;
 
-			const filter = this.data.filter;
-			let proposalCount = this.data.proposalCount;
-			if (target.type === 'checkbox') {
-				if (target.name === 'proposalCount') {
-					proposalCount = proposalCount.filter(
-						(el) => el !== target.value,
-					);
-					if (target.checked) {
-						proposalCount.push(target.value);
-					}
-					if (proposalCount.length > 0) {
-						proposalCount = proposalCount.sort();
-						filter['minProposalCount'] = proposalCount[
-							proposalCount.length - 1
-						].split('-')[0];
-						filter['maxProposalCount'] = proposalCount[
-							proposalCount.length - 1
-						].split('-')[1];
+				const filter = this.data.filter;
+				let proposalCount = this.data.proposalCount;
+				if (target.type === 'checkbox') {
+					if (target.name === 'proposalCount') {
+						proposalCount = proposalCount.filter(
+							(el) => el !== target.value,
+						);
+						if (target.checked) {
+							proposalCount.push(target.value);
+						}
+						if (proposalCount.length > 0) {
+							proposalCount = proposalCount.sort();
+							filter['minProposalCount'] = proposalCount[
+								proposalCount.length - 1
+							].split('-')[0];
+							filter['maxProposalCount'] = proposalCount[
+								proposalCount.length - 1
+							].split('-')[1];
 
-						filter['minProposalCount'] = proposalCount[0].split(
-							'-',
-						)[0];
-						// filter['maxProposalCount'] = proposalCount[0].split('-')[0];
-					} else {
-						delete filter['minProposalCount'];
-						delete filter['maxProposalCount'];
+							filter['minProposalCount'] = proposalCount[0].split(
+								'-',
+							)[0];
+							// filter['maxProposalCount'] = proposalCount[0].split('-')[0];
+						} else {
+							delete filter['minProposalCount'];
+							delete filter['maxProposalCount'];
+						}
 					}
+				} else {
+					filter[target.name] = target.value;
 				}
-			} else {
-				filter[target.name] = target.value;
-			}
 
-			this.data = {
-				filter,
-			};
+				this.data = {
+					filter,
+				};
 
-			let queryParams = new URLSearchParams(this.data.filter);
-			// queryParams.append('type', this.props.params.type);
-			queryParams = queryParams.toString();
-			router.push('/search', '?' + queryParams);
-		});
+				let queryParams = new URLSearchParams(this.data.filter);
+				// queryParams.append('type', this.props.params.type);
+				queryParams = queryParams.toString();
+				router.push('/search', '?' + queryParams);
+			});
+		}
 	}
 
 	onSearchResponse = (data) => {
@@ -371,8 +369,21 @@ export default class Search extends Component {
 
 	mapFreelancers = (freelancers) => {
 		return freelancers.map((f) => {
-			f = { ...f, ...f.freelancer };
-			return f;
+			const freelancerData = { ...f, ...f.freelancer };
+			freelancerData.speciality =
+				specialitiesRow[freelancerData.specialityId];
+			if (this.data.countryList) {
+				const country = this.data.countryList.find((el) => {
+					return el.value === freelancerData.country;
+				});
+				freelancerData.country = country ? country.label : '';
+			}
+			freelancerData.city =
+				typeof freelancerData.city === 'number'
+					? null
+					: freelancerData.city;
+
+			return freelancerData;
 		});
 	};
 
@@ -384,6 +395,7 @@ export default class Search extends Component {
 
 			const item = new Item({
 				children: [freelancerItem.render()],
+				link: `/freelancers/${f.id}`,
 			});
 
 			return item.render();

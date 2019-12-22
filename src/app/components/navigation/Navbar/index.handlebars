@@ -12,25 +12,32 @@
 		<ul class="navbar__nav" role="menubar">
 			<li class="nav__item">
 				<form method="GET" role="search" id="navbar-search-form">
-						<div class="navbar__search-input">
-							<input id='navbar-search' type="search" placeholder="Поиск">
-							<button type="submit"><i class="fas fa-search"></i></button>
-						</div>
+					<div class="navbar__search-input">
+						<input id='navbar-search' type="search" placeholder="Поиск">
+						<button type="submit"><i class="fas fa-search"></i></button>
+					</div>
 				</form>
 			</li>
 		</ul>
 		<ul class="navbar__nav navbar__nav_right" role="menubar">
-			{{#isClient}}
+			{{#if loggedIn}}
+				{{#isClient}}
+					<li class="nav__item">
+						<a href="/search?type=freelancers" target="_self" role="menuitem" class="nav__link">
+							Фрилансеры
+						</a>
+					</li>
+				{{else}}
+					{{{_dropdown}}}
+				{{/isClient}}
+			{{else}}
 				<li class="nav__item">
-					<a href="/freelancers" target="_self" role="menuitem" class="nav__link">
+					<a href="/search?type=freelancers" target="_self" role="menuitem" class="nav__link">
 						Фрилансеры
 					</a>
 				</li>
-			{{else}}
 				{{{_dropdown}}}
-			{{/isClient}}
-{{!--			{{#loggedIn}}--}}
-{{!--			{{/loggedIn}}--}}
+			{{/if}}
 			{{#if loggedIn}}
 				{{{profileDropdown}}}
 			{{/if}}

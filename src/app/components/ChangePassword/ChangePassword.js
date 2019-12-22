@@ -6,6 +6,7 @@ import bus from '@frame/bus';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 export class ChangePassword extends Component {
 	constructor({ ...props }) {
@@ -54,6 +55,9 @@ export class ChangePassword extends Component {
 			}).render(),
 			submitBtn: new FieldGroup({
 				children: [submitBtn.render()],
+			}).render(),
+			cardHeader: new CardTitle({
+				title: 'Изменение пароля',
 			}).render(),
 		};
 

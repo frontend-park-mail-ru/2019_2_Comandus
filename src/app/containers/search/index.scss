@@ -9,6 +9,11 @@
 	&__results {
 		border-top: 1px solid #E0E0E0;
 	}
+
+	&:before {
+		content: " ";
+		display: table;
+	}
 }
 
 .search-input__input {

@@ -39,6 +39,10 @@ export default class RadioGroup extends Component {
 	}
 
 	postRender() {
+		if (!this.el) {
+			return;
+		}
+
 		const radios = this.el.querySelectorAll('.radio');
 		radios.forEach((radio) => {
 			radio.removeEventListener('click', this.onClick);

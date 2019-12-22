@@ -16,6 +16,10 @@
 .tabs__nav_element {
 	padding: 9px 20px 5px;
 	margin: 0;
+	a:hover {
+		text-decoration: none;
+		display: block;
+	}
 }
 
 .tabs__nav_element.active, .tabs__nav_element:hover {

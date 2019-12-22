@@ -21,8 +21,8 @@ export default class Navbar extends Component {
 
 	render() {
 		const jobItems = [
-			{ url: '/jobs?type=project', text: 'Проекты' },
-			{ url: '/jobs/?type=vacancy', text: 'Вакансии' },
+			{ url: '/search?type=jobs&jobTypeId=0', text: 'Проекты' },
+			{ url: '/search?type=jobs&jobTypeId=1', text: 'Вакансии' },
 		];
 
 		this._dropdown = new Dropdown({

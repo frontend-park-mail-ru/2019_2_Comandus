@@ -67,6 +67,10 @@ export class Select extends Component {
 			return;
 		}
 
+		if (!this.el) {
+			return;
+		}
+
 		this.customSelectElem = this.el.querySelector('.select-custom');
 
 		const choicesList = this.customSelectElem.querySelectorAll(

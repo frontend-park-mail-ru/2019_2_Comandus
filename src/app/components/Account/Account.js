@@ -9,6 +9,7 @@ import Button from '@components/inputs/Button/Button';
 import './account.scss';
 import { defaultAvatarUrl } from '@modules/utils';
 import config from '../../config';
+import CardTitle from '@components/dataDisplay/CardTitle';
 
 export class Account extends Component {
 	constructor(props) {
@@ -93,6 +94,9 @@ export class Account extends Component {
 				children: [this._submitBtn.render()],
 			}).render(),
 			profileAvatar: this._avatar.render(),
+			accountHeader: new CardTitle({
+				title: 'Аккаунт',
+			}).render(),
 		};
 
 		this.html = template({

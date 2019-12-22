@@ -1,22 +1,20 @@
 <div id="{{_id}}">
 	<div class="tp-container tp-centered-container">
 		<div class="tp-row tp-row_content_left">
-			<div class="tp-col-3 filter-column">
-				<h2>Фильтр</h2>
-				<div class="filter-block">
-					<form id="searchFilter">
-						{{{jobTypeRadio}}}
-						{{{specialitySelect}}}
-						{{{levelRadioGroup}}}
-						{{{budgetField}}}
-						{{{citySelect}}}
-						{{{proposalsNum}}}
-					</form>
+			<div class="tp-col-12">
+				<div class="page-header page-title">
+					Поиск
+				</div>
+				<div class="tabs">
+					<ul class="nav tabs__nav">
+						<li class="tabs__nav_element {{#if_eq searchType 'jobs'}}active{{/if_eq}}"><a href="/search?type=jobs">Работы</a></li>
+						<li class="tabs__nav_element {{#if_eq searchType 'freelancers'}}active{{/if_eq}}"><a href="/search?type=freelancers">Фрилансеры</a></li>
+					</ul>
 				</div>
 			</div>
 			<div class="tp-col-9">
 				<div class="search-page card card_no-padding">
-					{{{ searchCardHeader }}}
+{{!--					{{{ searchCardHeader }}}--}}
 					<form id="searchForm" method="get" class="search-page__input">
 						<div class="search-input__input">
 							{{{ searchInput }}}
@@ -44,6 +42,24 @@
 							{{/if}}
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="tp-col-3 filter-column">
+				<h2>Фильтр</h2>
+				<div class="filter-block">
+					{{#if_eq searchType 'jobs'}}
+						<form id="searchFilter">
+							{{{jobTypeRadio}}}
+							{{{specialitySelect}}}
+							{{{levelRadioGroup}}}
+							{{{budgetField}}}
+							{{{citySelect}}}
+							{{{proposalsNum}}}
+						</form>
+					{{/if_eq}}
+					{{#if_eq searchType 'freelancers'}}
+
+					{{/if_eq}}
 				</div>
 			</div>
 		</div>
