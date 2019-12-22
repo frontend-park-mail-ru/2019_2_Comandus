@@ -1,6 +1,8 @@
 import Frame from '@frame/frame';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
+import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
 
 function getParamsFromSearch(search) {
 	const params = {};
@@ -175,6 +177,8 @@ export class Router {
 			el,
 			props,
 		};
+
+		bus.emit(busEvents.ROUTE_CHANGED, path);
 	}
 
 	match(route, requestPath) {
