@@ -72,12 +72,15 @@ export default class Proposals extends Component {
 			activeProposals: activeProposals.map((el) =>
 				ProposalService.renderProposalItem(el),
 			),
+			showActiveProposals: activeProposals.length > 0,
 			closedProposals: closedProposals.map((el) =>
 				ProposalService.renderProposalItem(el),
 			),
+			showClosedProposals: closedProposals.length > 0,
 			sentProposals: sentProposals.map((el) =>
 				ProposalService.renderProposalItem(el),
 			),
+			showSentProposals: sentProposals.length > 0,
 		};
 
 		this.stateChanged();

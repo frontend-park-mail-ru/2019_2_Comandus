@@ -5,60 +5,64 @@
 				<div class="page-header page-title">
 					Мои отклики и предложения
 				</div>
-				<div class="tabs">
-					<ul class="nav tabs__nav">
-						<li class="tabs__nav_element active">Текущие</li>
-						<li class="tabs__nav_element">Архив</li>
-					</ul>
-					<div class="tabs__content">
-						<div class="tp-container card">
-							{{{ sentToMeTitle }}}
-							<div class="tp-container">
+				{{!--				<div class="tabs">--}}
+				{{!--					<ul class="nav tabs__nav">--}}
+				{{!--						<li class="tabs__nav_element active">Текущие</li>--}}
+				{{!--						<li class="tabs__nav_element">Архив</li>--}}
+				{{!--					</ul>--}}
+				{{!--					<div class="tabs__content">--}}
+				{{!--						<div class="tp-container card">--}}
+				{{!--							{{{ sentToMeTitle }}}--}}
+				{{!--							<div class="tp-container">--}}
+				{{!--								{{#each proposals}}--}}
+				{{!--									<div>--}}
+				{{!--										{{{this}}}--}}
+				{{!--									</div>--}}
+				{{!--								{{/each}}--}}
+				{{!--							</div>--}}
+				{{!--						</div>--}}
 
-{{!--								{{#each proposals}}--}}
-{{!--									<div>--}}
-{{!--										{{{this}}}--}}
-{{!--									</div>--}}
-{{!--								{{/each}}--}}
-							</div>
+				{{#showActiveProposals}}
+					<div class="tp-container card">
+						{{{ activeTitle }}}
+						<div class="tp-container">
+							{{#each activeProposals}}
+								<div>
+									{{{this}}}
+								</div>
+							{{/each}}
 						</div>
-
-						<div class="tp-container card">
-							{{{ activeTitle }}}
-							<div class="tp-container">
-								{{#each activeProposals}}
-									<div>
-										{{{this}}}
-									</div>
-								{{/each}}
-							</div>
-						</div>
-
-
-						<div class="tp-container card">
-							{{{ myProposalTitle }}}
-							<div class="tp-container">
-								{{#each sentProposals}}
-									<div>
-										{{{this}}}
-									</div>
-								{{/each}}
-							</div>
-						</div>
-
-						<div class="tp-container card">
-							{{{ closedProposalTitle }}}
-							<div class="tp-container">
-								{{#each closedProposals}}
-									<div>
-										{{{this}}}
-									</div>
-								{{/each}}
-							</div>
-						</div>
-
 					</div>
-				</div>
+				{{/showActiveProposals}}
+
+				{{#showSentProposals}}
+					<div class="tp-container card">
+						{{{ myProposalTitle }}}
+						<div class="tp-container">
+							{{#each sentProposals}}
+								<div>
+									{{{this}}}
+								</div>
+							{{/each}}
+						</div>
+					</div>
+				{{/showSentProposals}}
+
+				{{#showClosedProposals}}
+					<div class="tp-container card">
+						{{{ closedProposalTitle }}}
+						<div class="tp-container">
+							{{#each closedProposals}}
+								<div>
+									{{{this}}}
+								</div>
+							{{/each}}
+						</div>
+					</div>
+				{{/showClosedProposals}}
+
+				{{!--					</div>--}}
+				{{!--				</div>--}}
 			</div>
 		</div>
 	</div>

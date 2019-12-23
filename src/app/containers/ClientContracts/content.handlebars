@@ -1,55 +1,71 @@
 <div class="tp-row tp-row_content_left">
 	<div class="tp-col-12 ">
 		{{#isClient}}
-			<div class="tp-container card card_no-padding">
-				{{{ pendingOffersTitle }}}
-				<div class="tp-container">
-					{{#each pendingContracts}}
-						{{{this}}}
-					{{/each}}
+			{{#pendingContractsShow}}
+				<div class="tp-container card card_no-padding">
+					{{{ pendingOffersTitle }}}
+					<div class="tp-container">
+						{{#each pendingContracts}}
+							{{{this}}}
+						{{/each}}
+					</div>
 				</div>
-			</div>
-			<div class="tp-container card card_no-padding">
-				{{{ activeContractsTitle }}}
-				<div class="tp-container">
-					{{#each activeContracts}}
-						{{{this}}}
-					{{/each}}
+			{{/pendingContractsShow}}
+			{{#activeContractsShow}}
+				<div class="tp-container card card_no-padding">
+					{{{ activeContractsTitle }}}
+					<div class="tp-container">
+						{{#each activeContracts}}
+							{{{this}}}
+						{{/each}}
+					</div>
 				</div>
-			</div>
-			<div class="tp-container card card_no-padding">
-				{{{ closedContractsTitle }}}
-				<div class="tp-container">
-					{{#each closedContracts}}
-						{{{this}}}
-					{{/each}}
+			{{/activeContractsShow}}
+			{{#closedContractsShow}}
+				<div class="tp-container card card_no-padding">
+					{{{ closedContractsTitle }}}
+					<div class="tp-container">
+						{{#each closedContracts}}
+							{{{this}}}
+						{{/each}}
+					</div>
 				</div>
-			</div>
+			{{/closedContractsShow}}
 		{{else}}
-			<div class="tp-container card card_no-padding">
-				{{{ offersTitle }}}
-				<div class="tp-container">
-					{{#each pendingContracts}}
-						{{{this}}}
-					{{/each}}
+			{{#pendingContractsShow}}
+				<div class="tp-container card card_no-padding">
+					{{{ offersTitle }}}
+					<div class="tp-container">
+						{{#each pendingContracts}}
+							{{{this}}}
+						{{/each}}
+					</div>
 				</div>
-			</div>
-			<div class="tp-container card card_no-padding">
-				{{{ activeContractsTitle }}}
-				<div class="tp-container">
-					{{#each activeContracts}}
-						{{{this}}}
-					{{/each}}
+			{{/pendingContractsShow}}
+			{{#activeContractsShow}}
+				<div class="tp-container card card_no-padding">
+					{{{ activeContractsTitle }}}
+					<div class="tp-container">
+						{{#each activeContracts}}
+							{{{this}}}
+						{{/each}}
+					</div>
 				</div>
-			</div>
-			<div class="tp-container card card_no-padding">
-				{{{ closedContractsTitle }}}
-				<div class="tp-container">
-					{{#each closedContracts}}
-						{{{this}}}
-					{{/each}}
+			{{/activeContractsShow}}
+			{{#closedContractsShow}}
+				<div class="tp-container card card_no-padding">
+					{{{ closedContractsTitle }}}
+					<div class="tp-container">
+						{{#each closedContracts}}
+							{{{this}}}
+						{{/each}}
+					</div>
 				</div>
-			</div>
+			{{/closedContractsShow}}
 		{{/isClient}}
+
+		{{#empty}}
+			Контракты, над которыми вы работаете, появятся здесь.
+		{{/empty}}
 	</div>
 </div>

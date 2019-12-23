@@ -231,6 +231,7 @@ export const levelsRadioDasha = [
 ];
 
 export const levelsDasha = {
+	0: 111,
 	1: '100',
 	2: '010',
 	3: '001',

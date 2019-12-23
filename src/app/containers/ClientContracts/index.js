@@ -68,22 +68,43 @@ export default class ClientContracts extends Component {
 	}
 
 	onGetContractsResponse = (contracts) => {
-		const pendingContracts = contracts.filter((el) => {
-			return el.Contract.status === statusesContract.EXPECTED;
-		});
+		let pendingContracts = [];
+		let activeContracts = [];
+		let closedContracts = [];
 
-		const activeContracts = contracts.filter((el) => {
-			return el.Contract.status === statusesContract.ACTIVE;
-		});
+		if (contracts) {
+			pendingContracts = contracts.filter((el) => {
+				return el.Contract.status === statusesContract.EXPECTED;
+			});
 
-		const closedContracts = contracts.filter((el) => {
-			return el.Contract.status === statusesContract.CLOSED;
-		});
+			activeContracts = contracts.filter((el) => {
+				return el.Contract.status === statusesContract.ACTIVE;
+			});
+
+			closedContracts = contracts.filter((el) => {
+				return el.Contract.status === statusesContract.CLOSED;
+			});
+		}
+
+		const pendingContractsShow = pendingContracts.length > 0;
+		const activeContractsShow = activeContracts.length > 0;
+		const closedContractsShow = closedContracts.length > 0;
 
 		this.data = {
 			pendingContracts: ContractService.renderItems(pendingContracts),
+			pendingContractsShow,
 			activeContracts: ContractService.renderItems(activeContracts),
+			activeContractsShow,
 			closedContracts: ContractService.renderItems(closedContracts),
+			closedContractsShow,
+		};
+
+		this.data = {
+			empty: !(
+				pendingContractsShow ||
+				activeContractsShow ||
+				closedContractsShow
+			),
 		};
 
 		this.stateChanged();

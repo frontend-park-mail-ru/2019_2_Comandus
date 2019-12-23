@@ -7,11 +7,15 @@
 	flex-wrap: wrap;
 	padding: 0;
 	margin: 0;
+
 	&__item {
 		width: 33.33%;
 		position: relative;
-		padding-left: 29px;
 		padding-right: 10px;
+	}
+
+	&__item:not(:first-child) {
+		padding-left: 29px;
 	}
 }
 
@@ -19,6 +23,7 @@
 	.features-list {
 		&__item {
 			padding: 0;
+
 			&:not(:first-child) {
 				padding-left: 24px;
 			}
