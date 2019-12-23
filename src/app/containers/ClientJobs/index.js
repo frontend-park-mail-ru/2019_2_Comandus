@@ -78,7 +78,7 @@ export default class ClientJobs extends Component {
 
 		jobs = jobs.filter((j) => j.hireManagerId == user.hireManagerId);
 
-		const jobsHtml = jobs ? this.renderJobs(jobs) : '';
+		const jobsHtml = jobs ? JobService.renderClientJobPostings(jobs) : '';
 
 		this.data = {
 			jobs: jobsHtml,
@@ -86,20 +86,6 @@ export default class ClientJobs extends Component {
 		};
 
 		this.stateChanged();
-	};
-
-	renderJobs = (jobs) => {
-		return jobs.map((job) => {
-			const jobItem = new JobItem({
-				...job,
-				manage: true,
-			});
-			const item = new Item({
-				children: [jobItem.render()],
-			});
-
-			return item.render();
-		});
 	};
 
 	handleDelete = (event) => {

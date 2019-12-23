@@ -1,7 +1,7 @@
 export const levels = {
-	0: 'Начинающий',
-	1: 'Продвинутый',
-	2: 'Эксперт',
+	1: 'Начинающий',
+	2: 'Продвинутый',
+	3: 'Эксперт',
 };
 
 export const jobs = [
@@ -229,6 +229,12 @@ export const levelsRadioDasha = [
 		label: 'Эксперт',
 	},
 ];
+
+export const levelsDasha = {
+	1: '100',
+	2: '010',
+	3: '001',
+};
 
 export const jobTypes = [
 	{

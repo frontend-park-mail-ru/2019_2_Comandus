@@ -126,7 +126,7 @@ class SignUpComponent extends Component {
 			return;
 		}
 
-		this.props.router.push('/settings');
+		this.props.router.push('/');
 	};
 }
 export default SignUpComponent;

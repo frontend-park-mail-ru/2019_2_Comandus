@@ -2,6 +2,9 @@ import AjaxModule from '@modules/ajax';
 import config from '../config';
 import store from '@modules/store';
 import AuthService from '@services/AuthService';
+import { specialitiesRow } from '@app/constants';
+import FreelancerItem from '@components/dataDisplay/FreelancerItem';
+import Item from '@components/surfaces/Item';
 
 export default class FreelancerService {
 	static GetFreelancerById(id) {
@@ -13,6 +16,8 @@ export default class FreelancerService {
 				store.setState({
 					freelancer: response.freelancer,
 				});
+
+				return response.freelancer;
 			})
 			.catch((error) => {
 				console.error('GetFreelancerById: ', error);
@@ -37,9 +42,44 @@ export default class FreelancerService {
 		});
 	}
 
-	static GetWorkHistory(freelancerId) {
+	static GetWorkHistory(freelancerId, countryList) {
 		return AjaxModule.get(`/contracts/archive/${freelancerId}`, {
 			headers: AuthService.getCsrfHeader(),
 		});
 	}
+
+	static mapFreelancers = (freelancers, countryList) => {
+		return freelancers.map((f) => {
+			const freelancerData = { ...f, ...f.freelancer };
+			freelancerData.speciality =
+				specialitiesRow[freelancerData.specialityId];
+			if (countryList) {
+				const country = countryList.find((el) => {
+					return el.value === freelancerData.country;
+				});
+				freelancerData.country = country ? country.label : '';
+			}
+			freelancerData.city =
+				typeof freelancerData.city === 'number'
+					? null
+					: freelancerData.city;
+
+			return freelancerData;
+		});
+	};
+
+	static renderFreelancers = (freelancers) => {
+		return freelancers.map((f) => {
+			const freelancerItem = new FreelancerItem({
+				...f,
+			});
+
+			const item = new Item({
+				children: [freelancerItem.render()],
+				link: `/freelancers/${f.id}`,
+			});
+
+			return item.render();
+		});
+	};
 }

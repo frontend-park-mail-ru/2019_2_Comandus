@@ -67,30 +67,6 @@ export default class ClientContracts extends Component {
 		return this.html;
 	}
 
-	renderItems = (contracts = []) => {
-		if (!contracts) {
-			return [];
-		}
-
-		return contracts.map((contract) => {
-			let fullname = contract.Company.CompanyName
-				? contract.Company.CompanyName
-				: '';
-			if (this.data.isClient) {
-				fullname = `${contract.Freelancer.FirstName} ${contract.Freelancer.SecondName}`;
-			}
-			const item = new ContractItem({
-				id: contract.Contract.id,
-				title: contract.Job.Title,
-				fullname,
-				created: formatDate(contract.Contract.startTime),
-				paymentAmount: formatMoney(contract.Contract.paymentAmount),
-			});
-
-			return item.render();
-		});
-	};
-
 	onGetContractsResponse = (contracts) => {
 		const pendingContracts = contracts.filter((el) => {
 			return el.Contract.status === statusesContract.EXPECTED;
@@ -105,9 +81,9 @@ export default class ClientContracts extends Component {
 		});
 
 		this.data = {
-			pendingContracts: this.renderItems(pendingContracts),
-			activeContracts: this.renderItems(activeContracts),
-			closedContracts: this.renderItems(closedContracts),
+			pendingContracts: ContractService.renderItems(pendingContracts),
+			activeContracts: ContractService.renderItems(activeContracts),
+			closedContracts: ContractService.renderItems(closedContracts),
 		};
 
 		this.stateChanged();

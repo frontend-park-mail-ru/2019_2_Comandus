@@ -3,6 +3,12 @@
 {{!--	<div class="job-item__small__info job-item__small">--}}
 {{!--		{{paymentAmount}} ₽--}}
 {{!--		- статус: {{statusManager}} - {{date}}</div>--}}
-	<a class="link" href="/proposals/{{id}}">{{jobTitle}}</a>
+	<a class="link" href="/proposals/{{id}}">
+		{{#isClient}}
+			От: {{freelancerName}} Для: "{{jobTitle}}"
+		{{else}}
+			{{jobTitle}}
+		{{/isClient}}
+	</a>
 	<span class="proposal-item__date">{{date}}</span>
 </div>

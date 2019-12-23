@@ -5,3 +5,25 @@
 	align-items: baseline;
 	justify-content: space-between;
 }
+
+.contract-item_title {
+	a {
+		display: inline-block;
+	}
+}
+
+.item-badge {
+	padding: 4px;
+	border-radius: 4px;
+	background: #ecf1f7;
+	color: #1771e6;
+	text-align: center;
+	font-size: 13px;
+	line-height: 20px;
+	font-weight: 400;
+	letter-spacing: 0;
+
+	&:hover {
+		text-decoration: none;
+	}
+}

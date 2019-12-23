@@ -6,6 +6,7 @@ import AccountService from '@services/AccountService';
 import FreelancerService from '@services/FreelancerService';
 import ProposalService from '@services/ProposalService';
 import UtilService from '@services/UtilService';
+import { router } from '../index';
 
 const handlers = [
 	{
@@ -72,6 +73,7 @@ bus.on(busEvents.ACCOUNT_GET, () => {
 bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
 	AccountService.SetUserType(newType).then(() => {
 		bus.emit(busEvents.USER_UPDATED);
+		router.push('/');
 	});
 });
 
@@ -174,7 +176,7 @@ bus.on(busEvents.JOB_DELETE, (id) => {
 });
 
 bus.on(busEvents.SEARCH, (params) => {
-	JobService.SearchJobs(params)
+	JobService.Search(params)
 		.then((response) => {
 			bus.emit(busEvents.SEARCH_RESPONSE, { response });
 		})

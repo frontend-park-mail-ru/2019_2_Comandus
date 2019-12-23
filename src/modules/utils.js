@@ -153,7 +153,7 @@ export function getJoTypeName(jobTypeId) {
 }
 
 export function getExperienceLevelName(experienceLevelId) {
-	return levels[experienceLevelId - 1];
+	return levels[experienceLevelId];
 }
 
 export function getTimeEstimationName(id) {

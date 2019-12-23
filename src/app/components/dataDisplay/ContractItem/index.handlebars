@@ -1,7 +1,10 @@
 <div id="{{_id}}" class="job-item">
 	<div class="contract-item__raw">
-		<a class="job-item__title" href="/my-contracts/{{id}}">{{title}}</a>
-		{{paymentAmount}}
+		<div class="contract-item_title">
+			<a class="job-item__title" href="/my-contracts/{{id}}">{{title}}</a>
+			{{{badge}}}
+		</div>
+		<span>{{paymentAmount}}</span>
 	</div>
 	<div class="job-item__small contract-item__raw">
 		<span>{{fullname}}</span>

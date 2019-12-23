@@ -82,7 +82,7 @@ class LoginComponent extends Component {
 			return;
 		}
 
-		this.props.router.push('/settings');
+		this.props.router.push('/');
 	};
 }
 

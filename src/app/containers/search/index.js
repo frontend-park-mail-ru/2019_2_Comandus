@@ -31,6 +31,7 @@ import UtilService from '@services/UtilService';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import Checkbox from '@components/inputs/Checkbox';
 import JobService from '@services/JobService';
+import FreelancerService from '@services/FreelancerService';
 
 const proposalCountRanges = {
 	'0-10': {
@@ -250,6 +251,7 @@ export default class Search extends Component {
 
 			let queryParams = new URLSearchParams(params);
 			queryParams.append('type', this.props.params.type);
+			queryParams.append('desc', 1);
 			queryParams = queryParams.toString();
 			router.push('/search', '?' + queryParams);
 		});
@@ -319,11 +321,14 @@ export default class Search extends Component {
 		response = response ? response : [];
 
 		if (this.props.params.type === 'freelancers') {
-			response = this.mapFreelancers(response);
-			response = this.renderFreelancers(response);
+			response = FreelancerService.mapFreelancers(
+				response,
+				this.data.countryList,
+			);
+			response = FreelancerService.renderFreelancers(response);
 		} else {
-			response = this.mapJobs(response);
-			response = this.renderJobs(response);
+			response = JobService.mapJobs(response);
+			response = JobService.renderJobs(response, this.data.countryList);
 		}
 
 		this.data = {
@@ -331,75 +336,6 @@ export default class Search extends Component {
 		};
 
 		this.stateChanged();
-	};
-
-	mapJobs = (jobs) => {
-		return jobs.map((job) => {
-			const el = { ...job };
-			el['experienceLevel'] = levels[el['experienceLevelId']];
-			el['skills'] = el['skills'] ? el['skills'].split(',') : [];
-			return el;
-		});
-	};
-
-	renderJobs = (jobs) => {
-		return jobs.map((job) => {
-			if (this.data.countryList) {
-				const country = this.data.countryList.find((el) => {
-					return el.value === job.country;
-				});
-				job.country = country ? country.label : '';
-			}
-
-			const jobItem = new JobItem({
-				...job,
-				created: formatDate(job.date),
-				paymentAmount: formatMoney(job.paymentAmount),
-				type: getJoTypeName(job['jobTypeId']).label,
-			});
-
-			const item = new Item({
-				children: [jobItem.render()],
-				link: `/jobs/${job.id}`,
-			});
-
-			return item.render();
-		});
-	};
-
-	mapFreelancers = (freelancers) => {
-		return freelancers.map((f) => {
-			const freelancerData = { ...f, ...f.freelancer };
-			freelancerData.speciality =
-				specialitiesRow[freelancerData.specialityId];
-			if (this.data.countryList) {
-				const country = this.data.countryList.find((el) => {
-					return el.value === freelancerData.country;
-				});
-				freelancerData.country = country ? country.label : '';
-			}
-			freelancerData.city =
-				typeof freelancerData.city === 'number'
-					? null
-					: freelancerData.city;
-
-			return freelancerData;
-		});
-	};
-
-	renderFreelancers = (freelancers) => {
-		return freelancers.map((f) => {
-			const freelancerItem = new FreelancerItem({
-				...f,
-			});
-
-			const item = new Item({
-				children: [freelancerItem.render()],
-				link: `/freelancers/${f.id}`,
-			});
-
-			return item.render();
-		});
 	};
 
 	utilsLoaded = () => {

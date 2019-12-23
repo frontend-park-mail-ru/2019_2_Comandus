@@ -20,6 +20,7 @@ import ClientContracts from '@containers/ClientContracts';
 import Contract from '@containers/Contract';
 import Proposal from '@containers/Proposal';
 import Hire from '@containers/HireComponent';
+import Dashboard from '@containers/Dashboard';
 
 const routes = [
 	{ path: '/', Component: offlineHOC(HomeComponent) },
@@ -72,6 +73,7 @@ const routes = [
 	{ path: '/my-job-postings', Component: ClientJobs },
 	{ path: '/my-contracts/:contractId', Component: Contract },
 	{ path: '/my-contracts', Component: ClientContracts },
+	{ path: '/dashboard', Component: Dashboard },
 ];
 
 export default routes;

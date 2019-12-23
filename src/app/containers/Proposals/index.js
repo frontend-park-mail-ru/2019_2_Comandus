@@ -7,6 +7,7 @@ import store from '@modules/store';
 import ProposalItem from '@components/dataDisplay/ProposalItem';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import { formatDate, isProposalActive, isProposalClosed } from '@modules/utils';
+import ProposalService from '@services/ProposalService';
 
 export default class Proposals extends Component {
 	constructor({ children = [], ...props }) {
@@ -65,24 +66,20 @@ export default class Proposals extends Component {
 		});
 
 		this.data = {
-			proposals: proposals.map(this.renderProposalItem),
-			activeProposals: activeProposals.map(this.renderProposalItem),
-			closedProposals: closedProposals.map(this.renderProposalItem),
-			sentProposals: sentProposals.map(this.renderProposalItem),
+			proposals: proposals.map((el) =>
+				ProposalService.renderProposalItem(el),
+			),
+			activeProposals: activeProposals.map((el) =>
+				ProposalService.renderProposalItem(el),
+			),
+			closedProposals: closedProposals.map((el) =>
+				ProposalService.renderProposalItem(el),
+			),
+			sentProposals: sentProposals.map((el) =>
+				ProposalService.renderProposalItem(el),
+			),
 		};
 
 		this.stateChanged();
-	};
-
-	renderProposalItem = (proposal) => {
-		return new ProposalItem({
-			id: proposal.Response.id,
-			date: formatDate(proposal.Response.date),
-			// jobTitle: proposal.Job.title,
-			jobTitle: proposal.jobTitle,
-			statusManager: proposal.Response.statusManager,
-			statusFreelancer: proposal.Response.statusFreelancer,
-			paymentAmount: proposal.Response.paymentAmount,
-		}).render();
 	};
 }

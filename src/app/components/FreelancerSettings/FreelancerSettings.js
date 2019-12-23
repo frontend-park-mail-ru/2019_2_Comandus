@@ -13,23 +13,13 @@ import '../inputs/FieldGroup/FieldGroup.scss';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import store from '@modules/store';
 import bus from '@frame/bus';
-import { busEvents, categories, specialities } from '@app/constants';
+import {
+	busEvents,
+	categories,
+	levelsRadioShort,
+	specialities,
+} from '@app/constants';
 import UtilService from '@services/UtilService';
-
-const experienceLevels = [
-	{
-		value: '1',
-		label: 'Начинающий',
-	},
-	{
-		value: '2',
-		label: 'Продвинутый',
-	},
-	{
-		value: '3',
-		label: 'Эксперт',
-	},
-];
 
 export class FreelancerSettings extends Component {
 	constructor(props) {
@@ -160,7 +150,7 @@ export class FreelancerSettings extends Component {
 		});
 
 		this._levelRadioGroup = new RadioGroup({
-			items: experienceLevels,
+			items: levelsRadioShort,
 			column: true,
 			// title: 'Уровень фрилансера',
 			required: true,
