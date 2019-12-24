@@ -6,7 +6,7 @@
 	color: $primary-color
 }
 
-.btn_secondary:hover {
+.btn_secondary:hover, .btn_secondary:disabled {
 	background-color: lighten($secondary-color, 2);
 }
 

@@ -21,6 +21,7 @@ import config from '@app/config';
 import bus from '@frame/bus';
 import UtilService from '@services/UtilService';
 import CompanyService from '@services/CompanyService';
+import Tag from '@components/dataDisplay/Tag/Tag';
 
 export default class Dashboard extends Component {
 	constructor({ ...props }) {
@@ -161,12 +162,21 @@ export default class Dashboard extends Component {
 	};
 
 	onGetFreelancerResponse = (freelancer) => {
+		let skills = [];
+		if (freelancer.tagline) {
+			skills = freelancer.tagline.split(',').map((skill) => {
+				return new Tag({ text: skill, secondary: true }).render();
+			});
+		}
+
 		this.data = {
 			freelancer: {
 				...freelancer,
 				speciality: specialitiesRow[freelancer.specialityId],
 				experienceLevel: levels[freelancer.experienceLevelId],
 				hasLevel: !!levels[freelancer.experienceLevelId],
+				skills,
+				hasSkills: skills.length > 0,
 			},
 		};
 

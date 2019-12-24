@@ -27,11 +27,9 @@ $button-s-height: 26px;
 	align-items: center;
 	justify-content: center;
 
-	&:hover {
+	&:hover, &:disabled {
 		box-shadow: 0 1px 1px 0 #707070;
-		&:hover {
-			text-decoration: none;
-		}
+		text-decoration: none;
 	}
 
 	&_fit {

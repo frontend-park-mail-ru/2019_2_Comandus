@@ -160,7 +160,7 @@ class JobFormComponent extends Component {
 			// value: job.tagLine,
 		});
 
-		const submitBtn = new Button({
+		this.submitBtn = new Button({
 			type: 'submit',
 			text: this.props.params.jobId
 				? 'Сохранить изменения'
@@ -213,7 +213,7 @@ class JobFormComponent extends Component {
 			}).render(),
 
 			submitBtn: new FieldGroup({
-				children: [submitBtn.render()],
+				children: [this.submitBtn.render()],
 			}).render(),
 
 			_jobTypeRadio: new FieldGroup({
@@ -241,6 +241,8 @@ class JobFormComponent extends Component {
 		if (form) {
 			enableValidationAndSubmit(form, (helper) => {
 				helper.event.preventDefault();
+
+				this.submitBtn.el.disabled = true;
 
 				this.helper = helper;
 				const data = helper.formToJSON();

@@ -51,27 +51,46 @@ export class UserMenu extends Component {
 			classes: 'user-menu__avatar',
 		});
 
-		this._dropdown = new Dropdown({
-			text:
-				`<div class="badge-wrap"><span class="badge">+1</span>` +
-				this._avatar.render() +
-				`</div>`,
-			items: [
-				{
-					url: '#',
-					text: 'Фрилансер: ' + this.data.freelancerLabel,
-					active: !this.data.isClient,
-					id: 'switchToFreelancer',
-				},
-				{
-					url: '#',
-					text: 'Компания',
-					active: this.data.isClient,
-					id: 'switchToClient',
-				},
+		const dropItems = [
+			// {
+			// 	url: '#',
+			// 	text: 'Фрилансер: ' + this.data.freelancerLabel,
+			// 	active: !this.data.isClient,
+			// 	id: 'switchToFreelancer',
+			// },
+			// {
+			// 	url: '#',
+			// 	text: 'Компания',
+			// 	active: this.data.isClient,
+			// 	id: 'switchToClient',
+			// },
+		];
 
-				{ url: '#', text: 'Выйти', id: 'logout' },
-			],
+		dropItems.push({ url: '/my-contracts', text: 'Контракты' });
+
+		if (this.data.isClient) {
+			dropItems.push({
+				url: '/my-job-postings',
+				text: 'Мои заказы',
+			});
+		} else {
+			dropItems.push({
+				url: `/freelancers/${this.data.user.freelancerId}`,
+				text: 'Профиль',
+			});
+			// profileItems.push({ url: '/saved', text: 'Закладки' });
+			dropItems.push({ url: '/proposals', text: 'Отклики' });
+		}
+		dropItems.push({ url: config.urls.settings, text: 'Настройки' });
+		dropItems.push({ url: '#', text: 'Выйти', id: 'logout' });
+
+		this._dropdown = new Dropdown({
+			text: `<div class="badge-wrap user-dropdown-wrap">
+					<!--<span class="badge">+1</span>-->
+					${this._avatar.render()}
+					<i class="fas fa-angle-down user-dropdown-wrap__arrow"></i>
+				</div>`,
+			items: dropItems,
 			contentRight: true,
 			toggleClassname: 'nav__item',
 		});

@@ -148,7 +148,6 @@
 					<div class="d-block">
 						<div class="d-block_title">Профиль</div>
 						<div class="d-card">
-							<div class="d-profile-item">{{freelancer.tagline}}</div>
 							<div class="d-profile-item">{{freelancer.overview}}</div>
 							<div class="d-profile-item">
 								<div class="d-profile-item-label">Специализация</div>
@@ -160,6 +159,14 @@
 									{{freelancer.experienceLevel}}
 								</div>
 							{{/freelancer.hasLevel}}
+							{{#freelancer.hasSkills}}
+								<div class="d-profile-item">
+									<div class="d-profile-item-label">Навыки</div>
+									{{#each freelancer.skills}}
+										{{{this}}}
+									{{/each}}
+								</div>
+							{{/freelancer.hasSkills}}
 							<a class="card-action" href="/settings?tab=freelancer">Управление профилем</a>
 							<a class="card-action" href="/freelancers/{{freelancer.id}}">Профиль</a>
 						</div>
