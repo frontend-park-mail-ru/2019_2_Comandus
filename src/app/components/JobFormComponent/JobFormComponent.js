@@ -156,8 +156,8 @@ class JobFormComponent extends Component {
 			name: 'tagLine',
 			max: 5,
 			duplicate: false,
-			tags: [],
-			value: job.skills,
+			tags: job.tagLine ? job.tagLine.split(',') : [],
+			// value: job.tagLine,
 		});
 
 		const submitBtn = new Button({

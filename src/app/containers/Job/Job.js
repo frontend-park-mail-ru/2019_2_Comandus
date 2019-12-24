@@ -125,7 +125,8 @@ export default class Job extends Component {
 	jobUpdated = () => {
 		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
 		const job = store.get(['job']);
-		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
+		// job['skills'] = job['skills'] ? job['skills'].split(',') : [];
+		job['skills'] = job['tagLine'] ? job['tagLine'].split(',') : [];
 		job['experienceLevel'] = getExperienceLevelName(
 			job['experienceLevelId'],
 		);

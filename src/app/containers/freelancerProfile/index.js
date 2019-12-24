@@ -79,7 +79,8 @@ export class Profile extends Component {
 			.map((job) => {
 				const el = { ...job };
 				el['experienceLevel'] = levels[el['experienceLevelId']];
-				el['skills'] = el['skills'].split(',');
+				// el['skills'] = el['skills'].split(',');
+				el['skills'] = el['tagline'] ? el['tagline'].split(',') : [];
 				return el;
 			})
 			.map((job) => {
@@ -224,7 +225,7 @@ export class Profile extends Component {
 		});
 
 		this._inputTags = new InputTags({
-			name: 'skills',
+			name: 'tagline',
 			max: 5,
 			duplicate: false,
 			tags: this._freelancerSkills
