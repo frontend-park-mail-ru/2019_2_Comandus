@@ -19,7 +19,10 @@ export default class IconButton extends Component {
 	}
 
 	postRender() {
-		// console.log("test id: " + this.data.id + " | _id: " + this._id);
+		if (!this.el) {
+			return;
+		}
+
 		this.el.onclick = this._onCkick;
 	}
 }

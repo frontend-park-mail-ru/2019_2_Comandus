@@ -66,22 +66,25 @@ export class UserMenu extends Component {
 			// },
 		];
 
-		dropItems.push({ url: '/my-contracts', text: 'Контракты' });
+		if (this.data.loggedIn) {
+			dropItems.push({ url: '/my-contracts', text: 'Контракты' });
 
-		if (this.data.isClient) {
-			dropItems.push({
-				url: '/my-job-postings',
-				text: 'Мои заказы',
-			});
-		} else {
-			dropItems.push({
-				url: `/freelancers/${this.data.user.freelancerId}`,
-				text: 'Профиль',
-			});
-			// profileItems.push({ url: '/saved', text: 'Закладки' });
-			dropItems.push({ url: '/proposals', text: 'Отклики' });
+			if (this.data.isClient) {
+				dropItems.push({
+					url: '/my-job-postings',
+					text: 'Мои заказы',
+				});
+			} else {
+				dropItems.push({
+					url: `/freelancers/${this.data.user.freelancerId}`,
+					text: 'Профиль',
+				});
+				// profileItems.push({ url: '/saved', text: 'Закладки' });
+				dropItems.push({ url: '/proposals', text: 'Отклики' });
+			}
+			dropItems.push({ url: config.urls.settings, text: 'Настройки' });
 		}
-		dropItems.push({ url: config.urls.settings, text: 'Настройки' });
+
 		dropItems.push({ url: '#', text: 'Выйти', id: 'logout' });
 
 		this._dropdown = new Dropdown({

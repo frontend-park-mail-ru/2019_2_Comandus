@@ -79,6 +79,10 @@ export default class InputTags extends Component {
 	}
 
 	postRender() {
+		if (!this.el) {
+			return;
+		}
+
 		this._wrapper = this.el.querySelector('.input-tags__tags-wrapper');
 		this._input = this.el.querySelector('.input-tags__input');
 		this._destinationInput = this.el.querySelector(

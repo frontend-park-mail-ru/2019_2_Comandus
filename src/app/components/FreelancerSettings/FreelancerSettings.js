@@ -83,8 +83,6 @@ export class FreelancerSettings extends Component {
 			countryId = currentCountry.value;
 		}
 
-		console.log('check id:', countryId);
-
 		let cityId = -1;
 		if (countryId !== -1) {
 			UtilService.getCityListByCountry(countryId).then((cities) => {
@@ -187,8 +185,6 @@ export class FreelancerSettings extends Component {
 			duplicate: false,
 			tags: freelancerObj.tagline ? freelancerObj.tagline.split(',') : [],
 		});
-		console.log('tagline', freelancerObj.tagline);
-
 		// const skillTags = [
 		// 	{
 		// 		section: 'Программирование',
@@ -308,7 +304,6 @@ export class FreelancerSettings extends Component {
 			...this.data.freelancer,
 			...helper.formToJSON(),
 		};
-		console.log('check merge:', data);
 		if (data.city) {
 			data.city = parseInt(data.city);
 			data.country = parseInt(data.country);

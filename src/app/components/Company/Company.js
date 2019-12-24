@@ -44,7 +44,6 @@ export class Company extends Component {
 						company: { ...response },
 						...this.data,
 					};
-					console.log('GetCompanyById', { ...response });
 				})
 				.catch((error) => {
 					console.error(error);
@@ -263,8 +262,6 @@ export class Company extends Component {
 			data.city = parseInt(data.city);
 			data.country = parseInt(data.country);
 		}
-
-		console.log('check what i send', data);
 
 		CompanyService.UpdateCompany(data)
 			.then((response) => {

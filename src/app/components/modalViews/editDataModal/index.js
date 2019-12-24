@@ -42,6 +42,10 @@ export default class editDataModal extends Component {
 	postRender() {
 		super.postRender();
 
+		if (!this.el) {
+			return;
+		}
+
 		const form = this.el.querySelector(`#${this.id}-modalForm`);
 		if (this._onSubmit) {
 			enableValidationAndSubmit(form, this._onSubmit);

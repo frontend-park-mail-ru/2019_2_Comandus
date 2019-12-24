@@ -346,7 +346,6 @@ export class Profile extends Component {
 			...helper.formToJSON(),
 		};
 
-		console.log(`check check:  '${this.data.freelancer.city}'`);
 		if (this.data.freelancer.city !== 'не задано') {
 			getCountryAndCityIdByName(
 				this.data.freelancer.country,

@@ -22,6 +22,7 @@ import bus from '@frame/bus';
 import UtilService from '@services/UtilService';
 import CompanyService from '@services/CompanyService';
 import Tag from '@components/dataDisplay/Tag/Tag';
+import AuthService from '@services/AuthService';
 
 export default class Dashboard extends Component {
 	constructor({ ...props }) {
@@ -44,12 +45,20 @@ export default class Dashboard extends Component {
 
 	preRender() {
 		const isClient = AccountService.isClient();
+		const loggedIn = AuthService.isLoggedIn();
 		const user = store.get(['user']);
 
 		this.data = {
 			isClient,
 			user,
+			loggedIn,
 		};
+
+		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+
+		if (!loggedIn) {
+			return;
+		}
 
 		ContractService.GetContracts().then(this.onGetContractsResponse);
 		ProposalService.GetProposals().then(this.onGetProposalsResponse);
@@ -69,7 +78,6 @@ export default class Dashboard extends Component {
 			FreelancerService.GetFreelancerById(user.freelancerId)
 				.then(this.onGetFreelancerResponse)
 				.then((freelancer) => {
-					console.log(this.data.freelancer.experienceLevelId);
 					return JobService.Search({
 						type: 'jobs',
 						limit: 3,
@@ -81,8 +89,6 @@ export default class Dashboard extends Component {
 				})
 				.then(this.onGetJobSuggestsResponse);
 		}
-
-		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
 	}
 
 	render() {
@@ -116,6 +122,10 @@ export default class Dashboard extends Component {
 	postRender() {}
 
 	onGetContractsResponse = (contracts) => {
+		if (!contracts) {
+			return;
+		}
+
 		const lastContracts = contracts
 			.filter((el) => {
 				return (
@@ -138,6 +148,10 @@ export default class Dashboard extends Component {
 	};
 
 	onGetProposalsResponse = (proposals) => {
+		if (!proposals) {
+			return;
+		}
+
 		let lastProposals = proposals
 			.filter((el) => {
 				return (
