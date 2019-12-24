@@ -48,29 +48,25 @@
 					</div>
 				</div>
 
-				<div class="profile-sidebar profile-sidebar_mobile">
-					{{#isClient}}
-						<div class="profile-sidebar__buttons">
-							{{{ projectSuggestBtn }}}
-							{{{ saveBtn }}}
-						</div>
-					{{/isClient}}
-					<div class="profile-sidebar__profile-link">
-						{{{ profileLinkField }}}
-						<button class="profile-link__copy">
-							Копировать ссылку
-						</button>
-					</div>
-				</div>
+{{!--				<div class="profile-sidebar profile-sidebar_mobile">--}}
+{{!--					{{#isClient}}--}}
+{{!--						<div class="profile-sidebar__buttons">--}}
+{{!--							{{{ projectSuggestBtn }}}--}}
+{{!--							{{{ saveBtn }}}--}}
+{{!--						</div>--}}
+{{!--					{{/isClient}}--}}
+{{!--					<div class="profile-sidebar__profile-link">--}}
+{{!--						{{{ profileLinkField }}}--}}
+{{!--						<button class="profile-link__copy">--}}
+{{!--							Копировать ссылку--}}
+{{!--						</button>--}}
+{{!--					</div>--}}
+{{!--				</div>--}}
 
 				{{#historyEnabled}}
 					<div class="profile-history card">
 						{{{ historyCardHeader }}}
 						<div class="profile-history__items">
-						{{#each profileHistory}}
-							{{{ this }}}
-						{{/each}}
-						{{historyHtmlArray}}
 						{{#each historyHtmlArray}}
 							{{{ this }}}
 						{{/each}}
@@ -87,19 +83,21 @@
 	{{!--				{{{ portfolioPaginator }}}--}}
 	{{!--			</div>--}}
 
-				<div class="profile-skills card">
-					{{{ skillsCardHeader }}}
-					<div class="profile-skills__row tp-row tp-row_content_left tp-row_align_center">
-						{{# if skillTags }}
-							{{#each skillTags}}
-								{{{ this }}}
-							{{/each}}
-						{{else}}
-							Пока нет навыков
-						{{/if}}
+				{{# if skillTags }}
+					<div class="profile-skills card">
+						{{{ skillsCardHeader }}}
+						<div class="profile-skills__row tp-row tp-row_content_left tp-row_align_center">
+							{{# if skillTags }}
+								{{#each skillTags}}
+									{{{ this }}}
+								{{/each}}
+							{{else}}
+								Пока нет навыков
+							{{/if}}
+						</div>
+						{{{ skillsChangeModal }}}
 					</div>
-					{{{ skillsChangeModal }}}
-				</div>
+				{{/if}}
 			</div>
 			<div class="tp-col-3 profile-sidebar profile-sidebar_desktop">
 {{!--				{{#isClient}}--}}

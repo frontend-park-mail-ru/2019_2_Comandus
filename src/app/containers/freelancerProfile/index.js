@@ -42,37 +42,37 @@ import editDataModal from '@components/modalViews/editDataModal';
 export class Profile extends Component {
 	constructor(props) {
 		super(props);
-		const profilePortfolios = [
-			{
-				projectTitle: 'Проект 1',
-				projectFile: defaultAvatarUrl('П', '1', 600),
-				projectUrl: '#',
-			},
-			{
-				projectTitle: 'Проект 2',
-				projectFile: defaultAvatarUrl('П', '2', 600),
-				projectUrl: '#',
-			},
-			{
-				projectTitle: 'Проект 3',
-				projectFile: defaultAvatarUrl('П', '3', 600),
-				projectUrl: '#',
-			},
-			{
-				projectTitle: 'Проект 4',
-				projectFile: defaultAvatarUrl('П', '4', 600),
-				projectUrl: '#',
-			},
-		];
+		// const profilePortfolios = [
+		// 	{
+		// 		projectTitle: 'Проект 1',
+		// 		projectFile: defaultAvatarUrl('П', '1', 600),
+		// 		projectUrl: '#',
+		// 	},
+		// 	{
+		// 		projectTitle: 'Проект 2',
+		// 		projectFile: defaultAvatarUrl('П', '2', 600),
+		// 		projectUrl: '#',
+		// 	},
+		// 	{
+		// 		projectTitle: 'Проект 3',
+		// 		projectFile: defaultAvatarUrl('П', '3', 600),
+		// 		projectUrl: '#',
+		// 	},
+		// 	{
+		// 		projectTitle: 'Проект 4',
+		// 		projectFile: defaultAvatarUrl('П', '4', 600),
+		// 		projectUrl: '#',
+		// 	},
+		// ];
 
 		this._defaultAvatar = defaultAvatarUrl('F', 'W', 200);
 
 		this.data = {
-			profilePortfolios,
+			// profilePortfolios,
 			profileHistory: jobs,
 			freelancer: {},
 			historyHtmlArray: [],
-			historyEnabled: true,
+			historyEnabled: false,
 		};
 
 		this.data.profileHistory = this.data.profileHistory
@@ -166,9 +166,9 @@ export class Profile extends Component {
 				}
 			}
 
-			const skills = this._freelancerSkills.split(',');
-
-			if (this._freelancerSkills) {
+			if (this.data.freelancer.tagline) {
+				this._freelancerSkills = this.data.freelancer.tagline;
+				const skills = this.data.freelancer.tagline.split(',');
 				skillTags = skills.map((skill) => {
 					return new Tag({ text: skill, secondary: true }).render();
 				});
@@ -276,7 +276,7 @@ export class Profile extends Component {
 
 			skillsCardHeader: new CardTitle({
 				title: 'Навыки',
-				children: [this._editSkillsButton.render()],
+				// children: [this._editSkillsButton.render()],
 			}).render(),
 
 			skillTags: skillTags,
@@ -321,17 +321,13 @@ export class Profile extends Component {
 		this._copyLinkWrapper = this.el.querySelector(
 			'.profile-sidebar__profile-link',
 		);
-		this._copyLinkValue = this._copyLinkWrapper.querySelector('input');
+		this._copyLinkValue = this._copyLinkWrapper.querySelector(
+			'input[name="profileLink"]',
+		);
 		this._copyLinkBtn = this._copyLinkWrapper.querySelector(
 			'.profile-link__copy',
 		);
-		// this._copyLinkBtn.addEventListener('click', (event) => {
-		// 	// event.stopPropagation();
-		// 	event.preventDefault();
-		// 	this._copyLinkValue.el.value.select();
-		// 	// this._copyLinkValue.el.setSelectionRange(0, 99999);
-		// 	document.execCommand("copy");
-		// });
+		this._copyLinkBtn.addEventListener('click', this.copyToClipboard);
 
 		this._inputTagsInModal.addOnSubmit(this.onFormSubmit);
 
@@ -445,9 +441,16 @@ export class Profile extends Component {
 			historyHtmlArray: history.map((el) => {
 				return new HistoryItem(el).render();
 			}),
-			historyEnabled: true,
+			historyEnabled: history.length > 0,
 		};
 
 		this.stateChanged();
+	};
+
+	copyToClipboard = (event) => {
+		event.preventDefault();
+		const text = this._copyLinkValue.value;
+		this._copyLinkValue.select();
+		navigator.clipboard.writeText(text).then((r) => {});
 	};
 }

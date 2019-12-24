@@ -20,6 +20,7 @@ import {
 	specialities,
 } from '@app/constants';
 import UtilService from '@services/UtilService';
+import InputTags from '@components/inputs/InputTags/InputTags';
 
 export class FreelancerSettings extends Component {
 	constructor(props) {
@@ -171,14 +172,6 @@ export class FreelancerSettings extends Component {
 			getItems2: UtilService.getSpecialitiesByCategory,
 		});
 
-		const taglineField = new TextField({
-			required: true,
-			type: 'text',
-			label: 'Заголовок',
-			placeholder: '',
-			name: 'tagline',
-			value: freelancerObj.tagline || '',
-		});
 		const descriptionField = new TextField({
 			required: true,
 			type: 'textarea',
@@ -187,6 +180,14 @@ export class FreelancerSettings extends Component {
 			name: 'overview',
 			value: freelancerObj.overview || '',
 		});
+
+		this._inputTags = new InputTags({
+			name: 'tagline',
+			max: 5,
+			duplicate: false,
+			tags: freelancerObj.tagline ? freelancerObj.tagline.split(',') : [],
+		});
+		console.log('tagline', freelancerObj.tagline);
 
 		// const skillTags = [
 		// 	{
@@ -257,11 +258,6 @@ export class FreelancerSettings extends Component {
 				title: 'Описание',
 			}).render(),
 
-			taglineField: new FieldGroup({
-				children: [taglineField.render()],
-				label: 'Заголовок',
-			}).render(),
-
 			descriptionField: new FieldGroup({
 				children: [descriptionField.render()],
 				label: 'Описание',
@@ -271,6 +267,10 @@ export class FreelancerSettings extends Component {
 
 			submitBtn: new FieldGroup({
 				children: [submitBtn.render()],
+			}).render(),
+			inputTags: new FieldGroup({
+				children: [this._inputTags.render()],
+				label: 'Навыки',
 			}).render(),
 		};
 
@@ -287,6 +287,7 @@ export class FreelancerSettings extends Component {
 
 		this._citySelect.postRender();
 		this._specialitySelect.postRender();
+		this._inputTags.postRender();
 
 		const descriptionForm = this.el.querySelector('#descriptionForm');
 		enableValidationAndSubmit(descriptionForm, this.updateFreelancer);
