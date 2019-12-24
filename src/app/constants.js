@@ -295,3 +295,9 @@ export const statusesContract = {
 	READY: 'Ready',
 	CLOSED: 'closed',
 };
+
+export const jobStatuses = {
+	OPENED: 'opened',
+	CLOSED: 'closed',
+	DELETED: 'deleted',
+};

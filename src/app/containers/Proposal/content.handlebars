@@ -9,11 +9,18 @@
 				<div class="job-details__inner-item">
 					<a href="/jobs/{{job.id}}" class="link job-item__title">{{job.title}}</a>
 					{{{jobFeatures}}}
+{{!--					<div class="proposal__freelancer-block">--}}
+{{!--						{{{freelancerAvatar}}}--}}
+{{!--						<div class="proposal__freelancer-block__info">--}}
+{{!--							<a href="/freelancers/{{freelancer.id}}" class="link job-item__title">{{freelancer.firstName}} {{freelancer.secondName}}</a>--}}
+{{!--							<span>{{freelancer.tagline}}</span>--}}
+{{!--						</div>--}}
+{{!--					</div>--}}
 				</div>
 				{{#isClient}}
 					<div class="job-details__inner-item proposal__freelancer-block">
 						{{{freelancerAvatar}}}
-						<div>
+						<div class="proposal__freelancer-block__info">
 							<a href="/freelancers/{{freelancer.id}}" class="link job-item__title">{{freelancer.firstName}} {{freelancer.secondName}}</a>
 							<span>{{freelancer.tagline}}</span>
 						</div>
@@ -54,7 +61,7 @@
 						{{/actionMakeCandidateEnabled}}
 						{{#actionNewContractEnabled}}
 							{{{makeOffer}}}
-							<a href="/proposals/{{params.proposalId}}/new-contract">Предложить контракт</a>
+{{!--							<a href="/proposals/{{params.proposalId}}/new-contract">Предложить контракт</a>--}}
 						{{/actionNewContractEnabled}}
 					{{else}}
 						{{#actionCancelEnabled}}
@@ -79,33 +86,35 @@
 	</div>
 	<div class="tp-col-3">
 		<div class="card card_no-padding">
-			<div class="contract-status__raw contract-status__raw_active">
-				<i class="status-icon fas fa-check"></i>
-				<div class="status-title">Ожидание ответа клиента</div>
+			<div class="contract-status__raw {{#statusCreated}}contract-status__raw_active{{/statusCreated}}">
+				{{#statusCreated}}<i class="status-icon fas fa-check"></i>{{/statusCreated}}
+				<div class="status-title">Создание отклика</div>
 			</div>
-			<div class="contract-status__raw">
-				<div class="status-title">Отмена отклика фрилансером</div>
-			</div>
-			<div class="contract-status__raw">
-				<div class="status-title">Отклонение отлика клиентом</div>
-			</div>
-			<div class="contract-status__raw">
-				<div class="status-title">Согласование условий</div>
-			</div>
-			<div class="contract-status__raw">
+{{!--			<div class="contract-status__raw">--}}
+{{!--				<div class="status-title">Отмена отклика фрилансером</div>--}}
+{{!--			</div>--}}
+{{!--			<div class="contract-status__raw">--}}
+{{!--				<div class="status-title">Отклонение отлика клиентом</div>--}}
+{{!--			</div>--}}
+{{!--			<div class="contract-status__raw">--}}
+{{!--				<div class="status-title">Согласование условий</div>--}}
+{{!--			</div>--}}
+			<div class="contract-status__raw {{#statusCandidate}}contract-status__raw_active{{/statusCandidate}}">
+				{{#statusCandidate}}<i class="status-icon fas fa-check"></i>{{/statusCandidate}}
 				<div class="status-title">Фрилансер -- кандидат</div>
 				<p class="status-description">Согласование условий</p>
 			</div>
-			<div class="contract-status__raw">
+			<div class="contract-status__raw {{#statusSentContract}}contract-status__raw_active{{/statusSentContract}}">
+				{{#statusSentContract}}<i class="status-icon fas fa-check"></i>{{/statusSentContract}}
 				<div class="status-title">Предложение контракта</div>
 				<p class="status-description"></p>
 			</div>
-			<div class="contract-status__raw">
-				<div class="status-title">Создан новый контракт</div>
-			</div>
-			<div class="contract-status__raw">
-				<div class="status-title">Отклик закрыт</div>
-			</div>
+{{!--			<div class="contract-status__raw">--}}
+{{!--				<div class="status-title">Создан новый контракт</div>--}}
+{{!--			</div>--}}
+{{!--			<div class="contract-status__raw">--}}
+{{!--				<div class="status-title">Отклик закрыт</div>--}}
+{{!--			</div>--}}
 		</div>
 	</div>
 </div>

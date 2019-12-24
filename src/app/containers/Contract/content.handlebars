@@ -28,14 +28,15 @@
 						<div class="proposal-details__key">
 							Предложение сделано компанией:
 						</div>
-						<div><a class="link">Мэйлру</a></div>
+{{!--						<div><a class="link">Мэйлру</a></div>--}}
+						<div>{{company.CompanyName}}</div>
 					</div>
 					<div class="proposal-details">
 						<div class="proposal-details__key">
 							Предложение сделано фрилансеру:
 						</div>
 						<div>
-							<a class="link">Nozim Y.</a>
+							<a class="link" href="/freelancers/{{freelancer.ID}}">{{freelancer.FirstName}} {{freelancer.SecondName}}</a>
 						</div>
 					</div>
 				</div>
@@ -132,26 +133,29 @@
 	</div>
 	<div class="tp-col-3">
 		<div class="card card_no-padding">
-			<div class="contract-status__raw contract-status__raw_active">
-				<i class="status-icon fas fa-check"></i>
+			<div class="contract-status__raw {{#statusCreated}}contract-status__raw_active{{/statusCreated}}">
+				{{#statusCreated}}<i class="status-icon fas fa-check"></i>{{/statusCreated}}
 				<div class="status-title">Создание заказа</div>
 			</div>
-			<div class="contract-status__raw">
-				<div class="status-title">Согласование условий</div>
-			</div>
-			<div class="contract-status__raw">
+{{!--			<div class="contract-status__raw">--}}
+{{!--				<i class="status-icon fas fa-check"></i>--}}
+{{!--				<div class="status-title">Согласование условий</div>--}}
+{{!--			</div>--}}
+			<div class="contract-status__raw {{#statusActive}}contract-status__raw_active{{/statusActive}}">
+				{{#statusActive}}<i class="status-icon fas fa-check"></i>{{/statusActive}}
 				<div class="status-title">Выполнение работы</div>
 				<p class="status-description">Процесс выполнения задания в заказе ло получения Заказчиком иотгового
 					результата работы.</p>
 			</div>
-			<div class="contract-status__raw">
+			<div class="contract-status__raw {{#statusClosed}}contract-status__raw_active{{/statusClosed}}">
+				{{#statusClosed}}<i class="status-icon fas fa-check"></i>{{/statusClosed}}
 				<div class="status-title">Завершение заказа</div>
 				<p class="status-description">Получение Заказчиком результата работы, закрытие заказа с отзывом о
 					сотрудничестве.</p>
 			</div>
 		</div>
 		<div class="card">
-			<a class="link">Посмотреть объявление</a>
+			<a class="link" href="/jobs/{{job.ID}}">Посмотреть объявление</a>
 		</div>
 	</div>
 </div>

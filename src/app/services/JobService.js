@@ -5,7 +5,7 @@ import store from '@modules/store';
 import JobItem from '@components/dataDisplay/JobItem';
 import { formatDate, formatMoney, getJoTypeName } from '@modules/utils';
 import Item from '@components/surfaces/Item';
-import { levels } from '@app/constants';
+import { jobStatuses, levels } from '@app/constants';
 
 export default class JobService {
 	static CreateJob(jobData) {
@@ -35,6 +35,10 @@ export default class JobService {
 				headers: AuthService.getCsrfHeader(),
 			},
 		).then((jobs) => {
+			store.setState({
+				jobs: jobs,
+			});
+
 			return jobs;
 		});
 	}
@@ -125,6 +129,7 @@ export default class JobService {
 			const jobItem = new JobItem({
 				...job,
 				manage: true,
+				published: job.status !== jobStatuses.CLOSED,
 			});
 			const item = new Item({
 				children: [jobItem.render()],
@@ -133,4 +138,20 @@ export default class JobService {
 			return item.render();
 		});
 	};
+
+	static OpenJob(id) {
+		return AjaxModule.put(`${config.urls.jobs}/${id}/open`, null, {
+			headers: AuthService.getCsrfHeader(),
+		});
+	}
+
+	static CloseJob(id) {
+		return AjaxModule.put(
+			`${config.urls.jobs}/${id}/close`,
+			{},
+			{
+				headers: AuthService.getCsrfHeader(),
+			},
+		);
+	}
 }

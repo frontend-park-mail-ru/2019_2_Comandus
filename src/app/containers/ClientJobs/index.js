@@ -22,6 +22,7 @@ export default class ClientJobs extends Component {
 		this.data = {
 			jobs: [],
 			loading: true,
+			isRequest: false,
 		};
 
 		bus.on(busEvents.JOBS_UPDATED, this.jobsUpdated);
@@ -76,9 +77,11 @@ export default class ClientJobs extends Component {
 		let jobs = store.get(['jobs']);
 		const user = store.get(['user']);
 
-		jobs = jobs.filter((j) => j.hireManagerId == user.hireManagerId);
-
-		const jobsHtml = jobs ? JobService.renderClientJobPostings(jobs) : '';
+		let jobsHtml = '';
+		if (jobs) {
+			jobs = jobs.filter((j) => j.hireManagerId == user.hireManagerId);
+			jobsHtml = jobs ? JobService.renderClientJobPostings(jobs) : '';
+		}
 
 		this.data = {
 			jobs: jobsHtml,
@@ -90,6 +93,8 @@ export default class ClientJobs extends Component {
 
 	handleDelete = (event) => {
 		const { target } = event;
+		event.preventDefault();
+
 		if (hasClass('delete-job-action', target)) {
 			const id = target.dataset.id;
 			this.data = {
@@ -100,10 +105,32 @@ export default class ClientJobs extends Component {
 
 		if (hasClass('publish-job-action', target)) {
 			const id = target.dataset.id;
-			this.data = {
-				jobIdForTogglePublish: id,
-			};
-			this.togglePublish();
+			if (!this.data.isRequest) {
+				this.data = {
+					isRequest: true,
+				};
+				return JobService.OpenJob(id).then(() => {
+					this.data = {
+						isRequest: false,
+					};
+					return this.togglePublish();
+				});
+			}
+		}
+
+		if (hasClass('close-job-action', target)) {
+			const id = target.dataset.id;
+			if (!this.data.isRequest) {
+				this.data = {
+					isRequest: true,
+				};
+				return JobService.CloseJob(id).then(() => {
+					this.data = {
+						isRequest: false,
+					};
+					return this.togglePublish();
+				});
+			}
 		}
 	};
 
@@ -126,5 +153,11 @@ export default class ClientJobs extends Component {
 		});
 	};
 
-	togglePublish = () => {};
+	togglePublish = () => {
+		bus.off(busEvents.JOBS_UPDATED, this.jobsUpdated);
+		bus.on(busEvents.JOBS_UPDATED, this.jobsUpdated);
+		bus.emit(busEvents.JOBS_GET, {
+			only: 'my',
+		});
+	};
 }

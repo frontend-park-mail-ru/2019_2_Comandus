@@ -78,7 +78,8 @@ bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
 });
 
 bus.on(busEvents.JOBS_GET, (params) => {
-	JobService.GetAllJobs(params)
+	// JobService.GetAllJobs(params)
+	JobService.GetAllMyJobs(params)
 		.then(() => {
 			bus.emit(busEvents.JOBS_UPDATED);
 		})

@@ -5,6 +5,7 @@ export default {
 		process.env.NODE_ENV === 'production'
 			? 'https://fwork.live/api/'
 			: 'http://89.208.211.100:8080',
+	// : 'http://localhost:8080',
 	cookieAccountModeName: 'user_type',
 	urls: {
 		account: '/account',

@@ -123,7 +123,7 @@ class JobFormComponent extends Component {
 			name: 'city',
 			nameFirst: 'country',
 			label: 'Нужен исполнитель из...',
-			required: true,
+			// required: true,
 			filterable: true,
 			selectedItem1: job.country,
 			selectedItem2: job.city,
@@ -153,7 +153,7 @@ class JobFormComponent extends Component {
 		});
 
 		this._inputTags = new InputTags({
-			name: 'skills',
+			name: 'tagLine',
 			max: 5,
 			duplicate: false,
 			tags: [],

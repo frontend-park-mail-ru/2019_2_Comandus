@@ -43,6 +43,10 @@ export default class ClientChat extends Component {
 	}
 
 	postRender() {
+		if (!this.el) {
+			return;
+		}
+
 		this.sendBtn = this.el.querySelector('.send-message-button');
 		if (this.sendBtn) {
 			this.sendBtn.addEventListener('click', this.send);

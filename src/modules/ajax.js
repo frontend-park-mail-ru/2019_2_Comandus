@@ -61,7 +61,7 @@ class AjaxModule {
 			method: 'put',
 			data,
 			...config,
-		}).then((response) => response.json());
+		}).then((response) => this._parseJSON(response));
 	}
 
 	delete(url = '/', config = {}) {
@@ -98,6 +98,12 @@ class AjaxModule {
 		}
 
 		return fetch(url, init).then(handleErrors);
+	}
+
+	_parseJSON(response) {
+		return response.text().then(function(text) {
+			return text ? JSON.parse(text) : {};
+		});
 	}
 }
 

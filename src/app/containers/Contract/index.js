@@ -38,6 +38,9 @@ export default class Contract extends Component {
 			acceptContractEnabled: false,
 			markContractAsDoneEnabled: false,
 			feedbackEnabled: false,
+			statusCreated: false,
+			statusActive: false,
+			statusClosed: false,
 		};
 	}
 
@@ -165,6 +168,15 @@ export default class Contract extends Component {
 	}
 
 	onGetContractResponse = (contract) => {
+		const statusClosed =
+			contract.Contract.status === statusesContract.CLOSED;
+		const statusActive =
+			statusClosed ||
+			contract.Contract.status === statusesContract.ACTIVE;
+		const statusCreated =
+			statusActive ||
+			contract.Contract.status === statusesContract.EXPECTED;
+
 		this.data = {
 			contract: {
 				...contract.Contract,
@@ -175,6 +187,7 @@ export default class Contract extends Component {
 			},
 			freelancer: {
 				...contract.Freelancer,
+				...contract.Freelancer.Fr,
 			},
 			company: {
 				...contract.Company,
@@ -206,6 +219,9 @@ export default class Contract extends Component {
 			firstMessage: this.data.isClient
 				? contract.Contract.freelancerComment
 				: contract.Contract.clientComment,
+			statusCreated,
+			statusActive,
+			statusClosed,
 		};
 
 		this.stateChanged();
