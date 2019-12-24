@@ -3,12 +3,13 @@ import template from './Tag.handlebars';
 import './Tag.scss';
 
 export default class Tag extends Component {
-	constructor({ text = '', onDelete = null, props }) {
+	constructor({ text = '', onDelete = null, secondary = false, props }) {
 		super(props);
 
 		this.data = {
 			text,
 			onDelete,
+			secondary,
 		};
 	}
 

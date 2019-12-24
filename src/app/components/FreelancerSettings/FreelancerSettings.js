@@ -152,7 +152,6 @@ export class FreelancerSettings extends Component {
 		this._levelRadioGroup = new RadioGroup({
 			items: levelsRadioShort,
 			column: true,
-			// title: 'Уровень фрилансера',
 			required: true,
 			name: 'experienceLevelId',
 			value: freelancerObj.experienceLevelId || '',
@@ -288,6 +287,9 @@ export class FreelancerSettings extends Component {
 
 		this._citySelect.postRender();
 		this._specialitySelect.postRender();
+
+		const descriptionForm = this.el.querySelector('#descriptionForm');
+		enableValidationAndSubmit(descriptionForm, this.updateFreelancer);
 
 		const contactsForm = this.el.querySelector('#contactsForm');
 		enableValidationAndSubmit(contactsForm, this.updateFreelancer);

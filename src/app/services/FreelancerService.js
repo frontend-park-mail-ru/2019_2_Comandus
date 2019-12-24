@@ -12,9 +12,12 @@ export default class FreelancerService {
 			headers: AuthService.getCsrfHeader(),
 		})
 			.then((response) => {
+				console.log('GetFreelancerById Full response', response);
 				console.log('GetFreelancerById', response.freelancer);
 				store.setState({
 					freelancer: response.freelancer,
+					firstName: response.firstName,
+					secondName: response.secondName,
 				});
 
 				return response.freelancer;

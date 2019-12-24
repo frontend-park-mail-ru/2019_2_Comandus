@@ -1,4 +1,6 @@
 import { dueTimes, jobTypes, levels, proposalStatuses } from '@app/constants';
+import UtilService from '@services/UtilService';
+import store from '@modules/store';
 
 /**
  * @param {String} html representing a single element
@@ -175,4 +177,46 @@ export function isProposalActive(proposal) {
 		(proposal.statusManager === proposalStatuses.ACCEPTED ||
 			proposal.statusManager === proposalStatuses.SENT_CONTRACT)
 	);
+}
+
+export async function getCountryAndCityIdByName(countryName, cityName) {
+	const countryList = UtilService.MapCountriesToSelectList();
+
+	if (!countryList) {
+		console.error('Unavailable to get country list!');
+		return;
+	}
+
+	const currentCountry = countryList.find((country) => {
+		return country.label === countryName;
+	});
+
+	let countryId = -1;
+	if (currentCountry) {
+		countryId = currentCountry.value;
+	} else {
+		console.error('Unable to resolve country name: ', countryName);
+		return;
+	}
+	let cityId = -1;
+
+	await UtilService.getCityListByCountry(countryId).then((cities) => {
+		const currentCity = cities.find((city) => {
+			return city.label === cityName;
+		});
+
+		if (currentCity) {
+			cityId = currentCity.value;
+		}
+	});
+
+	if (cityId === -1) {
+		console.error('Unable to resolve city name: ', cityName);
+		return;
+	}
+
+	return {
+		country: countryId,
+		city: cityId,
+	};
 }
