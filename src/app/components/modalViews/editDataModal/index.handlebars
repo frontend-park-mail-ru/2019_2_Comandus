@@ -1,0 +1,10 @@
+<div id="{{_id}}">
+	<form method="post" id="{{_id}}-modalForm" autocomplete="off">
+		{{#each children}}
+			{{{ this }}}
+		{{/each}}
+		<div class="edit-data-modal__buttons">
+			{{{ submitBtn }}}
+		</div>
+	</form>
+</div>

@@ -1,0 +1,22 @@
+@import '~@assets/scss/global';
+
+.edit-data-modal {
+	&__content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 1.5em;
+	}
+	&__buttons {
+		margin-bottom: 1.5em;
+	}
+}
+
+.edit-data-content {
+	&__image {
+		margin: 10px 10px 0 10px;
+	}
+	&__description {
+		text-align: center;
+	}
+}
