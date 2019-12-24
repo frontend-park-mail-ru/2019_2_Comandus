@@ -24,6 +24,7 @@ const restrictedUrls = [
 	'/proposals/:proposalId',
 	'/contracts/new',
 	'/jobs/:jobId/edit',
+	'/dashboard',
 ];
 
 const restrictedUrlsForFreelancer = [
