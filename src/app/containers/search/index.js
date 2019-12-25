@@ -21,6 +21,7 @@ import { router } from '../../../index';
 import FreelancerItem from '@components/dataDisplay/FreelancerItem';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import {
+	debounce,
 	formatDate,
 	formatMoney,
 	getJoTypeName,
@@ -105,7 +106,7 @@ export default class Search extends Component {
 			placeholder: 'Поиск',
 			value: this.data.q,
 			onKeydown: this.onKeydown,
-			onInput: this.onInput,
+			onInput: debounce(this.onInput, 300),
 		});
 		this.searchBtn = new Button({
 			text: 'Поиск',
@@ -217,18 +218,6 @@ export default class Search extends Component {
 						value: '0-10',
 						checked: this.data.proposalCount.includes('0-10'),
 					}).render(),
-					// new Checkbox({
-					// 	label: 'от 5 до 10',
-					// 	name: 'proposalCount',
-					// 	value: '5-10',
-					// 	checked: this.data.proposalCount.includes('5-10')
-					// }).render(),
-					// new Checkbox({
-					// 	label: 'от 10 до 20',
-					// 	name: 'proposalCount',
-					// 	value: '10-20',
-					// 	checked: this.data.proposalCount.includes('10-20')
-					// }).render(),
 					new Checkbox({
 						label: 'более 10',
 						name: 'proposalCount',
