@@ -24,9 +24,9 @@
 								</div>
 							</div>
 						</div>
-{{!--						<div class="profile-info__selected">--}}
-{{!--							{{{ selectedCount }}}--}}
-{{!--						</div>--}}
+						{{!--						<div class="profile-info__selected">--}}
+						{{!--							{{{ selectedCount }}}--}}
+						{{!--						</div>--}}
 
 					</div>
 
@@ -38,50 +38,46 @@
 						<h2 class="profile-description__title">
 							Описание:
 						</h2>
-						<p class="profile-description__text">
-							{{#if freelancer.overview}}
-								{{freelancer.overview}}
-							{{else}}
-								Пока тут ничего нет
-							{{/if}}
+						<p class="profile-description__text">{{#if freelancer.overview}}{{freelancer.overview}}{{else}}
+							Пока тут ничего нет{{/if}}
 						</p>
 					</div>
 				</div>
 
-{{!--				<div class="profile-sidebar profile-sidebar_mobile">--}}
-{{!--					{{#isClient}}--}}
-{{!--						<div class="profile-sidebar__buttons">--}}
-{{!--							{{{ projectSuggestBtn }}}--}}
-{{!--							{{{ saveBtn }}}--}}
-{{!--						</div>--}}
-{{!--					{{/isClient}}--}}
-{{!--					<div class="profile-sidebar__profile-link">--}}
-{{!--						{{{ profileLinkField }}}--}}
-{{!--						<button class="profile-link__copy">--}}
-{{!--							Копировать ссылку--}}
-{{!--						</button>--}}
-{{!--					</div>--}}
-{{!--				</div>--}}
+				{{!--				<div class="profile-sidebar profile-sidebar_mobile">--}}
+				{{!--					{{#isClient}}--}}
+				{{!--						<div class="profile-sidebar__buttons">--}}
+				{{!--							{{{ projectSuggestBtn }}}--}}
+				{{!--							{{{ saveBtn }}}--}}
+				{{!--						</div>--}}
+				{{!--					{{/isClient}}--}}
+				{{!--					<div class="profile-sidebar__profile-link">--}}
+				{{!--						{{{ profileLinkField }}}--}}
+				{{!--						<button class="profile-link__copy">--}}
+				{{!--							Копировать ссылку--}}
+				{{!--						</button>--}}
+				{{!--					</div>--}}
+				{{!--				</div>--}}
 
 				{{#historyEnabled}}
 					<div class="profile-history card">
 						{{{ historyCardHeader }}}
 						<div class="profile-history__items">
-						{{#each historyHtmlArray}}
-							{{{ this }}}
-						{{/each}}
-					</div>
+							{{#each historyHtmlArray}}
+								{{{ this }}}
+							{{/each}}
+						</div>
 						<div class="profile-history__footer">
 							{{{ portfolioCardFooter }}}
 						</div>
 					</div>
 				{{/historyEnabled}}
 
-	{{!--			<div class="profile-portfolio card">--}}
-	{{!--				{{{ portfolioCardHeader }}}--}}
-	{{!--				{{{ portfolioCardGroup }}}--}}
-	{{!--				{{{ portfolioPaginator }}}--}}
-	{{!--			</div>--}}
+				{{!--			<div class="profile-portfolio card">--}}
+				{{!--				{{{ portfolioCardHeader }}}--}}
+				{{!--				{{{ portfolioCardGroup }}}--}}
+				{{!--				{{{ portfolioPaginator }}}--}}
+				{{!--			</div>--}}
 
 				{{# if skillTags }}
 					<div class="profile-skills card">
@@ -100,12 +96,12 @@
 				{{/if}}
 			</div>
 			<div class="tp-col-3 profile-sidebar profile-sidebar_desktop">
-{{!--				{{#isClient}}--}}
-{{!--					<div class="profile-sidebar__buttons">--}}
-{{!--						{{{ projectSuggestBtn }}}--}}
-{{!--						{{{ saveBtn }}}--}}
-{{!--					</div>--}}
-{{!--				{{/isClient}}--}}
+				{{!--				{{#isClient}}--}}
+				{{!--					<div class="profile-sidebar__buttons">--}}
+				{{!--						{{{ projectSuggestBtn }}}--}}
+				{{!--						{{{ saveBtn }}}--}}
+				{{!--					</div>--}}
+				{{!--				{{/isClient}}--}}
 				<div class="profile-sidebar__profile-link">
 					{{{ profileLinkField }}}
 					<button class="profile-link__copy">
