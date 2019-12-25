@@ -9,10 +9,20 @@ import ContractItem from '@components/dataDisplay/ContractItem';
 import { formatDate, formatMoney } from '@modules/utils';
 import ContractService from '@services/ContractService';
 import { statusesContract } from '@app/constants';
+import emptyBox from '@assets/img/empty-box.svg';
 
 export default class ClientContracts extends Component {
 	constructor(props) {
 		super(props);
+
+		const emptyBoxImg = document.createElement('img');
+		emptyBoxImg.src = emptyBox;
+		emptyBoxImg.style.height = '10em';
+		emptyBoxImg.style.width = '10em';
+
+		this.data = {
+			emptyBoxImg: emptyBoxImg.outerHTML,
+		};
 	}
 
 	preRender() {

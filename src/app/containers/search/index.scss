@@ -79,3 +79,12 @@
 		color: $primary-color;
 	}
 }
+
+@media screen and (max-width: 576px) {
+	.search-page {
+		&__input {
+			margin: 1em;
+		}
+	}
+}
+

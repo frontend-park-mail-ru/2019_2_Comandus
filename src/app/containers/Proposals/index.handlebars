@@ -1,7 +1,7 @@
-<div id="{{_id}}">
+<div id="{{_id}}" class="proposals-page">
 	<div class="tp-container tp-centered-container">
-		<div class="tp-row">
-			<div class="tp-col-12">
+		<div class="tp-row proposals-page">
+			<div class="tp-col-12 proposals-page">
 				<div class="page-header page-title">
 					Мои отклики
 				</div>
@@ -60,10 +60,16 @@
 						</div>
 					</div>
 				{{/showClosedProposals}}
-
-				{{!--					</div>--}}
-				{{!--				</div>--}}
 			</div>
 		</div>
 	</div>
+
+	{{#empty}}
+		<div class="empty-box-wrap">
+			<div class="empty-box">
+				{{{emptyBoxImg}}}
+				<div class="empty-box_text">Здесь будут ваши отклики</div>
+			</div>
+		</div>
+	{{/empty}}
 </div>

@@ -3,7 +3,6 @@
 .freelancer-item {
 	&__row {
 		display: flex;
-
 	}
 
 	&__col-full {
@@ -82,6 +81,10 @@
 			&_desktop {
 				display: none;
 			}
+		}
+
+		&__avatar {
+			@include small-avatar;
 		}
 	}
 }

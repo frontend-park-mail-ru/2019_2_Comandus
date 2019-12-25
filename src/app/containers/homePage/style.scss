@@ -186,4 +186,26 @@ h1.tp-main-text {
 	.thumb-up-img {
 		padding: 0;
 	}
+
+	.how-it-works-wrap {
+		padding: 40px 0;
+		margin-top: 20px;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	}
+
+	.how-it-works {
+		font-size: 14px;
+	}
+
+	.main-title {
+		font-size: 3em;
+	}
+
+	.main-desc {
+		font-size: 1em;
+	}
+
+	.header_dark .nav__item {
+		color: initial;
+	}
 }

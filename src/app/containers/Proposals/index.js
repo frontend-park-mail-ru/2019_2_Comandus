@@ -8,13 +8,20 @@ import ProposalItem from '@components/dataDisplay/ProposalItem';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import { formatDate, isProposalActive, isProposalClosed } from '@modules/utils';
 import ProposalService from '@services/ProposalService';
+import emptyBox from '@assets/img/empty-box.svg';
 
 export default class Proposals extends Component {
 	constructor({ children = [], ...props }) {
 		super(props);
 
+		const emptyBoxImg = document.createElement('img');
+		emptyBoxImg.src = emptyBox;
+		emptyBoxImg.style.height = '10em';
+		emptyBoxImg.style.width = '10em';
+
 		this.data = {
 			children,
+			emptyBoxImg: emptyBoxImg.outerHTML,
 		};
 
 		bus.on(busEvents.PROPOSALS_UPDATED, this.proposalsUpdated);
@@ -52,35 +59,48 @@ export default class Proposals extends Component {
 	proposalsUpdated = () => {
 		const proposals = store.get(['proposals']);
 
-		const activeProposals = proposals.filter((el) => {
-			return isProposalActive(el.Response);
-		});
-		const closedProposals = proposals.filter((el) => {
-			return isProposalClosed(el.Response);
-		});
-		const sentProposals = proposals.filter((el) => {
-			return (
-				el.Response.statusFreelancer === proposalStatuses.SENT &&
-				el.Response.statusManager === proposalStatuses.REVIEW
-			);
-		});
+		let activeProposals = [];
+		let closedProposals = [];
+		let sentProposals = [];
+
+		if (proposals) {
+			activeProposals = proposals
+				.filter((el) => {
+					return isProposalActive(el.Response);
+				})
+				.map((el) => ProposalService.renderProposalItem(el));
+			closedProposals = proposals
+				.filter((el) => {
+					return isProposalClosed(el.Response);
+				})
+				.map((el) => ProposalService.renderProposalItem(el));
+			sentProposals = proposals
+				.filter((el) => {
+					return (
+						el.Response.statusFreelancer ===
+							proposalStatuses.SENT &&
+						el.Response.statusManager === proposalStatuses.REVIEW
+					);
+				})
+				.map((el) => ProposalService.renderProposalItem(el));
+		}
+
+		const showActiveProposals = activeProposals.length > 0;
+		const showClosedProposals = closedProposals.length > 0;
+		const showSentProposals = sentProposals.length > 0;
 
 		this.data = {
-			proposals: proposals.map((el) =>
-				ProposalService.renderProposalItem(el),
+			activeProposals,
+			showActiveProposals,
+			closedProposals,
+			showClosedProposals,
+			sentProposals,
+			showSentProposals,
+			empty: !(
+				showActiveProposals ||
+				showClosedProposals ||
+				showSentProposals
 			),
-			activeProposals: activeProposals.map((el) =>
-				ProposalService.renderProposalItem(el),
-			),
-			showActiveProposals: activeProposals.length > 0,
-			closedProposals: closedProposals.map((el) =>
-				ProposalService.renderProposalItem(el),
-			),
-			showClosedProposals: closedProposals.length > 0,
-			sentProposals: sentProposals.map((el) =>
-				ProposalService.renderProposalItem(el),
-			),
-			showSentProposals: sentProposals.length > 0,
 		};
 
 		this.stateChanged();
