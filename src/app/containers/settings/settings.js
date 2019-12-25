@@ -182,9 +182,6 @@ export class Settings extends Component {
 					return tab.link === 'freelancer';
 				}).props.freelancerId = this.data.user.freelancerId;
 			})
-			.catch((error) => {
-				console.error(error);
-			})
 			.finally(() => {
 				this.data = {
 					...this.data,

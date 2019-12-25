@@ -105,6 +105,8 @@
 	}
 	&__text {
 		padding: 0;
+		overflow-wrap: break-word;
+		white-space: pre-wrap;
 	}
 }
 

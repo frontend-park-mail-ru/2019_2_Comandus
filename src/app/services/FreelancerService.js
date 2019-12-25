@@ -10,19 +10,15 @@ export default class FreelancerService {
 	static GetFreelancerById(id) {
 		return AjaxModule.get(`/freelancer/${id}`, {
 			headers: AuthService.getCsrfHeader(),
-		})
-			.then((response) => {
-				store.setState({
-					freelancer: response.freelancer,
-					firstName: response.firstName,
-					secondName: response.secondName,
-				});
-
-				return response.freelancer;
-			})
-			.catch((error) => {
-				console.error('GetFreelancerById: ', error);
+		}).then((response) => {
+			store.setState({
+				freelancer: response.freelancer,
+				firstName: response.firstName,
+				secondName: response.secondName,
 			});
+
+			return response.freelancer;
+		});
 	}
 
 	static UpdateFreelancer(id, data) {

@@ -49,8 +49,6 @@ export default class editDataModal extends Component {
 		const form = this.el.querySelector(`#${this.id}-modalForm`);
 		if (this._onSubmit) {
 			enableValidationAndSubmit(form, this._onSubmit);
-		} else {
-			console.error(`no callback for submit ${this.id} modal form`);
 		}
 	}
 

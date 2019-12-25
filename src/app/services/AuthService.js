@@ -40,7 +40,10 @@ export default class AuthService {
 				user: null,
 			});
 			AccountService.PutUserToLocalStorage();
+			store.clear();
+			localStorage.clear();
 			router.push('/');
+			document.location.reload(false);
 		});
 	}
 

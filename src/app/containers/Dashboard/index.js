@@ -84,7 +84,7 @@ export default class Dashboard extends Component {
 						desc: 1,
 						experienceLevel:
 							levelsDasha[freelancer.experienceLevelId],
-						specialityId: freelancer.specialityId,
+						// specialityId: freelancer.specialityId,
 					});
 				})
 				.then(this.onGetJobSuggestsResponse);

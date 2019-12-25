@@ -47,21 +47,13 @@
 						{{#isClient}}
 							{{#isMyJob}}
 								<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
-								{{#job.published}}
-									<button class="close-job-action btn btn_secondary btn-m" data-id="{{job.id}}">Снять
-										с публикации
-									</button>
-								{{else}}
-									<button class="publish-job-action btn btn_secondary btn-m" data-id="{{job.id}}">
-										Опубликовать
-									</button>
-								{{/job.published}}
+								{{{_togglePublish}}}
 							{{else}}
 								<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
 							{{/isMyJob}}
 						{{else}}
 							{{{submitProposal}}}
-							{{{saveBtn}}}
+{{!--							{{{saveBtn}}}--}}
 						{{/isClient}}
 					{{else}}
 						<a href="/login" class="btn btn_primary btn-m">Войти</a>
@@ -117,7 +109,7 @@
 					{{/isMyJob}}
 				{{else}}
 					{{{submitProposalMobile}}}
-					{{{saveBtn}}}
+{{!--					{{{saveBtn}}}--}}
 				{{/isClient}}
 			{{else}}
 				<a href="/login" class="btn btn_primary btn-m">Войти</a>

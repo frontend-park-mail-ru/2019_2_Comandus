@@ -57,10 +57,25 @@ export default class Search extends Component {
 	}
 
 	preRender() {
-		bus.on(busEvents.SEARCH_RESPONSE, this.onSearchResponse);
-		bus.emit(busEvents.SEARCH, this.props.params);
+		if (!this.props.params.type) {
+			let queryParams = new URLSearchParams(this.props.params);
+			queryParams.append('type', 'jobs');
+			queryParams.append('desc', 1);
+			queryParams = queryParams.toString();
+			router.push('/search', '?' + queryParams);
+			return;
+		}
 
-		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+		bus.on(busEvents.SEARCH_RESPONSE, this.onSearchResponse);
+		const countries = UtilService.MapCountriesToSelectList();
+		if (countries && countries.length !== 0) {
+			bus.emit(busEvents.SEARCH, this.props.params);
+		} else {
+			bus.on(busEvents.UTILS_LOADED, () => {
+				this.utilsLoaded();
+				bus.emit(busEvents.SEARCH, this.props.params);
+			});
+		}
 
 		const { minProposalCount, maxProposalCount } = this.props.params;
 		const proposalCount = [];
@@ -107,7 +122,7 @@ export default class Search extends Component {
 		this._specialitySelect = new DoubleSelect({
 			items: categories,
 			label1: 'Категория',
-			items2: specialities,
+			// items2: specialities,
 			label2: 'Специализация',
 			nameFirst: 'category',
 			name: 'specialityId',

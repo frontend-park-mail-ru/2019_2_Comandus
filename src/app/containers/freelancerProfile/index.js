@@ -378,9 +378,6 @@ export class Profile extends Component {
 					user: { ...res },
 				};
 			})
-			.catch((error) => {
-				console.error(error);
-			})
 			.finally(() => {
 				this.data = {
 					...this.data,

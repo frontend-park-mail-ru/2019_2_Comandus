@@ -26,6 +26,10 @@ class Store {
 
 		return requiredData;
 	}
+
+	clear() {
+		this._state = {};
+	}
 }
 
 export default new Store();

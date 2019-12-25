@@ -58,6 +58,16 @@ $border-radius-l: 10px;
 	object-fit: cover;
 }
 
+@mixin big-avatar {
+	height: 105px;
+	width: 105px;
+	border-radius: 50%;
+	color: #E0E0E0;
+	border: solid 1px #E0E0E0;
+	object-fit: cover;
+}
+
+
 @mixin active {
 	color: $primary-color;
 }

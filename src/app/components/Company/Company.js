@@ -45,9 +45,6 @@ export class Company extends Component {
 						...this.data,
 					};
 				})
-				.catch((error) => {
-					console.error(error);
-				})
 				.finally(() => {
 					this.data = {
 						...this.data,

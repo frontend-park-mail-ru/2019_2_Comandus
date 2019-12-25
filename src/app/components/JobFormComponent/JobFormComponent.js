@@ -212,9 +212,10 @@ class JobFormComponent extends Component {
 				label: 'Требуемые навыки и компетенции',
 			}).render(),
 
-			submitBtn: new FieldGroup({
-				children: [this.submitBtn.render()],
-			}).render(),
+			// submitBtn: new FieldGroup({
+			// 	children: btnChildren,
+			// }).render(),
+			submitBtn: this.submitBtn.render(),
 
 			_jobTypeRadio: new FieldGroup({
 				children: [this._jobTypeRadio.render()],

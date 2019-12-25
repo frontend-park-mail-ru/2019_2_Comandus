@@ -10,12 +10,12 @@ import { busEvents } from '@app/constants';
 
 const roles = [
 	{
-		value: 'client',
-		label: 'Найти исполнителя',
-	},
-	{
 		value: 'freelancer',
 		label: 'Работать фрилансером',
+	},
+	{
+		value: 'client',
+		label: 'Найти исполнителя',
 	},
 ];
 
@@ -64,6 +64,7 @@ class SignUpComponent extends Component {
 			items: roles,
 			required: true,
 			name: 'type',
+			value: 'freelancer',
 		});
 		const submitBtn = new Button({
 			type: 'submit',

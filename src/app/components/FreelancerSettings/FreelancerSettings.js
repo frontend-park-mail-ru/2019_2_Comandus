@@ -54,9 +54,6 @@ export class FreelancerSettings extends Component {
 						freelancer,
 					};
 				})
-				.catch((error) => {
-					console.error(error);
-				})
 				.finally(() => {
 					this.data = {
 						...this.data,

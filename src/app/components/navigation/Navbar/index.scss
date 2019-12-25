@@ -91,12 +91,12 @@
 	border: 1px solid #E0E0E0;
 	border-radius: 2px;
 	color: #656565;
-	display: flex;
+	position: relative;
 
 	input {
 		padding: 10px;
 		border: none;
-		width: 80%;
+		width: 100%;
 		background: none;
 
 		&:hover, &:focus {
@@ -111,11 +111,13 @@
 	}
 
 	button {
-		width: 20%;
 		padding: 10px;
 		color: $light-text-color;
 		border: none;
 		cursor: pointer;
+		position: absolute;
+		right: 0;
+		top: 0;
 
 		&:hover {
 			color: $primary-color;

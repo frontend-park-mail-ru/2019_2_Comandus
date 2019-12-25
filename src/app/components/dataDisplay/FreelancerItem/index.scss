@@ -10,6 +10,7 @@
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 10px;
 	}
 
 	&__avatar-wrapper {
@@ -19,7 +20,7 @@
 	}
 
 	&__avatar {
-		@include small-avatar;
+		@include big-avatar;
 	}
 
 	&__name {
@@ -60,6 +61,10 @@
 		&_desktop {
 			display: flex;
 		}
+	}
+
+	&__right-col {
+		margin-left: 10px;
 	}
 }
 
