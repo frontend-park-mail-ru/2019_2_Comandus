@@ -1,4 +1,4 @@
-import { htmlToElement, uniqueId } from '@modules/utils';
+import { debounce, htmlToElement, uniqueId } from '@modules/utils';
 import { router } from '../index';
 
 export default class Component {
@@ -41,17 +41,19 @@ export default class Component {
 	}
 
 	stateChanged() {
-		// const el = document.getElementById(this._id);
-		// this.html = this.render();
-		if (this.el) {
-			this.html = this.render();
-			// el.replaceWith(htmlToElement(this.render()));
-			this.el.replaceWith(htmlToElement(this.html));
-			this.postRender();
-			router.listenClasses();
-		} else {
-			this.onDestroy();
-		}
+		return debounce(() => {
+			// const el = document.getElementById(this._id);
+			// this.html = this.render();
+			if (this.el) {
+				this.html = this.render();
+				// el.replaceWith(htmlToElement(this.render()));
+				this.el.replaceWith(htmlToElement(this.html));
+				this.postRender();
+				router.listenClasses();
+			} else {
+				this.onDestroy();
+			}
+		}, 300)();
 	}
 
 	setProps(newProps) {

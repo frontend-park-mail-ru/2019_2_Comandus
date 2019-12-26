@@ -66,8 +66,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 100%;
+	min-height: 400px;
 	text-align: center;
+	color: $primary-color;
 
 	& img {
 		height: 100px;

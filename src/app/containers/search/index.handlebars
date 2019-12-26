@@ -7,14 +7,16 @@
 				</div>
 				<div class="tabs">
 					<ul class="nav tabs__nav">
-						<li class="tabs__nav_element {{#if_eq searchType 'jobs'}}active{{/if_eq}}"><a href="/search?type=jobs">Работы</a></li>
-						<li class="tabs__nav_element {{#if_eq searchType 'freelancers'}}active{{/if_eq}}"><a href="/search?type=freelancers">Фрилансеры</a></li>
+						<li class="tabs__nav_element {{#if_eq searchType 'jobs'}}active{{/if_eq}}"><a
+								href="/search?type=jobs">Работы</a></li>
+						<li class="tabs__nav_element {{#if_eq searchType 'freelancers'}}active{{/if_eq}}"><a
+								href="/search?type=freelancers">Фрилансеры</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="tp-col-9">
 				<div class="search-page card card_no-padding">
-{{!--					{{{ searchCardHeader }}}--}}
+					{{!--					{{{ searchCardHeader }}}--}}
 					<form id="searchForm" method="get" class="search-page__input">
 						<div class="search-input__input">
 							{{{ searchInput }}}
@@ -25,21 +27,34 @@
 					</form>
 					<div class="search-page__results">
 						<div class="search-results__items">
-							{{#if searchResults.length}}
-								{{#each searchResults}}
-									{{{this}}}
-								{{/each}}
-							{{else}}
+							{{#loading}}
 								<div class="search-not-found">
 									<div>
-										<img src="../../../assets/img/icons8-nothing-found-96.png" >
-										<div class="search-not-found__text">
-											По Вашему запросу ничего не найдено.
+										<div class="fa-3x">
+											<i class="far fa-snowflake fa-spin"></i>
 										</div>
-										<div>Попробуйте ввести другие слова или настройте фильтр</div>
+										<div class="search-not-found__text">
+											Загрузка...
+										</div>
 									</div>
 								</div>
-							{{/if}}
+							{{else}}
+								{{#if searchResults.length}}
+									{{#each searchResults}}
+										{{{this}}}
+									{{/each}}
+								{{else}}
+									<div class="search-not-found">
+										<div>
+											<img src="../../../assets/img/icons8-nothing-found-96.png">
+											<div class="search-not-found__text">
+												По Вашему запросу ничего не найдено.
+											</div>
+											<div>Попробуйте ввести другие слова или настройте фильтр</div>
+										</div>
+									</div>
+								{{/if}}
+							{{/loading}}
 						</div>
 					</div>
 				</div>

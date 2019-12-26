@@ -52,6 +52,7 @@ export default class Search extends Component {
 		this.data = {
 			children,
 			filter: {},
+			loading: false,
 		};
 
 		this.currentFocus = -1;
@@ -66,6 +67,10 @@ export default class Search extends Component {
 			router.push('/search', '?' + queryParams);
 			return;
 		}
+
+		this.data = {
+			loading: true,
+		};
 
 		bus.on(busEvents.SEARCH_RESPONSE, this.onSearchResponse);
 		const countries = UtilService.MapCountriesToSelectList();
@@ -261,52 +266,54 @@ export default class Search extends Component {
 		});
 
 		const filterForm = this.el.querySelector('#searchFilter');
-		if (filterForm) {
-			enableValidationAndSubmit(filterForm, null, (event) => {
-				const { target } = event;
-
-				const filter = this.data.filter;
-				let proposalCount = this.data.proposalCount;
-				if (target.type === 'checkbox') {
-					if (target.name === 'proposalCount') {
-						proposalCount = proposalCount.filter(
-							(el) => el !== target.value,
-						);
-						if (target.checked) {
-							proposalCount.push(target.value);
-						}
-						if (proposalCount.length > 0) {
-							proposalCount = proposalCount.sort();
-							filter['minProposalCount'] = proposalCount[
-								proposalCount.length - 1
-							].split('-')[0];
-							filter['maxProposalCount'] = proposalCount[
-								proposalCount.length - 1
-							].split('-')[1];
-
-							filter['minProposalCount'] = proposalCount[0].split(
-								'-',
-							)[0];
-							// filter['maxProposalCount'] = proposalCount[0].split('-')[0];
-						} else {
-							delete filter['minProposalCount'];
-							delete filter['maxProposalCount'];
-						}
-					}
-				} else {
-					filter[target.name] = target.value;
-				}
-
-				this.data = {
-					filter,
-				};
-
-				let queryParams = new URLSearchParams(this.data.filter);
-				// queryParams.append('type', this.props.params.type);
-				queryParams = queryParams.toString();
-				router.push('/search', '?' + queryParams);
-			});
+		if (!filterForm) {
+			return;
 		}
+
+		enableValidationAndSubmit(filterForm, null, (event) => {
+			const { target } = event;
+
+			const filter = this.data.filter;
+			let proposalCount = this.data.proposalCount;
+			if (target.type === 'checkbox') {
+				if (target.name === 'proposalCount') {
+					proposalCount = proposalCount.filter(
+						(el) => el !== target.value,
+					);
+					if (target.checked) {
+						proposalCount.push(target.value);
+					}
+					if (proposalCount.length > 0) {
+						proposalCount = proposalCount.sort();
+						filter['minProposalCount'] = proposalCount[
+							proposalCount.length - 1
+						].split('-')[0];
+						filter['maxProposalCount'] = proposalCount[
+							proposalCount.length - 1
+						].split('-')[1];
+
+						filter['minProposalCount'] = proposalCount[0].split(
+							'-',
+						)[0];
+						// filter['maxProposalCount'] = proposalCount[0].split('-')[0];
+					} else {
+						delete filter['minProposalCount'];
+						delete filter['maxProposalCount'];
+					}
+				}
+			} else {
+				filter[target.name] = target.value;
+			}
+
+			this.data = {
+				filter,
+			};
+
+			let queryParams = new URLSearchParams(this.data.filter);
+			// queryParams.append('type', this.props.params.type);
+			queryParams = queryParams.toString();
+			router.push('/search', '?' + queryParams);
+		});
 	}
 
 	onSearchResponse = (data) => {
@@ -336,6 +343,7 @@ export default class Search extends Component {
 		}
 
 		this.data = {
+			loading: false,
 			searchResults: response,
 		};
 
@@ -384,6 +392,14 @@ export default class Search extends Component {
 		a.setAttribute('id', this.id + 'autocomplete-list');
 		a.setAttribute('class', 'autocomplete-items');
 		this._searchField.el.parentNode.appendChild(a);
+
+		if (!suggestList) {
+			return;
+		}
+
+		suggestList = suggestList.filter((value, index, self) => {
+			return self.indexOf(value) === index;
+		});
 
 		suggestList.forEach((el) => {
 			const b = document.createElement('DIV');
