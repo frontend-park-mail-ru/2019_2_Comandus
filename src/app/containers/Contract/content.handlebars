@@ -16,13 +16,13 @@
 						<div class="proposal-details__key">
 							Срок
 						</div>
-						<div>от 1 до 3 месяцев</div>
+						<div>{{contract.timeEstimation}}</div>
 					</div>
 					<div class="proposal-details">
 						<div class="proposal-details__key">
 							Дата создания контракта
 						</div>
-						<div>20.11.2019</div>
+						<div>{{contract.startTime}}</div>
 					</div>
 					<div class="proposal-details">
 						<div class="proposal-details__key">
@@ -45,8 +45,11 @@
 				<div class="job-item__title">
 					Описание работы
 				</div>
+				<div style="margin-bottom: 20px">
+					{{job.Title}}
+				</div>
 				<div>
-					Описание работы из объявления...
+					{{job.Description}}
 				</div>
 			</div>
 			<div class="job-details__inner-item buttons-group">

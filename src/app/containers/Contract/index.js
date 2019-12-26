@@ -5,7 +5,7 @@ import './index.scss';
 import PageWithTitle from '@components/PageWithTitle';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
-import { formatMoney, getTimeEstimationName } from '@modules/utils';
+import { formatDate, formatMoney, getTimeEstimationName } from '@modules/utils';
 import ContractService from '@services/ContractService';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
@@ -184,6 +184,7 @@ export default class Contract extends Component {
 				timeEstimation: getTimeEstimationName(
 					contract.Contract.timeEstimation,
 				),
+				startTime: formatDate(contract.Contract.startTime),
 			},
 			freelancer: {
 				...contract.Freelancer,
