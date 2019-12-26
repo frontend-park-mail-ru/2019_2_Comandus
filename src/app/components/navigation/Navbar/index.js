@@ -95,7 +95,8 @@ export default class Navbar extends Component {
 		this.searchInput.addEventListener('submit', this.onSearchSubmit);
 	}
 
-	toggle = () => {
+	toggle = (e) => {
+		e.preventDefault();
 		const bar = document.getElementById(this.id);
 		toggleClass('navbar__nav_responsive', bar);
 	};
