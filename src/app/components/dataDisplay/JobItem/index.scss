@@ -35,3 +35,15 @@
 .manage-btn {
 	margin-left: 20px;
 }
+
+.job-small-info {
+	&__project {
+		//color: $primary-color;
+		color: $light-primary-color;
+	}
+
+	&__vacancy {
+		color: #4E45AF;
+		//color: #33AE89;
+	}
+}

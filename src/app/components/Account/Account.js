@@ -10,6 +10,7 @@ import './account.scss';
 import { defaultAvatarUrl } from '@modules/utils';
 import config from '../../config';
 import CardTitle from '@components/dataDisplay/CardTitle';
+import { formToJSON } from '@modules/form/formToJSON';
 
 export class Account extends Component {
 	constructor(props) {
@@ -116,6 +117,11 @@ export class Account extends Component {
 			helper.event.preventDefault();
 
 			this.helper = helper;
+
+			this.data.user = {
+				...this.data.user,
+				...helper.formToJSON(),
+			};
 
 			bus.on('account-put-response', this.onAccountPutResponse);
 			bus.emit('account-put', helper.formToJSON());

@@ -1,18 +1,46 @@
 <div id="{{_id}}" class="job-item">
 	<a class="job-item__title" href="/jobs/{{id}}">{{title}}</a>
 	{{#manage}}
-		<div class="manage-buttons">
-			<a href="/jobs/{{id}}/edit">Редактировать</a>
-			{{#published}}
-				<button class="close-job-action manage-btn" data-id="{{id}}">Закрыть</button>
-			{{else}}
-				<button class="publish-job-action manage-btn" data-id="{{id}}">Опубликовать</button>
-			{{/published}}
-			<button class="delete-job-action manage-btn" data-id="{{id}}">Удалить</button>
+		<div class="tp-row tp-row_content_stretch">
+			{{#if_eq type 'Проект'}}
+				<span class="job-small-info__project">
+						<i class="fa fa-laptop" aria-hidden="true"></i>
+					{{type}}
+					</span>
+			{{/if_eq}}
+			{{#if_eq type 'Вакансия'}}
+				<span class="job-small-info__vacancy">
+						<i class="fa fa-briefcase" aria-hidden="true"></i>
+					{{type}}
+					</span>
+			{{/if_eq}}
+			<div class="manage-buttons">
+				<a href="/jobs/{{id}}/edit">Редактировать</a>
+				{{#published}}
+					<button class="close-job-action manage-btn" data-id="{{id}}">Закрыть</button>
+				{{else}}
+					<button class="publish-job-action manage-btn" data-id="{{id}}">Опубликовать</button>
+				{{/published}}
+				<button class="delete-job-action manage-btn" data-id="{{id}}">Удалить</button>
+			</div>
 		</div>
 	{{else}}
-		<div class="job-item__small__info job-item__small">{{type}} {{paymentAmount}}
-			- {{experienceLevel}} - {{created}}</div>
+		<div class="job-item__small__info job-item__small">
+			{{#if_eq type 'Проект'}}
+				<span class="job-small-info__project">
+					<i class="fa fa-laptop" aria-hidden="true"></i>
+					{{type}}
+				</span>
+			{{/if_eq}}
+			{{#if_eq type 'Вакансия'}}
+				<span class="job-small-info__vacancy">
+					<i class="fa fa-briefcase" aria-hidden="true"></i>
+					{{type}}
+				</span>
+			{{/if_eq}}
+			{{paymentAmount}}
+			- {{experienceLevel}} - {{created}}
+		</div>
 		<div class="job-item__description">
 			{{description}}
 		</div>

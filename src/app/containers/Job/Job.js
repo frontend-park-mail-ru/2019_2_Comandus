@@ -26,6 +26,8 @@ import {
 	getExperienceLevelName,
 	getJoTypeName,
 	hasClass,
+	isProposalActive,
+	isProposalClosed,
 } from '@modules/utils';
 import JobService from '@services/JobService';
 
@@ -211,20 +213,41 @@ export default class Job extends Component {
 			return;
 		}
 
-		response = response.filter((proposal) => {
-			return (
-				proposal.Response.statusFreelancer === proposalStatuses.SENT &&
-				proposal.Response.statusManager !== proposalStatuses.DENIED
-			);
-		});
-
 		response = response.map((r) => {
 			r.Response.date = formatDate(r.Response.date);
 			return r;
 		});
 
+		const activeProposals = response.filter((el) => {
+			return isProposalActive(el.Response);
+		});
+		// .map((el) => ProposalService.renderProposalItem(el));
+
+		const closedProposals = response.filter((el) => {
+			return isProposalClosed(el.Response);
+		});
+		// .map((el) => ProposalService.renderProposalItem(el));
+
+		const sentProposals = response.filter((el) => {
+			return (
+				el.Response.statusFreelancer === proposalStatuses.SENT &&
+				el.Response.statusManager === proposalStatuses.REVIEW
+			);
+		});
+		// .map((el) => ProposalService.renderProposalItem(el));
+
+		const showActiveProposals = activeProposals.length > 0;
+		const showClosedProposals = closedProposals.length > 0;
+		const showSentProposals = sentProposals.length > 0;
+
 		this.data = {
-			proposals: response.length ? response : null,
+			empty: !response.length,
+			activeProposals,
+			showActiveProposals,
+			closedProposals,
+			showClosedProposals,
+			sentProposals,
+			showSentProposals,
 		};
 
 		this.stateChanged();
