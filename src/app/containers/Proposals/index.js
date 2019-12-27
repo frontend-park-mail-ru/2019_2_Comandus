@@ -37,10 +37,10 @@ export default class Proposals extends Component {
 				title: 'Предложенные мне',
 			}).render(),
 			activeTitle: new CardTitle({
-				title: 'Активные отлики (в процессе обсуждения)',
+				title: 'Активные отлики',
 			}).render(),
 			myProposalTitle: new CardTitle({
-				title: 'Мои отклики (без ответа клиента)',
+				title: 'Мои отклики',
 			}).render(),
 			closedProposalTitle: new CardTitle({
 				title: 'Закрытые отклики',
