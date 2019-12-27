@@ -7,7 +7,7 @@ export default {
 			: 'http://localhost:8080',
 	socketAPIUrl:
 		process.env.NODE_ENV === 'production'
-			? ' wss://fwork.live/wsapi/'
+			? ' ws://89.208.211.100:8089'
 			: 'ws://localhost:8089/entry',
 	cookieAccountModeName: 'user_type',
 	urls: {
