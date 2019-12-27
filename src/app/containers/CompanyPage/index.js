@@ -36,7 +36,6 @@ export class CompanyPage extends Component {
 	}
 
 	render() {
-		console.log('check company:', this.data.company);
 		this.data = {
 			cityString: 'Не задан',
 		};

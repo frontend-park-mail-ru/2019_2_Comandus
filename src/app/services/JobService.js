@@ -133,7 +133,6 @@ export default class JobService {
 				published: job.status !== jobStatuses.CLOSED,
 				type: getJoTypeName(job['jobTypeId']).label,
 			});
-			console.log('test job', job);
 			const item = new Item({
 				children: [jobItem.render()],
 			});
