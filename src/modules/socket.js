@@ -33,9 +33,9 @@ class Socket {
 	};
 
 	send = (data) => {
-		if (this.ws.readyState !== 1) {
-			return;
-		}
+		// if (this.ws.readyState !== 1) {
+		// 	return;
+		// }
 
 		this.ws.send(JSON.stringify(data));
 	};
