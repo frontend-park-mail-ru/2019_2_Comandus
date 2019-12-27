@@ -5,40 +5,28 @@
 				<h2 class="chat-header__title">Чат</h2>
 			</div>
 			<div class="chat-messages-screen">
-
 				<div class="chat-messages">
-					<div class="date">Сегодня</div>
 					{{#each messages}}
-						<div class="message message_is-first-in-block">
-							<div class="content-wrapper {{#isSender}}content-wrapper_user{{/isSender}}">
-								<div class="content">
-									<div class="message-text-wrapper {{#isSender}}message-text-wrapper_user{{/isSender}}">
-										<span class="message-text">{{message}}</span>
-										<div class="message-text-footer">
-											<i class="message-text__state fas fa-check"></i>
-											<span class="message-time">{{time}}</span>
+						{{#if isDate}}
+							<div class="date">{{dateString}}</div>
+						{{else}}
+							<div class="message message_is-first-in-block">
+								<div class="content-wrapper {{#isSender}}content-wrapper_user{{/isSender}}">
+									<div class="content">
+										<div class="message-text-wrapper {{#isSender}}message-text-wrapper_user{{/isSender}}">
+											<span class="message-text">{{message}}</span>
+											<div class="message-text-footer">
+												{{#isSender}}
+													<i class="message-text__state fas fa-check {{#isRead}}message-text__state_is-read{{/isRead}}"></i>
+												{{/isSender}}
+												<span class="message-time">{{time}}</span>
+											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
-						</div>
+						{{/if}}
 					{{/each}}
-
-					{{!--				<div class="message message_is-first-in-block">--}}
-					{{!--					<div class="content-wrapper">--}}
-					{{!--						<div class="content">--}}
-					{{!--							<div class="message-text-wrapper">--}}
-					{{!--								<span class="message-text">Hello</span>--}}
-					{{!--								<div class="message-text-footer">--}}
-					{{!--									<i class="message-text__state fas fa-check"></i>--}}
-					{{!--									<span class="message-time">12:20</span>--}}
-					{{!--								</div>--}}
-					{{!--							</div>--}}
-
-					{{!--						</div>--}}
-					{{!--					</div>--}}
-					{{!--				</div>--}}
 				</div>
 				<div class="chat-input">
 					<div class="chat-input__text">

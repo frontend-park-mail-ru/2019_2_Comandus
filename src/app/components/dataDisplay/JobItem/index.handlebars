@@ -38,7 +38,9 @@
 					{{type}}
 				</span>
 			{{/if_eq}}
-			{{paymentAmount}}
+			<span class="job-item__budget">
+				 {{paymentAmount}}
+			</span>
 			- {{experienceLevel}} - {{created}}
 		</div>
 		<div class="job-item__description">
@@ -49,6 +51,11 @@
 				<span class="tag tag_secondary">{{this}}</span>
 			{{/each}}
 		</div>
-		<div class="job-item__small">Откликов: {{proposals}}  {{country}}</div>
+		<div class="job-item__small">Откликов: {{proposals}}
+			<span class="job-item__country">
+				<i class="fas fa-map-marker-alt"></i>
+				<span>{{country}}</span>
+			</span>
+		</div>
 	{{/manage}}
 </div>

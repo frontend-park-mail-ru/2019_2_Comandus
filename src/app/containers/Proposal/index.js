@@ -116,7 +116,12 @@ export default class Proposal extends Component {
 			imgHeight: 65,
 		});
 
-		this._chat = new ClientChat({});
+		this._chat = new ClientChat({
+			proposalId: this.data.proposal.id,
+			freelancerId: this.data.proposal.freelancerId,
+			hireManagerId: parseInt(this.data.job.hireManagerId),
+			chatEnabled: this.data.chatEnabled,
+		});
 
 		this.data = {
 			jobFeatures: new FeaturesList({
@@ -213,6 +218,7 @@ export default class Proposal extends Component {
 			statusCreated,
 			statusCandidate,
 			statusSentContract,
+			chatEnabled: statusCandidate,
 		};
 
 		this.stateChanged();

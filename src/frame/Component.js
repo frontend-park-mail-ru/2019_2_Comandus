@@ -40,21 +40,19 @@ export default class Component {
 		this._data = { ...this._data, ...newData };
 	}
 
-	stateChanged() {
-		return debounce(() => {
-			// const el = document.getElementById(this._id);
-			// this.html = this.render();
-			if (this.el) {
-				this.html = this.render();
-				// el.replaceWith(htmlToElement(this.render()));
-				this.el.replaceWith(htmlToElement(this.html));
-				this.postRender();
-				router.listenClasses();
-			} else {
-				this.onDestroy();
-			}
-		}, 300)();
-	}
+	stateChanged = debounce(() => {
+		// const el = document.getElementById(this._id);
+		// this.html = this.render();
+		if (this.el) {
+			this.html = this.render();
+			// el.replaceWith(htmlToElement(this.render()));
+			this.el.replaceWith(htmlToElement(this.html));
+			this.postRender();
+			router.listenClasses();
+		} else {
+			this.onDestroy();
+		}
+	}, 300);
 
 	setProps(newProps) {
 		this.props = { ...this.props, ...newProps };

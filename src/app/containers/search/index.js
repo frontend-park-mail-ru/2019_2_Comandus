@@ -106,7 +106,7 @@ export default class Search extends Component {
 	render() {
 		this._searchField = new TextField({
 			name: 'q',
-			type: 'text',
+			type: 'search',
 			label: 'Поиск',
 			placeholder: 'Поиск',
 			value: this.data.q,

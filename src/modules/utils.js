@@ -127,7 +127,7 @@ export function formatDate(dateString) {
 	return `${day}.${m}.${d.getFullYear()}`;
 }
 
-function formatDateNum(num) {
+export function formatDateNum(num) {
 	if (num > 0 && num < 9) {
 		return '0' + num;
 	}
