@@ -41,7 +41,7 @@ export default class ClientContracts extends Component {
 			activeContracts: this.data.activeContracts,
 			closedContracts: this.data.closedContracts,
 			pendingOffersTitle: new CardTitle({
-				title: 'Отправленные предложения (ожидается ответ фрилансера)',
+				title: 'Отправленные предложения',
 			}).render(),
 			activeContractsTitle: new CardTitle({
 				title: 'Активные',
