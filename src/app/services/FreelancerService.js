@@ -46,6 +46,10 @@ export default class FreelancerService {
 	}
 
 	static mapFreelancers = (freelancers, countryList) => {
+		if (!freelancers) {
+			return [];
+		}
+
 		return freelancers.map((f) => {
 			const freelancerData = { ...f, ...f.freelancer };
 			freelancerData.speciality =
@@ -66,6 +70,10 @@ export default class FreelancerService {
 	};
 
 	static renderFreelancers = (freelancers) => {
+		if (!freelancers) {
+			return [];
+		}
+
 		return freelancers.map((f) => {
 			const freelancerItem = new FreelancerItem({
 				...f,

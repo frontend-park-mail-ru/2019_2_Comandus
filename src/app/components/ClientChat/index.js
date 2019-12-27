@@ -1,120 +1,132 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './index.scss';
-
-const messages = [
-	{ isSender: true, message: 'Привет', time: '18:30' },
-	{ isSender: false, message: 'Чем могу помочь?', time: '18:31' },
-];
+import Socket, { wsActions } from '@modules/socket';
+import AuthService from '@services/AuthService';
+import ChatService from '@services/ChatService';
+import { formatDate } from '@modules/utils';
+import AccountService from '@services/AccountService';
 
 export default class ClientChat extends Component {
-	constructor({ children = [], ...props }) {
+	constructor({
+		proposalId,
+		hireManagerId,
+		freelancerId,
+		chatEnabled = false,
+		...props
+	}) {
 		super(props);
 
-		// const loggedIn = AuthService.isLoggedIn();
-		const loggedIn = true;
-		//
 		this.data = {
-			children,
-			messages,
-			loggedIn,
+			messages: [],
+			proposalId,
+			freelancerId,
+			hireManagerId,
+			loading: true,
+			loggedIn: AuthService.isLoggedIn() && proposalId !== undefined,
+			chatEnabled,
+			senderId: AccountService.isClient() ? hireManagerId : freelancerId,
+			receiverId: AccountService.isClient()
+				? freelancerId
+				: hireManagerId,
 		};
 
-		// bus.on(busEvents.USER_UPDATED, this.userUpdated);
-		// Socket.subscribe('ws_message', this.onMessage);
-		// Socket.send('init', {
-		// 	action: 'init',
-		// 	payload: {
-		// 		AccountId: '10',
-		// 		Message: ''
-		// 	}
-		// });
+		Socket.subscribe(wsActions.WS_MESSAGE, this.onMessage);
+
+		ChatService.initChat(this.data.proposalId, this.data.senderId);
 	}
 
 	render() {
+		this.data = {};
+
 		this.html = template({
 			...this.props,
 			...this.data,
 		});
 
-		// this.attachToParent();
-
 		return this.html;
 	}
 
 	postRender() {
-		if (!this.el) {
+		if (!this.el || !this.data.chatEnabled) {
 			return;
 		}
 
 		this.sendBtn = this.el.querySelector('.send-message-button');
 		if (this.sendBtn) {
-			this.sendBtn.addEventListener('click', this.send);
+			this.sendBtn.addEventListener('click', this.onClickSend);
 		}
 		this.textArea = this.el.querySelector('.message-textarea');
 		if (this.textArea) {
 			this.textArea.addEventListener('keypress', this.onKeyPress);
+			this.textArea.focus();
 		}
 		this.messages = this.el.querySelector('.chat-messages');
+
+		this.scrollToBottom();
 	}
+
+	onDestroy() {}
 
 	onKeyPress = (event) => {
 		const code = event.keyCode ? event.keyCode : event.which;
 
 		if (code === 13) {
 			event.preventDefault();
-			this.send(event);
-			return;
+			this.onClickSend(event);
 		}
 	};
 
-	send = (event) => {
+	onClickSend = (event) => {
 		event.preventDefault();
-		this.addMessage(this.textArea.value);
+
+		const message = this.textArea.value ? this.textArea.value.trim() : '';
+		this.textArea.value = '';
 		this.textArea.focus();
+
+		if (!message) {
+			return;
+		}
+
+		ChatService.sendMessage(this.data.proposalId, message);
 	};
 
-	addMessage = (message) => {
-		const d = new Date();
-		const time = d.getHours() + ':' + d.getMinutes();
+	onMessage = (messageData) => {
+		if (messageData.proposalId !== this.data.proposalId) {
+			return;
+		}
+
+		const date = new Date(messageData.date);
+		const len = this.data.messages.length;
+
+		if (
+			len > 2 &&
+			ChatService.dateDifference(date, this.data.messages[len - 1].date) >
+				0
+		) {
+			this.data.messages.push({
+				isDate: true,
+				dateString: formatDate(messageData.date),
+				date,
+			});
+		}
 
 		this.data.messages.push({
-			isSender: true,
-			message,
-			time,
+			message: messageData.body,
+			time: ChatService.formatTime(messageData.date),
+			isSender: messageData.senderId === this.data.senderId,
+			isRead: messageData.isRead,
+			date,
 		});
 
-		// Socket.send('send-message', {
-		// 	message,
-		// 	// accountId: this.data.user.id,
-		// 	author: 'id',
-		// 	body: message,
-		// 	time,
-		// });
-
 		this.stateChanged();
-
-		this.scrollToBottom();
 	};
 
-	// userUpdated = (data) => {
-	// 	const user = store.get(['user']);
-	// 	// const loggedIn = AuthService.isLoggedIn();
-	// 	const loggedIn = true;
-	//
-	// 	this.data = {
-	// 		user,
-	// 		loggedIn,
-	// 	};
-	//
-	// 	this.stateChanged();
-	// };
-
-	// onMessage = data => {
-	// 	console.log(data)
-	// };
-
 	scrollToBottom = () => {
+		if (!this.el) {
+			return;
+		}
+
 		this.messages = this.el.querySelector('.chat-messages');
 		if (this.messages) {
 			this.messages.scrollTop = this.messages.scrollHeight;

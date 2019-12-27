@@ -35,3 +35,16 @@
 .manage-btn {
 	margin-left: 20px;
 }
+
+.job-item__country {
+	padding-left: 20px;
+
+	& i {
+		font-size: 14px;
+		line-height: 14px;
+	}
+}
+
+.job-item__budget {
+	color: #242124;
+}

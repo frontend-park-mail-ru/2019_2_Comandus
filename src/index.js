@@ -7,6 +7,8 @@ import routes from '@app/routes';
 import '@app/busHandlers';
 import AccountService from '@services/AccountService'; // !Нужно обязательно импортировать модуль чтобы подключить обработчики событий для bus
 import initLogTrack from '@modules/log';
+import Socket from '@modules/socket';
+import config from '@app/config';
 
 initLogTrack();
 
@@ -18,6 +20,8 @@ export const router = new Router(document.getElementById('root'), {
 router.register(routes);
 
 Frame.bootstrap(AppComponent, document.getElementById('root'), router);
+
+Socket.init(config.socketAPIUrl);
 
 if ('serviceWorker' in navigator) {
 	navigator.serviceWorker

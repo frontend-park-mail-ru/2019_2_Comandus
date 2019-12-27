@@ -11,7 +11,7 @@
 			<button class="delete-job-action manage-btn" data-id="{{id}}">Удалить</button>
 		</div>
 	{{else}}
-		<div class="job-item__small__info job-item__small">{{type}} {{paymentAmount}}
+		<div class="job-item__small__info job-item__small">{{type}} <span class="job-item__budget">{{paymentAmount}}</span>
 			- {{experienceLevel}} - {{created}}</div>
 		<div class="job-item__description">
 			{{description}}
@@ -21,6 +21,11 @@
 				<span class="tag tag_secondary">{{this}}</span>
 			{{/each}}
 		</div>
-		<div class="job-item__small">Откликов: {{proposals}}  {{country}}</div>
+		<div class="job-item__small">Откликов: {{proposals}}
+			<span class="job-item__country">
+				<i class="fas fa-map-marker-alt"></i>
+				<span>{{country}}</span>
+			</span>
+		</div>
 	{{/manage}}
 </div>
