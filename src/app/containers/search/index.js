@@ -359,9 +359,19 @@ export default class Search extends Component {
 	};
 
 	onInput = (e) => {
+		let dict = 'jobs';
+
+		if (
+			this.props &&
+			this.props.params &&
+			this.props.params.type === 'freelancers'
+		) {
+			dict = 'freelancers';
+		}
+
 		JobService.GetSearchSuggest({
 			q: e.target.value,
-			dict: 'jobs',
+			dict: dict,
 		}).then((response) => this.onSuggestResponse(e, response));
 	};
 
