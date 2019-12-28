@@ -1,0 +1,80 @@
+<div id="{{_id}}">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-col-12">
+			<div class="page-header">
+				Страница компании
+			</div>
+		</div>
+		<div class="tp-row card card_no-padding">
+			<div class="tp-col-9 tp-col_padding_0">
+				<div class="company-info">
+					<div class="company-info__main tp-row tp-row_content_stretch">
+						<div class="company-info__main-info">
+							<span class="main-info__name">
+								{{#if company.companyName}}
+									{{ company.companyName }}
+								{{else}}
+									Название отсутствует
+								{{/if}}
+							</span>
+
+						</div>
+					</div>
+
+					<span class="main-info__item main-info__item_mobile">
+						<span class="company-region__city">Город: {{ cityString }}</span>
+					</span>
+
+					<div class="company-info__description">
+						<h2 class="company-description__title">
+							{{#if company.tagline}}
+								{{ company.tagline }}
+							{{else}}
+								Описание
+							{{/if}}
+						</h2>
+						<p class="company-description__text">{{#if company.description}}{{ company.description }}{{else}}
+								Пока тут ничего нет
+							{{/if}}
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="tp-col-3 company-contacts_desktop">
+				<div class="main-info__info-columns-wrapper">
+					<div class="main-info__labels-column">
+						<span class="labels-column__label">Город:</span>
+						<span class="labels-column__label">Сайт:</span>
+						<span class="labels-column__label">Адрес:</span>
+						<span class="labels-column__label">Телефон:</span>
+					</div>
+					<div class="main-info__info-column">
+						<span class="info-column__value">{{ cityString }}</span>
+						<span class="info-column__value">
+							{{#if company.site}}
+								{{ company.site }}
+							{{else}}
+								Не указан
+							{{/if}}
+						</span>
+						<span class="info-column__value">
+							{{#if company.address}}
+								{{ company.address }}
+							{{else}}
+								Не указан
+							{{/if}}
+						</span>
+						<span class="info-column__value">
+							{{#if company.phone}}
+								{{ company.phone }}
+							{{else}}
+								Не указан
+							{{/if}}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

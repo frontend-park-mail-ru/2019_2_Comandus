@@ -131,6 +131,7 @@ export default class JobService {
 				...job,
 				manage: true,
 				published: job.status !== jobStatuses.CLOSED,
+				type: getJoTypeName(job['jobTypeId']).label,
 			});
 			const item = new Item({
 				children: [jobItem.render()],

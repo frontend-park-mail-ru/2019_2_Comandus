@@ -260,9 +260,12 @@ export class Company extends Component {
 			data.country = parseInt(data.country);
 		}
 
+		this.data.company = data;
+
 		CompanyService.UpdateCompany(data)
 			.then((response) => {
 				helper.setResponseText('Изменения сохранены.', true);
+				setTimeout(this.stateChanged.bind(this), 3000);
 			})
 			.catch((error) => {
 				let text = error.message;

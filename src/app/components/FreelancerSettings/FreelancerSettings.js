@@ -310,9 +310,12 @@ export class FreelancerSettings extends Component {
 			data.experienceLevelId = parseInt(data.experienceLevelId);
 		}
 
+		this.data.freelancer = data;
+
 		FreelancerService.UpdateFreelancer(this.data.freelancerId, data)
 			.then((res) => {
 				helper.setResponseText('Изменения сохранены.', true);
+				setTimeout(this.stateChanged.bind(this), 3000);
 			})
 			.catch((error) => {
 				let text = error.message;

@@ -42,33 +42,10 @@ import editDataModal from '@components/modalViews/editDataModal';
 export class Profile extends Component {
 	constructor(props) {
 		super(props);
-		// const profilePortfolios = [
-		// 	{
-		// 		projectTitle: 'Проект 1',
-		// 		projectFile: defaultAvatarUrl('П', '1', 600),
-		// 		projectUrl: '#',
-		// 	},
-		// 	{
-		// 		projectTitle: 'Проект 2',
-		// 		projectFile: defaultAvatarUrl('П', '2', 600),
-		// 		projectUrl: '#',
-		// 	},
-		// 	{
-		// 		projectTitle: 'Проект 3',
-		// 		projectFile: defaultAvatarUrl('П', '3', 600),
-		// 		projectUrl: '#',
-		// 	},
-		// 	{
-		// 		projectTitle: 'Проект 4',
-		// 		projectFile: defaultAvatarUrl('П', '4', 600),
-		// 		projectUrl: '#',
-		// 	},
-		// ];
 
 		this._defaultAvatar = defaultAvatarUrl('F', 'W', 200);
 
 		this.data = {
-			// profilePortfolios,
 			profileHistory: jobs,
 			freelancer: {},
 			historyHtmlArray: [],
@@ -79,7 +56,6 @@ export class Profile extends Component {
 			.map((job) => {
 				const el = { ...job };
 				el['experienceLevel'] = levels[el['experienceLevelId']];
-				// el['skills'] = el['skills'].split(',');
 				el['skills'] = el['tagline'] ? el['tagline'].split(',') : [];
 				return el;
 			})
@@ -178,21 +154,15 @@ export class Profile extends Component {
 			}
 		}
 
-		// this._portfolioCards = this.data.profilePortfolios.reduce(
-		// 	(result, part) => {
-		// 		result.push(new PortfolioCard({ ...part }).render());
-		// 		return result;
-		// 	},
-		// 	[],
-		// );
-
 		//---------------------//
 
 		//-------Components Creating -------//
 
 		this._avatar = new Avatar({
 			changing: isAvatarChange,
-			imgUrl: `${config.baseAPIUrl}${'/account/avatar/'}${avatarId}`,
+			imgUrl: `${
+				config.baseAPIUrl
+			}${'/account/avatar/'}${avatarId}${'?'}${new Date().getTime()}`,
 			imgDefault: this._defaultAvatar,
 		});
 
@@ -200,19 +170,6 @@ export class Profile extends Component {
 			title: 'Выбран исполнителем',
 			data: this.data.selectCount + ' раз',
 		});
-
-		// this._projectSuggestBtn = new Button({
-		// 	type: 'button',
-		// 	noFit: true,
-		// 	text: 'Предложить проект',
-		// });
-		//
-		// this._saveBtn = new Button({
-		// 	type: 'button',
-		// 	text: 'Добавить в избранное',
-		// 	noFit: true,
-		// 	className: 'btn_secondary',
-		// });
 
 		this._profileLinkField = new TextField({
 			required: false,

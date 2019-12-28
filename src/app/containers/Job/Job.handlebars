@@ -132,27 +132,78 @@
 
 				{{#isMyJob}}
 					<div class="tp-row card card_no-padding">
-						<div class="tp-col-12">
-							{{!--					<div class="job-details ">--}}
-							<h2 class="job-details__inner-item job-details_title">Отклики</h2>
-							<div class="job-details__inner-item job-proposals">
-								{{#proposals.length}}
-								{{else}}
+						<div class="tp-col-12 tp-col_padding_0">
+							<div class="features-wrap">
+								<h2 class="job-details__inner-item job-details_title">
+									Отклики
+								</h2>
+							</div>
+							<div class="job-details__inner-item">
+								{{#if empty}}
 									<div class="job-proposal">
 										Здесь будут отклики к данной работе
 									</div>
-								{{/proposals.length}}
+								{{/if}}
 								{{#each proposals}}
 									<div class="job-proposal">
 										<a class="link" href="/proposals/{{Response.id}}">Отклик от
 											фрилансера {{firstName}} {{lastName}}</a>
-										{{!--								<div>Это кавер леттер...</div>--}}
-										{{!--								<div>--}}
-										{{!--									<span></span>--}}
-										{{!--								</div>--}}
 										<div>{{Response.date}}</div>
 									</div>
 								{{/each}}
+								{{#showActiveProposals}}
+									<div class="proposals-item">
+										<strong class="proposals-item__title">
+											Активные
+										</strong>
+										<div class="tp-container proposals-item__list">
+											{{#each activeProposals}}
+												<div class="proposals-list__link">
+													<a class="link" href="/proposals/{{Response.id}}">
+														Отклик от фрилансера {{firstName}} {{lastName}}
+													</a>
+													<div class="proposals-list__date">{{Response.date}}</div>
+												</div>
+											{{/each}}
+										</div>
+									</div>
+								{{/showActiveProposals}}
+
+								{{#showSentProposals}}
+									<div class="proposals-item">
+										<strong class="proposals-item__title">
+											Требующие ответа
+										</strong>
+										<div class="tp-container proposals-item__list">
+											{{#each sentProposals}}
+												<div class="proposals-list__link">
+													<a class="link" href="/proposals/{{Response.id}}">
+														Отклик от фрилансера {{firstName}} {{lastName}}
+													</a>
+													<div class="proposals-list__date">{{Response.date}}</div>
+												</div>
+											{{/each}}
+										</div>
+									</div>
+								{{/showSentProposals}}
+
+								{{#showClosedProposals}}
+									<div class="proposals-item">
+										<strong class="proposals-item__title">
+											Закрытые
+										</strong>
+										<div class="tp-container proposals-item__list">
+											{{#each closedProposals}}
+												<div class="proposals-list__link">
+													<a class="link" href="/proposals/{{Response.id}}">
+														Отклик от фрилансера {{firstName}} {{lastName}}
+													</a>
+													<div class="proposals-list__date">{{Response.date}}</div>
+												</div>
+											{{/each}}
+										</div>
+									</div>
+								{{/showClosedProposals}}
 							</div>
 							{{!--						<div class="job-details__inner-item">--}}
 

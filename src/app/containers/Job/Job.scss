@@ -128,6 +128,31 @@
 	margin-top: 20px;
 }
 
-.job-proposals {
-	padding-top: 0;
+.proposals-item {
+	&:not(:last-child) {
+		border-bottom: 1px solid #E0E0E0;
+		margin-bottom: 10px;
+	}
+
+	&__title {
+		font-weight: bold;
+		letter-spacing: 0.06em;
+	}
+
+	&__list {
+		margin: 6px 0;
+	}
+}
+
+
+.proposals-list {
+	&__link {
+		margin: 5px 0;
+		display: flex;
+		flex-direction: row;
+	}
+
+	&__date {
+		margin-left: auto;
+	}
 }
