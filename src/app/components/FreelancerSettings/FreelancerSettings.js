@@ -8,7 +8,6 @@ import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
-import Tag from '@components/dataDisplay/Tag/Tag';
 import '../inputs/FieldGroup/FieldGroup.scss';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import store from '@modules/store';
@@ -182,36 +181,6 @@ export class FreelancerSettings extends Component {
 			duplicate: false,
 			tags: freelancerObj.tagline ? freelancerObj.tagline.split(',') : [],
 		});
-		// const skillTags = [
-		// 	{
-		// 		section: 'Программирование',
-		// 		categories: [
-		// 			'Веб-программирование',
-		// 			'Базы данных',
-		// 			'Программирование игр',
-		// 			'Встраиваемые системы',
-		// 		],
-		// 	},
-		// 	{
-		// 		section: 'Дизайн и арт',
-		// 		categories: ['Логотипы', 'Векторная графика'],
-		// 	},
-		// ];
-		//
-		// // Создание html-верстки тэгов по названиям
-		// const skills = skillTags.reduce((result, part) => {
-		// 	let templatePart = {};
-		// 	templatePart.categories = part.categories.reduce(
-		// 		(result, skill) => {
-		// 			result.push(new Tag({ text: skill }).render());
-		// 			return result;
-		// 		},
-		// 		[],
-		// 	);
-		// 	templatePart.section = part.section;
-		// 	result.push(templatePart);
-		// 	return result;
-		// }, []);
 
 		this.data = {
 			citySelect: this._citySelect.render(),

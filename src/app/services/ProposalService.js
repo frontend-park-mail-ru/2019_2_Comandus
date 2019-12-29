@@ -76,7 +76,6 @@ export default class ProposalService {
 		return new ProposalItem({
 			id: proposal.Response.id,
 			date: formatDate(proposal.Response.date),
-			// jobTitle: proposal.Job.title,
 			jobTitle: proposal.jobTitle,
 			statusManager: proposal.Response.statusManager,
 			statusFreelancer: proposal.Response.statusFreelancer,

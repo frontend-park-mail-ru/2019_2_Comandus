@@ -1,21 +1,11 @@
 <div class="tp-row">
 	<div class="tp-col-9">
-{{!--		<div class="page-header">--}}
-{{!--			Отклик--}}
-{{!--		</div>--}}
 		<div class="tp-container card">
 			{{{ aboutProposalTitle }}}
 			<div class="tp-container">
 				<div class="job-details__inner-item">
 					<a href="/jobs/{{job.id}}" class="link job-item__title">{{job.title}}</a>
 					{{{jobFeatures}}}
-{{!--					<div class="proposal__freelancer-block">--}}
-{{!--						{{{freelancerAvatar}}}--}}
-{{!--						<div class="proposal__freelancer-block__info">--}}
-{{!--							<a href="/freelancers/{{freelancer.id}}" class="link job-item__title">{{freelancer.firstName}} {{freelancer.secondName}}</a>--}}
-{{!--							<span>{{freelancer.tagline}}</span>--}}
-{{!--						</div>--}}
-{{!--					</div>--}}
 				</div>
 				{{#isClient}}
 					<div class="job-details__inner-item proposal__freelancer-block">
@@ -61,12 +51,10 @@
 						{{/actionMakeCandidateEnabled}}
 						{{#actionNewContractEnabled}}
 							{{{makeOffer}}}
-{{!--							<a href="/proposals/{{params.proposalId}}/new-contract">Предложить контракт</a>--}}
 						{{/actionNewContractEnabled}}
 					{{else}}
 						{{#actionCancelEnabled}}
 							{{{withdrawProposal}}}
-{{!--							{{{archiveProposal}}}--}}
 						{{/actionCancelEnabled}}
 					{{/isClient}}
 				</div>
@@ -90,15 +78,6 @@
 				{{#statusCreated}}<i class="status-icon fas fa-check"></i>{{/statusCreated}}
 				<div class="status-title">Создание отклика</div>
 			</div>
-{{!--			<div class="contract-status__raw">--}}
-{{!--				<div class="status-title">Отмена отклика фрилансером</div>--}}
-{{!--			</div>--}}
-{{!--			<div class="contract-status__raw">--}}
-{{!--				<div class="status-title">Отклонение отлика клиентом</div>--}}
-{{!--			</div>--}}
-{{!--			<div class="contract-status__raw">--}}
-{{!--				<div class="status-title">Согласование условий</div>--}}
-{{!--			</div>--}}
 			<div class="contract-status__raw {{#statusCandidate}}contract-status__raw_active{{/statusCandidate}}">
 				{{#statusCandidate}}<i class="status-icon fas fa-check"></i>{{/statusCandidate}}
 				<div class="status-title">Фрилансер -- кандидат</div>
@@ -109,12 +88,6 @@
 				<div class="status-title">Предложение контракта</div>
 				<p class="status-description"></p>
 			</div>
-{{!--			<div class="contract-status__raw">--}}
-{{!--				<div class="status-title">Создан новый контракт</div>--}}
-{{!--			</div>--}}
-{{!--			<div class="contract-status__raw">--}}
-{{!--				<div class="status-title">Отклик закрыт</div>--}}
-{{!--			</div>--}}
 		</div>
 	</div>
 </div>

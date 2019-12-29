@@ -51,20 +51,7 @@ export class UserMenu extends Component {
 			classes: 'user-menu__avatar',
 		});
 
-		const dropItems = [
-			// {
-			// 	url: '#',
-			// 	text: 'Фрилансер: ' + this.data.freelancerLabel,
-			// 	active: !this.data.isClient,
-			// 	id: 'switchToFreelancer',
-			// },
-			// {
-			// 	url: '#',
-			// 	text: 'Компания',
-			// 	active: this.data.isClient,
-			// 	id: 'switchToClient',
-			// },
-		];
+		const dropItems = [];
 
 		if (this.data.loggedIn) {
 			dropItems.push({ url: '/my-contracts', text: 'Контракты' });
@@ -79,7 +66,6 @@ export class UserMenu extends Component {
 					url: `/freelancers/${this.data.user.freelancerId}`,
 					text: 'Профиль',
 				});
-				// profileItems.push({ url: '/saved', text: 'Закладки' });
 				dropItems.push({ url: '/proposals', text: 'Отклики' });
 			}
 			dropItems.push({ url: config.urls.settings, text: 'Настройки' });
@@ -89,7 +75,6 @@ export class UserMenu extends Component {
 
 		this._dropdown = new Dropdown({
 			text: `<div class="badge-wrap user-dropdown-wrap">
-					<!--<span class="badge">+1</span>-->
 					${this._avatar.render()}
 					<i class="fas fa-angle-down user-dropdown-wrap__arrow"></i>
 				</div>`,

@@ -25,7 +25,6 @@ import {
 	formatMoney,
 	getExperienceLevelName,
 	getJoTypeName,
-	hasClass,
 	isProposalActive,
 	isProposalClosed,
 } from '@modules/utils';
@@ -142,7 +141,6 @@ export default class Job extends Component {
 	jobUpdated = () => {
 		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
 		const job = store.get(['job']);
-		// job['skills'] = job['skills'] ? job['skills'].split(',') : [];
 		job['skills'] = job['tagLine'] ? job['tagLine'].split(',') : [];
 		job['experienceLevel'] = getExperienceLevelName(
 			job['experienceLevelId'],
@@ -221,12 +219,10 @@ export default class Job extends Component {
 		const activeProposals = response.filter((el) => {
 			return isProposalActive(el.Response);
 		});
-		// .map((el) => ProposalService.renderProposalItem(el));
 
 		const closedProposals = response.filter((el) => {
 			return isProposalClosed(el.Response);
 		});
-		// .map((el) => ProposalService.renderProposalItem(el));
 
 		const sentProposals = response.filter((el) => {
 			return (
@@ -234,7 +230,6 @@ export default class Job extends Component {
 				el.Response.statusManager === proposalStatuses.REVIEW
 			);
 		});
-		// .map((el) => ProposalService.renderProposalItem(el));
 
 		const showActiveProposals = activeProposals.length > 0;
 		const showClosedProposals = closedProposals.length > 0;

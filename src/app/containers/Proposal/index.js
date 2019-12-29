@@ -8,7 +8,6 @@ import FeaturesList from '@components/dataDisplay/FeaturesList';
 import Button from '@components/inputs/Button/Button';
 import { Avatar } from '@components/Avatar/Avatar';
 import {
-	defaultAvatarUrl,
 	formatMoney,
 	getExperienceLevelName,
 	getJoTypeName,
@@ -111,7 +110,6 @@ export default class Proposal extends Component {
 
 		this.freelancerAvatar = new Avatar({
 			imgUrl: this.data.freelancer.avatar,
-			// defaultAvatarUrl('C', 'L', 150),
 			imgWidth: 65,
 			imgHeight: 65,
 		});

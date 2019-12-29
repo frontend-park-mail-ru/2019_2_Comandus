@@ -28,7 +28,6 @@
 						<div class="proposal-details__key">
 							Предложение сделано компанией:
 						</div>
-{{!--						<div><a class="link">Мэйлру</a></div>--}}
 						<div>{{company.CompanyName}}</div>
 					</div>
 					<div class="proposal-details">
@@ -140,10 +139,6 @@
 				{{#statusCreated}}<i class="status-icon fas fa-check"></i>{{/statusCreated}}
 				<div class="status-title">Создание заказа</div>
 			</div>
-{{!--			<div class="contract-status__raw">--}}
-{{!--				<i class="status-icon fas fa-check"></i>--}}
-{{!--				<div class="status-title">Согласование условий</div>--}}
-{{!--			</div>--}}
 			<div class="contract-status__raw {{#statusActive}}contract-status__raw_active{{/statusActive}}">
 				{{#statusActive}}<i class="status-icon fas fa-check"></i>{{/statusActive}}
 				<div class="status-title">Выполнение работы</div>

@@ -4,9 +4,8 @@ import './index.scss';
 import bus from '@frame/bus';
 import { busEvents, proposalStatuses } from '@app/constants';
 import store from '@modules/store';
-import ProposalItem from '@components/dataDisplay/ProposalItem';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import { formatDate, isProposalActive, isProposalClosed } from '@modules/utils';
+import { isProposalActive, isProposalClosed } from '@modules/utils';
 import ProposalService from '@services/ProposalService';
 import emptyBox from '@assets/img/empty-box.svg';
 

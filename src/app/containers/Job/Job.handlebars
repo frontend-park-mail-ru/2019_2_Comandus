@@ -44,11 +44,6 @@
 									</div>
 									<div>{{job.created}}</div>
 								</div>
-								{{!--						<div class="">--}}
-								{{!--							<a class="job-details__category" href="/search/jobs?category={{job.specialityId}}--}}
-								{{!--							">{{job.speciality}}</a>--}}
-								{{!--						</div>--}}
-								{{!--						<small>{{job.created}}</small>--}}
 							</div>
 						</div>
 					</div>
@@ -64,28 +59,12 @@
 									{{/isMyJob}}
 								{{else}}
 									{{{submitProposal}}}
-								{{!--							{{{saveBtn}}}--}}
 								{{/isClient}}
 							{{else}}
 								<a href="/login" class="btn btn_primary btn-m">Войти</a>
 							{{/loggedIn}}
 						</div>
 						<div class="job-details__inner-item">
-							{{!--					<strong>О заказчике</strong>--}}
-							{{!--					<ul class="about-client">--}}
-							{{!--						<li>--}}
-							{{!--							<strong>{{job.hireManagerId}}</strong>--}}
-							{{!--							<small>{{job.hireManagerId}}</small>--}}
-							{{!--						</li>--}}
-							{{!--						<li>--}}
-							{{!--							<strong></strong>--}}
-							{{!--							<small>Отзывы фрилансеров</small>--}}
-							{{!--						</li>--}}
-							{{!--						<li>--}}
-							{{!--							<strong></strong>--}}
-							{{!--							<small>Зарегистрирован</small>--}}
-							{{!--						</li>--}}
-							{{!--					</ul>--}}
 						</div>
 					</div>
 					<div class="job-details-sidebar job-details-sidebar_mobile">
@@ -120,7 +99,6 @@
 							{{/isMyJob}}
 						{{else}}
 							{{{submitProposalMobile}}}
-						{{!--					{{{saveBtn}}}--}}
 						{{/isClient}}
 					{{else}}
 						<a href="/login" class="btn btn_primary btn-m">Войти</a>
@@ -205,16 +183,7 @@
 									</div>
 								{{/showClosedProposals}}
 							</div>
-							{{!--						<div class="job-details__inner-item">--}}
-
-
-							{{!--						</div>--}}
-							{{!--						<div class="job-details__inner-item">--}}
-
-							{{!--						</div>--}}
-							{{!--					</div>--}}
 						</div>
-						{{!--				<div class="tp-col-3"></div>--}}
 					</div>
 				{{/isMyJob}}
 			</div>

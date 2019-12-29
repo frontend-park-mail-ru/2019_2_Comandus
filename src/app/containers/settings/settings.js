@@ -104,12 +104,6 @@ export class Settings extends Component {
 			});
 		}
 
-		// if (this._currentTab.component) {
-		// 	this._currentTabSettings = this._currentTab.component;
-		// } else {
-		// 	this._currentTabSettings = new this._currentTab.Component({});
-		// 	this._currentTab.component = this._currentTabSettings;
-		// }
 		this._currentTabSettings = new this._currentTab.Component(
 			this._currentTab.props,
 		);

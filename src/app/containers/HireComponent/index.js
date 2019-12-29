@@ -11,13 +11,11 @@ import Alert from '@components/surfaces/Alert';
 import { Select } from '@components/inputs/Select/Select';
 import { busEvents, dueTimes } from '@app/constants';
 import { toSelectElement } from '@modules/utils';
-import CardTitle from '@components/dataDisplay/CardTitle';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 import ProposalService from '@services/ProposalService';
 import { router } from '@index';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
-import bus from '@frame/bus';
 import ContractService from '@services/ContractService';
 
 export default class Hire extends Component {
@@ -95,9 +93,6 @@ export default class Hire extends Component {
 				children: [this._timeSelect.render()],
 				label: 'Сколько времени займет этот проект/вакансия',
 			}).render(),
-			// messagesTitle: new CardTitle({
-			// 	title: 'Сообщения (блок появяется после того, как фрилансер стал кандидатом на работу)',
-			// }).render(),
 		};
 
 		const page = new PageWithTitle({

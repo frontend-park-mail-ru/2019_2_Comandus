@@ -1,28 +1,16 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './profile.scss';
-import {
-	historySortBy,
-	jobs,
-	levels,
-	busEvents,
-	specialitiesRow,
-} from '@app/constants';
+import { jobs, levels, busEvents, specialitiesRow } from '@app/constants';
 import {
 	defaultAvatarUrl,
 	getCountryAndCityIdByName,
 	getExperienceLevelName,
-	toSelectElement,
 } from '@modules/utils';
-import { Select } from '@components/inputs/Select/Select';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
 import JobItem from '@components/dataDisplay/JobItem';
 import Item from '@components/surfaces/Item';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import Paginator from '@components/navigation/Paginator';
-import PortfolioCard from '@components/dataDisplay/PortfolioCard';
-import CardBoard from '@components/dataDisplay/CardBoard';
-import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import { Avatar } from '@components/Avatar/Avatar';

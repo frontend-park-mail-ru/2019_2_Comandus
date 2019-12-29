@@ -209,8 +209,3 @@ bus.on('change-password', (data) => {
 	const response = AccountService.ChangePassword(data);
 	bus.emit('change-password-response', response);
 });
-
-// bus.on('get-role', () => {
-// 	const response = AccountService.GetRoles();
-// 	bus.emit('get-role-response', response);
-// });

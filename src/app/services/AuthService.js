@@ -74,7 +74,6 @@ export default class AuthService {
 
 	static GetCsrfToken() {
 		return localStorage.getItem(CSRF_TOKEN_NAME);
-		// return store.get([CSRF_TOKEN_NAME]);
 	}
 
 	static getCsrfHeader() {

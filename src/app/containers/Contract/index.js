@@ -12,8 +12,7 @@ import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import GradeComponent from '@components/inputs/GradeComponent';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
-import bus from '@frame/bus';
-import { busEvents, statusesContract } from '@app/constants';
+import { statusesContract } from '@app/constants';
 import ClientChat from '@components/ClientChat';
 
 export default class Contract extends Component {

@@ -123,7 +123,6 @@ class JobFormComponent extends Component {
 			name: 'city',
 			nameFirst: 'country',
 			label: 'Нужен исполнитель из...',
-			// required: true,
 			filterable: true,
 			selectedItem1: job.country,
 			selectedItem2: job.city,
@@ -157,7 +156,6 @@ class JobFormComponent extends Component {
 			max: 5,
 			duplicate: false,
 			tags: job.tagLine ? job.tagLine.split(',') : [],
-			// value: job.tagLine,
 		});
 
 		this.submitBtn = new Button({
@@ -212,9 +210,6 @@ class JobFormComponent extends Component {
 				label: 'Требуемые навыки и компетенции',
 			}).render(),
 
-			// submitBtn: new FieldGroup({
-			// 	children: btnChildren,
-			// }).render(),
 			submitBtn: this.submitBtn.render(),
 
 			_jobTypeRadio: new FieldGroup({
@@ -231,9 +226,7 @@ class JobFormComponent extends Component {
 	}
 
 	postRender() {
-		// if (this.data.isVacancy()) {
 		this._citySelect.postRender();
-		// }
 		this._specialitySelect.postRender();
 		this._inputTags.postRender();
 		this._jobTypeRadio.postRender();

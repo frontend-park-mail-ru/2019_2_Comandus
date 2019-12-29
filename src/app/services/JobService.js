@@ -119,7 +119,6 @@ export default class JobService {
 		return jobs.map((job) => {
 			const el = { ...job };
 			el['experienceLevel'] = levels[el['experienceLevelId']];
-			// el['skills'] = el['skills'] ? el['skills'].split(',') : [];
 			el['skills'] = el['tagLine'] ? el['tagLine'].split(',') : [];
 			return el;
 		});

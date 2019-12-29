@@ -5,8 +5,6 @@ import './index.scss';
 import PageWithTitle from '@components/PageWithTitle';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
-import ContractItem from '@components/dataDisplay/ContractItem';
-import { formatDate, formatMoney } from '@modules/utils';
 import ContractService from '@services/ContractService';
 import { statusesContract } from '@app/constants';
 import emptyBox from '@assets/img/empty-box.svg';

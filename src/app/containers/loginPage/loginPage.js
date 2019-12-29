@@ -49,8 +49,6 @@ class LoginComponent extends Component {
 		};
 
 		this.html = template(this.data);
-		// this._el = htmlToElement(html);
-		// this._parent.appendChild(this._el);
 		this.attachToParent();
 
 		return this.html;
