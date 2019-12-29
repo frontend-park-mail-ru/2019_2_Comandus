@@ -18,6 +18,7 @@
 
 //$primary-color: #3E6BB4;
 $primary-color: #1f7ce7;
+$light-primary-color: #429cff;
 $secondary-color: #eef2f7;
 $secondary-color2: #F3F0E7;
 $color3: #1c3f7b;
@@ -58,6 +59,16 @@ $border-radius-l: 10px;
 	object-fit: cover;
 }
 
+@mixin big-avatar {
+	height: 105px;
+	width: 105px;
+	border-radius: 50%;
+	color: #E0E0E0;
+	border: solid 1px #E0E0E0;
+	object-fit: cover;
+}
+
+
 @mixin active {
 	color: $primary-color;
 }
@@ -65,6 +76,7 @@ $border-radius-l: 10px;
 .page-header {
 	padding-top: 20px;
 	font-size: 1.6em;
+	color: $light-text-color;
 }
 
 .buttons-group {

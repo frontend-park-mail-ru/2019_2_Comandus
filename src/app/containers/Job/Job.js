@@ -7,6 +7,7 @@ import {
 	busEvents,
 	specialitiesRow,
 	proposalStatuses,
+	jobStatuses,
 } from '@app/constants';
 import Button from '@components/inputs/Button/Button';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
@@ -24,7 +25,10 @@ import {
 	formatMoney,
 	getExperienceLevelName,
 	getJoTypeName,
+	isProposalActive,
+	isProposalClosed,
 } from '@modules/utils';
+import JobService from '@services/JobService';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -79,6 +83,16 @@ export default class Job extends Component {
 			className: 'btn_secondary',
 		});
 
+		this._togglePublish = new Button({
+			type: 'button',
+			text:
+				this.data.job.status === jobStatuses.CLOSED
+					? 'Опубликовать'
+					: 'Закрыть',
+			className: 'btn_secondary',
+			onClick: this.togglePublish,
+		});
+
 		const type = getJoTypeName(this.data.job['jobTypeId']);
 
 		this._jobType = new FeatureComponent({
@@ -107,6 +121,7 @@ export default class Job extends Component {
 				className: 'job-details__inner-item',
 			}).render(),
 			sendProposalFormModal: this.sendProposalFormModal.render(),
+			_togglePublish: this._togglePublish.render(),
 		};
 
 		this.html = template(this.data);
@@ -120,12 +135,13 @@ export default class Job extends Component {
 		this._submitProposalMobile.postRender();
 		this.sendProposalFormModal.postRender();
 		this.sendProposalForm.postRender();
+		this._togglePublish.postRender();
 	}
 
 	jobUpdated = () => {
 		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
 		const job = store.get(['job']);
-		job['skills'] = job['skills'] ? job['skills'].split(',') : [];
+		job['skills'] = job['tagLine'] ? job['tagLine'].split(',') : [];
 		job['experienceLevel'] = getExperienceLevelName(
 			job['experienceLevelId'],
 		);
@@ -195,20 +211,38 @@ export default class Job extends Component {
 			return;
 		}
 
-		response = response.filter((proposal) => {
-			return (
-				proposal.Response.statusFreelancer === proposalStatuses.SENT &&
-				proposal.Response.statusManager !== proposalStatuses.DENIED
-			);
-		});
-
 		response = response.map((r) => {
 			r.Response.date = formatDate(r.Response.date);
 			return r;
 		});
 
+		const activeProposals = response.filter((el) => {
+			return isProposalActive(el.Response);
+		});
+
+		const closedProposals = response.filter((el) => {
+			return isProposalClosed(el.Response);
+		});
+
+		const sentProposals = response.filter((el) => {
+			return (
+				el.Response.statusFreelancer === proposalStatuses.SENT &&
+				el.Response.statusManager === proposalStatuses.REVIEW
+			);
+		});
+
+		const showActiveProposals = activeProposals.length > 0;
+		const showClosedProposals = closedProposals.length > 0;
+		const showSentProposals = sentProposals.length > 0;
+
 		this.data = {
-			proposals: response.length ? response : null,
+			empty: !response.length,
+			activeProposals,
+			showActiveProposals,
+			closedProposals,
+			showClosedProposals,
+			sentProposals,
+			showSentProposals,
 		};
 
 		this.stateChanged();
@@ -216,5 +250,41 @@ export default class Job extends Component {
 
 	renderProposalItem = (proposal) => {
 		return new ProposalItem(proposal).render();
+	};
+
+	togglePublish = () => {
+		if (this.data.job.status === jobStatuses.CLOSED) {
+			if (!this.data.isRequest) {
+				this.data = {
+					isRequest: true,
+				};
+				return JobService.OpenJob(this.props.params.jobId).then(() => {
+					this.data = {
+						isRequest: false,
+					};
+					return this.togglePublishResponse();
+				});
+			}
+		}
+
+		if (this.data.job.status !== jobStatuses.CLOSED) {
+			if (!this.data.isRequest) {
+				this.data = {
+					isRequest: true,
+				};
+				return JobService.CloseJob(this.props.params.jobId).then(() => {
+					this.data = {
+						isRequest: false,
+					};
+					return this.togglePublishResponse();
+				});
+			}
+		}
+	};
+
+	togglePublishResponse = () => {
+		bus.off(busEvents.JOB_UPDATED, this.jobUpdated);
+		bus.on(busEvents.JOB_UPDATED, this.jobUpdated);
+		bus.emit(busEvents.JOB_GET, this.props.params.jobId);
 	};
 }

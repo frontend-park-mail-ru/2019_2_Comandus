@@ -95,6 +95,8 @@ export default class SendProposalForm extends Component {
 
 				this.helper = helper;
 
+				this._submitProposal.el.disabled = true;
+
 				const formData = helper.formToJSON();
 				formData.timeEstimation = parseInt(formData.timeEstimation);
 
@@ -113,6 +115,9 @@ export default class SendProposalForm extends Component {
 	onProposalsResponse = (data) => {
 		bus.off(busEvents.PROPOSAL_CREATE_RESPONSE, this.onProposalsResponse);
 		const { error, response } = data;
+
+		this._submitProposal.el.disabled = false;
+
 		if (error) {
 			let text = error.message;
 			if (error.data && error.data.error) {

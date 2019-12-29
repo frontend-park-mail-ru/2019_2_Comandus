@@ -10,3 +10,9 @@
 .login-block {
 	margin: 10% 30%
 }
+
+@media screen and (max-width: 576px) {
+	.login-block {
+		margin: 20px 5px;
+	}
+}

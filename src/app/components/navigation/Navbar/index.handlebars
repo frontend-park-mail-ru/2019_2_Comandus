@@ -1,48 +1,46 @@
 <nav id="{{_id}}" class="navbar">
 	<div class="navbar__header">
-		<a href="javascript:void(0);" class="navbar__toggler">
+		<a href="#" class="navbar__toggler">
 			<i class="fa fa-bars"></i>
 		</a>
 		<a class="navbar__brand" href="/">FWORK</a>
-		<div class="navbar__header-search"><i class="navbar__toggler fa fa-search"></i></div>
+		<div class="navbar__header-search">
+		</div>
 	</div>
 
 	<div class="navbar__collapse">
 		<ul class="navbar__nav" role="menubar">
 			<li class="nav__item">
-				{{!--				<a href="/jobs?type=project" target="_self" role="menuitem" class="nav__link">--}}
-				{{!--					icon--}}
-				{{!--				</a>--}}
 				<form method="GET" role="search" id="navbar-search-form">
-					<div>
-						<span class="navbar__search-input">
-							<input id='navbar-search' type="text" placeholder="Поиск {{#isClient}}фрилансера{{else}}работы{{/isClient}}">
-							<span></span>
-						</span>
+					<div class="navbar__search-input">
+						<input id='navbar-search' type="search" placeholder="Поиск">
+						<button type="submit"><i class="fas fa-search"></i></button>
 					</div>
 				</form>
 			</li>
 		</ul>
 		<ul class="navbar__nav navbar__nav_right" role="menubar">
-			{{#isClient}}
+			{{#if loggedIn}}
+				{{#isClient}}
+					<li class="nav__item">
+						<a href="/search?type=freelancers&desc=1" target="_self" role="menuitem" class="nav__link">
+							Фрилансеры
+						</a>
+					</li>
+				{{else}}
+					{{{_dropdown}}}
+				{{/isClient}}
+			{{else}}
 				<li class="nav__item">
-					<a href="/freelancers" target="_self" role="menuitem" class="nav__link">
+					<a href="/search?type=freelancers&desc=1" target="_self" role="menuitem" class="nav__link">
 						Фрилансеры
 					</a>
 				</li>
-			{{else}}
 				{{{_dropdown}}}
-			{{/isClient}}
-			{{#loggedIn}}
-{{!--				<li class="nav__item">--}}
-{{!--					<a href="/messages" target="_self" role="menuitem" class="nav__link">--}}
-{{!--						Сообщения--}}
-{{!--					</a>--}}
-{{!--				</li>--}}
-			{{/loggedIn}}
-			{{#if loggedIn}}
-				{{{profileDropdown}}}
 			{{/if}}
+{{!--			{{#if loggedIn}}--}}
+{{!--				{{{profileDropdown}}}--}}
+{{!--			{{/if}}--}}
 		</ul>
 		{{{userMenu}}}
 	</div>

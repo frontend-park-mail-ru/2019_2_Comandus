@@ -14,13 +14,14 @@
 					{{{inputTags}}}
 					{{{budgetField}}}
 
-					{{!--				{{#if isVacancy}}--}}
 					{{{citySelect}}}
-					{{!--				{{/if}}--}}
 
 					{{{levelRadioGroup}}}
-					<div class="job-form__submit">
+					<div class="job-form__submit submit-wrap">
 						{{{submitBtn}}}
+						{{#isEdit}}
+							<a href="/jobs/{{jobId}}" class="btn btn_secondary cancel-submit">Отмена</a>
+						{{/isEdit}}
 					</div>
 				</form>
 			</div>

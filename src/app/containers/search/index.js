@@ -8,6 +8,7 @@ import {
 	levels,
 	levelsRadioDasha,
 	specialities,
+	specialitiesRow,
 } from '@app/constants';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import TextField from '@components/inputs/TextField/TextField';
@@ -20,6 +21,7 @@ import { router } from '../../../index';
 import FreelancerItem from '@components/dataDisplay/FreelancerItem';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
 import {
+	debounce,
 	formatDate,
 	formatMoney,
 	getJoTypeName,
@@ -30,18 +32,13 @@ import UtilService from '@services/UtilService';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import Checkbox from '@components/inputs/Checkbox';
 import JobService from '@services/JobService';
+import FreelancerService from '@services/FreelancerService';
 
 const proposalCountRanges = {
 	'0-10': {
 		min: 0,
 		max: 10,
 	},
-	// '5-10': {
-	// 	min: 5, max: 10
-	// },
-	// '10-20': {
-	// 	min: 10, max: 20
-	// },
 	'10-1000': {
 		min: 10,
 		max: 1000,
@@ -55,16 +52,36 @@ export default class Search extends Component {
 		this.data = {
 			children,
 			filter: {},
+			loading: false,
 		};
 
 		this.currentFocus = -1;
 	}
 
 	preRender() {
-		bus.on(busEvents.SEARCH_RESPONSE, this.onSearchResponse);
-		bus.emit(busEvents.SEARCH, this.props.params);
+		if (!this.props.params.type) {
+			let queryParams = new URLSearchParams(this.props.params);
+			queryParams.append('type', 'jobs');
+			queryParams.append('desc', 1);
+			queryParams = queryParams.toString();
+			router.push('/search', '?' + queryParams);
+			return;
+		}
 
-		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+		this.data = {
+			loading: true,
+		};
+
+		bus.on(busEvents.SEARCH_RESPONSE, this.onSearchResponse);
+		const countries = UtilService.MapCountriesToSelectList();
+		if (countries && countries.length !== 0) {
+			bus.emit(busEvents.SEARCH, this.props.params);
+		} else {
+			bus.on(busEvents.UTILS_LOADED, () => {
+				this.utilsLoaded();
+				bus.emit(busEvents.SEARCH, this.props.params);
+			});
+		}
 
 		const { minProposalCount, maxProposalCount } = this.props.params;
 		const proposalCount = [];
@@ -79,6 +96,7 @@ export default class Search extends Component {
 
 		this.data = {
 			q: this.props.params.q,
+			searchType: this.props.params.type,
 			countryList: UtilService.MapCountriesToSelectList(),
 			filter: this.props.params,
 			proposalCount: proposalCount,
@@ -88,12 +106,12 @@ export default class Search extends Component {
 	render() {
 		this._searchField = new TextField({
 			name: 'q',
-			type: 'text',
+			type: 'search',
 			label: 'Поиск',
 			placeholder: 'Поиск',
 			value: this.data.q,
 			onKeydown: this.onKeydown,
-			onInput: this.onInput,
+			onInput: debounce(this.onInput, 300),
 		});
 		this.searchBtn = new Button({
 			text: 'Поиск',
@@ -110,7 +128,7 @@ export default class Search extends Component {
 		this._specialitySelect = new DoubleSelect({
 			items: categories,
 			label1: 'Категория',
-			items2: specialities,
+			// items2: specialities,
 			label2: 'Специализация',
 			nameFirst: 'category',
 			name: 'specialityId',
@@ -205,18 +223,6 @@ export default class Search extends Component {
 						value: '0-10',
 						checked: this.data.proposalCount.includes('0-10'),
 					}).render(),
-					// new Checkbox({
-					// 	label: 'от 5 до 10',
-					// 	name: 'proposalCount',
-					// 	value: '5-10',
-					// 	checked: this.data.proposalCount.includes('5-10')
-					// }).render(),
-					// new Checkbox({
-					// 	label: 'от 10 до 20',
-					// 	name: 'proposalCount',
-					// 	value: '10-20',
-					// 	checked: this.data.proposalCount.includes('10-20')
-					// }).render(),
 					new Checkbox({
 						label: 'более 10',
 						name: 'proposalCount',
@@ -254,11 +260,16 @@ export default class Search extends Component {
 
 			let queryParams = new URLSearchParams(params);
 			queryParams.append('type', this.props.params.type);
+			queryParams.append('desc', 1);
 			queryParams = queryParams.toString();
 			router.push('/search', '?' + queryParams);
 		});
 
 		const filterForm = this.el.querySelector('#searchFilter');
+		if (!filterForm) {
+			return;
+		}
+
 		enableValidationAndSubmit(filterForm, null, (event) => {
 			const { target } = event;
 
@@ -321,73 +332,22 @@ export default class Search extends Component {
 		response = response ? response : [];
 
 		if (this.props.params.type === 'freelancers') {
-			response = this.mapFreelancers(response);
-			response = this.renderFreelancers(response);
+			response = FreelancerService.mapFreelancers(
+				response,
+				this.data.countryList,
+			);
+			response = FreelancerService.renderFreelancers(response);
 		} else {
-			response = this.mapJobs(response);
-			response = this.renderJobs(response);
+			response = JobService.mapJobs(response);
+			response = JobService.renderJobs(response, this.data.countryList);
 		}
 
 		this.data = {
+			loading: false,
 			searchResults: response,
 		};
 
 		this.stateChanged();
-	};
-
-	mapJobs = (jobs) => {
-		return jobs.map((job) => {
-			const el = { ...job };
-			el['experienceLevel'] = levels[el['experienceLevelId']];
-			el['skills'] = el['skills'] ? el['skills'].split(',') : [];
-			return el;
-		});
-	};
-
-	renderJobs = (jobs) => {
-		return jobs.map((job) => {
-			if (this.data.countryList) {
-				const country = this.data.countryList.find((el) => {
-					return el.value === job.country;
-				});
-				job.country = country ? country.label : '';
-			}
-
-			const jobItem = new JobItem({
-				...job,
-				created: formatDate(job.date),
-				paymentAmount: formatMoney(job.paymentAmount),
-				type: getJoTypeName(job['jobTypeId']).label,
-			});
-
-			const item = new Item({
-				children: [jobItem.render()],
-				link: `/jobs/${job.id}`,
-			});
-
-			return item.render();
-		});
-	};
-
-	mapFreelancers = (freelancers) => {
-		return freelancers.map((f) => {
-			f = { ...f, ...f.freelancer };
-			return f;
-		});
-	};
-
-	renderFreelancers = (freelancers) => {
-		return freelancers.map((f) => {
-			const freelancerItem = new FreelancerItem({
-				...f,
-			});
-
-			const item = new Item({
-				children: [freelancerItem.render()],
-			});
-
-			return item.render();
-		});
 	};
 
 	utilsLoaded = () => {
@@ -399,9 +359,19 @@ export default class Search extends Component {
 	};
 
 	onInput = (e) => {
+		let dict = 'jobs';
+
+		if (
+			this.props &&
+			this.props.params &&
+			this.props.params.type === 'freelancers'
+		) {
+			dict = 'freelancers';
+		}
+
 		JobService.GetSearchSuggest({
 			q: e.target.value,
-			dict: 'jobs',
+			dict: dict,
 		}).then((response) => this.onSuggestResponse(e, response));
 	};
 
@@ -432,6 +402,14 @@ export default class Search extends Component {
 		a.setAttribute('id', this.id + 'autocomplete-list');
 		a.setAttribute('class', 'autocomplete-items');
 		this._searchField.el.parentNode.appendChild(a);
+
+		if (!suggestList) {
+			return;
+		}
+
+		suggestList = suggestList.filter((value, index, self) => {
+			return self.indexOf(value) === index;
+		});
 
 		suggestList.forEach((el) => {
 			const b = document.createElement('DIV');

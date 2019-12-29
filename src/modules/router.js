@@ -1,6 +1,8 @@
 import Frame from '@frame/frame';
 import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
+import bus from '@frame/bus';
+import { busEvents } from '@app/constants';
 
 function getParamsFromSearch(search) {
 	const params = {};
@@ -22,7 +24,16 @@ const restrictedUrls = [
 	'/proposals/:proposalId',
 	'/contracts/new',
 	'/jobs/:jobId/edit',
+	'/dashboard',
 ];
+
+const restrictedUrlsForFreelancer = [
+	'/new-job',
+	'/my-job-postings',
+	'/jobs/:jobId/edit',
+];
+
+const restrictedUrlsForClient = ['/proposals'];
 /**
  * место для вставки роутов (switch)
  * ссылки
@@ -128,12 +139,25 @@ export class Router {
 			}
 
 			if (path === '/') {
-				if (AccountService.isClient()) {
-					this.push('/freelancers');
+				this.push('/dashboard');
+				// if (AccountService.isClient()) {
+				// 	this.push('/freelancers');
+				// 	return;
+				// }
+				// this.push('/jobs');
+				return;
+			}
+
+			if (AccountService.isClient()) {
+				if (restrictedUrlsForClient.includes(route.path)) {
+					this.push('/');
 					return;
 				}
-				this.push('/jobs');
-				return;
+			} else {
+				if (restrictedUrlsForFreelancer.includes(route.path)) {
+					this.push('/');
+					return;
+				}
 			}
 		} else {
 			if (restrictedUrls.includes(route.path)) {
@@ -175,6 +199,8 @@ export class Router {
 			el,
 			props,
 		};
+
+		bus.emit(busEvents.ROUTE_CHANGED, path);
 	}
 
 	match(route, requestPath) {

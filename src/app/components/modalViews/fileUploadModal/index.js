@@ -4,6 +4,7 @@ import './index.scss';
 import Button from '@components/inputs/Button/Button';
 import bus from '@frame/bus';
 import config from '@app/config';
+import { busEvents } from '@app/constants';
 
 export default class fileUploadModal extends Component {
 	constructor({
@@ -139,6 +140,8 @@ export default class fileUploadModal extends Component {
 				this._selectBtnElement.classList.remove('btn_secondary');
 				this._uploadBtnElement.style.display = 'none';
 				this._imgThumb.innerHTML = '';
+
+				bus.emit(busEvents.USER_UPDATED);
 			})
 			.catch((error) => {
 				console.dir(error);

@@ -2,6 +2,8 @@ import AjaxModule from '@modules/ajax';
 import config from '../config';
 import store from '@modules/store';
 import AuthService from '@services/AuthService';
+import ProposalItem from '@components/dataDisplay/ProposalItem';
+import { formatDate } from '@modules/utils';
 
 export default class ProposalService {
 	static GetProposals() {
@@ -69,4 +71,17 @@ export default class ProposalService {
 			},
 		);
 	}
+
+	static renderProposalItem = (proposal, isClient = false) => {
+		return new ProposalItem({
+			id: proposal.Response.id,
+			date: formatDate(proposal.Response.date),
+			jobTitle: proposal.jobTitle,
+			statusManager: proposal.Response.statusManager,
+			statusFreelancer: proposal.Response.statusFreelancer,
+			paymentAmount: proposal.Response.paymentAmount,
+			freelancerName: `${proposal.firstName} ${proposal.lastName}`,
+			isClient,
+		}).render();
+	};
 }

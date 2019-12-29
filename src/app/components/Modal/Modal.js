@@ -25,6 +25,10 @@ export default class Modal extends Component {
 	postRender() {
 		this._el = document.getElementById(this._id);
 
+		if (!this._el) {
+			return;
+		}
+
 		const closeBtn = this._el.querySelectorAll(
 			'.modal-header__close-icon',
 		)[0];

@@ -1,10 +1,12 @@
 export default {
-	// baseAPIUrl: 'http://89.208.211.100:8080',
-	// baseAPIUrl: 'https://api.fwork.live',
 	baseAPIUrl:
 		process.env.NODE_ENV === 'production'
-			? 'https://api.fwork.live'
+			? 'https://fwork.live/api/'
 			: 'http://89.208.211.100:8080',
+	socketAPIUrl:
+		process.env.NODE_ENV === 'production'
+			? ' wss://fwork.live/wsapi/'
+			: 'ws://localhost:8089/entry',
 	cookieAccountModeName: 'user_type',
 	urls: {
 		account: '/account',

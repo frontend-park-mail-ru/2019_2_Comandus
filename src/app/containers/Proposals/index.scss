@@ -16,6 +16,10 @@
 .tabs__nav_element {
 	padding: 9px 20px 5px;
 	margin: 0;
+	a:hover {
+		text-decoration: none;
+		display: block;
+	}
 }
 
 .tabs__nav_element.active, .tabs__nav_element:hover {
@@ -23,3 +27,31 @@
 	color: $primary-color;
 	cursor: pointer;
 }
+
+.proposals-page {
+	min-height: 100%;
+	position: relative;
+}
+
+.empty-box-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 80%;
+
+	margin: auto;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.empty-box {
+	text-align: center;
+}
+
+.empty-box_text {
+	text-align: center;
+	padding: 20px;
+	font-size: 1.5em;
+	color: $primary-color;
+}
+

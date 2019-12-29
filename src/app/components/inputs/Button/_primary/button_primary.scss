@@ -5,7 +5,7 @@
 	color: $white;
 }
 
-.btn_primary:hover {
+.btn_primary:hover, .btn_primary:disabled{
 	background-color: lighten($primary-color, 10);
 }
 

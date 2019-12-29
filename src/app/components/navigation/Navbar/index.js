@@ -21,8 +21,8 @@ export default class Navbar extends Component {
 
 	render() {
 		const jobItems = [
-			{ url: '/jobs?type=project', text: 'Проекты' },
-			{ url: '/jobs/?type=vacancy', text: 'Вакансии' },
+			{ url: '/search?type=jobs&desc=1&jobTypeId=0', text: 'Проекты' },
+			{ url: '/search?type=jobs&desc=1&jobTypeId=1', text: 'Вакансии' },
 		];
 
 		this._dropdown = new Dropdown({
@@ -95,7 +95,7 @@ export default class Navbar extends Component {
 		this.searchInput.addEventListener('submit', this.onSearchSubmit);
 	}
 
-	toggle = () => {
+	toggle = (e) => {
 		const bar = document.getElementById(this.id);
 		toggleClass('navbar__nav_responsive', bar);
 	};
@@ -122,6 +122,8 @@ export default class Navbar extends Component {
 		params.append('type', type);
 
 		event.target.elements[0].value = '';
+
+		this.toggle();
 
 		router.push(`/search`, `?${params.toString()}`);
 	};

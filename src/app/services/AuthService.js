@@ -3,6 +3,7 @@ import config from '../config';
 import store from '@modules/store';
 import AccountService from '@services/AccountService';
 import { CSRF_TOKEN_NAME } from '@app/constants';
+import { router } from '../../index';
 
 export default class AuthService {
 	static Login(data) {
@@ -39,6 +40,10 @@ export default class AuthService {
 				user: null,
 			});
 			AccountService.PutUserToLocalStorage();
+			store.clear();
+			localStorage.clear();
+			router.push('/');
+			document.location.reload(false);
 		});
 	}
 
@@ -58,20 +63,17 @@ export default class AuthService {
 			})
 			.catch((error) => {
 				// Если user в local storage больше невалидный
-				if (error.message === 'Unauthorized') {
-					store.setState({
-						user: null,
-					});
-					AccountService.PutUserToLocalStorage();
-				}
+				store.setState({
+					user: null,
+				});
+				AccountService.PutUserToLocalStorage();
 
-				return error.message;
+				return 'Unauthorized';
 			});
 	}
 
 	static GetCsrfToken() {
 		return localStorage.getItem(CSRF_TOKEN_NAME);
-		// return store.get([CSRF_TOKEN_NAME]);
 	}
 
 	static getCsrfHeader() {

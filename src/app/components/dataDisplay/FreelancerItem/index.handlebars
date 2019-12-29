@@ -3,37 +3,39 @@
 		<div class="freelancer-item__avatar-wrapper">
 			<img class="freelancer-item__avatar" src="{{avatar}}" alt="{{firstName}}" onerror="{{imgOnError}}"/>
 		</div>
-		<div class="freelancer-item__col-full">
-			<div class="name-col">
-				<a class="freelancer-item__name" href="/freelancers/{{id}}">{{firstName}} {{lastName}}</a>
-				<strong class="freelancer-item__small">Специализация: {{speciality}}</strong>
+		<div class="freelancer-item__right-col">
+			<div class="freelancer-item__col-full">
+				<div class="name-col">
+					<a class="freelancer-item__name" href="/freelancers/{{id}}">{{firstName}} {{lastName}}</a>
+					<strong class="freelancer-item__small">Специализация: {{speciality}}</strong>
+				</div>
+				<div class="freelancer-item__offer_desktop">
+					{{!--				{{{btn}}}--}}
+				</div>
 			</div>
-			<div class="freelancer-item__offer_desktop">
+			<div class="freelancer-item__small ">
+				<ul class="freelancer-item__block-info">
+					{{#if proposals}}
+						<li class="freelancer-item__block-info-item">100% положительных отзывов. Всего {{proposalCount}} отзывов.</li>
+					{{/if}}
+					<li class="freelancer-item__block-info-item">{{country}} {{city}}</li>
+				</ul>
+			</div>
+			<div class="freelancer-item__row">
+				<div class="freelancer-item__description">
+					{{overview}}
+				</div>
+			</div>
+			<ul class="freelancer-item__small freelancer-item-skills">
+				{{#each skills}}
+					<li class="freelancer-item-skills__item">
+						<span class="">{{this}}</span>
+					</li>
+				{{/each}}
+			</ul>
+			<div class="freelancer-item__offer_mobile">
 {{!--				{{{btn}}}--}}
 			</div>
 		</div>
-	</div>
-	<div class="freelancer-item__small ">
-		<ul class="freelancer-item__block-info">
-			{{#if proposals}}
-				<li class="freelancer-item__block-info-item">100% положительных отзывов. Всего {{proposalCount}} отзывов.</li>
-			{{/if}}
-			<li class="freelancer-item__block-info-item">{{country}} {{city}}</li>
-		</ul>
-	</div>
-	<div class="freelancer-item__row">
-		<div class="freelancer-item__description">
-			{{overview}}
-		</div>
-	</div>
-	<ul class="freelancer-item__small freelancer-item-skills">
-		{{#each skills}}
-			<li class="freelancer-item-skills__item">
-				<span class="">{{this}}</span>
-			</li>
-		{{/each}}
-	</ul>
-	<div class="freelancer-item__offer_mobile">
-		{{{btn}}}
 	</div>
 </div>

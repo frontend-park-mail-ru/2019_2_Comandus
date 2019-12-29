@@ -9,6 +9,8 @@ import Button from '@components/inputs/Button/Button';
 import './account.scss';
 import { defaultAvatarUrl } from '@modules/utils';
 import config from '../../config';
+import CardTitle from '@components/dataDisplay/CardTitle';
+import { formToJSON } from '@modules/form/formToJSON';
 
 export class Account extends Component {
 	constructor(props) {
@@ -69,6 +71,7 @@ export class Account extends Component {
 			label: 'E-mail',
 			placeholder: 'Ваш e-mail',
 			value: this.data.user ? this.data.user.email : '',
+			attributes: 'disabled',
 		});
 		this._submitBtn = new Button({
 			type: 'submit',
@@ -92,6 +95,9 @@ export class Account extends Component {
 				children: [this._submitBtn.render()],
 			}).render(),
 			profileAvatar: this._avatar.render(),
+			accountHeader: new CardTitle({
+				title: 'Аккаунт',
+			}).render(),
 		};
 
 		this.html = template({
@@ -111,6 +117,11 @@ export class Account extends Component {
 			helper.event.preventDefault();
 
 			this.helper = helper;
+
+			this.data.user = {
+				...this.data.user,
+				...helper.formToJSON(),
+			};
 
 			bus.on('account-put-response', this.onAccountPutResponse);
 			bus.emit('account-put', helper.formToJSON());

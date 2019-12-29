@@ -9,6 +9,11 @@
 	&__results {
 		border-top: 1px solid #E0E0E0;
 	}
+
+	&:before {
+		content: " ";
+		display: table;
+	}
 }
 
 .search-input__input {
@@ -61,8 +66,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 100%;
+	min-height: 400px;
 	text-align: center;
+	color: $primary-color;
 
 	& img {
 		height: 100px;
@@ -74,3 +80,12 @@
 		color: $primary-color;
 	}
 }
+
+@media screen and (max-width: 576px) {
+	.search-page {
+		&__input {
+			margin: 1em;
+		}
+	}
+}
+

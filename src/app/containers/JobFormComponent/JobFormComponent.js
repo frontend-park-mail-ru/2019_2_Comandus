@@ -123,7 +123,6 @@ class JobFormComponent extends Component {
 			name: 'city',
 			nameFirst: 'country',
 			label: 'Нужен исполнитель из...',
-			required: true,
 			filterable: true,
 			selectedItem1: job.country,
 			selectedItem2: job.city,
@@ -153,14 +152,13 @@ class JobFormComponent extends Component {
 		});
 
 		this._inputTags = new InputTags({
-			name: 'skills',
+			name: 'tagLine',
 			max: 5,
 			duplicate: false,
-			tags: [],
-			value: job.skills,
+			tags: job.tagLine ? job.tagLine.split(',') : [],
 		});
 
-		const submitBtn = new Button({
+		this.submitBtn = new Button({
 			type: 'submit',
 			text: this.props.params.jobId
 				? 'Сохранить изменения'
@@ -212,9 +210,7 @@ class JobFormComponent extends Component {
 				label: 'Требуемые навыки и компетенции',
 			}).render(),
 
-			submitBtn: new FieldGroup({
-				children: [submitBtn.render()],
-			}).render(),
+			submitBtn: this.submitBtn.render(),
 
 			_jobTypeRadio: new FieldGroup({
 				children: [this._jobTypeRadio.render()],
@@ -230,9 +226,7 @@ class JobFormComponent extends Component {
 	}
 
 	postRender() {
-		// if (this.data.isVacancy()) {
 		this._citySelect.postRender();
-		// }
 		this._specialitySelect.postRender();
 		this._inputTags.postRender();
 		this._jobTypeRadio.postRender();
@@ -241,6 +235,8 @@ class JobFormComponent extends Component {
 		if (form) {
 			enableValidationAndSubmit(form, (helper) => {
 				helper.event.preventDefault();
+
+				this.submitBtn.el.disabled = true;
 
 				this.helper = helper;
 				const data = helper.formToJSON();

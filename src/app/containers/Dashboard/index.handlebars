@@ -1,0 +1,178 @@
+<div id="{{_id}}" class="dashboard-container">
+	<div class="tp-container tp-centered-container">
+		<div class="tp-row">
+			<div class="tp-col-12">
+				<div class="page-header">
+					Главная
+				</div>
+			</div>
+		</div>
+		<div class="tp-row dashboard-page">
+			{{#isClient}}
+				<div class="tp-col-8">
+					{{#showFreelancerContracts}}
+						<div class="d-block">
+							<div class="d-block_title">Контракты</div>
+							<div class="d-card">
+								{{#each freelancerContracts}}
+									{{{this}}}
+								{{/each}}
+								<a class="card-action" href="/my-contracts">Все контракты</a>
+							</div>
+						</div>
+					{{/showFreelancerContracts}}
+					{{#showClientJobs}}
+						<div class="d-block">
+							<div class="d-block_title">Мои заказы</div>
+							<div class="d-card">
+								{{#each clientJobs}}
+									{{{this}}}
+								{{/each}}
+								<a class="card-action" href="/my-job-postings">Все заказы</a>
+								<a class="card-action-top btn btn_primary btn-s" href="/new-job">Разместить заказ</a>
+							</div>
+						</div>
+					{{/showClientJobs}}
+					{{#showFreelancerProposals}}
+						<div class="d-block">
+							<div class="d-block_title">Отклики</div>
+							<div class="d-card">
+								{{#each freelancerProposals}}
+									{{{this}}}
+								{{/each}}
+							</div>
+						</div>
+					{{/showFreelancerProposals}}
+					{{#showFreelancerSuggests}}
+						<div class="d-block">
+							<div class="d-block_title">Рекомендуемые фрилансеры</div>
+							<div class="d-card">
+								{{#each freelancerSuggests}}
+									{{{this}}}
+								{{/each}}
+								<a class="card-action" href="/search?type=freelancers&desc=1">Поиск фрилансеров</a>
+							</div>
+						</div>
+					{{/showFreelancerSuggests}}
+				</div>
+				<div class="tp-col-4">
+					<div class="d-block">
+						<div class="d-block_title">Аккаунт</div>
+						<div class="d-card">
+							<div class="d-account-card">
+								{{{accountAvatar}}}
+								<div>{{user.firstName}} {{user.secondName}}</div>
+							</div>
+							<a class="card-action" href="/settings?tab=account">Управление аккаунтом</a>
+						</div>
+					</div>
+					<div class="d-block">
+						<div class="d-block_title">Компания</div>
+						<div class="d-card">
+							{{#hasCompanyName}}
+								<div class="d-profile-item">
+									<div class="d-profile-item-label">Название</div>
+									{{company.companyName}}
+								</div>
+							{{/hasCompanyName}}
+							{{#hasTagline}}
+								<div class="d-profile-item">
+									<div class="d-profile-item-label">Заголовок</div>
+									{{company.tagline}}
+								</div>
+							{{/hasTagline}}
+							{{#hasDescription}}
+								<div class="d-profile-item">
+									<div class="d-profile-item-label">Описание</div>
+									{{company.description}}
+								</div>
+							{{/hasDescription}}
+							{{#hasSite}}
+								<div class="d-profile-item">
+									<div class="d-profile-item-label">Сайт</div>
+									{{company.site}}
+								</div>
+							{{/hasSite}}
+							<a class="card-action" href="/settings?tab=company">Изменить данные компании</a>
+							<a class="card-action" href="/companies/{{company.id}}">Страница компании</a>
+						</div>
+					</div>
+				</div>
+			{{else}}
+				<div class="tp-col-8">
+					{{#showFreelancerContracts}}
+						<div class="d-block">
+							<div class="d-block_title">Контракты</div>
+							<div class="d-card">
+								{{#each freelancerContracts}}
+									{{{this}}}
+								{{/each}}
+								<a class="card-action" href="/my-contracts">Все контракты</a>
+							</div>
+						</div>
+					{{/showFreelancerContracts}}
+					{{#showFreelancerProposals}}
+						<div class="d-block">
+							<div class="d-block_title">Мои отклики</div>
+							<div class="d-card">
+								{{#each freelancerProposals}}
+									{{{this}}}
+								{{/each}}
+								<a class="card-action" href="/proposals">Все отклики</a>
+							</div>
+						</div>
+					{{/showFreelancerProposals}}
+					{{#showJobSuggests}}
+						<div class="d-block">
+							<div class="d-block_title">Рекомендуемые работы</div>
+							<div class="d-card">
+								{{#each jobSuggests}}
+									{{{this}}}
+								{{/each}}
+								<a class="card-action" href="/search?type=jobs&desc=1">Поиск работ</a>
+							</div>
+						</div>
+					{{/showJobSuggests}}
+				</div>
+				<div class="tp-col-4">
+					<div class="d-block">
+						<div class="d-block_title">Аккаунт</div>
+						<div class="d-card">
+							<div class="d-account-card">
+								{{{accountAvatar}}}
+								<div>{{user.firstName}} {{user.secondName}}</div>
+							</div>
+							<a class="card-action" href="/settings?tab=account">Управление аккаунтом</a>
+						</div>
+					</div>
+					<div class="d-block">
+						<div class="d-block_title">Профиль</div>
+						<div class="d-card">
+							<div class="d-profile-item">{{freelancer.overview}}</div>
+							<div class="d-profile-item">
+								<div class="d-profile-item-label">Специализация</div>
+								{{freelancer.speciality}}
+							</div>
+							{{#freelancer.hasLevel}}
+								<div class="d-profile-item">
+									<div class="d-profile-item-label">Уровень</div>
+									{{freelancer.experienceLevel}}
+								</div>
+							{{/freelancer.hasLevel}}
+							{{#freelancer.hasSkills}}
+								<div class="d-profile-item">
+									<div class="d-profile-item-label">Навыки</div>
+									{{#each freelancer.skills}}
+										{{{this}}}
+									{{/each}}
+								</div>
+							{{/freelancer.hasSkills}}
+							<a class="card-action" href="/settings?tab=freelancer">Управление профилем</a>
+							<a class="card-action" href="/freelancers/{{freelancer.id}}">Профиль</a>
+						</div>
+					</div>
+				</div>
+			{{/isClient}}
+		</div>
+	</div>
+</div>

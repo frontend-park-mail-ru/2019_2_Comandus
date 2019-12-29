@@ -4,16 +4,23 @@ import './index.scss';
 import bus from '@frame/bus';
 import { busEvents, proposalStatuses } from '@app/constants';
 import store from '@modules/store';
-import ProposalItem from '@components/dataDisplay/ProposalItem';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import { formatDate, isProposalActive, isProposalClosed } from '@modules/utils';
+import { isProposalActive, isProposalClosed } from '@modules/utils';
+import ProposalService from '@services/ProposalService';
+import emptyBox from '@assets/img/empty-box.svg';
 
 export default class Proposals extends Component {
 	constructor({ children = [], ...props }) {
 		super(props);
 
+		const emptyBoxImg = document.createElement('img');
+		emptyBoxImg.src = emptyBox;
+		emptyBoxImg.style.height = '10em';
+		emptyBoxImg.style.width = '10em';
+
 		this.data = {
 			children,
+			emptyBoxImg: emptyBoxImg.outerHTML,
 		};
 
 		bus.on(busEvents.PROPOSALS_UPDATED, this.proposalsUpdated);
@@ -29,10 +36,10 @@ export default class Proposals extends Component {
 				title: 'Предложенные мне',
 			}).render(),
 			activeTitle: new CardTitle({
-				title: 'Активные отлики (в процессе обсуждения)',
+				title: 'Активные отлики',
 			}).render(),
 			myProposalTitle: new CardTitle({
-				title: 'Мои отклики (без ответа клиента)',
+				title: 'Мои отклики',
 			}).render(),
 			closedProposalTitle: new CardTitle({
 				title: 'Закрытые отклики',
@@ -51,38 +58,50 @@ export default class Proposals extends Component {
 	proposalsUpdated = () => {
 		const proposals = store.get(['proposals']);
 
-		const activeProposals = proposals.filter((el) => {
-			return isProposalActive(el.Response);
-		});
-		const closedProposals = proposals.filter((el) => {
-			return isProposalClosed(el.Response);
-		});
-		const sentProposals = proposals.filter((el) => {
-			return (
-				el.Response.statusFreelancer === proposalStatuses.SENT &&
-				el.Response.statusManager === proposalStatuses.REVIEW
-			);
-		});
+		let activeProposals = [];
+		let closedProposals = [];
+		let sentProposals = [];
+
+		if (proposals) {
+			activeProposals = proposals
+				.filter((el) => {
+					return isProposalActive(el.Response);
+				})
+				.map((el) => ProposalService.renderProposalItem(el));
+			closedProposals = proposals
+				.filter((el) => {
+					return isProposalClosed(el.Response);
+				})
+				.map((el) => ProposalService.renderProposalItem(el));
+			sentProposals = proposals
+				.filter((el) => {
+					return (
+						el.Response.statusFreelancer ===
+							proposalStatuses.SENT &&
+						el.Response.statusManager === proposalStatuses.REVIEW
+					);
+				})
+				.map((el) => ProposalService.renderProposalItem(el));
+		}
+
+		const showActiveProposals = activeProposals.length > 0;
+		const showClosedProposals = closedProposals.length > 0;
+		const showSentProposals = sentProposals.length > 0;
 
 		this.data = {
-			proposals: proposals.map(this.renderProposalItem),
-			activeProposals: activeProposals.map(this.renderProposalItem),
-			closedProposals: closedProposals.map(this.renderProposalItem),
-			sentProposals: sentProposals.map(this.renderProposalItem),
+			activeProposals,
+			showActiveProposals,
+			closedProposals,
+			showClosedProposals,
+			sentProposals,
+			showSentProposals,
+			empty: !(
+				showActiveProposals ||
+				showClosedProposals ||
+				showSentProposals
+			),
 		};
 
 		this.stateChanged();
-	};
-
-	renderProposalItem = (proposal) => {
-		return new ProposalItem({
-			id: proposal.Response.id,
-			date: formatDate(proposal.Response.date),
-			// jobTitle: proposal.Job.title,
-			jobTitle: proposal.jobTitle,
-			statusManager: proposal.Response.statusManager,
-			statusFreelancer: proposal.Response.statusFreelancer,
-			paymentAmount: proposal.Response.paymentAmount,
-		}).render();
 	};
 }

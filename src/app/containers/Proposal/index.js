@@ -8,7 +8,6 @@ import FeaturesList from '@components/dataDisplay/FeaturesList';
 import Button from '@components/inputs/Button/Button';
 import { Avatar } from '@components/Avatar/Avatar';
 import {
-	defaultAvatarUrl,
 	formatMoney,
 	getExperienceLevelName,
 	getJoTypeName,
@@ -21,6 +20,7 @@ import { proposalStatuses } from '@app/constants';
 import PageWithTitle from '@components/PageWithTitle';
 import contentTemplate from './content.handlebars';
 import ClientChat from '@components/ClientChat';
+import { router } from '../../../index';
 
 export default class Proposal extends Component {
 	constructor({ children = [], ...props }) {
@@ -36,6 +36,11 @@ export default class Proposal extends Component {
 			actionMakeCandidateEnabled: false,
 			actionRejectEnabled: false,
 			actionNewContractEnabled: false,
+			statusCreated: false,
+			statusCanceled: false,
+			statusRejected: false,
+			statusCandidate: false,
+			statusSentContract: false,
 		};
 	}
 
@@ -85,6 +90,7 @@ export default class Proposal extends Component {
 		this.makeOffer = new Button({
 			type: 'submit',
 			text: 'Предложить контракт',
+			onClick: this.onMakeOffer,
 		});
 
 		const type = getJoTypeName(this.data.job['jobTypeId']);
@@ -104,12 +110,16 @@ export default class Proposal extends Component {
 
 		this.freelancerAvatar = new Avatar({
 			imgUrl: this.data.freelancer.avatar,
-			// defaultAvatarUrl('C', 'L', 150),
 			imgWidth: 65,
 			imgHeight: 65,
 		});
 
-		this._chat = new ClientChat({});
+		this._chat = new ClientChat({
+			proposalId: this.data.proposal.id,
+			freelancerId: this.data.proposal.freelancerId,
+			hireManagerId: parseInt(this.data.job.hireManagerId),
+			chatEnabled: this.data.chatEnabled,
+		});
 
 		this.data = {
 			jobFeatures: new FeaturesList({
@@ -159,11 +169,20 @@ export default class Proposal extends Component {
 		this.rejectProposal.postRender();
 		this.withdrawProposal.postRender();
 		this.makeCandidateProposal.postRender();
-		// this.makeOffer.postRender();
+		this.makeOffer.postRender();
 		this._chat.postRender();
 	}
 
 	onProposalGetResponse = (proposal) => {
+		const statusSentContract =
+			proposal.Response.statusManager === proposalStatuses.SENT_CONTRACT;
+		const isCandidate =
+			proposal.Response.statusManager === proposalStatuses.ACCEPTED;
+		const statusCandidate = statusSentContract || isCandidate;
+		const statusCreated =
+			statusCandidate ||
+			proposal.Response.statusFreelancer === proposalStatuses.SENT;
+
 		this.data = {
 			freelancer: {
 				...proposal.Freelancer,
@@ -182,9 +201,9 @@ export default class Proposal extends Component {
 					proposal.Job['experienceLevelId'],
 				),
 			},
-			isCandidate:
-				proposal.Response.statusManager === proposalStatuses.ACCEPTED,
-			actionCancelEnabled: !isProposalClosed(proposal.Response),
+			isCandidate,
+			actionCancelEnabled:
+				!isProposalClosed(proposal.Response) && !statusSentContract,
 			actionMakeCandidateEnabled:
 				!isProposalClosed(proposal.Response) &&
 				proposal.Response.statusManager === proposalStatuses.REVIEW,
@@ -194,6 +213,10 @@ export default class Proposal extends Component {
 			actionNewContractEnabled:
 				!isProposalClosed(proposal.Response) &&
 				proposal.Response.statusManager === proposalStatuses.ACCEPTED,
+			statusCreated,
+			statusCandidate,
+			statusSentContract,
+			chatEnabled: statusCandidate,
 		};
 
 		this.stateChanged();
@@ -229,5 +252,11 @@ export default class Proposal extends Component {
 				).then(this.onProposalGetResponse);
 			},
 		);
+	};
+
+	onMakeOffer = (e) => {
+		e.preventDefault();
+
+		router.push(`/proposals/${this.props.params.proposalId}/new-contract`);
 	};
 }

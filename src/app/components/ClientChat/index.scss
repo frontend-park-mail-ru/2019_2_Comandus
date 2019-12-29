@@ -46,7 +46,7 @@ $primary-color: #1f7ce7;
 	flex-grow: 1;
 	min-height: 0;
 	height: 100%;
-	padding: 8px 12px 0;
+	padding: 8px 12px 8px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -93,7 +93,6 @@ $primary-color: #1f7ce7;
 	margin: 0 0 8px;
 	padding: 0;
 	border: 0;
-	//background: 0 0;
 	width: 34px;
 	height: 34px;
 	border-radius: 50%;
@@ -140,14 +139,12 @@ $primary-color: #1f7ce7;
 }
 
 .message-text-wrapper_user {
-	background-color: $primary-color;
+	background-color: var(--primary-color);
 	color: #ffffff;
 	align-items: flex-end;
 }
 
 .message {
-	//display: block;
-	//flex-shrink: 0;
 	word-break: break-word;
 	line-height: 20px;
 	max-width: 100%;
@@ -169,7 +166,10 @@ $primary-color: #1f7ce7;
 
 .message-text__state {
 	margin-right: 5px;
-}
 
+	&_is-read {
+		color:  var(--color5);
+	}
+}
 
 

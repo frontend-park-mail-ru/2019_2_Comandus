@@ -5,14 +5,22 @@ import './index.scss';
 import PageWithTitle from '@components/PageWithTitle';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
-import ContractItem from '@components/dataDisplay/ContractItem';
-import { formatDate, formatMoney } from '@modules/utils';
 import ContractService from '@services/ContractService';
 import { statusesContract } from '@app/constants';
+import emptyBox from '@assets/img/empty-box.svg';
 
 export default class ClientContracts extends Component {
 	constructor(props) {
 		super(props);
+
+		const emptyBoxImg = document.createElement('img');
+		emptyBoxImg.src = emptyBox;
+		emptyBoxImg.style.height = '10em';
+		emptyBoxImg.style.width = '10em';
+
+		this.data = {
+			emptyBoxImg: emptyBoxImg.outerHTML,
+		};
 	}
 
 	preRender() {
@@ -31,7 +39,7 @@ export default class ClientContracts extends Component {
 			activeContracts: this.data.activeContracts,
 			closedContracts: this.data.closedContracts,
 			pendingOffersTitle: new CardTitle({
-				title: 'Отправленные предложения (ожидается ответ фрилансера)',
+				title: 'Отправленные предложения',
 			}).render(),
 			activeContractsTitle: new CardTitle({
 				title: 'Активные',
@@ -67,47 +75,44 @@ export default class ClientContracts extends Component {
 		return this.html;
 	}
 
-	renderItems = (contracts = []) => {
-		if (!contracts) {
-			return [];
-		}
+	onGetContractsResponse = (contracts) => {
+		let pendingContracts = [];
+		let activeContracts = [];
+		let closedContracts = [];
 
-		return contracts.map((contract) => {
-			let fullname = contract.Company.CompanyName
-				? contract.Company.CompanyName
-				: '';
-			if (this.data.isClient) {
-				fullname = `${contract.Freelancer.FirstName} ${contract.Freelancer.SecondName}`;
-			}
-			const item = new ContractItem({
-				id: contract.Contract.id,
-				title: contract.Job.Title,
-				fullname,
-				created: formatDate(contract.Contract.startTime),
-				paymentAmount: formatMoney(contract.Contract.paymentAmount),
+		if (contracts) {
+			pendingContracts = contracts.filter((el) => {
+				return el.Contract.status === statusesContract.EXPECTED;
 			});
 
-			return item.render();
-		});
-	};
+			activeContracts = contracts.filter((el) => {
+				return el.Contract.status === statusesContract.ACTIVE;
+			});
 
-	onGetContractsResponse = (contracts) => {
-		const pendingContracts = contracts.filter((el) => {
-			return el.Contract.status === statusesContract.EXPECTED;
-		});
+			closedContracts = contracts.filter((el) => {
+				return el.Contract.status === statusesContract.CLOSED;
+			});
+		}
 
-		const activeContracts = contracts.filter((el) => {
-			return el.Contract.status === statusesContract.ACTIVE;
-		});
-
-		const closedContracts = contracts.filter((el) => {
-			return el.Contract.status === statusesContract.CLOSED;
-		});
+		const pendingContractsShow = pendingContracts.length > 0;
+		const activeContractsShow = activeContracts.length > 0;
+		const closedContractsShow = closedContracts.length > 0;
 
 		this.data = {
-			pendingContracts: this.renderItems(pendingContracts),
-			activeContracts: this.renderItems(activeContracts),
-			closedContracts: this.renderItems(closedContracts),
+			pendingContracts: ContractService.renderItems(pendingContracts),
+			pendingContractsShow,
+			activeContracts: ContractService.renderItems(activeContracts),
+			activeContractsShow,
+			closedContracts: ContractService.renderItems(closedContracts),
+			closedContractsShow,
+		};
+
+		this.data = {
+			empty: !(
+				pendingContractsShow ||
+				activeContractsShow ||
+				closedContractsShow
+			),
 		};
 
 		this.stateChanged();

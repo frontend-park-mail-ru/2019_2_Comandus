@@ -18,11 +18,24 @@ self.addEventListener('fetch', function(event) {
 			}
 
 			return fetch(event.request).then((response) => {
+				// Check if we received a valid response
+				if (
+					!response ||
+					response.status !== 200 ||
+					response.type !== 'basic'
+				) {
+					return response;
+				}
+
+				if (event.request.method !== 'GET') {
+					return response;
+				}
+
 				// const url = new URL(event.request.url);
 				// if (/.jpg|.jpeg|.png$/.test(url.pathname)) {
-				let responseClone = response.clone();
+				let responseToCache = response.clone();
 				caches.open(CACHE_NAME).then((cache) => {
-					cache.put(event.request, responseClone);
+					cache.put(event.request, responseToCache);
 				});
 				// }
 

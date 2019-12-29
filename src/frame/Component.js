@@ -1,4 +1,4 @@
-import { htmlToElement, uniqueId } from '@modules/utils';
+import { debounce, htmlToElement, uniqueId } from '@modules/utils';
 import { router } from '../index';
 
 export default class Component {
@@ -40,7 +40,7 @@ export default class Component {
 		this._data = { ...this._data, ...newData };
 	}
 
-	stateChanged() {
+	stateChanged = debounce(() => {
 		// const el = document.getElementById(this._id);
 		// this.html = this.render();
 		if (this.el) {
@@ -52,7 +52,7 @@ export default class Component {
 		} else {
 			this.onDestroy();
 		}
-	}
+	}, 300);
 
 	setProps(newProps) {
 		this.props = { ...this.props, ...newProps };

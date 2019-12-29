@@ -82,16 +82,16 @@ export class Avatar extends Component {
 	}
 
 	postRender() {
-		if (!this.data.changing) {
-			return;
-		}
-
 		this._avatarElement = this.el.querySelector('#avatar-img');
 		this._avatarElement.onerror = () => {
 			if (this.data.user) {
 				this._avatarElement.src = this.data.imgDefault;
 			}
 		};
+
+		if (!this.data.changing) {
+			return;
+		}
 
 		this._avatarUpload.postRender();
 		this._changeBtn.postRender();

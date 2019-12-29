@@ -11,6 +11,7 @@ export default class ContractItem extends Component {
 		created = '',
 		paymentAmount = 0,
 		children = [],
+		badge = '',
 		...props
 	}) {
 		super(props);
@@ -22,6 +23,7 @@ export default class ContractItem extends Component {
 			paymentAmount,
 			fullname,
 			children,
+			badge: badge ? `<span class="item-badge">${badge}</span>` : null,
 		};
 	}
 
@@ -33,6 +35,7 @@ export default class ContractItem extends Component {
 
 		this.html = new Item({
 			children: [this.html],
+			link: `/my-contracts/${this.data.id}`,
 		}).render();
 
 		return this.html;

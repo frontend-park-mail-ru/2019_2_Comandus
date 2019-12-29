@@ -7,22 +7,22 @@
 
 	&__avatar {
 		display: flex;
-		margin-right: 10px;
+		margin: -12px 12px 0 -12px;
 	}
 	&__main-info {
 		display: flex;
 		flex-direction: column;
+		margin-right: auto;
 	}
 	&__description {
 		margin-bottom: 10px;
 	}
-	&__features {
-
+	&__selected {
+		text-align: end;
 	}
 }
 
 .main-info {
-
 	&__name {
 		display: flex;
 		flex-wrap: wrap;
@@ -30,11 +30,10 @@
 		letter-spacing: 0.08em;
 	}
 
-	&__region {
+	&__item {
 		margin-top: 5px;
 
 		&_mobile {
-			color: #656565;
 			display: none;
 		}
 		&_desktop {
@@ -42,20 +41,40 @@
 		}
 	}
 
-	&__rating {
-		margin-left: auto;
+	&__info-columns-wrapper {
+		margin-top: 12px;
+		display: flex;
+		flex-direction: row;
+	}
+
+	&__labels-column {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+	}
 
-		&_mobile {
-			display: none;
-			flex-direction: row;
-			margin: 0;
-		}
-		&_desktop {
-			display: flex;
-		}
+	&__info-column	{
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.labels-column {
+	&__label {
+		color: $light-text-color;
+		margin: 0 12px 10px 0;
+	}
+}
+
+.info-column {
+	&__value {
+		margin-bottom: 10px;
+	}
+}
+
+.info-item {
+	&__label {
+		color: $light-text-color;
+		margin: 0 5px 5px 0;
 	}
 }
 
@@ -66,7 +85,7 @@
 		}
 	}
 	.main-info {
-		&__region {
+		&__item {
 			&_mobile {
 				display: flex;
 			}
@@ -74,25 +93,6 @@
 				display: none;
 			}
 		}
-
-		&__rating {
-			&_mobile {
-				display: flex;
-			}
-			&_desktop {
-				display: none;
-			}
-		}
-	}
-}
-
-.profile-region {
-	&__city {
-	}
-	&__time {
-	}
-	&__description {
-		font-size: 0.9em;
 	}
 }
 
@@ -104,6 +104,8 @@
 	}
 	&__text {
 		padding: 0;
+		overflow-wrap: break-word;
+		white-space: pre-wrap;
 	}
 }
 
@@ -222,6 +224,7 @@
 		font-size: 0.9em;
 		margin-top: -5px;
 		color: $color4;
+		text-align: left;
 	}
 }
 

@@ -10,6 +10,7 @@ const KEYS = {
 	COMMA: 188,
 	BACK: 8,
 	TAB: 9,
+	SPACE: 32,
 };
 
 function whichTransitionEnd() {
@@ -56,7 +57,8 @@ export default class InputTags extends Component {
 		this._inputComponent = new TextField({
 			type: 'text',
 			classes: 'input-tags__input',
-			placeholder: 'Введите название навыка для добавления',
+			placeholder:
+				'Введите название навыка для добавления и нажмите Enter',
 		});
 		this.data = {
 			tags,
@@ -77,6 +79,10 @@ export default class InputTags extends Component {
 	}
 
 	postRender() {
+		if (!this.el) {
+			return;
+		}
+
 		this._wrapper = this.el.querySelector('.input-tags__tags-wrapper');
 		this._input = this.el.querySelector('.input-tags__input');
 		this._destinationInput = this.el.querySelector(
@@ -90,7 +96,7 @@ export default class InputTags extends Component {
 		this._input.addEventListener('keydown', (event) => {
 			let str = this._input.value.trim();
 			const code = event.which || event.keyCode;
-			if (~[KEYS.TAB, KEYS.ENTER, KEYS.COMMA].indexOf(code)) {
+			if (~[KEYS.TAB, KEYS.ENTER, KEYS.COMMA, KEYS.SPACE].indexOf(code)) {
 				event.preventDefault();
 				this._input.value = '';
 				if (str !== '') {

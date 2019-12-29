@@ -49,6 +49,7 @@ export class Settings extends Component {
 		];
 
 		this._getAccountBlock = false;
+		this._isFirstGet = true;
 	}
 
 	preRender() {
@@ -92,6 +93,7 @@ export class Settings extends Component {
 		this._currentTab = this._tabs.find((tab) => {
 			return tab.link === currentLink;
 		});
+
 		if (
 			!this._currentTab ||
 			(this.data.isClient && this._currentTab.link === 'freelancer') ||
@@ -102,12 +104,6 @@ export class Settings extends Component {
 			});
 		}
 
-		// if (this._currentTab.component) {
-		// 	this._currentTabSettings = this._currentTab.component;
-		// } else {
-		// 	this._currentTabSettings = new this._currentTab.Component({});
-		// 	this._currentTab.component = this._currentTabSettings;
-		// }
 		this._currentTabSettings = new this._currentTab.Component(
 			this._currentTab.props,
 		);
@@ -142,6 +138,11 @@ export class Settings extends Component {
 		const user = store.get(['user']);
 		const isClient = AccountService.isClient();
 
+		this.data = {
+			isClient,
+			user,
+		};
+
 		this._tabs.find((tab) => {
 			return tab.link === 'account';
 		}).props.user = this.data.user;
@@ -153,17 +154,12 @@ export class Settings extends Component {
 			router.push(config.urls.settings);
 		}
 
-		// Если обновили данные из формы - обновлять ничего не надо
-		if (isClient === this.data.isClient) {
-			return;
+		if (this._isFirstGet) {
+			this.stateChanged();
+			this._isFirstGet = false;
+		} else {
+			setTimeout(this.stateChanged.bind(this), 3000);
 		}
-
-		this.data = {
-			isClient,
-			user,
-		};
-
-		this.stateChanged();
 	};
 
 	onAccountReceived = (response) => {
@@ -182,12 +178,12 @@ export class Settings extends Component {
 					return tab.link === 'freelancer';
 				}).props.freelancerId = this.data.user.freelancerId;
 			})
-			.catch((error) => {
-				console.error(error);
-			})
 			.finally(() => {
+				const isClient = AccountService.isClient();
+
 				this.data = {
 					...this.data,
+					isClient,
 					loaded: true,
 				};
 				this._getAccountBlock = false;

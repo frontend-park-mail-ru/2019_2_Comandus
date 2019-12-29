@@ -3,13 +3,13 @@
 .freelancer-item {
 	&__row {
 		display: flex;
-
 	}
 
 	&__col-full {
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 10px;
 	}
 
 	&__avatar-wrapper {
@@ -19,7 +19,7 @@
 	}
 
 	&__avatar {
-		@include small-avatar;
+		@include big-avatar;
 	}
 
 	&__name {
@@ -61,6 +61,10 @@
 			display: flex;
 		}
 	}
+
+	&__right-col {
+		margin-left: 10px;
+	}
 }
 
 @media screen and (max-width: 576px) {
@@ -77,6 +81,10 @@
 			&_desktop {
 				display: none;
 			}
+		}
+
+		&__avatar {
+			@include small-avatar;
 		}
 	}
 }

@@ -8,36 +8,18 @@ import DoubleSelect from '@components/inputs/DoubleSelect/DoubleSelect';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import RadioGroup from '@components/inputs/RadioGroup/RadioGroup';
-import Tag from '@components/dataDisplay/Tag/Tag';
 import '../inputs/FieldGroup/FieldGroup.scss';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import countriesCitiesRow from './../../../assets/countries.min.json';
-import { toSelectElement } from '@modules/utils';
 import store from '@modules/store';
 import bus from '@frame/bus';
-import { busEvents } from '@app/constants';
+import {
+	busEvents,
+	categories,
+	levelsRadioShort,
+	specialities,
+} from '@app/constants';
 import UtilService from '@services/UtilService';
-
-const cities = {};
-const countriesCities = Object.keys(countriesCitiesRow).map((el, i) => {
-	cities[i] = countriesCitiesRow[el].map(toSelectElement);
-	return toSelectElement(el, i);
-});
-
-const experienceLevels = [
-	{
-		value: '1',
-		label: 'Начинающий',
-	},
-	{
-		value: '2',
-		label: 'Продвинутый',
-	},
-	{
-		value: '3',
-		label: 'Эксперт',
-	},
-];
+import InputTags from '@components/inputs/InputTags/InputTags';
 
 export class FreelancerSettings extends Component {
 	constructor(props) {
@@ -48,10 +30,13 @@ export class FreelancerSettings extends Component {
 		this.data = {
 			freelancerId,
 		};
+
+		this._isGetBefore = false;
 	}
 
 	preRender() {
 		bus.on(busEvents.UTILS_LOADED, this.utilsLoaded);
+
 		this.data = {
 			countryList: UtilService.MapCountriesToSelectList(),
 		};
@@ -60,26 +45,65 @@ export class FreelancerSettings extends Component {
 			return;
 		}
 
-		FreelancerService.GetFreelancerById(this.data.freelancerId)
-			.then((response) => {
-				const freelancer = store.get(['freelancer']);
-				this.data = {
-					freelancer,
-				};
-			})
-			.catch((error) => {
-				console.error(error);
-			})
-			.finally(() => {
-				this.data = {
-					...this.data,
-					loaded: true,
-				};
-				this.stateChanged();
-			});
+		if (!this._isGetBefore) {
+			FreelancerService.GetFreelancerById(this.data.freelancerId)
+				.then((response) => {
+					const freelancer = store.get(['freelancer']);
+					this.data = {
+						freelancer,
+					};
+				})
+				.finally(() => {
+					this.data = {
+						...this.data,
+						loaded: true,
+					};
+					this._isGetBefore = true;
+
+					this.stateChanged();
+				});
+		} else {
+			this._isGetBefore = false;
+		}
 	}
 
 	render() {
+		const freelancerObj = this.data.freelancer ? this.data.freelancer : {};
+
+		const currentCountry = this.data.countryList.find((country) => {
+			return country.label === freelancerObj.country;
+		});
+
+		let countryId = -1;
+		if (currentCountry) {
+			countryId = currentCountry.value;
+		}
+
+		let cityId = -1;
+		if (countryId !== -1) {
+			UtilService.getCityListByCountry(countryId).then((cities) => {
+				const currentCity = cities.find((city) => {
+					return city.label === freelancerObj.city;
+				});
+
+				let cityId = -1;
+				if (currentCity) {
+					cityId = currentCity.value;
+				}
+
+				if (cityId !== -1) {
+					this._citySelect.setSelectedValues(
+						countryId,
+						cityId,
+						cities,
+					);
+				}
+
+				freelancerObj.country = countryId;
+				freelancerObj.city = cityId;
+			});
+		}
+
 		this._citySelect = new DoubleSelect({
 			items: this.data.countryList,
 			getItems2: UtilService.getCityListByCountry,
@@ -87,7 +111,8 @@ export class FreelancerSettings extends Component {
 			label2: 'Город',
 			nameFirst: 'country',
 			name: 'city',
-			required: true,
+			selectedItem2: cityId !== -1 ? cityId : '',
+			// required: true,
 			filterable: true,
 		});
 
@@ -101,9 +126,10 @@ export class FreelancerSettings extends Component {
 			name: 'address',
 			type: 'text',
 			label: 'Адрес',
-			placeholder: 'Бауманская 7',
+			placeholder: 'Например: Бауманская 7',
 			minlength: '5',
 			maxlength: '40',
+			value: freelancerObj.address || '',
 		});
 
 		const phoneField = new TextField({
@@ -114,50 +140,51 @@ export class FreelancerSettings extends Component {
 			pattern: '\\+[0-9]{11,12}',
 			title:
 				'Неправильный формат номера телефона. Пример: +7 900 90 90 900',
-			placeholder: '+78005553535',
+			placeholder: '+7 999 999 99 99',
+			value: freelancerObj.phone || '',
 		});
 
 		this._levelRadioGroup = new RadioGroup({
-			items: experienceLevels,
+			items: levelsRadioShort,
 			column: true,
-			// title: 'Уровень фрилансера',
 			required: true,
 			name: 'experienceLevelId',
+			value: freelancerObj.experienceLevelId || '',
 		});
 
-		const skillTags = [
-			{
-				section: 'Программирование',
-				categories: [
-					'Веб-программирование',
-					'Базы данных',
-					'Программирование игр',
-					'Встраиваемые системы',
-				],
-			},
-			{
-				section: 'Дизайн и арт',
-				categories: ['Логотипы', 'Векторная графика'],
-			},
-		];
+		this._specialitySelect = new DoubleSelect({
+			items: categories,
+			label1: 'Категория',
+			items2: specialities,
+			label2: 'Специализация',
+			name: 'specialityId',
+			label: 'Ваша специализация',
+			required: true,
+			filterable: true,
+			selectedItem1: '',
+			selectedItem2: freelancerObj.specialityId || '',
+			getItems2: UtilService.getSpecialitiesByCategory,
+		});
 
-		// Создание html-верстки тэгов по названиям
-		const skills = skillTags.reduce((result, part) => {
-			let templatePart = {};
-			templatePart.categories = part.categories.reduce(
-				(result, skill) => {
-					result.push(new Tag({ text: skill }).render());
-					return result;
-				},
-				[],
-			);
-			templatePart.section = part.section;
-			result.push(templatePart);
-			return result;
-		}, []);
+		const descriptionField = new TextField({
+			required: true,
+			type: 'textarea',
+			label: 'Описание',
+			placeholder: '',
+			name: 'overview',
+			value: freelancerObj.overview || '',
+		});
+
+		this._inputTags = new InputTags({
+			name: 'tagline',
+			max: 5,
+			duplicate: false,
+			tags: freelancerObj.tagline ? freelancerObj.tagline.split(',') : [],
+		});
 
 		this.data = {
 			citySelect: this._citySelect.render(),
+
 			addressField: new FieldGroup({
 				children: [
 					addressField.render(),
@@ -166,27 +193,46 @@ export class FreelancerSettings extends Component {
 				],
 				label: 'Адрес',
 			}).render(),
+
 			phoneField: new FieldGroup({
 				children: [phoneField.render()],
 				label: 'Телефон',
 			}).render(),
+
 			levelRadioGroup: new FieldGroup({
 				children: [this._levelRadioGroup.render()],
 				label: 'Ваш уровень опыта',
 			}).render(),
+
 			contactsSettingsHeader: new CardTitle({
 				title: 'Контакты',
 			}).render(),
+
 			experienceSettingsHeader: new CardTitle({
 				title: 'Уровень опыта',
 			}).render(),
+
 			specializationSettingsHeader: new CardTitle({
-				children: ['<a class="" href="#" target="_self">Изменить</a>'],
 				title: 'Выбор специализации и категорий услуг',
 			}).render(),
-			skills,
+
+			overviewHeader: new CardTitle({
+				title: 'Описание',
+			}).render(),
+
+			descriptionField: new FieldGroup({
+				children: [descriptionField.render()],
+				label: 'Описание',
+			}).render(),
+
+			specialitySelect: this._specialitySelect.render(),
+
 			submitBtn: new FieldGroup({
 				children: [submitBtn.render()],
+			}).render(),
+			inputTags: new FieldGroup({
+				children: [this._inputTags.render()],
+				label: 'Навыки',
 			}).render(),
 		};
 
@@ -202,20 +248,43 @@ export class FreelancerSettings extends Component {
 		super.postRender();
 
 		this._citySelect.postRender();
+		this._specialitySelect.postRender();
+		this._inputTags.postRender();
 
-		const contactsForm = this._el.querySelector('#contactsForm');
+		const descriptionForm = this.el.querySelector('#descriptionForm');
+		enableValidationAndSubmit(descriptionForm, this.updateFreelancer);
+
+		const contactsForm = this.el.querySelector('#contactsForm');
 		enableValidationAndSubmit(contactsForm, this.updateFreelancer);
 
-		const profileForm = this._el.querySelector('#profileSettingsForm');
+		const profileForm = this.el.querySelector('#profileSettingsForm');
 		enableValidationAndSubmit(profileForm, this.updateFreelancer);
+
+		const specialityForm = this.el.querySelector('#specialityForm');
+		enableValidationAndSubmit(specialityForm, this.updateFreelancer);
 	}
 
 	updateFreelancer = (helper) => {
 		helper.event.preventDefault();
+		const data = {
+			...this.data.freelancer,
+			...helper.formToJSON(),
+		};
+		if (data.city) {
+			data.city = parseInt(data.city);
+			data.country = parseInt(data.country);
+		}
 
-		FreelancerService.UpdateFreelancer(0, helper.formToJSON())
+		if (data.experienceLevelId) {
+			data.experienceLevelId = parseInt(data.experienceLevelId);
+		}
+
+		this.data.freelancer = data;
+
+		FreelancerService.UpdateFreelancer(this.data.freelancerId, data)
 			.then((res) => {
 				helper.setResponseText('Изменения сохранены.', true);
+				setTimeout(this.stateChanged.bind(this), 3000);
 			})
 			.catch((error) => {
 				let text = error.message;

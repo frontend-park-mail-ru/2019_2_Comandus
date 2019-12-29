@@ -1,144 +1,192 @@
 <div id="{{_id}}">
 	<div class="tp-container tp-centered-container">
-		{{#isMyJob}}
-			<a href="/my-job-postings" style="margin-top: 20px;">Назад к размещениям</a>
-		{{/isMyJob}}
-		<div class="tp-row  card card_no-padding">
-			<div class="tp-col-9">
-				<div class="job-details job-details_clear-margins">
-					<h2 class="job-details__inner-item job-details_title">{{job.title}}</h2>
-					<div class="job-details__inner-item">
-						<div class="">
-							<a class="job-details__category" href="/search/jobs?category={{job.specialityId}}
-							">{{job.speciality}}</a>
+		<div class="tp-row">
+			<div class="tp-col-12">
+				<div class="page-header">
+					Объявление
+				</div>
+				{{#isMyJob}}
+					<a href="/my-job-postings" style="margin-top: 20px;">Назад к размещениям</a>
+				{{/isMyJob}}
+				<div class="tp-row  card card_no-padding">
+					<div class="tp-col-9">
+						<div class="job-details job-details_clear-margins">
+							<div class="features-wrap">
+								<h2 class="job-details__inner-item job-details_title">{{job.title}}</h2>
+							</div>
+							<div class="job-details__inner-item job-details__description">{{{job.description}}}</div>
+							<div class="features-wrap">
+								{{{ jobFeatures }}}
+							</div>
+
+							<div class="job-details__inner-item job-item__tags">
+								{{#each job.skills}}
+									<span class="tag">{{this}}</span>
+								{{/each}}
+							</div>
+							<div class="job-details__inner-item">
+								<div class="proposal-details">
+									<div class="proposal-details__key">
+										Специализация
+									</div>
+									<div><a class="job-details__category" href="/search?type=jobs&desc=1&specialityId=1{{job.specialityId}}
+								">{{job.speciality}}</a></div>
+								</div>
+								<div class="proposal-details">
+									<div class="proposal-details__key">
+										Откликов
+									</div>
+									<div>{{job.proposals}}</div>
+								</div>
+								<div class="proposal-details">
+									<div class="proposal-details__key">
+										Опубликован
+									</div>
+									<div>{{job.created}}</div>
+								</div>
+							</div>
 						</div>
-						<small>{{job.created}}</small>
 					</div>
-					<div class="job-details__inner-item job-details__description">{{{job.description}}}</div>
-					{{{ jobFeatures }}}
-					<div class="job-details__inner-item job-item__tags">
-						{{#each job.skills}}
-							<span class="tag">{{this}}</span>
-						{{/each}}
+					<div class="tp-col-3 tp-col_padding_0 job-details-sidebar job-details-sidebar_desktop">
+						<div class="buttons job-details__inner-item buttons_desktop">
+							{{#loggedIn}}
+								{{#isClient}}
+									{{#isMyJob}}
+										<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
+										{{{_togglePublish}}}
+									{{else}}
+										<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
+									{{/isMyJob}}
+								{{else}}
+									{{{submitProposal}}}
+								{{/isClient}}
+							{{else}}
+								<a href="/login" class="btn btn_primary btn-m">Войти</a>
+							{{/loggedIn}}
+						</div>
+						<div class="job-details__inner-item">
+						</div>
+					</div>
+					<div class="job-details-sidebar job-details-sidebar_mobile">
+						<div></div>
+						<div class="job-details__inner-item">
+							<strong>О заказчике</strong>
+							<ul class="about-client">
+								<li>
+									<strong>{{job.hireManagerId}}</strong>
+									<small>{{job.hireManagerId}}</small>
+								</li>
+								<li>
+									<strong></strong>
+									<small>Отзывы фрилансеров</small>
+								</li>
+								<li>
+									<strong></strong>
+									<small>Зарегистрирован</small>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="tp-col-3 tp-col_padding_0 job-details-sidebar job-details-sidebar_desktop">
-				<div class="buttons job-details__inner-item buttons_desktop">
+
+				<div class="buttons job-details__inner-item buttons_mobile">
 					{{#loggedIn}}
 						{{#isClient}}
 							{{#isMyJob}}
 								<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
-								{{#job.published}}
-									<button class="close-job-action btn btn_secondary btn-m" data-id="{{job.id}}">Снять с публикации</button>
-								{{else}}
-									<button class="publish-job-action btn btn_secondary btn-m" data-id="{{job.id}}">Опубликовать</button>
-								{{/job.published}}
 							{{else}}
 								<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
 							{{/isMyJob}}
 						{{else}}
-							{{{submitProposal}}}
-							{{{saveBtn}}}
+							{{{submitProposalMobile}}}
 						{{/isClient}}
 					{{else}}
 						<a href="/login" class="btn btn_primary btn-m">Войти</a>
 					{{/loggedIn}}
 				</div>
-				<div class="job-details__inner-item">
-{{!--					<strong>О заказчике</strong>--}}
-{{!--					<ul class="about-client">--}}
-{{!--						<li>--}}
-{{!--							<strong>{{job.hireManagerId}}</strong>--}}
-{{!--							<small>{{job.hireManagerId}}</small>--}}
-{{!--						</li>--}}
-{{!--						<li>--}}
-{{!--							<strong></strong>--}}
-{{!--							<small>Отзывы фрилансеров</small>--}}
-{{!--						</li>--}}
-{{!--						<li>--}}
-{{!--							<strong></strong>--}}
-{{!--							<small>Зарегистрирован</small>--}}
-{{!--						</li>--}}
-{{!--					</ul>--}}
-				</div>
-			</div>
-			<div class="job-details-sidebar job-details-sidebar_mobile">
-				<div></div>
-				<div class="job-details__inner-item">
-					<strong>О заказчике</strong>
-					<ul class="about-client">
-						<li>
-							<strong>{{job.hireManagerId}}</strong>
-							<small>{{job.hireManagerId}}</small>
-						</li>
-						<li>
-							<strong></strong>
-							<small>Отзывы фрилансеров</small>
-						</li>
-						<li>
-							<strong></strong>
-							<small>Зарегистрирован</small>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-		<div class="buttons job-details__inner-item buttons_mobile">
-			{{#loggedIn}}
-				{{#isClient}}
-					{{#isMyJob}}
-						<a href="/jobs/{{job.id}}/edit" class="btn btn_primary btn-m">Редактировать</a>
-					{{else}}
-						<a href="/new-job" class="btn btn_primary btn-m">Разместить заказ</a>
-					{{/isMyJob}}
-				{{else}}
-					{{{submitProposalMobile}}}
-					{{{saveBtn}}}
-				{{/isClient}}
-			{{else}}
-				<a href="/login" class="btn btn_primary btn-m">Войти</a>
-			{{/loggedIn}}
-		</div>
 
 
-		{{{sendProposalFormModal}}}
+				{{{sendProposalFormModal}}}
 
-		{{#isMyJob}}
-			<div class="tp-row card card_no-padding">
-				<div class="tp-col-12">
-					{{!--					<div class="job-details ">--}}
-					<h2 class="job-details__inner-item job-details_title">Отклики</h2>
-					<div class="job-details__inner-item job-proposals">
-						{{#proposals.length}}
-						{{else}}
-							<div class="job-proposal">
-								Здесь будут отклики к данной работе
+				{{#isMyJob}}
+					<div class="tp-row card card_no-padding">
+						<div class="tp-col-12 tp-col_padding_0">
+							<div class="features-wrap">
+								<h2 class="job-details__inner-item job-details_title">
+									Отклики
+								</h2>
 							</div>
-						{{/proposals.length}}
-						{{#each proposals}}
-							<div class="job-proposal">
-								<a class="link" href="/proposals/{{Response.id}}">Отклик №{{Response.id}} от фрилансера {{firstName}} {{lastName}}</a>
-{{!--								<div>Это кавер леттер...</div>--}}
-{{!--								<div>--}}
-{{!--									<span></span>--}}
-{{!--								</div>--}}
-								<div>{{Response.date}}</div>
+							<div class="job-details__inner-item">
+								{{#if empty}}
+									<div class="job-proposal">
+										Здесь будут отклики к данной работе
+									</div>
+								{{/if}}
+								{{#each proposals}}
+									<div class="job-proposal">
+										<a class="link" href="/proposals/{{Response.id}}">Отклик от
+											фрилансера {{firstName}} {{lastName}}</a>
+										<div>{{Response.date}}</div>
+									</div>
+								{{/each}}
+								{{#showActiveProposals}}
+									<div class="proposals-item">
+										<strong class="proposals-item__title">
+											Активные
+										</strong>
+										<div class="tp-container proposals-item__list">
+											{{#each activeProposals}}
+												<div class="proposals-list__link">
+													<a class="link" href="/proposals/{{Response.id}}">
+														Отклик от фрилансера {{firstName}} {{lastName}}
+													</a>
+													<div class="proposals-list__date">{{Response.date}}</div>
+												</div>
+											{{/each}}
+										</div>
+									</div>
+								{{/showActiveProposals}}
+
+								{{#showSentProposals}}
+									<div class="proposals-item">
+										<strong class="proposals-item__title">
+											Требующие ответа
+										</strong>
+										<div class="tp-container proposals-item__list">
+											{{#each sentProposals}}
+												<div class="proposals-list__link">
+													<a class="link" href="/proposals/{{Response.id}}">
+														Отклик от фрилансера {{firstName}} {{lastName}}
+													</a>
+													<div class="proposals-list__date">{{Response.date}}</div>
+												</div>
+											{{/each}}
+										</div>
+									</div>
+								{{/showSentProposals}}
+
+								{{#showClosedProposals}}
+									<div class="proposals-item">
+										<strong class="proposals-item__title">
+											Закрытые
+										</strong>
+										<div class="tp-container proposals-item__list">
+											{{#each closedProposals}}
+												<div class="proposals-list__link">
+													<a class="link" href="/proposals/{{Response.id}}">
+														Отклик от фрилансера {{firstName}} {{lastName}}
+													</a>
+													<div class="proposals-list__date">{{Response.date}}</div>
+												</div>
+											{{/each}}
+										</div>
+									</div>
+								{{/showClosedProposals}}
 							</div>
-						{{/each}}
+						</div>
 					</div>
-					{{!--						<div class="job-details__inner-item">--}}
-
-
-					{{!--						</div>--}}
-					{{!--						<div class="job-details__inner-item">--}}
-
-					{{!--						</div>--}}
-					{{!--					</div>--}}
-				</div>
-				{{!--				<div class="tp-col-3"></div>--}}
+				{{/isMyJob}}
 			</div>
-		{{/isMyJob}}
+		</div>
 	</div>
 </div>

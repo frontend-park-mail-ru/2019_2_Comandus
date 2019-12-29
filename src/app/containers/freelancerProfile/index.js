@@ -1,24 +1,16 @@
 import Component from '@frame/Component';
 import template from './index.handlebars';
 import './profile.scss';
+import { jobs, levels, busEvents, specialitiesRow } from '@app/constants';
 import {
-	historySortBy,
-	jobs,
-	levels,
-	availability,
-	busEvents,
-} from '@app/constants';
-import { defaultAvatarUrl, toSelectElement } from '@modules/utils';
-import { Select } from '@components/inputs/Select/Select';
+	defaultAvatarUrl,
+	getCountryAndCityIdByName,
+	getExperienceLevelName,
+} from '@modules/utils';
 import FeatureComponent from '@components/dataDisplay/FeatureComponent';
-import FeaturesList from '@components/dataDisplay/FeaturesList';
 import JobItem from '@components/dataDisplay/JobItem';
 import Item from '@components/surfaces/Item';
 import CardTitle from '@components/dataDisplay/CardTitle';
-import Paginator from '@components/navigation/Paginator';
-import PortfolioCard from '@components/dataDisplay/PortfolioCard';
-import CardBoard from '@components/dataDisplay/CardBoard';
-import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import { Avatar } from '@components/Avatar/Avatar';
@@ -29,90 +21,57 @@ import store from '@modules/store';
 import config from '@app/config';
 import FreelancerService from '@services/FreelancerService';
 import HistoryItem from '@components/dataDisplay/HistoryItem';
+import IconButton from '@components/inputs/IconButton/IconButton';
+import InputTags from '@components/inputs/InputTags/InputTags';
+import Modal from '@components/Modal/Modal';
+import Tag from '@components/dataDisplay/Tag/Tag';
+import editDataModal from '@components/modalViews/editDataModal';
 
 export class Profile extends Component {
 	constructor(props) {
 		super(props);
 
-		const profilePortfolios = [
-			{
-				projectTitle: 'Проект 1',
-				projectFile: defaultAvatarUrl('П', '1', 600),
-				projectUrl: '#',
-			},
-			{
-				projectTitle: 'Проект 2',
-				projectFile: defaultAvatarUrl('П', '2', 600),
-				projectUrl: '#',
-			},
-			{
-				projectTitle: 'Проект 3',
-				projectFile: defaultAvatarUrl('П', '3', 600),
-				projectUrl: '#',
-			},
-			{
-				projectTitle: 'Проект 4',
-				projectFile: defaultAvatarUrl('П', '4', 600),
-				projectUrl: '#',
-			},
-		];
-
-		const freelancerObj = {
-			avatarUrl: defaultAvatarUrl('F', 'W', 200),
-			firstName: 'Александр',
-			lastName: 'Косенков',
-			city: 'Москва, Россия',
-			rating: '100',
-			tagline: 'Frontend разработчик',
-			description:
-				"I've been administering Microsoft and Citrix server infrastructures for the last 9 years, and have in-depth experience with design, deployment, repair and support of all Citrix, VMWare and many Microsoft technologies. My experiences range from server administration roles, specialized application support, desktop support, administrator to advanced virtualization implementations jobs combined with programming skills .",
-			hourCost: '7000',
-			monthCost: '40000',
-			selectCount: '44',
-			availability: '1',
-			languages: [
-				{
-					language: 'Русский',
-					type: 'Родной',
-				},
-				{
-					language: 'Английский',
-					type: 'Разговорный',
-				},
-			],
-			profileHistory: jobs,
-			profilePortfolios: profilePortfolios,
-			skills: ['JavaScript', 'Python', 'Frontend Development'],
-		};
+		this._defaultAvatar = defaultAvatarUrl('F', 'W', 200);
 
 		this.data = {
-			...freelancerObj,
-			profilePortfolios,
-			// profileHistory: jobs,
+			profileHistory: jobs,
 			freelancer: {},
 			historyHtmlArray: [],
 			historyEnabled: false,
 		};
 
-		// this.data.profileHistory = this.data.profileHistory
-		// 	.map((job) => {
-		// 		const el = { ...job };
-		// 		el['experienceLevel'] = levels[el['experienceLevelId']];
-		// 		el['skills'] = el['skills'].split(',');
-		// 		return el;
-		// 	})
-		// 	.map((job) => {
-		// 		const jobItem = new JobItem({
-		// 			...job,
-		// 		});
-		// 		const item = new Item({
-		// 			children: [jobItem.render()],
-		// 		});
-		// 		return item.render();
-		// 	});
+		this.data.profileHistory = this.data.profileHistory
+			.map((job) => {
+				const el = { ...job };
+				el['experienceLevel'] = levels[el['experienceLevelId']];
+				el['skills'] = el['tagline'] ? el['tagline'].split(',') : [];
+				return el;
+			})
+			.map((job) => {
+				const jobItem = new JobItem({
+					...job,
+				});
+				const item = new Item({
+					children: [jobItem.render()],
+				});
+				return item.render();
+			});
+
+		this._getAccountBlock = false;
+		this._freelancerSkills = '';
 	}
 
 	preRender() {
+		this.data.user = store.get(['user']);
+
+		if (!this.data.user) {
+			bus.on('account-get-response', this.onAccountReceived);
+			if (!this._getAccountBlock) {
+				bus.emit('account-get');
+				this._getAccountBlock = true;
+			}
+		}
+
 		bus.on(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
 		bus.emit(busEvents.FREELANCER_GET, this.props.params.freelancerId);
 		const loggedIn = AuthService.isLoggedIn();
@@ -129,64 +88,75 @@ export class Profile extends Component {
 	}
 
 	render() {
-		this.data.availability = availability[this.data.availability];
+		//----- Data Handling -----//
 
-		this._portfolioCards = this.data.profilePortfolios.reduce(
-			(result, part) => {
-				result.push(new PortfolioCard({ ...part }).render());
-				return result;
-			},
-			[],
-		);
+		// Если будет неизвестен id, возбудится событие error и будет показан
+		// дефолтный аватар
+		this.data = {
+			selectCount: 0,
+			cityString: 'Не указан',
+			speciality: 'Не указана',
+			experienceLevel: 'Не указан',
+		};
 
-		let avatarDefault = '';
-		if (this.data.user) {
-			avatarDefault = defaultAvatarUrl(
-				this.data.user.firstName,
-				this.data.user.secondName,
-				200,
-			);
+		let avatarId = -1;
+		let isAvatarChange = false;
+
+		let skillTags = [];
+
+		if (this.data.freelancer) {
+			avatarId = this.data.freelancer.accountId;
+			// NOTE: Хардкод!
+			this.data.freelancer.skills = this._freelancerSkills;
+			// this.data.selectCount = this.data.freelancer.selectCount;
+			if (this.data.freelancer.city) {
+				this.data.cityString =
+					this.data.freelancer.country +
+					', ' +
+					this.data.freelancer.city;
+			}
+			if (this.data.freelancer.experienceLevelId) {
+				this.data.experienceLevel = getExperienceLevelName(
+					this.data.freelancer.experienceLevelId,
+				);
+			}
+			if (this.data.freelancer.specialityId) {
+				this.data.speciality =
+					specialitiesRow[this.data.freelancer.specialityId];
+			}
+
+			if (this.data.user) {
+				if (this.data.user.freelancerId === this.data.freelancer.id) {
+					isAvatarChange = true;
+				}
+			}
+
+			if (this.data.freelancer.tagline) {
+				this._freelancerSkills = this.data.freelancer.tagline;
+				const skills = this.data.freelancer.tagline.split(',');
+				skillTags = skills.map((skill) => {
+					return new Tag({ text: skill, secondary: true }).render();
+				});
+			} else {
+				skillTags = [];
+			}
 		}
 
-		this._avatar = new Avatar({
-			changing: true,
-			imgUrl: `${config.baseAPIUrl}${'/account/download-avatar' +
-				'?'}${new Date().getTime()}`,
-			imgDefault: avatarDefault,
-		});
+		//---------------------//
+
+		//-------Components Creating -------//
 
 		this._avatar = new Avatar({
-			imgUrl: this.data.avatarUrl,
-			changing: true,
+			changing: isAvatarChange,
+			imgUrl: `${
+				config.baseAPIUrl
+			}${'/account/avatar/'}${avatarId}${'?'}${new Date().getTime()}`,
+			imgDefault: this._defaultAvatar,
 		});
 
-		this._hourCost = new FeatureComponent({
-			title: 'Стоимость часа работы',
-			data: this.data.hourCost + ' ₽',
-		});
-		this._monthCost = new FeatureComponent({
-			title: 'Стоимость месяца работы',
-			data: this.data.monthCost + ' ₽',
-		});
 		this._selected = new FeatureComponent({
 			title: 'Выбран исполнителем',
-			data: this.data.selectCount + ' раза',
-		});
-
-		this._sortSelect = new Select({
-			items: historySortBy.map(toSelectElement),
-		});
-
-		this._projectSuggestBtn = new Button({
-			type: 'button',
-			noFit: true,
-			text: 'Предложить проект',
-		});
-		this._saveBtn = new Button({
-			type: 'button',
-			text: 'Добавить в избранное',
-			noFit: true,
-			className: 'btn_secondary',
+			data: this.data.selectCount + ' раз',
 		});
 
 		this._profileLinkField = new TextField({
@@ -199,45 +169,88 @@ export class Profile extends Component {
 			value: window.location,
 		});
 
+		this._inputTags = new InputTags({
+			name: 'tagline',
+			max: 5,
+			duplicate: false,
+			tags: this._freelancerSkills
+				? this._freelancerSkills.split(',')
+				: [],
+		});
+
+		this._inputTagsInModal = new editDataModal({
+			description: 'Какими навыками Вы обладаете?',
+			children: [this._inputTags.render()],
+		});
+
+		this._skillsChangeModal = new Modal({
+			title: 'Обновление навыков',
+			children: [this._inputTagsInModal.render()],
+		});
+
+		const onClickSkillsModal = () => {
+			this._skillsChangeModal.show();
+		};
+
+		this._editSkillsButton = new IconButton({
+			className: 'fas fa-pen',
+			onClick: onClickSkillsModal,
+		});
+
+		//---------------------//
+
+		//--------Rendering---------//
+
 		this.data = {
 			profileAvatar: this._avatar.render(),
-			profileInfoFeatures: new FeaturesList({
-				children: [
-					// this._hourCost.render(),
-					// this._monthCost.render(),
-					this._selected.render(),
-				],
-			}).render(),
+
+			cityString: this.data.cityString,
+
+			selectedCount: this._selected.render(),
+
 			historyCardHeader: new CardTitle({
-				children: [this._sortSelect.render()],
 				title: 'История работ и отзывы',
 			}).render(),
-			portfolioCardHeader: new CardTitle({
-				title: 'Портфолио',
-			}).render(),
-			portfolioCardFooter: new Item({
-				children: ['<a href="#" target="_self">Посмотреть еще</a>'],
-			}).render(),
+
+			// portfolioCardHeader: new CardTitle({
+			// 	title: 'Портфолио',
+			// }).render(),
+
+			// portfolioCardFooter: new Item({
+			// 	children: ['<a href="#" target="_self">Посмотреть еще</a>'],
+			// }).render(),
+
 			skillsCardHeader: new CardTitle({
 				title: 'Навыки',
-				children: [`<i class="fas fa-pen"></i>`],
+				// children: [this._editSkillsButton.render()],
 			}).render(),
-			portfolioPaginator: new Paginator({
-				currentPage: 2,
-				countOfPages: 6,
-				maxDisplayingPages: 4,
-			}).render(),
-			portfolioCardGroup: new CardBoard({
-				children: this._portfolioCards,
-				columns: 2,
-			}).render(),
-			projectSuggestBtn: this._projectSuggestBtn.render(),
-			saveBtn: this._saveBtn.render(),
+
+			skillTags: skillTags,
+
+			skillsChangeModal: this._skillsChangeModal.render(),
+
+			// portfolioPaginator: new Paginator({
+			// 	currentPage: 2,
+			// 	countOfPages: 6,
+			// 	maxDisplayingPages: 4,
+			// }).render(),
+
+			// portfolioCardGroup: new CardBoard({
+			// 	children: this._portfolioCards,
+			// 	columns: 2,
+			// }).render(),
+
+			// projectSuggestBtn: this._projectSuggestBtn.render(),
+			//
+			// saveBtn: this._saveBtn.render(),
+
 			profileLinkField: new FieldGroup({
 				children: [this._profileLinkField.render()],
 				label: 'Ссылка на профиль',
 			}).render(),
 		};
+
+		//---------------------//
 
 		this.html = template({
 			...this.data,
@@ -250,20 +263,76 @@ export class Profile extends Component {
 
 	postRender() {
 		this._avatar.postRender();
-		if (this.data.historyEnabled) {
-			this._sortSelect.postRender();
-		}
 
-		//TODO: COPY link to clipboard
-		// this._copyLinkBtn = this.el.querySelector('.profile-link__copy');
-		// this._copyLinkBtn.addEventListener('click', (event) => {
-		// 	event.stopPropagation();
-		// 	event.preventDefault();
-		// 	this._profileLinkField.el.select();
-		// 	this._profileLinkField.el.setSelectionRange(0, 99999);
-		// 	document.execCommand("copy");
-		// });
+		this._copyLinkWrapper = this.el.querySelector(
+			'.profile-sidebar__profile-link',
+		);
+		this._copyLinkValue = this._copyLinkWrapper.querySelector(
+			'input[name="profileLink"]',
+		);
+		this._copyLinkBtn = this._copyLinkWrapper.querySelector(
+			'.profile-link__copy',
+		);
+		this._copyLinkBtn.addEventListener('click', this.copyToClipboard);
+
+		this._inputTagsInModal.addOnSubmit(this.onFormSubmit);
+
+		this._editSkillsButton.postRender();
+		this._skillsChangeModal.postRender();
+		this._inputTags.postRender();
+		this._inputTagsInModal.postRender();
 	}
+
+	onFormSubmit = (helper) => {
+		helper.event.preventDefault();
+
+		const data = {
+			...this.data.freelancer,
+			...helper.formToJSON(),
+		};
+
+		if (this.data.freelancer.city !== 'не задано') {
+			getCountryAndCityIdByName(
+				this.data.freelancer.country,
+				this.data.freelancer.city,
+			).then((mapped) => {
+				if (!mapped) {
+					return;
+				}
+
+				data.country = mapped.country;
+				data.city = mapped.city;
+				this._freelancerSkills = data.skills;
+
+				this.updateFreelancer(helper, data);
+			});
+		} else {
+			data.country = 0;
+			data.city = 0;
+
+			this._freelancerSkills = data.skills;
+			this.updateFreelancer(helper, data);
+		}
+	};
+
+	onAccountReceived = (response) => {
+		bus.off('account-get-response', this.onAccountReceived);
+		response
+			.then((res) => {
+				this.data = {
+					user: { ...res },
+				};
+			})
+			.finally(() => {
+				this.data = {
+					...this.data,
+					loaded: true,
+				};
+				this._getAccountBlock = false;
+
+				this.stateChanged();
+			});
+	};
 
 	freelancerUpdated = (err) => {
 		bus.off(busEvents.FREELANCER_UPDATED, this.freelancerUpdated);
@@ -272,24 +341,38 @@ export class Profile extends Component {
 		}
 
 		const freelancer = store.get(['freelancer']);
+		const firstName = store.get(['firstName']);
+		const secondName = store.get(['secondName']);
 
 		this.data = {
-			freelancer: freelancer,
-			...freelancer,
+			freelancer,
+			firstName,
+			secondName,
 		};
 
 		if (freelancer) {
-			this.data = {
-				avatarUrl: defaultAvatarUrl(
-					freelancer.firstName,
-					freelancer.secondName,
-					200,
-				),
-			};
+			this._defaultAvatar = defaultAvatarUrl(firstName, secondName, 200);
 		}
 
 		this.stateChanged();
 	};
+
+	updateFreelancer(helper, data) {
+		FreelancerService.UpdateFreelancer(this.data.freelancer.id, data)
+			.then((res) => {
+				helper.setResponseText('Изменения сохранены.', true);
+
+				setTimeout(this._skillsChangeModal.close, 3000);
+				setTimeout(this.stateChanged.bind(this), 4000);
+			})
+			.catch((error) => {
+				let text = error.message;
+				if (error.data && error.data.error) {
+					text = error.data.error;
+				}
+				helper.setResponseText(text);
+			});
+	}
 
 	onHistoryResponse = (history) => {
 		if (!history) {
@@ -300,9 +383,16 @@ export class Profile extends Component {
 			historyHtmlArray: history.map((el) => {
 				return new HistoryItem(el).render();
 			}),
-			historyEnabled: true,
+			historyEnabled: history.length > 0,
 		};
 
 		this.stateChanged();
+	};
+
+	copyToClipboard = (event) => {
+		event.preventDefault();
+		const text = this._copyLinkValue.value;
+		this._copyLinkValue.select();
+		navigator.clipboard.writeText(text).then((r) => {});
 	};
 }

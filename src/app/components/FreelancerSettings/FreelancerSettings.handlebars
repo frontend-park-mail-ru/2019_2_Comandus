@@ -1,8 +1,26 @@
 <div id="{{_id}}">
+
+	<div class="verview-settings card">
+		{{{ overviewHeader }}}
+		<div class="tp-container">
+			<form
+					class="tp-form"
+					id="descriptionForm"
+					method="post"
+					autocomplete="off"
+			>
+				{{{ descriptionField }}}
+				{{{ inputTags }}}
+				<div class="contact-setting__submit">
+					{{{ submitBtn }}}
+				</div>
+			</form>
+		</div>
+	</div>
+
+
 	<div class="contacts-settings card">
 		{{{ contactsSettingsHeader }}}
-<!--		<div class="tp-row tp-row_content_stretch">-->
-<!--			<div class="tp-col-12">-->
 				<div class="tp-container">
 					<form
 						class="tp-form"
@@ -18,8 +36,6 @@
 							</div>
 					</form>
 				</div>
-<!--			</div>-->
-<!--		</div>-->
 	</div>
 
 	<div class="experience-settings card">
@@ -44,13 +60,18 @@
 
 	<div class="specialization-settings card">
 		{{{ specializationSettingsHeader }}}
-			{{#each skills}}
-				<label class="field-group__label">{{section}}</label>
-				<div class="tp-row tp-row_content_left">
-					{{#each categories}}
-						{{{ this }}}
-					{{/each}}
+		<div class="tp-container">
+			<form
+				class="tp-form"
+				id="specialityForm"
+				method="post"
+				autocomplete="off"
+			>
+				{{{ specialitySelect }}}
+				<div class="contact-setting__submit">
+					{{{ submitBtn }}}
 				</div>
-			{{/each}}
+			</form>
+		</div>
 	</div>
 </div>

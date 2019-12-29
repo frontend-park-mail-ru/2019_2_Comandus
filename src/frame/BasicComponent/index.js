@@ -18,6 +18,7 @@ export default class BasicComponent extends Component {
 			...this.data,
 		});
 
+		// this.attachToParent(); // if it is container
 		return this.html;
 	}
 }

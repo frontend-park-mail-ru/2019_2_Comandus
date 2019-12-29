@@ -12,6 +12,8 @@
 	font-size: .9em;
 	margin-bottom: 15px;
 	overflow-wrap: break-word;
+	max-height: 56px;
+	overflow: hidden;
 }
 
 .job-item__small__info {
@@ -34,4 +36,29 @@
 
 .manage-btn {
 	margin-left: 20px;
+}
+
+.job-item__country {
+	padding-left: 20px;
+
+	& i {
+		font-size: 14px;
+		line-height: 14px;
+	}
+}
+
+.job-item__budget {
+	color: #242124;
+}
+
+.job-small-info {
+	&__project {
+		//color: $primary-color;
+		color: $light-primary-color;
+	}
+
+	&__vacancy {
+		color: #4E45AF;
+		//color: #33AE89;
+	}
 }

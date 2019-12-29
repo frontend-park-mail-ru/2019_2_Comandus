@@ -67,6 +67,10 @@ export class Select extends Component {
 			return;
 		}
 
+		if (!this.el) {
+			return;
+		}
+
 		this.customSelectElem = this.el.querySelector('.select-custom');
 
 		const choicesList = this.customSelectElem.querySelectorAll(
@@ -165,6 +169,20 @@ export class Select extends Component {
 	switchDropdownActive = () => {
 		if (!this.customSelectElem.classList.contains('select-custom_active')) {
 			this.customSelectElem.classList.add('select-custom_active');
+
+			if (!this.customSelectElem) {
+				return;
+			}
+
+			const selectFilter = this.customSelectElem.querySelector(
+				'.select-dropdown__filter',
+			);
+
+			if (!selectFilter) {
+				return;
+			}
+
+			selectFilter.focus();
 		} else {
 			this.customSelectElem.classList.remove('select-custom_active');
 		}

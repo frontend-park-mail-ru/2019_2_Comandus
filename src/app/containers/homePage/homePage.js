@@ -2,9 +2,6 @@ import template from './index.handlebars';
 import { htmlToElement } from '@modules/utils';
 import Component from '@frame/Component';
 import './style.scss';
-// import './chaice.scss';
-// import './pulsingCircles.scss';
-// import './shiningText.scss';
 import BenzeneParticles from './benzene';
 
 class HomeComponent extends Component {

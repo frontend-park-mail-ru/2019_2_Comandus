@@ -1,3 +1,11 @@
-<div id="{{_id}}">
+<div id="{{_id}}" class="contracts-page">
 	{{{page}}}
+	{{#empty}}
+		<div class="empty-box-wrap">
+			<div class="empty-box">
+				{{{emptyBoxImg}}}
+				<div class="empty-box_text">Контракты, над которыми вы работаете, появятся здесь.</div>
+			</div>
+		</div>
+	{{/empty}}
 </div>

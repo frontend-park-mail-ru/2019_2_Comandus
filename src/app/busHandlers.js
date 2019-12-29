@@ -6,6 +6,7 @@ import AccountService from '@services/AccountService';
 import FreelancerService from '@services/FreelancerService';
 import ProposalService from '@services/ProposalService';
 import UtilService from '@services/UtilService';
+import { router } from '../index';
 
 const handlers = [
 	{
@@ -72,11 +73,13 @@ bus.on(busEvents.ACCOUNT_GET, () => {
 bus.on(busEvents.CHANGE_USER_TYPE, (newType) => {
 	AccountService.SetUserType(newType).then(() => {
 		bus.emit(busEvents.USER_UPDATED);
+		router.push('/');
 	});
 });
 
 bus.on(busEvents.JOBS_GET, (params) => {
-	JobService.GetAllJobs(params)
+	// JobService.GetAllJobs(params)
+	JobService.GetAllMyJobs(params)
 		.then(() => {
 			bus.emit(busEvents.JOBS_UPDATED);
 		})
@@ -115,6 +118,7 @@ bus.on(busEvents.ON_PAGE_LOAD, () => {
 	AuthService.FetchCsrfToken()
 		.then((response) => {
 			if (response === 'Unauthorized') {
+				bus.emit(busEvents.USER_UPDATED);
 				return;
 			}
 
@@ -173,7 +177,7 @@ bus.on(busEvents.JOB_DELETE, (id) => {
 });
 
 bus.on(busEvents.SEARCH, (params) => {
-	JobService.SearchJobs(params)
+	JobService.Search(params)
 		.then((response) => {
 			bus.emit(busEvents.SEARCH_RESPONSE, { response });
 		})
@@ -205,8 +209,3 @@ bus.on('change-password', (data) => {
 	const response = AccountService.ChangePassword(data);
 	bus.emit('change-password-response', response);
 });
-
-// bus.on('get-role', () => {
-// 	const response = AccountService.GetRoles();
-// 	bus.emit('get-role-response', response);
-// });

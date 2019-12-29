@@ -5,15 +5,14 @@ import './index.scss';
 import PageWithTitle from '@components/PageWithTitle';
 import CardTitle from '@components/dataDisplay/CardTitle';
 import AccountService from '@services/AccountService';
-import { formatMoney, getTimeEstimationName } from '@modules/utils';
+import { formatDate, formatMoney, getTimeEstimationName } from '@modules/utils';
 import ContractService from '@services/ContractService';
 import Button from '@components/inputs/Button/Button';
 import TextField from '@components/inputs/TextField/TextField';
 import FieldGroup from '@components/inputs/FieldGroup/FieldGroup';
 import GradeComponent from '@components/inputs/GradeComponent';
 import { enableValidationAndSubmit } from '@modules/form/formValidationAndSubmit';
-import bus from '@frame/bus';
-import { busEvents, statusesContract } from '@app/constants';
+import { statusesContract } from '@app/constants';
 import ClientChat from '@components/ClientChat';
 
 export default class Contract extends Component {
@@ -38,6 +37,9 @@ export default class Contract extends Component {
 			acceptContractEnabled: false,
 			markContractAsDoneEnabled: false,
 			feedbackEnabled: false,
+			statusCreated: false,
+			statusActive: false,
+			statusClosed: false,
 		};
 	}
 
@@ -165,6 +167,15 @@ export default class Contract extends Component {
 	}
 
 	onGetContractResponse = (contract) => {
+		const statusClosed =
+			contract.Contract.status === statusesContract.CLOSED;
+		const statusActive =
+			statusClosed ||
+			contract.Contract.status === statusesContract.ACTIVE;
+		const statusCreated =
+			statusActive ||
+			contract.Contract.status === statusesContract.EXPECTED;
+
 		this.data = {
 			contract: {
 				...contract.Contract,
@@ -172,9 +183,11 @@ export default class Contract extends Component {
 				timeEstimation: getTimeEstimationName(
 					contract.Contract.timeEstimation,
 				),
+				startTime: formatDate(contract.Contract.startTime),
 			},
 			freelancer: {
 				...contract.Freelancer,
+				...contract.Freelancer.Fr,
 			},
 			company: {
 				...contract.Company,
@@ -184,7 +197,8 @@ export default class Contract extends Component {
 			},
 			closeContractEnabled:
 				contract.Contract.statusFreelancerWork ===
-				statusesContract.READY,
+					statusesContract.READY &&
+				contract.Contract.status !== statusesContract.CLOSED,
 			acceptContractEnabled:
 				contract.Contract.status === statusesContract.EXPECTED,
 			markContractAsDoneEnabled:
@@ -205,6 +219,9 @@ export default class Contract extends Component {
 			firstMessage: this.data.isClient
 				? contract.Contract.freelancerComment
 				: contract.Contract.clientComment,
+			statusCreated,
+			statusActive,
+			statusClosed,
 		};
 
 		this.stateChanged();
@@ -247,12 +264,8 @@ export default class Contract extends Component {
 	};
 
 	onLeaveFeedbackResponse = (res) => {
-		ContractService.MarkReadyContract(this.props.params.contractId).then(
-			() => {
-				ContractService.GetContractById(
-					this.props.params.contractId,
-				).then(this.onGetContractResponse);
-			},
+		ContractService.GetContractById(this.props.params.contractId).then(
+			this.onGetContractResponse,
 		);
 	};
 }

@@ -3,12 +3,9 @@ import template from './index.handlebars';
 import contentTemplate from './content.handlebars';
 import './index.scss';
 import { busEvents, jobs, levels } from './../../constants';
-import JobItem from '@components/dataDisplay/JobItem';
-import Item from '@components/surfaces/Item';
 import bus from '@frame/bus';
 import store from '@modules/store';
 import PageWithTitle from '@components/PageWithTitle';
-import AuthService from '@services/AuthService';
 import AccountService from '@services/AccountService';
 import Dialog from '@components/surfaces/Dialog';
 import Modal from '@components/Modal/Modal';
@@ -22,6 +19,7 @@ export default class ClientJobs extends Component {
 		this.data = {
 			jobs: [],
 			loading: true,
+			isRequest: false,
 		};
 
 		bus.on(busEvents.JOBS_UPDATED, this.jobsUpdated);
@@ -76,9 +74,11 @@ export default class ClientJobs extends Component {
 		let jobs = store.get(['jobs']);
 		const user = store.get(['user']);
 
-		jobs = jobs.filter((j) => j.hireManagerId == user.hireManagerId);
-
-		const jobsHtml = jobs ? this.renderJobs(jobs) : '';
+		let jobsHtml = '';
+		if (jobs) {
+			jobs = jobs.filter((j) => j.hireManagerId == user.hireManagerId);
+			jobsHtml = jobs ? JobService.renderClientJobPostings(jobs) : '';
+		}
 
 		this.data = {
 			jobs: jobsHtml,
@@ -88,22 +88,10 @@ export default class ClientJobs extends Component {
 		this.stateChanged();
 	};
 
-	renderJobs = (jobs) => {
-		return jobs.map((job) => {
-			const jobItem = new JobItem({
-				...job,
-				manage: true,
-			});
-			const item = new Item({
-				children: [jobItem.render()],
-			});
-
-			return item.render();
-		});
-	};
-
 	handleDelete = (event) => {
 		const { target } = event;
+		event.preventDefault();
+
 		if (hasClass('delete-job-action', target)) {
 			const id = target.dataset.id;
 			this.data = {
@@ -114,10 +102,32 @@ export default class ClientJobs extends Component {
 
 		if (hasClass('publish-job-action', target)) {
 			const id = target.dataset.id;
-			this.data = {
-				jobIdForTogglePublish: id,
-			};
-			this.togglePublish();
+			if (!this.data.isRequest) {
+				this.data = {
+					isRequest: true,
+				};
+				return JobService.OpenJob(id).then(() => {
+					this.data = {
+						isRequest: false,
+					};
+					return this.togglePublish();
+				});
+			}
+		}
+
+		if (hasClass('close-job-action', target)) {
+			const id = target.dataset.id;
+			if (!this.data.isRequest) {
+				this.data = {
+					isRequest: true,
+				};
+				return JobService.CloseJob(id).then(() => {
+					this.data = {
+						isRequest: false,
+					};
+					return this.togglePublish();
+				});
+			}
 		}
 	};
 
@@ -140,5 +150,11 @@ export default class ClientJobs extends Component {
 		});
 	};
 
-	togglePublish = () => {};
+	togglePublish = () => {
+		bus.off(busEvents.JOBS_UPDATED, this.jobsUpdated);
+		bus.on(busEvents.JOBS_UPDATED, this.jobsUpdated);
+		bus.emit(busEvents.JOBS_GET, {
+			only: 'my',
+		});
+	};
 }

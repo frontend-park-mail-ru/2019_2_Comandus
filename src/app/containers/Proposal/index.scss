@@ -13,6 +13,16 @@
 
 .proposal__freelancer-block {
 	display: flex;
+	padding-top: 0;
+	padding-bottom: 12px;
+
+	&__info {
+		margin-left: 12px;
+	}
+
+	& img {
+		margin: 0;
+	}
 }
 
 .fwork-chat-wrapper {

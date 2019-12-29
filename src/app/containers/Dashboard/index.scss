@@ -1,0 +1,71 @@
+@import "~@assets/scss/global";
+
+.dashboard-page {
+	margin-top: 20px;
+}
+
+.d-card {
+	background-color: #fff;
+	border: solid 1px #eee;
+	border-radius: 5px;
+	padding: 16px;
+}
+
+.d-block {
+	margin-bottom: 48px;
+	position: relative;
+}
+
+.d-block_title {
+	word-wrap: break-word;
+	letter-spacing: -.3px;
+	line-height: 24px;
+	margin-bottom: 20px;
+	color: #333;
+	font-size: 20px;
+	font-weight: 600;
+	transition: color .23s ease-in-out;
+}
+
+.card-action {
+	margin-top: 16px;
+	padding: 8px;
+	border-radius: 4px;
+	background: #ecf1f7;
+	color: #1771e6;
+	text-align: center;
+	word-wrap: break-word;
+	font-size: 13px;
+	line-height: 20px;
+	font-weight: 400;
+	letter-spacing: 0;
+
+	display: block;
+
+	&:hover {
+		background: #e4ebf3;
+		text-decoration: none;
+	}
+}
+
+.card-action-top {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.d-account-card {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.d-profile-item {
+	margin-bottom: 15px;
+}
+
+.d-profile-item-label {
+	color: $light-text-color;
+	margin-bottom: 5px;
+}
