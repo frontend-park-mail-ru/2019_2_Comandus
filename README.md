@@ -55,7 +55,7 @@ https://trello.com/comandus
 
 - [Дарья Ефимова](https://github.com/efimovad)
 - [Дмитрий Андронов](https://github.com/Andronovdima)
-- [Нозим Юнусов](https://github.com/nozimy)
+- [Нозим Юнусов](https://github.com/zelflod)
 - [Александр Косенков](https://github.com/SoulPhazed)
 
 Ментор: [Джахонгир Тулфоров](https://github.com/bin-umar)
